@@ -1,0 +1,3202 @@
+\chapter{Fundamentals}
+\section{Basic Properties of Sets} \label{sec:basic-properties-of-sets}
+
+Many properties of sets follow directly from the axioms listed in \cref{ch:zfc-axioms}. Note that the 
+although the axioms postulate the existence of various sets (e.g: the empty set, the power set and 
+the union of any given set), they say nothing about the \emph{uniqueness} of those sets.
+Therefore, we shall begin this chapter by proving the uniqueness of the various sets postulated by the basic axioms.
+Common notations used in set theory will also be introduced along with a rigorous justification for their usage.
+
+\begin{thm}
+    \label{thm:uniqueness-empty-set}
+    The empty set is unique.
+    \begin{equation*}
+        \forall A,B \Big[\, \forall x \, \mleft( x \notin A \mright) \land \forall x \, \mleft( x \notin B \mright) \implies A = B \,\Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets that do not contain any elements. That is,
+    \begin{equation}
+        \label{eq:A-B-empty}
+        \forall x \left(x \notin A \right) \land \forall x \left(x \notin B \right)
+    \end{equation}
+    Let \( x_{0} \) be any arbitrary object. Then by \eqref{eq:A-B-empty}, it follows that \( x_{0} \notin A \land x_{0} \notin B \). 
+    Thus, the statements \( x_{0} \in A \implies x_{0} \in B \) and \( x_{0} \in B \implies x_{0} \in A \) are both vacuously true. By elementary
+    logic,
+    \begin{equation*}
+        \mleft( x_{0} \in A \implies x_{0} \in B \mright) \land 
+        \mleft( x_{0} \in B \implies x_{0} \in A \mright) \iff  
+        \mleft( x_{0} \in A \iff x_{0} \in B \mright)
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \iff x \in B \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that \( A = B \). Thus, the empty set is unique.
+\end{proof}
+
+
+\vspace{0.3cm}
+\noindent Since the empty set is unique, we can denote it with a single universal symbol.
+\begin{dfn}
+    \label{dfn:empty-set}
+    \( \emptyset \) is the empty set.
+    \begin{equation*}
+        \forall S \, \mleft( S = \emptyset \iff \forall x \, \mleft( x \notin S \mright) \mright)
+    \end{equation*}
+\end{dfn}
+
+
+\begin{thm}[Restricted Comprehension]
+    \label{thm:uniqueness-predicate-set}
+    Given any predicate \( \varphi \) and any set \( A \), the set \( S \) such that 
+    \( \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright) \) is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( S \) and \( S^{\prime} \) be sets such that,
+    \begin{gather}
+        \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright) \label{eq:S-satisfies-phi} \\ 
+        \forall x \, \mleft( x \in S^{\prime} \iff x \in A \land \varphi(x) \mright) \label{eq:S-prime-satisfies-phi}
+    \end{gather}
+    By elementary logic, \eqref{eq:S-satisfies-phi} and \eqref{eq:S-prime-satisfies-phi} clearly imply,
+    \begin{equation*}
+        \forall x \, \mleft( x \in S \iff x \in S^{\prime} \mright)
+    \end{equation*}
+    By \nameref{axm:axiom-of-extensionality}, it follows that \( S = S^{\prime} \).
+\end{proof}
+
+
+\begin{thm}
+    \label{thm:sufficient-condition-for-unrestricted-comprehension}
+    For any predicate \( \varphi \),
+    \begin{equation*}
+        \exists A \, \forall x \, \big( \varphi(x) \implies x \in A \big) 
+        \implies 
+        \exists! S \, \forall x \, \mleft( x \in S \iff \varphi(x) \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be a predicate such that,
+    \begin{equation}
+        \label{eq:phi-x-implies-x-in-A}
+        \forall x \, ( \varphi(x) \implies x \in A )
+    \end{equation}
+    for some set \( A \). 
+    The \nameref{axm:axiom-schema-of-specification} and \cref{thm:uniqueness-predicate-set}
+    guarantee the existence of a set \( S \) such that,
+    \begin{equation}
+        \label{eq:property-of-S}
+        \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright)
+    \end{equation}
+    Let \( x_{0} \in S \) be arbitrary. Then \( x_{0} \,{\in}\, A \land \varphi(x_{0}) \) follows immediately
+    from \eqref{eq:property-of-S}. By Conjunction Elimination, we can infer \( \varphi(x_{0}) \).
+    \begin{equation}
+        \label{eq:x-in-S-implies-phi-x}
+        \therefore \, x_{0} \in S \implies \varphi(x_{0})
+    \end{equation}
+    To prove the converse, let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) holds.
+    By \eqref{eq:phi-x-implies-x-in-A}, it follows that \( x_{0} \in A \).
+    And by Conjunction Introduction, we infer \( x_{0} \in A \land \varphi(x_{0}) \),
+    which in turns implies \( x_{0} \in S \) by \eqref{eq:property-of-S}.
+    \begin{equation}
+        \label{eq:phi-x-implies-x-in-S}
+        \therefore \, \varphi(x_{0}) \implies x_{0} \in S
+    \end{equation}
+    By \eqref{eq:phi-x-implies-x-in-S}, \eqref{eq:x-in-S-implies-phi-x}, and Universal Generalization,
+    \begin{equation*}
+        \forall x \, \mleft( x \in S \iff \varphi(x) \mright)
+    \end{equation*}
+    Thus, \( \exists  S \, \forall x \, \mleft( x \in S \iff \varphi(x) \mright) \) by Existential Generalization.
+    The proof for the uniqueness of \( S \) is straightforward.
+    Suppose that \( S \) and \( S^{\prime} \) are sets such that,
+    \begin{gather*}
+        \forall x \, \mleft( x \in S \iff \varphi(x) \mright) \\ 
+        \forall x \, \mleft( x \in S^{\prime} \iff \varphi(x) \mright)
+    \end{gather*}
+    It is obvious that \( \forall x \, \mleft( x \in S \iff x \in S^{\prime} \mright) \) and thus \( S = S^{\prime} \)
+    by the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\vspace{0.3cm}
+\noindent\cref{thm:uniqueness-predicate-set,thm:sufficient-condition-for-unrestricted-comprehension}
+serve as the rigorous foundation for the familiar set-builder notation.
+\begin{dfn}[Set-Builder Notation]
+    \label{dfn:set-builder-notation}
+    For any set \( A \) and any predicate \( \varphi \), the set
+    of all elements of \( A \) that satisfy \( \varphi \) is denoted by
+    \setbuilder{x \in A}{ \varphi(x) }.
+    \begin{equation*}
+        \forall A \, \forall x \, \Big[ x \in \setbuilder{z \in A}{\varphi(z)} \iff x \in A \land \varphi(x) \Big]
+    \end{equation*}
+    Similarly, \setbuilder{x}{\varphi(x)} denotes the set of all \( x \) satisfying \( \varphi(x) \).
+    \begin{equation*}
+        \forall x \, \Big[ x \in \setbuilder{z}{\varphi(z)} \iff \varphi(x) \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    The set \setbuilder{x}{\varphi(x)} doesn't exist for every predicate \( \varphi \) (see \cref{thm:russell-paradox}).
+    Unless one can prove its existence (with \cref{thm:sufficient-condition-for-unrestricted-comprehension}), the notation
+    \setbuilder{x}{\varphi(x)} is meaningless and therefore should not be used.
+\end{rem}
+
+\begin{thm}
+    \label{thm:equal-predicate-specification}
+    For any set \( A \) and any two predicates \( \varphi_{1} \) and \( \varphi_{2} \), 
+    \begin{equation*}
+        \forall x \, \big[ \varphi_{1}(x) \iff \varphi_{2}(x) \big]
+        \implies \setbuilder{x \in A}{\varphi_{1}(x)} = \setbuilder{x \in A}{\varphi_{2}(x)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be any set and \( \varphi_{1} \) and \( \varphi_{2} \) be two predicates. Suppose that,
+    \begin{equation}
+        \label{eq:phi1-iff-phi2}
+        \forall \, \big[ \varphi_{1}(x) \iff \varphi_{2}(x) \big]
+    \end{equation}
+    Let \( S_{1} = \setbuilder{x \in A}{\varphi_{1}(x)} \) and \( S_{2} = \setbuilder{x \in A}{\varphi_{2}(x)} \). 
+    Let \( x_{0} \in S_{1} \) be arbitrary. By \cref{dfn:set-builder-notation}, it follows that \( x_{0} \in A \land \varphi_{1}(x_{0}) \).
+    Thus, \( x_{0} \in A \land \varphi_{2}(x_{0}) \) and \( x_{0} \in S_{2} \) by
+    \eqref{eq:phi1-iff-phi2} and \cref{dfn:set-builder-notation}. Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation}
+        \label{eq:s1-subset-s2}
+        \forall x \, \mleft( x \in S_{1} \implies x \in S_{2} \mright)
+    \end{equation}
+    Letting \( x_{0} \in S_{2} \) be arbitrary, we can use the same argument in reverse and prove that,
+    \begin{equation}
+        \label{eq:s2-subset-s1}
+        \forall x \, \mleft( x \in S_{2} \implies x \in S_{1} \mright)
+    \end{equation}
+    Together, \cref{eq:s1-subset-s2,eq:s2-subset-s1} imply the biconditional,
+    \begin{equation}
+        \label{eq:s1-equals-s2}
+        \forall x \, \mleft( x \in S_{1} \iff x \in S_{2} \mright)
+    \end{equation}
+    \begin{equation*}
+        \therefore \, \forall x \, \big[\, \varphi_{1}(x) \iff \varphi_{2}(x) \,\big]
+        \implies \setbuilder{x \in A}{\varphi_{1}(x)} = \setbuilder{x \in A}{\varphi_{2}(x)} \qedhere
+    \end{equation*}
+\end{proof}
+
+\vspace{0.5cm}
+\begin{rem}
+    Note that the converse of \cref{thm:equal-predicate-specification}
+    is \keyword{not} true, as can be shown by the following counterexample.
+    Consider the predicates,
+    \begin{gather}
+        \varphi_{1}(x) \coloneq 
+        \Big[\, \big( \Gamma(x) \land x \in A \big)
+        \lor x \in B \,\Big] \label{eq:phi1-definition} \\ 
+        \varphi_{2}(x) \coloneq 
+        \Big[\, \big( \Gamma(x) \land x \in A \big)
+        \lor x \in C \,\Big] \label{eq:phi2-definition}
+    \end{gather}
+    where \( \Gamma \) is another predicate and \( B \) and \( C \) are distinct, 
+    non-empty sets that have no element in common with \( A \). In other words,
+    \begin{gather}
+        B \neq C \label{eq:B-C-Not-Equal} \\
+        \forall x \, \mleft( x \in A \implies x \notin B \mright) \label{eq:A-B-no-common-elements} \\
+        \forall x \, \mleft( x \in A \implies x \notin C \mright) \label{eq:A-C-no-common-elements}
+    \end{gather}
+    Let \( x_{0} \) be any element of \setbuilder{z \in A}{\varphi_{1}(z)}. 
+    Thus, we can make the following chain of inferences:
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in \setbuilder{z \in A}{\varphi_{1}(z)}& \\
+            x_{0} \in A \land \varphi_{1}(x_{0})& \\
+            x_{0} \in A& \\
+            x_{0} \notin B& \\
+            \varphi_{1}(x_{0})& \\
+            \big[\, \Gamma(x_{0}) \land x_{0} \in A \,\big] \lor x_{0} \in B& \\
+            \Gamma(x_{0}) \land x_{0} \in A& \\
+            \therefore \, \Gamma(x_{0})&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{by \cref{dfn:set-builder-notation}}\\ 
+            &\quad\text{Conjuction Elimination}\\
+            &\quad\text{by \eqref{eq:A-B-no-common-elements}}\\
+            &\quad\text{Conjuction Elimination}\\
+            &\quad\text{by \eqref{eq:phi1-definition}}\\ 
+            &\quad\text{Disjunctive Syllogism}\\
+            &\quad\text{Conjunction Elimination}
+        \end{aligned}
+    \end{equation*}
+    Since \( \Gamma(x_{0}) \) holds and \( x_{0} \in A \) by assumption, it follows from
+    \eqref{eq:phi2-definition} that \( \varphi_{2}(x_{0}) \) also holds. Thus, \( x_{0} \in 
+    \setbuilder{z \in A}{\varphi_{2}(z)} \). Since \( x_{0} \) is arbitrary, we infer,
+    \begin{equation*}
+        \forall x \, \Big[ x \in \setbuilder{z \in A}{\varphi_{1}(z)} 
+        \implies x \in \setbuilder{z \in A}{\varphi_{2}(z)} \Big]
+    \end{equation*}
+    The exact same argument can be done in reverse to prove the converse, thereby
+    establishing the biconditional,
+    \begin{equation*}
+        \forall x \, \Big[ x \in \setbuilder{z \in A}{\varphi_{1}(z)}
+        \iff x \in \setbuilder{z \in A}{\varphi_{2}(z)} \Big]
+    \end{equation*}
+    Thus, the definitions of \( \varphi_{1} \) and \( \varphi_{2} \) given by
+    \eqref{eq:phi1-definition} and \eqref{eq:phi2-definition} does indeed imply 
+    \( \{ x \in A \mid \varphi_{1}(x) \} = \{ x \in A \mid \varphi_{2}(x) \} \).
+    Now let \( b \) be an arbitrary object such that \( b \in B \land b \notin C \). 
+    Note that the existence of \( b \) is guaranteed because \( B \) and \( C \) are
+    non-empty and \( B \neq C \) by \eqref{eq:B-C-Not-Equal}. We now invoke another
+    chain of inferences:
+    \begin{equation*}
+        \begin{aligned}
+            b \in B \land b \notin C& \\
+            \varphi_{1}(b)& \\
+            b \in A \implies b \notin B& \\
+            b \notin A& \\
+            \lnot \, \Gamma(b) \lor b \notin A& \\ 
+            \lnot \, ( \Gamma(b) \land b \in A )& \\ 
+            \lnot \, ( \Gamma(b) \land b \in A ) \land b \notin C& \\
+            \lnot \, ( ( \Gamma(b) \land b \in A ) \lor b \in C )& \\ 
+            \lnot \, \varphi_{2}(b)& \\ 
+            \varphi_{1}(b) \land \lnot \, \varphi_{2}(b)& \\
+            \lnot \, ( \varphi_{1}(b) \implies \varphi_{2}(b) )& \\
+            \lnot \, ( \varphi_{1}(b) \implies \varphi_{2}(b) )
+            \lor \lnot \, ( \varphi_{2}(b) \implies \varphi_{1}(b) )& \\ 
+            \lnot \, ( \varphi_{1}(b) \implies \varphi_{2}(b) 
+            \land \varphi_{2}(b) \implies \varphi_{1}(b) )& \\
+            \lnot \, ( \varphi_{1}(b) \iff \varphi_{2}(b) )& \\ 
+            \exists \, x [ \lnot \, ( \varphi_{1}(x) \iff \varphi_{2}(x) ) ]& \\ 
+            \therefore \, \lnot \, \forall x \, ( \varphi_{1}(x) \iff \varphi_{2}(x) )&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption} \\ 
+            &\quad\text{by \eqref{eq:phi1-definition}} \\
+            &\quad\text{by \eqref{eq:A-B-no-common-elements} and Universal Instantiation} \\ 
+            &\quad\text{Modus Tollens} \\
+            &\quad\text{Disjunction Introduction} \\
+            &\quad\text{De Morgan's Law} \\
+            &\quad\text{Conjunction Introduction} \\
+            &\quad\text{De Morgan's Law} \\
+            &\quad\text{by \eqref{eq:phi2-definition}} \\
+            &\quad\text{Conjunction Introduction} \\
+            &\quad\text{Definition of Conditional} \\
+            &\quad\text{Disjunction Introduction} \\
+            &\quad\text{De Morgan's Law} \\
+            &\quad\text{Definition of Biconditionals} \\
+            &\quad\text{Existential Generalization} \\
+            &\quad\text{Logical Equivalence}
+        \end{aligned}
+    \end{equation*}
+    Thus, we have arrived at a counterexample for the converse of \cref{thm:equal-predicate-specification}.
+    For the predicates \( \varphi_{1} \) and \( \varphi_{2} \) as defined in \eqref{eq:phi1-definition} and 
+    \eqref{eq:phi2-definition}, \setbuilder{x \in A}{\varphi_{1}(x)} = \setbuilder{x \in A}{\varphi_{2}(x)} 
+    does \keyword{not} imply \( \forall x \, \big( \varphi_{1}(x) \iff \varphi_{2}(x) \big) \).
+\end{rem}
+
+\begin{thm}
+    \label{thm:empty-specification}
+    For any given predicate \( \varphi \), \( \setbuilder{x \in \emptyset}{\varphi(x)} = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be any predicate. Since \( \emptyset \) is an existing
+    set (the \nameref{axm:axiom-of-existence}), it follows from the 
+    \nameref{axm:axiom-schema-of-specification} that \setbuilder{x \in \emptyset}{\varphi(x)} 
+    exists. Let \( S = \setbuilder{x \in \emptyset}{\varphi(x)} \). 
+    By \cref{dfn:set-builder-notation},
+    \begin{equation}
+        \label{eq:definition-of-S}
+        \forall x \, \mleft( x \in S \iff x \in \emptyset \land \varphi(x) \mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object. By \cref{dfn:set-builder-notation}, \( x_{0} \notin \emptyset \).
+    Thus, \( \lnot \, \mleft(x_{0} \in \emptyset \land \varphi(x_{0})\mright) \) and \( x_{0} \notin S \) by \eqref{eq:definition-of-S}.
+    Since \( x_{0} \) is arbitrary, we conclude from Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \notin S \mright)
+    \end{equation*}
+    By \cref{dfn:empty-set}, 
+    \begin{equation*}
+        S = \setbuilder{x \in \emptyset}{\varphi(x)} = \emptyset \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:uniqueness-unordered-pair}
+    For any two objects \( A \) and \( B \), there is only one set whose elements are exactly \( A \) and \( B \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be any two objects. Let \( S \) and \( S^{\prime} \) be sets whose elements are exactly
+    \( A \) and \( B \). In other words,
+    \begin{gather*}
+        \forall x \, \mleft( x \in S \iff x = A \lor x = B \mright) \\ 
+        \forall x \, \mleft( x \in S^{\prime} \iff x = A \lor x = B \mright)
+    \end{gather*}
+    By elementary logic,
+    \begin{equation*}
+        \forall x \, ( x \in S \iff x \in S^{\prime} )
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality},
+    \begin{equation*}
+        S = S^{\prime} \qedhere
+    \end{equation*}
+\end{proof}
+
+\vspace{0.3cm}
+\noindent \cref{thm:uniqueness-unordered-pair} yields the following definition.
+\begin{dfn}[Unordered-Pair]
+    \label{dfn:unordered-pair}
+    Given any two objects \( A \) and \( B \), the unique set whose elements are exactly
+    \( A \) and \( B \) is denoted by \( \mleft\{ A, B \mright\} \). 
+    \begin{equation*}
+        \forall A,B \, \forall x \, \Big( x \in \mleft\{ A, B \mright\} \iff x = A \lor x = B \Big)
+    \end{equation*}
+    The set \( \mleft\{ A, B \mright\} \) is called an \keyword{unordered-pair}. If \( A = B \),
+    then the notation can be simplied to \( \mleft\{ A, A \mright\} = \mleft\{ A \mright\} \).
+    The set \( \mleft\{ A \mright\} \) is known as a \keyword{singleton}\footnote{A set with only a single element}
+    (or a \keyword{unit set}).
+    %% WIP
+\end{dfn}
+
+\begin{thm}
+    \label{thm:uniqueness-power-set}
+    For any set \( A \), there is only one set \( P \) such that,
+    \begin{equation*}
+        \forall x \mleft( x \in P
+        \iff \forall y \mleft( y \in x \implies y \in A \mright) \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( P \) and \( P^{\prime} \) be two sets
+    such that,
+    \begin{gather}
+        \forall x \, ( x \in P \iff \forall y \, ( y \in x \implies y \in A ) ) \label{eq:p-biconditional} \\ 
+        \forall x \, ( x \in P^{\prime} \iff \forall y \, ( y \in x \implies y \in A ) ) \label{eq:p-prime-biconditional}
+    \end{gather}
+    By elementary logic, \eqref{eq:p-biconditional} and \eqref{eq:p-prime-biconditional} implies,
+    \begin{gather*}
+        \forall x \, ( x \in P \iff x \in P^{\prime} ) \\ 
+        \therefore \, P = P^{\prime} \qedhere
+    \end{gather*}
+\end{proof}
+
+\vspace{0.3cm}
+\noindent\cref{thm:uniqueness-power-set} justifies the following definition of power sets.
+
+\begin{dfn}[Power Set]
+    \label{dfn:power-set}
+    For any set \( A \), the \keyword{power set} of \( A \) is given by,
+    \begin{equation*}
+        \powerset{A} = \setbuilder{S}{\forall x \, \mleft( x \in S \implies x \in A \mright)}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:power-set-is-always-non-empty}
+    For any set \( A \), \( \powerset{A} \neq \emptyset \).
+    \begin{equation*}
+        \forall A \, ( \powerset{A} \neq \emptyset )
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. By \cref{thm:every-set-is-subset-of-itself}, it follows that
+    \( A \subseteq A \). Thus,
+    \begin{equation*}
+        \begin{aligned}
+            A \in \powerset{A}& \\
+            \exists x ( x \in \powerset{A} )& \\
+            \lnot \, \forall x \, ( x \notin \powerset{A} )&\\ 
+            \powerset{A} \neq \emptyset&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{\cref{dfn:power-set}}\\
+            &\quad\text{Existential Generalization}\\
+            &\quad\text{Logical Equivalence}\\
+            &\quad\text{\cref{dfn:empty-set}}\\
+        \end{aligned}
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:empty-set-belongs-to-the-powerset-of-any-set}
+    For any set \( A \), \( \emptyset \in \powerset{A} \).
+    \begin{equation*}
+        \forall A \, \mleft( \emptyset \in \powerset{A} \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. By \cref{dfn:power-set}, 
+    \begin{equation}
+        \label{eq:apply-definition-of-power-set}
+        \forall x \, \mleft( x \in \powerset{A} \iff 
+        \forall y \, \mleft( y \in x \implies y \in A \mright) \mright)
+    \end{equation}
+    But \( \forall x \, \mleft( x \notin \emptyset \mright) \) by 
+    \cref{dfn:empty-set}. Thus, \( y_{0} \in \emptyset \implies y_{0} \in A \)
+    is vacuously true for any arbitrary \( y_{0} \).
+    By Universal Generalization,
+    \begin{equation*}
+        \forall y \, \mleft( y \in \emptyset \implies y \in A \mright)
+    \end{equation*}
+    By \eqref{eq:apply-definition-of-power-set} and Universal Instantiation,
+    \begin{equation*}
+        \emptyset \in \powerset{A}
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+
+\begin{thm}
+    \label{thm:every-set-is-an-element-of-its-powerset}
+    For any set \( A \), \( A \in \powerset{A} \)
+    \begin{equation*}
+        \forall A \, \mleft( A \in \powerset{A} \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    See \cref{thm:power-set-is-always-non-empty}.
+\end{proof}
+
+
+\begin{thm}[Russell's Paradox]
+    \label{thm:russell-paradox}
+    The set \setbuilder{x}{x \notin x} does not exist.
+\end{thm}
+
+\begin{proof}
+    Suppose that \( R = \setbuilder{x}{x \notin x} \) exists. Thus,
+    by \cref{dfn:set-builder-notation},
+    \begin{equation}
+        \label{eq:property-of-russell-set}
+        \forall x \, \mleft( x \in R \iff x \notin x \mright)
+    \end{equation}
+    But \eqref{eq:property-of-russell-set} implies that 
+    \( R \in R \iff R \notin R \), which is a logical
+    impossiblity. The supposition that \setbuilder{x}{x \notin x} 
+    exists must therefore be false.
+\end{proof}
+
+
+\begin{thm}
+    \label{thm:the-set-of-all-sets-does-not-exist}
+    The set of all sets does not exist.
+    \begin{equation*}
+        \forall A \, \exists x \, \mleft( x \notin A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Suppose that the set of all sets exists. That is,
+    \begin{equation}
+        \label{eq:set-of-all-sets-property}
+        \forall x \, \mleft( x \in A \mright)
+    \end{equation}
+    for some set \( A \). Let the predicate \( \varphi \)
+    be defined as:
+    \begin{equation}
+        \label{eq:predicate-for-russell-set}
+        \varphi(x) \coloneq x \notin x
+    \end{equation}
+    By the \nameref{axm:axiom-schema-of-specification}, the set 
+    \( S = \setbuilder{x \in A}{\varphi(x)} = \setbuilder{x \in A}{x \notin x} \)
+    exists.
+    And by \cref{dfn:set-builder-notation},
+    \begin{equation}
+        \label{eq:S-in-predicate-form}
+        \forall x \, \mleft( x \in S \iff x \in A \land x \notin x \mright)
+    \end{equation}
+    From elementary logic\footnote{The Law of Excluded Middle}, we know that,
+    \begin{equation}
+        \label{eq:tautology-rule-S-in-S-or-S-notin-S}
+        S \in S \lor S \notin S
+    \end{equation}
+    If \( S \notin S \), then \( \varphi(S) \) must hold by 
+    \eqref{eq:predicate-for-russell-set}. And by \eqref{eq:set-of-all-sets-property},
+    it follows that \( S \in A \). Thus, \( S \,{\in}\, A \,\,{\land}\,\, \varphi(S) \), so
+    \( S \,{\in}\, S \) by \eqref{eq:S-in-predicate-form}. We thus have \( S \,{\notin}\, S \,{\implies}\,
+    S \,{\in}\, S \), a logical impossibility. By Reduction ad Absurdum, we conclude that
+    \( S \notin S \) cannot possibly be true. Thus, by Disjunctive Syllogism, we conclude that,
+    \begin{equation*}
+        S \in S
+    \end{equation*}
+    But if \( S \in S \), then \( S \notin S \) by \eqref{eq:S-in-predicate-form}, yet another
+    contradiction. In other words, if the set of all sets exists, then \eqref{eq:tautology-rule-S-in-S-or-S-notin-S} 
+    had to be false, which is impossible by the Law of Excluded Middle. 
+    Thus, the set of all sets does not exist.
+\end{proof}
+
+\section{Elementary Set Relations and Operations}
+The basic properties established in \cref{sec:basic-properties-of-sets} can be used 
+to rigorously define the familiar set relations and operations.
+The process involved in these definitions is straightforward. We first choose a
+predicate, and then prove (using the properties established in
+\cref{sec:basic-properties-of-sets}) that it determines a unique set. Finally, we use
+the predicate to define the set operation.
+
+\subsection{Subset Relation}
+\begin{dfn}[Subset]
+    \label{dfn:subset}
+    For any given set \( A \), a set \( B \) is a \keyword{subset} of \( A \) \annotation{(denoted as \( B \subseteq A \))}
+    if and only if every element of \( B \) is also an element of \( A \).
+    \begin{equation*}
+        \forall A,B \, \big( B \subseteq A \iff \forall x \, \mleft( x \in B \implies x \in A \mright) \big)
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}
+    \label{dfn:proper-subset}
+    Given any set \( A \), a set \( B \) is a \keyword{proper subset} of A
+    \annotation{(denoted as \( B \subset A \))} if and only if \( B \subseteq A \land B \neq A \).
+    \begin{equation*}
+        \forall A,B \, \mleft( B \subset A \iff B \subseteq A \land B \neq A \mright)
+    \end{equation*}
+\end{dfn}
+
+\subsection{Union}
+\begin{thm}
+    \label{thm:uniqueness-union}
+    Given any set \( A \), the set \( U \)such that \( \forall x \, \big( x \in U \iff \exists S \, {\in} \, A \, \mleft( x \in S \mright) \big) \)
+    is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary system of sets. The \nameref{axm:axiom-of-union} postulates the existence of a set \( U \) such that,
+    \begin{equation}
+        \label{eq:U-defining-statement}
+        \forall x \, \big( x \in U \iff \exists S \, {\in} \, A \, \mleft( x \in S \mright) \big)
+    \end{equation}
+    Suppose that there exists another set \( U^{\prime} \) such that,
+    \begin{equation}
+        \label{eq:U-prime-defining-statement}
+        \forall x \, \big( x \in U^{\prime} \iff \exists S \,{\in}\, A \, \mleft( x \in S \mright) \big)
+    \end{equation}
+    By elementary logic, \eqref{eq:U-defining-statement} and \eqref{eq:U-prime-defining-statement} implies
+    \( \forall x \, \mleft( x \in U \iff x \in U^{\prime} \mright) \).
+    \begin{equation*}
+        \therefore U = U^{\prime} \qedhere
+    \end{equation*}
+\end{proof}
+
+
+\vspace{0.3cm}
+\noindent \cref{thm:uniqueness-union} gives rise to the following definition.
+\begin{dfn}[Union]
+    \label{dfn:union-of-sets}
+    For any system of sets \( S \), the union of \( S \) is the unique set given by,
+    \begin{equation*}
+        \Union S = \setbuilder{x}{\exists \, T \, \mleft( T \in S \land x \in T \,\mright)}
+    \end{equation*}
+    In particular, if \( S = \mleft\{ A, B \mright\} \), then \( \Union S \) can be denoted as \( A \union B \).
+\end{dfn}
+
+
+\begin{thm}
+    \label{thm:union-in-terms-of-logical-or}
+    Let \( A \) and \( B \) be arbitrary sets. Then \( A \union B = \setbuilder{x}{x \in A \lor x \in B} \). In other words,
+    \begin{equation*}
+        \forall A,B \, \forall x \, \mleft( x \in A \union B \iff x \in A \lor x \in B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. From \cref{dfn:union-of-sets},
+    \begin{equation*}
+        A \union B = \Union \mleft\{ A, B \mright\} = \setbuilderbig{x}{\exists \, T \, \mleft(\, T \in \mleft\{ A, B \mright\} \land x \in T \,\mright) }
+    \end{equation*}
+    By \cref{dfn:unordered-pair}, 
+    \begin{equation*}
+        T \in \mleft\{ A, B \mright\} \iff \mleft( T = A \mright) \lor \mleft( T = B \mright)
+    \end{equation*}
+    By elementary logic,
+    \begin{align}
+        \label{eq:distributive-law-of-logical-and-over-or}
+        T \in \mleft\{ A,B \mright\} \land x \in T 
+        &\iff
+        \big( T = A \lor T = B \big) \land x \in T \notag \\ 
+        &\iff
+        \big(\, T = A \land x \in T \,\big) \lor \big(\, T = B \land x \in T \,\big)
+    \end{align}
+    By Existential Generalization,
+    \begin{align}
+        \label{eq:equivalent-predicate-for-union-of-pair}
+        \exists \, T \, \big( T \in \{ A,B \} \land x \in T \big)
+        &\iff 
+        \exists \, T \, \big( T = A \land x \in T \big) \lor
+        \exists \, T \, \big( T = B \land x \in T \big) \notag \\
+        &\iff x \in A \lor x \in B
+    \end{align}
+    \eqref{eq:equivalent-predicate-for-union-of-pair} follows readily from the obvious fact that
+    \( \exists \, T \, \mleft( T = A \land x \in T \mright) \iff x \in A \) and
+    \( \exists \, T \, \mleft( T = B \land x \in T \mright) \iff x \in B \).
+    \begin{equation*}
+        \therefore \, \forall x \, \Big[\, \exists \, T \, \big( T \in \{ A,B \} \land x \in T \big)
+        \iff x \in A \lor x \in B \,\Big]
+    \end{equation*}
+    Treating each side of the biconditional as a predicate, \cref{thm:equal-predicate-specification}
+    yields,
+    \begin{equation*}
+        A \union B = \setbuilder{x}{\exists \, T \, \big( T \in \left\{ A, B \right\} \land x \in T \big)}
+                 = \setbuilder{x}{x \in A \lor x \in B} \qedhere
+    \end{equation*}
+\end{proof}
+
+\subsection{Intersection}
+\begin{thm}
+    \label{thm:existence-and-uniqueness-of-intersection}
+    For any non-empty system of sets \( A \), there exists a unique set S such that
+    \( \forall x \, \mleft( x \in S \iff 
+    \forall z \, \mleft( z \in A \implies x \in z \mright) \mright) \).
+    \begin{equation*}
+        \forall A \, \mleft( A \neq \emptyset \implies 
+        \exists! S \, \forall x \, \mleft( x \in S 
+        \iff \forall z \, \mleft( z \in A \implies x \in z \mright) \mright) \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary, non-empty system of sets.
+    \begin{equation}
+        \label{eq:A-has-at-least-one-elem}
+        \therefore \, \exists x \, \mleft( x \in A \mright)
+    \end{equation}
+    Let \( \varphi \) be the predicate defined as,
+    \begin{equation}
+        \label{eq:intersection-predicate-definition}
+        \varphi(x) \coloneq \forall z \, \mleft( z \in A \implies x \in z \mright)
+    \end{equation}
+    We now prove that \( \forall x \, \mleft( \varphi(x) \implies x \in \Union A \mright) \)
+    via the following chain of inferences:
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(t)&\\
+            \forall z \, \mleft( z \in A \implies t \in z \mright)&\\
+            \alpha \in A& \\
+            \alpha \in A \implies t \in \alpha & \\
+            t \in \alpha& \\
+            \alpha \in A \land t \in \alpha& \\
+            \exists S \, \mleft( S \in A \land t \in S \mright)& \\
+            t \in \union A& \\
+            \varphi(t) \implies t \in \union A& \\
+            \therefore \, \forall x \, \mleft( \varphi(x) \implies x \in \union A \mright)& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption} \\
+            &\quad\text{by \eqref{eq:intersection-predicate-definition}} \\
+            &\quad\text{Existential Instantiation, \eqref{eq:A-has-at-least-one-elem}} \\
+            &\quad\text{Universal Instantiation} \\
+            &\quad\text{Modus Ponens} \\
+            &\quad\text{Conjunction Introduction} \\
+            &\quad\text{Existential Generalization} \\
+            &\quad\text{\cref{dfn:union-of-sets}} \\
+            &\quad\text{Deduction Theorem} \\
+            &\quad\text{Universal Generalization} \\
+        \end{aligned}
+    \end{equation*}
+    \cref{thm:sufficient-condition-for-unrestricted-comprehension} guarantees the existence
+    of the unique set \( S = \setbuilder{x}{\forall z \, \mleft( z \in A \implies x \in z \mright)} \).
+    By the Deduction Theorem,
+    \begin{equation*}
+        A \neq \emptyset \implies \exists! S \, \forall x \, \mleft( x \in S \iff 
+        \forall z \, \mleft( z \in A \implies x \in z \mright)\mright)
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{dfn}[Intersection]
+    \label{dfn:intersection-of-sets}
+    For any non-empty system of sets \( S \), the unique set \( \Intersect S = 
+    \setbuilder{x}{\forall z \, \mleft( z \in S \implies x \in z \mright)}\) is called
+    the \keyword{intersection} of \( S \). If \( S = \mleft\{A, B\mright\} \), we can denote
+    \( \Intersect S \) as \( A \intersect B \).
+\end{dfn}
+
+\begin{thm}
+    \label{thm:intersection-in-terms-of-logical-and}
+    For any two sets \( A \) and \( B \), \( A \intersect B = \setbuilder{x}{x \in A \land x \in B} \).
+    \begin{equation*}
+        \forall A,B \, \forall x \, \mleft( x \in A \intersect B \iff x \in A \land x \in B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. By \cref{dfn:intersection-of-sets},
+    \begin{equation}
+        \label{eq:express-A-intersect-B-using-setbuilder-notation}
+        A \intersect B = \Intersect \mleft\{ A, B \mright\} = 
+        \setbuilder{x}{\varphi(x)}
+    \end{equation}
+    where,
+    \begin{equation}
+        \label{eq:introduce-the-predicate-symbol}
+        \varphi(x) \coloneq \forall z \, \mleft( z \in 
+    \mleft\{ A,B \mright\} \implies x \in z \mright)
+    \end{equation}
+    By \cref{dfn:unordered-pair},
+    \begin{equation}
+        \label{eq:use-the-definition-of-unordered-pair}
+        \forall z \, \mleft( z \in \mleft\{ A,B \mright\} \iff 
+        z = A \lor z = B \mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitary object. Using elementary logic, we reason as follows:
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(x_{0})& \\
+            \forall z \, \mleft( z \in \mleft\{ A,B \mright\} \implies x_{0} \in z \mright)& \\
+            A \in \mleft\{ A,B \mright\} \implies x_{0} \in A& \\
+            B \in \mleft\{ A,B \mright\} \implies x_{0} \in B& \\
+            A \in \mleft\{ A,B \mright\} \land B \in \mleft\{ A,B \mright\}& \\
+            x_{0} \in A \land x_{0} \in B& \\
+            \therefore \, \varphi(x_{0}) \implies \mleft( x_{0} \in A \land x_{0} \in B \mright)& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{by \eqref{eq:introduce-the-predicate-symbol}}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{by \eqref{eq:use-the-definition-of-unordered-pair}}\\
+            &\quad\text{Modus Ponens}\\
+            &\quad\text{Deduction Theorem}\\
+        \end{aligned}
+    \end{equation*}
+    Similarly, we can prove the converse via the following chain of reasoning:
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in A \land x_{0} \in B& \\
+            z_{0} \in \left\{ A,B \right\}& \\
+            z_{0} = A \lor z_{0} = B& \\
+            z_{0} = A& \\
+            x_{0} \in z_{0}& \\
+            z_{0} = A \implies x_{0} \in z_{0}& \\
+            z_{0} = B& \\
+            x_{0} \in z_{0}& \\
+            z_{0} = B \implies x_{0} \in z_{0}& \\
+            x_{0} \in z_{0}& \\
+            z_{0} \in \mleft\{ A,B \mright\} \implies x_{0} \in z_{0}& \\
+            \forall z \, \mleft( z \in \mleft\{ A,B \mright\} \implies x_{0} \in z \mright)& \\
+            \varphi(x_{0})& \\
+            \therefore \, x_{0} \in A \land x_{0} \in B \implies \varphi(x_{0})&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{by \eqref{eq:use-the-definition-of-unordered-pair}}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{\nameref{axm:axiom-of-extensionality}}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{\nameref{axm:axiom-of-extensionality}}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Disjunction Elimination}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}\\
+            &\quad\text{by \eqref{eq:introduce-the-predicate-symbol}}\\
+            &\quad\text{Deduction Theorem}
+        \end{aligned}
+    \end{equation*}
+    Combining the results from both analyses via Biconditional Introduction yields,
+    \begin{equation*}
+        \varphi(x_{0}) \iff x_{0} \in A \land x_{0} \in B
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( \varphi(x) \iff x \in A \land x \in B \mright)
+    \end{equation*}
+    And since, \( \forall x \, \mleft( x \in A \intersect B \iff \varphi(x) \mright) \), we thus have,
+    \begin{equation*}
+        A \intersect B = \setbuilder{x}{\varphi(x)} = \setbuilder{x}{x \in A \land x \in B} \qedhere
+    \end{equation*}
+\end{proof}
+
+
+\begin{dfn}[Disjoint]
+    \label{dfn:disjoint-two-sets}
+    Two sets \( A \) and \( B \) are \keyword{disjoint} if and only if \( A \intersect B = \emptyset \).
+\end{dfn}
+
+
+\begin{dfn}[Pairwise Disjoint]
+    \label{dfn:pairwise-disjoint-sets}
+    A non-empty system of sets \( S \) is \keyword{pairwise disjoint\,\footnote{Some mathematicians use the
+    term disjoint as synonymous to pairwise disjoint, but we will avoid that to prevent any ambiguity.
+    Instead, we use \keyword{pairwise disjoint} when we're talking about a system of sets and reserve 
+    the term \keyword{disjoint} for two sets.}} if and only if the intersection of any pair of distinct
+    sets from \( S \) is empty. In other words, \( S \) is pairwise disjoint if and only if,
+    \begin{equation*}
+        \forall A \,{\in}\, S, B \,{\in}\, S \, \mleft( A \neq B \implies A \intersect B = \emptyset \mright)
+    \end{equation*}
+\end{dfn}
+
+\subsection{Complementation}
+\begin{thm}
+    \label{thm:existence-and-uniqueness-of-difference}
+    For any two sets \( A \) and \( B \), there exists a unique set \( S \) such that
+    \( \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) \).
+    \begin{equation*}
+        \forall A,B \, \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets. Consider the predicate,
+    \begin{equation}
+        \label{eq:introduce-the-predicate-for-diff}
+        \varphi(x) \coloneq x \in A \land x \notin B
+    \end{equation}
+    Clearly, \eqref{eq:introduce-the-predicate-for-diff} implies,
+    \begin{equation*}
+        \forall x \, \mleft( \varphi(x) \implies x \in A \mright)
+    \end{equation*}
+    Thus, \cref{thm:sufficient-condition-for-unrestricted-comprehension} guarantess the existence of a unique set
+    \( S \) such that,
+    \begin{gather*}
+        \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) \\
+        \therefore \, \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) 
+    \end{gather*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+
+\begin{dfn}[Relative Complement]
+    \label{dfn:difference}
+    For any two sets \( A \) and \( B \), the \keyword{complement\,\footnote{Also known as 
+    the \keyword{set difference}}} of \( B \) relative to \( A \) is the set given by,
+    \begin{equation*}
+        A - B = \setbuilder{x}{x \in A \land x \notin B}
+    \end{equation*}
+    In other words,
+    \begin{equation*}
+        \forall A,B \, \mleft( x \in \mleft( A - B \mright) \iff x \in A \land x \notin B \mright)
+    \end{equation*}
+\end{dfn}
+
+
+\begin{thm}
+    \label{thm:existence-and-uniqueness-of-symmetric-difference}
+    For any two sets \( A \) and \( B \), there exists a unique set \( S \) such that
+    \( \forall x \, \mleft( x \in S \iff \mleft( x \in A \lor x \in B
+    \mright) \land \lnot \, \mleft( x \in A \land x \in B \mright) \mright) \).
+    \begin{equation*}
+        \forall A,B \, \exists! S \, \forall x \, \big( x \in S \iff 
+        \mleft( x \in A \lor  x \in B \mright) \land 
+        \lnot \, \mleft( x \in A \land x \in B \mright) \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. Consider the predicate,
+    \begin{equation}
+        \label{eq:introduce-predicate-for-symmetric-difference}
+        \varphi(x) \coloneq \mleft( x \in A \lor x \in B \mright)
+        \land 
+        \lnot \, \mleft( x \in A \land x \in B \mright)
+    \end{equation}
+    The following chain of inferences should complete the proof:
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(x_{0})& \\
+            x_{0} \in A \lor x_{0} \in B& \\
+            x_{0} \in A \union B& \\
+            \varphi(x_{0}) \implies x_{0} \in A \union B& \\
+            \therefore \, \forall x \, \mleft( \varphi(x_{0}) \implies 
+            x_{0} \in A \union B \mright)&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{\eqref{eq:introduce-predicate-for-symmetric-difference}, 
+            Conjunction Elimination}\\
+            &\quad\text{\cref{thm:union-in-terms-of-logical-or}}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}
+        \end{aligned}
+    \end{equation*}
+    Thus, by \cref{thm:sufficient-condition-for-unrestricted-comprehension},
+    the set \setbuilder{x}{\varphi(x)} exists and is unique.
+\end{proof}
+
+
+\begin{dfn}[Symmetric Difference]
+    \label{dfn:symmetric-difference}
+    For any two sets \( A \) and \( B \), the \keyword{symmetric difference}
+    of \( A \) and \( B \) is the unique set given by,
+    \begin{align*}
+        A \symdiff B &= \setbuilder{x}{ \mleft( x \in A \lor x \in B \mright) \land 
+        \lnot \, \mleft( x \in A \land x \in B \mright) } \\
+        &=
+        \setbuilder{x}{\mleft( x \in A \land x \notin B \mright) \lor \mleft( x \notin A \land x \in B \mright)}
+    \end{align*}
+\end{dfn}
+
+\section{Set Identities and Laws}
+In this section, we present the laws and identities that the basic set-theoretic operations
+obey. These identities serves as a means to simplifying and evaluating set-theoretic expressions 
+and are applicable to many other areas of mathematics where sets of complex mathematical objects 
+are being studied.
+
+\subsection{Subset Relation}
+\begin{thm}
+    \label{thm:empty-set-universal-subset}
+    For any set \( A \), \( \emptyset \subseteq A \).
+    \begin{equation*}
+        \forall A \, ( \emptyset \subseteq A )
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x \in A \) be arbitrary. By \cref{dfn:empty-set},
+    it follows that \( x \notin \emptyset \). Thus, the \( x \in \emptyset \implies x \in A \)
+    is vacuously true. By Universal Generalization,
+    \begin{equation*}
+        \forall x \, \mleft( x \in \emptyset \implies x \in A \mright)
+    \end{equation*}
+    By \cref{dfn:subset},
+    \begin{equation*}
+        \emptyset \subseteq A
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Unviersal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:every-set-is-subset-of-itself}
+    For any set \( A \), \( A \subseteq A \).
+    \begin{equation*}
+        \forall A \, \mleft( A \subseteq A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x \) be an arbitrary object.
+    Using elementary propositional logic, we can make the following inferences:
+    \begin{equation*}
+        \begin{aligned}
+            x \notin A \lor x \in A& \\
+            \mleft( x \in A \mright) \implies \mleft( x \in A \mright)& \\
+            \forall x \, \mleft( x \in A \implies x \in A \mright)&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Law of Excluded Middle}\\
+            &\quad\text{Logical Equivalence}\\
+            &\quad\text{Universal Generalization}
+        \end{aligned}
+    \end{equation*}
+    \( A \subseteq A \) folllows readily from \cref{dfn:subset}.
+\end{proof}
+
+\begin{thm}[Set Equality]
+    \label{thm:set-equality-in-terms-of-subsets}
+    Two sets are equal if and only if they are subsets of each other. 
+    \begin{equation*}
+        \forall A,B \, \mleft( A = B \iff A \subseteq B \land B \subseteq A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets. Suppose that \( A = B \).
+    Then by the \nameref{axm:axiom-of-extensionality},
+    \begin{gather}
+        \forall x \, \mleft( x \in A \iff x \in B \mright) \label{eq:A-B-equality-biconditional} \\ 
+        \therefore \, \forall x \, \mleft( x \in A \implies x \in B \mright) 
+        \land 
+        \forall x \, \mleft( x \in B \implies x \in A \mright) \label{eq:A-B-equality-biconditional-conjunction}
+    \end{gather}
+    By \cref{dfn:subset},
+    \begin{gather}
+        A \subseteq B \iff \forall x \, \mleft( x \in A \implies x \in B \mright) \label{eq:A-B-equality-rightward-implication} \\ 
+        B \subseteq A \iff \forall x \, \mleft( x \in B \implies x \in A \mright) \label{eq:A-B-equality-leftward-implication}
+    \end{gather}
+    Applying elementary propositional logic to \eqref{eq:A-B-equality-biconditional-conjunction},
+    \eqref{eq:A-B-equality-rightward-implication} and \eqref{eq:A-B-equality-leftward-implication} yields,
+    \begin{gather}
+        A \subseteq B \land B \subseteq A \notag \\ 
+        \therefore \, A = B \implies \mleft( A \subseteq B \land B \subseteq A \mright) \label{eq:subset-equality-direct}
+    \end{gather}
+    To prove the converse, suppose that \( A \subseteq B \land B \subseteq A \). Again,
+    by \cref{dfn:subset}, we once again arrive at \eqref{eq:A-B-equality-biconditional}; so \( A = B \).
+    \begin{equation}
+        \label{eq:subset-equality-converse}
+        \therefore \, A \subseteq B \land B \subseteq A \implies A = B
+    \end{equation}
+    Together, \eqref{eq:subset-equality-direct} and \eqref{eq:subset-equality-converse} yields the biconditional,
+    \begin{equation*}
+        A = B \iff A \subseteq B \land B \subseteq A
+    \end{equation*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:power-set-of-A-can-never-be-subset-of-A}
+    For any set \( A \), \( \powerset{A} \nsubseteq A \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Consider once again the predicate
+    defined in \eqref{eq:predicate-for-russell-set} and the set,
+    \begin{equation}
+        \label{eq:define-S-using-russell-predicate}
+        S = \setbuilder{x \in A}{x \notin x}
+    \end{equation}
+    The following chain of inferences completes the proof:
+    \begin{equation*}
+        \begin{aligned}
+            S \subseteq A& \\
+            S \in \powerset{A}& \\
+            S \in S& \\
+            S \notin S \land S \in A& \\
+            S \notin S& \\
+            \lnot \, \mleft(S \in A \land S \notin S\mright)& \\
+            S \notin A \lor S \in S& \\
+            S \notin A& \\
+            S \in \powerset{A} \land S \notin A& \\
+            \lnot \, \mleft( S \in \powerset{A} \implies S \in A \mright)& \\
+            \exists x \, \lnot \, \mleft( x \in \powerset{A} \implies x \in A \mright)& \\
+            \lnot \, \forall x \, \mleft( x \in \powerset{A} \implies x \in A \mright)&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{by \eqref{eq:define-S-using-russell-predicate}} \\
+            &\quad\text{\cref{dfn:power-set}} \\
+            &\quad\text{Assumption} \\
+            &\quad\text{by \eqref{eq:define-S-using-russell-predicate}}\\
+            &\quad\text{Reduction ad Absurdum}\\
+            &\quad\text{by \eqref{eq:define-S-using-russell-predicate} and 
+            \cref{dfn:set-builder-notation}}\\
+            &\quad\text{De Morgan's Law}\\
+            &\quad\text{Disjunctive Syllogism}\\
+            &\quad\text{Conjunction Introduction}\\
+            &\quad\text{De Morgan's Law}\\
+            &\quad\text{Existential Generalization}\\
+            &\quad\text{Logical Equivalence}\\
+        \end{aligned}
+    \end{equation*}
+    By \cref{dfn:subset}, the last statement is equivalent to \( \powerset{A} \nsubseteq A \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:power-set-of-A-is-never-equal-to-A}
+    For any set \( A \), \( \powerset{A} \neq A \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. It follows from
+    \cref{thm:power-set-of-A-can-never-be-subset-of-A}
+    that \( \powerset{A} \nsubseteq A \). Thus,
+    \( \powerset{A} \neq A \) by \cref{thm:set-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:A-is-a-subset-of-B-iff-the-power-set-of-A-is-the-subset-of-the-power-set-of-B}
+    For any two sets \( A \) and \( B \), \( A \subseteq B \iff \powerset{A} \subseteq \powerset{B} \).
+    \begin{equation*}
+        \forall A,B \, \Big[ A \subseteq B \iff \powerset{A} \subseteq \powerset{B} \Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. Suppose that \( A \subseteq B \). By \cref{dfn:subset}, it 
+    follows that, 
+    \begin{equation}
+        \label{eq:state-that-A-is-a-subset-of-B-in-logical-form}
+        \forall x \, \mleft( x \in A \implies x \in B \mright)
+    \end{equation}
+    Let \( z_{0} \in \powerset{A} \) be arbitrary. By \cref{dfn:power-set,dfn:subset}, it follows that 
+    \( z_{0} \subseteq A \). Again, by \cref{dfn:subset}, we have,
+    \begin{equation}
+        \label{eq:state-that-z0-is-a-subset-of-A-in-logical-form}
+        \forall x \, \mleft( x \in z_{0} \implies x \in A \mright)
+    \end{equation}
+    Now, let \( \alpha \in z_{0} \) be arbitrary. By \eqref{eq:state-that-z0-is-a-subset-of-A-in-logical-form},
+    it follows that \( \alpha \in A \) and thus \( \alpha \in B \) by \eqref{eq:state-that-A-is-a-subset-of-B-in-logical-form}.
+    \begin{equation*}
+        \therefore \, \alpha \in z_{0} \implies \alpha \in B
+    \end{equation*}
+    Since \( \alpha \) is arbitrary, we have \( \forall x \, \mleft( x \in z_{0} \implies x \in B \mright) \) by Universal Generalization.
+    In other words, \( z_{0} \subseteq B \) and \( z_{0} \in \powerset{B} \).
+    \begin{equation*}
+        \therefore \, z_{0} \in \powerset{A} \implies z_{0} \in \powerset{B}
+    \end{equation*}
+    Since \( z_{0} \) is arbitrary, we can generalize again, 
+    \begin{equation*}
+        \forall x \, \mleft( x \in \powerset{A} \implies x \in \powerset{B} \mright)
+    \end{equation*}
+    By \cref{dfn:subset}, it follows that \( \powerset{A} \subseteq \powerset{B} \).
+    \begin{equation}
+        \label{eq:A-subset-B-implies-powerset-A-subset-powerset-B}
+        \therefore \, A \subseteq B \implies \powerset{A} \subseteq \powerset{B}
+    \end{equation}
+    To prove the converse, suppose that \( \powerset{A} \subseteq \powerset{B} \). By \cref{thm:every-set-is-an-element-of-its-powerset},
+    it follows that \( A \in \powerset{A} \). Since \( \powerset{A} \subseteq \powerset{B} \), this means that \( A \in \powerset{B} \), 
+    which in turn implies \( A \subseteq B \). 
+    \begin{equation}
+        \label{eq:powerset-A-subset-powerset-B-implies-A-subset-B}
+        \therefore \, \powerset{A} \subseteq \powerset{B} \implies A \subseteq B
+    \end{equation}
+    It follows from \eqref{eq:A-subset-B-implies-powerset-A-subset-powerset-B} and \eqref{eq:powerset-A-subset-powerset-B-implies-A-subset-B}
+    that \( A \subseteq B \iff \powerset{A} \subseteq \powerset{B} \). Since \( A \) and \( B \) are arbitrary, the theorem follows from
+    Universal Generalization.
+\end{proof}
+
+\begin{thm}[Transitivity]
+    \label{thm:transitivity-of-the-subset-relation}
+    For any sets \( A \), \( B \), and \( C \), if
+    \( A \subseteq B \) and \( B \subseteq C \), then
+    \( A \subseteq C \).
+    \begin{equation*}
+        \forall A,B,C \, \mleft( A \subseteq B \land 
+        B \subseteq C \implies A \subseteq C \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets such that
+    \( A \subseteq B \) and \( B \subseteq C \). The following chain
+    of inferences completes the proof:
+    \begin{equation*}
+        \begin{aligned}
+            A \subseteq B \land B \subseteq C& \\
+            A \subseteq B& \\
+            B \subseteq C& \\
+            \forall x \, \mleft( x \in A \implies x \in B \mright)& \\
+            \forall x \, \mleft( x \in B \implies x \in C \mright)& \\
+            \alpha \in A \implies \alpha \in B& \\
+            \alpha \in B \implies \alpha \in C& \\
+            \alpha \in A \implies \alpha \in C& \\
+            \forall x \, \mleft( x \in A \implies x \in C \mright)&\\
+            A \subseteq C& \\
+            \therefore \, A \subseteq B \land B \subseteq C
+            \implies A \subseteq C& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption} \\
+            &\quad\text{Conjunction Elimination} \\
+            &\quad\text{Conjunction Elimination} \\
+            &\quad\text{\cref{dfn:subset}} \\
+            &\quad\text{\cref{dfn:subset}} \\
+            &\quad\text{Universal Instantiation} \\
+            &\quad\text{Universal Instantiation} \\
+            &\quad\text{Hypothetical Syllogism} \\
+            &\quad\text{Universal Generalization} \\
+            &\quad\text{\cref{dfn:subset}} \\
+            &\quad\text{Deduction Theorem} \\
+        \end{aligned}
+    \end{equation*}
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows
+    by Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:every-member-of-a-system-of-sets-is-a-subset-of-the-union}
+    For any system of sets \( S \), if \( A \in S \) then, \( A \subseteq \Union S \).
+    \begin{equation*}
+        \forall S \, \forall A \, \mleft( A \in S \implies A \subseteq \Union S \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be an arbitrary system of sets. Let \( A \) be a set such that \( A \in S \).
+    Let \( x_{0} \) be an object such that \( x_{0} \in A \).
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in A& \\
+            A \in S& \\
+            \exists \, T \,{\in}\, S \, \mleft( x_{0} \in T \mright)& \\
+            x_{0} \in \union S& \\
+            x_{0} \in A \implies x_{0} \in \union S& \\
+            \forall x \, \mleft( x \in A \implies x \in \union S \mright)& \\
+            A \subseteq \union S& \\
+            \therefore \, A \in S \implies A \subseteq \union S& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{Assumption} \\
+            &\quad\text{Existential Generalization}\\ 
+            &\quad\text{\cref{dfn:union-of-sets}}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}\\ 
+            &\quad\text{\cref{dfn:subset}}\\
+            &\quad\text{Deduction Theorem}
+        \end{aligned}
+    \end{equation*}
+    Since \( A \) and \( S \) are arbitrary, the theorem follows from Universal
+    Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:a-set-is-a-subset-of-its-union-with-another-set}
+    For any two sets \( A \) and \( B \), \( A \subseteq A \union B \)
+    and \( B \subseteq A \union B \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \subseteq A \union B \land B \subseteq A \union B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    This is just a special case of \cref{thm:every-member-of-a-system-of-sets-is-a-subset-of-the-union}
+    with \( S = \mleft\{ A,B \mright\} \). By \cref{dfn:unordered-pair}, we have \( A \in \mleft\{ A,B \mright\}
+    \land B \in \mleft\{ A,B \mright\} \).
+    By \cref{thm:every-member-of-a-system-of-sets-is-a-subset-of-the-union},
+    \begin{gather*}
+        A \subseteq \Union \mleft\{ A,B \mright\} = A \union B \\
+        B \subseteq \Union \mleft\{ A,B \mright\} = A \union B
+    \end{gather*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-intersection-of-any-system-of-sets-is-a-subset-of-each-member-of-the-system}
+    For any non-empty system of sets \( S \),
+    \begin{equation*}
+        \forall A \, \mleft( A \in S \implies \Intersect S \subseteq A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be a system of sets such that \( S \neq \emptyset \).
+    \begin{equation*}
+        \begin{aligned}
+            A \in S& \\
+            \forall z \, \mleft( z \in S \implies x_{0} \in z \mright)&\\
+            A \in S \implies x_{0} \in A& \\
+            x_{0} \in A& \\
+            \forall z \, \mleft( z \in S \implies x_{0} \in z \mright) \implies
+            x_{0} \in A& \\
+            \intersect S \subseteq A& \\
+            \therefore \, A \in S \implies \intersect S \subseteq A& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{Assumption, \cref{dfn:intersection-of-sets}}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{Modus Ponens}\\
+            &\quad\text{Deduction Theorem}\\ 
+            &\quad\text{Universal Generalization, \cref{dfn:intersection-of-sets}}\\
+            &\quad\text{Deduction Theorem}
+        \end{aligned}
+    \end{equation*}
+    Since \( A \) and \( S \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-intersection-of-two-sets-is-a-subset-of-each-set}
+    For any two sets \( A \) and \( B \), \( A \intersect B \subseteq A \) and 
+    \( A \intersect B \subseteq B \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \intersect B \subseteq A \land A \intersect B \subseteq B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    This is a special case of \cref{thm:the-intersection-of-any-system-of-sets-is-a-subset-of-each-member-of-the-system}
+    with \( S = \mleft\{ A,B \mright\} \). By \cref{dfn:unordered-pair}, it follows that \( A \in \mleft\{ A,B \mright\}
+    \land B \in \mleft\{ A,B \mright\} \). Thus, \( A \intersect B = \Intersect \mleft\{ A,B \mright\} \subseteq A \) and
+    \( A \intersect B = \Intersect \mleft\{ A,B \mright\} \subseteq B \) by \cref{thm:the-intersection-of-any-system-of-sets-is-a-subset-of-each-member-of-the-system}
+    as required. Universal Generalization completes the proof.
+\end{proof}
+
+\begin{thm}
+    \label{thm:subset-in-terms-of-union}
+    For any two sets \( A \) and \( B \), \( A \subseteq B \) if and only if 
+    \( A \union B = B \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \subseteq B \iff A \union B = B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets.
+    \begin{equation*}
+        \begin{aligned}
+            A \subseteq B& \\
+            \forall x \, \mleft( x \in A \implies x \in B \mright)& \\
+            x_{0} \in A \union B& \\
+            x_{0} \in A \lor x_{0} \in B& \\
+            x_{0} \in A \implies x_{0} \in B& \\
+            x_{0} \in B \implies x_{0} \in B& \\
+            x_{0} \in B& \\
+            x_{0} \in A \union B \implies x_{0} \in B& \\
+            \forall x \, \mleft( x \in A \union B \implies x \in B \mright)& \\
+            A \union B \subseteq B& \\
+            \therefore \, A \subseteq B \implies A \union B \subseteq B&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{\cref{dfn:subset}}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{\cref{thm:union-in-terms-of-logical-or}}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{Tautology}\\
+            &\quad\text{Disjunction Elimination}\\
+            &\quad\text{Deduction Theorem}\\ 
+            &\quad\text{Universal Generalization}\\
+            &\quad\text{\cref{dfn:subset}}\\
+            &\quad\text{Deduction Theorem}
+        \end{aligned}
+    \end{equation*}
+    By \cref{thm:a-set-is-a-subset-of-its-union-with-another-set}, we know that 
+    \( B \subseteq A \union B \) is also true.
+    \begin{equation*}
+        \therefore \, A \subseteq B \implies A \union B \subseteq B \land 
+        B \subseteq A \union B
+    \end{equation*}
+    By \cref{thm:set-equality-in-terms-of-subsets}, we have,
+    \begin{equation}
+        \label{eq:A-subset-B-implies-A-union-B-equals-B}
+        A \subseteq B \implies A \union B = B
+    \end{equation}
+    To prove the converse, suppose that \( A \union B = B \).
+    \begin{equation*}
+        \begin{aligned}
+            A \union B = B& \\
+            \forall x \, \mleft( x \in A \lor x \in B \iff x \in B \mright)& \\
+            x_{0} \in A& \\
+            x_{0} \in A \lor x_{0} \in B \iff x_{0} \in B& \\
+            x_{0} \in A \lor x_{0} \in B& \\
+            x_{0} \in B& \\
+            x_{0} \in A \implies x_{0} \in B& \\
+            \forall x \, \mleft( x \in A \implies x \in B \mright)& \\
+            \therefore \, A \subseteq B& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{\nameref{axm:axiom-of-extensionality}, \cref{thm:union-in-terms-of-logical-or}}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{Universal Instantiation}\\ 
+            &\quad\text{Disjunction Introduction}\\ 
+            &\quad\text{Modus Ponens}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}\\ 
+            &\quad\text{\cref{dfn:subset}}\\
+        \end{aligned}
+    \end{equation*}
+    By the Deduction Theorem,
+    \begin{equation}
+        \label{eq:A-union-B-equals-B-implies-A-subset-B}
+        A \union B = B \implies A \subseteq B
+    \end{equation}
+    Together, \eqref{eq:A-subset-B-implies-A-union-B-equals-B} and \eqref{eq:A-union-B-equals-B-implies-A-subset-B}
+    establishes the biconditional \( A \subseteq B \iff A \union B = A \). Since \( A \) and \( B \) are arbitrary, 
+    the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:subset-in-terms-of-intersection}
+    For any two sets \( A \) and \( B \), \( A \subseteq B \) if and only if
+    \( A \intersect B = A \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \subseteq B \iff A \intersect B = A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. \cref{thm:the-intersection-of-two-sets-is-a-subset-of-each-set} 
+    dictates that,
+    \begin{equation*}
+        A \intersect B \subseteq A
+    \end{equation*}
+    It remains to prove the inclusion relation in reverse.
+    \begin{equation*}
+        \begin{aligned}
+            A \subseteq B& \\
+            \forall x \, \mleft( x \in A \implies x \in B \mright)& \\
+            x_{0} \in A& \\
+            x_{0} \in A \implies x_{0} \in B& \\
+            x_{0} \in B& \\
+            x_{0} \in A \land x_{0} \in B& \\
+            x_{0} \in A \intersect B& \\
+            x_{0} \in A \implies x_{0} \in A \intersect B& \\
+            \forall x \, \mleft( x \in A \implies x \in A \intersect B \mright)& \\
+            \therefore \, A \subseteq A \intersect B& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{\cref{dfn:subset}}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{Modus Ponens}\\
+            &\quad\text{Conjunction Introduction}\\
+            &\quad\text{\cref{thm:intersection-in-terms-of-logical-and}}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}\\
+            &\quad\text{\cref{dfn:subset}}\\
+        \end{aligned}
+    \end{equation*}
+    Since \( A \intersect B \subseteq A \land A \subseteq A \intersect B \), 
+    it follows from \cref{thm:set-equality-in-terms-of-subsets} that 
+    \( A \intersect B = A \).
+    \begin{equation}
+        \label{eq:A-subset-B-implies-A-intersect-B-equals-A}
+        \therefore \, A \subseteq B \implies A \intersect B = A
+    \end{equation}
+    The proof for the converse is fairly straightforward:
+    \begin{equation*}
+        \begin{aligned}
+            A \intersect B = A& \\
+            \forall x \, \mleft( x \in A \land x \in B \iff x \in A \mright)& \\
+            x_{0} \in A& \\
+            x_{0} \in A \land x_{0} \in B \iff x_{0} \in A& \\
+            x_{0} \in A \land x_{0} \in B& \\
+            x_{0} \in B& \\
+            x_{0} \in A \implies x_{0} \in B& \\
+            \forall x \, \mleft( x \in A \implies x \in B \mright)& \\
+            A \subseteq B&\\
+            A \intersect B = A \implies A \subseteq B& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{Assumption}\\
+            &\quad\text{\nameref{axm:axiom-of-extensionality}, \cref{thm:intersection-in-terms-of-logical-and}}\\
+            &\quad\text{Assumption}\\
+            &\quad\text{Universal Instantiation}\\
+            &\quad\text{Modus Ponens}\\
+            &\quad\text{Conjunction Elimination}\\
+            &\quad\text{Deduction Theorem}\\
+            &\quad\text{Universal Generalization}\\
+            &\quad\text{\cref{dfn:subset}}\\
+            &\quad\text{Deduction Theorem}
+        \end{aligned}
+    \end{equation*}
+    This along with \eqref{eq:A-subset-B-implies-A-intersect-B-equals-A} establish the biconditional,
+    \begin{equation*}
+        A \subseteq B \iff A \intersect B = A
+    \end{equation*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:subset-in-terms-of-empty-difference}
+    For any two sets \( A \) and \( B \), \( A \subseteq B \iff A - B = \emptyset\).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \subseteq B \iff A - B = \emptyset \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. The theorem can be derived by applying the laws
+    of propositional logic to \cref{dfn:subset}:
+    \begin{align*}
+        A \subseteq B &\iff \forall x \, \mleft( x \in A \implies x \in B \mright)\\
+        &\iff \forall x \, \mleft( \lnot \, \mleft( x \in A \land x \notin B \mright) \mright) \\
+        &\iff \forall x \, \mleft( x \notin A - B \mright) \\ 
+        &\iff A - B = \emptyset \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:left-distributivity-of-subset-relation-over-intersection}
+    For any three sets \( A \), \( B \), and \( C \), \( A \subseteq \mleft( B \intersect C \mright)
+    \iff A \subseteq B \land A \subseteq C \).
+    \begin{equation*}
+        \forall A,B,C \, \Big( A \subseteq \mleft( B \intersect C \mright) \iff 
+        A \subseteq B \land A \subseteq C \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Using elementary propositional logic, \cref{dfn:subset,thm:intersection-in-terms-of-logical-and}, 
+    we can re-express \( A \subseteq \mleft( B \intersect C \mright) \) in another logically equivalent form:
+    \begin{align*}
+        A \subseteq \mleft( B \intersect C \mright)
+        &\iff 
+        \forall x \, \mleft( x \in A \implies x \in B \land x \in C \mright)\\
+        &\iff 
+        \forall x \, \mleft( x \notin A \,\,{\lor} \mleft( x \in B \land x \in C \mright) \mright)\\ 
+        &\iff 
+        \forall x \, \mleft( \mleft( x \notin A \lor x \in B \mright)
+        \land \mleft( x \notin A \lor x \in C \mright) \mright)\\ 
+        &\iff 
+        \forall x \, \mleft( x \notin A \lor x \in B \mright)
+        \land
+        \forall x \, \mleft( x \notin A \lor x \in C \mright)\\
+        &\iff 
+        \forall x \, \mleft( x \in A \implies x \in B \mright)
+        \land
+        \forall x \, \mleft( x \in A \implies x \in C \mright)\\
+        &\iff 
+        A \subseteq B \land A \subseteq C
+    \end{align*}
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:right-distributivity-of-subset-relation-over-union}
+    For any three sets \( A \), \( B \), and \( C \), \( \mleft( A \union B \mright) \subseteq C 
+    \iff A \subseteq C \land B \subseteq C\).
+    \begin{equation*}
+        \forall A,B,C \, \Big( \mleft( A \union B \mright) \subseteq C \iff 
+        A \subseteq C \land B \subseteq C \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Using elementary propositional logic, \cref{dfn:subset,thm:union-in-terms-of-logical-or},
+    we can re-express \( \mleft( A \union B \mright) \subseteq C \) in another logically equivalent form:
+    \begin{align*}
+        \mleft( A \union B \mright) \subseteq C
+        &\iff 
+        \forall x \, \big( \mleft( x \in A \lor x \in B \mright) 
+        \implies x \in C \big)\\
+        &\iff 
+        \forall x \, \big( \mleft( x \notin A \land x \notin B \mright) \lor x \in C \big)\\
+        &\iff 
+        \forall x \, \big( \mleft( x \notin A \lor x \in C \mright) 
+        \land 
+        \mleft( x \notin B \lor x \in C \mright) \big)\\
+        &\iff 
+        \forall x \, \big( x \in A \implies x \in C \land x \in B \implies x \in C \big)\\
+        &\iff 
+        \forall x \, \mleft( x \in A \implies x \in C \mright) \land 
+        \forall x \, \mleft( x \in B \implies x \in C  \mright)\\
+        &\iff 
+        A \subseteq C \land B \subseteq C
+    \end{align*}
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-union-of-subsets-is-a-subset-of-the-union}
+    Let \( A \), \( B \), \( C \), and \( D \) be arbitrary sets. If \( A \subseteq C \) and \( B \subseteq D \), then
+    \( A \union B \subseteq C \union D \).
+    \begin{equation*}
+        \forall A,B,C,D \, \Big( \mleft( A \subseteq C \mright) \land \mleft( B \subseteq D \mright) \implies 
+        \mleft( A \union B \mright) \subseteq \mleft( C \union D \mright) \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( x_{0} \) be an arbitrary object. Since \( A \subseteq C \) and \( B \subseteq D \), it follows from \cref{dfn:subset} 
+    that, 
+    \begin{gather*}
+        x_{0} \in A \implies x_{0} \in C \\ 
+        x_{0} \in B \implies x_{0} \in D
+    \end{gather*}
+    Suppose that \( x_{0} \in A \union B \). Then by \cref{thm:union-in-terms-of-logical-or},
+    \begin{equation*}
+        x_{0} \in A \lor x_{0} \in B
+    \end{equation*}
+    By Constructive Dilemma, it follows that \( x_{0} \in C \lor x_{0} \in D \).
+    \begin{equation*}
+        \therefore \, x_{0} \in \mleft( A \union B \mright) \implies x_{0} \in \mleft( C \union D \mright)
+    \end{equation*}
+    The theorem follows by Universal Generalization
+\end{proof}
+
+\subsection{Union}
+\begin{thm}
+    \label{set-identities:union-of-empty-set-is-empty}
+    \( \Union \emptyset = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( x \) be an arbitrary object and \( T \) be any arbitrary set. Thus, we can make the following inferences:
+    \begin{equation*}
+        \begin{aligned}[c]
+            T \notin \emptyset& \\
+            T \notin \emptyset \lor x \notin T& \\ 
+            \lnot \, \mleft( T \in \emptyset \land x \in T \mright)& \\
+            \forall T \, \big[ \lnot \, \mleft( T \in \emptyset \land x \in T \mright) \big]& \\
+            \lnot \, \exists \, T \big[ T \in \emptyset \land x \in T \big]& \\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}[c]
+            &\quad\text{\cref{dfn:empty-set}} \\
+            &\quad\text{Disjunction Introduction} \\
+            &\quad\text{De Morgan's Law} \\
+            &\quad\text{Universal Generalization} \\
+            &\quad\text{Logical Equivalence}
+        \end{aligned}
+    \end{equation*}
+    By \cref{dfn:union-of-sets}, the last statement implies \( x \notin \Union \emptyset \).
+    Since \( x \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \notin \Union \emptyset \mright)
+    \end{equation*}
+    \( \Union \emptyset = \emptyset \) follows readily from \cref{dfn:empty-set}.
+\end{proof}
+
+\begin{thm}[Idempotence]
+    \label{set-identities:idempotence-of-unions}
+    For any set \( A \), \( A \union A = A\).
+    \begin{equation*}
+        \forall A \, \mleft( A \union A = A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x_{0} \) be arbitrary. By \cref{thm:union-in-terms-of-logical-or},
+    \begin{align*}
+        x_{0} \in A \union A &\iff x_{0} \in A \lor x_{0} \in A\\
+        &\iff x_{0} \in A
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \union A \iff x \in A \mright)
+    \end{equation*}
+    By \nameref{axm:axiom-of-extensionality}, we have \( A \union A = A \).
+\end{proof}
+
+\begin{thm}[Commutativity]
+    \label{set-identities:commutativity-of-union}
+    For any two sets \( A \) and \( B \), \( A \union B = B \union A \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \union B = B \union A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets. Let \( x_{0} \) be an arbitrary object.
+    The logical \( \lor \)-operator is commutative, thus,
+    \begin{equation*}
+        x_{0} \in A \lor x_{0} \in B \iff x_{0} \in B \lor x_{0} \in A
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, Universal Generalization permits us to infer,
+    \begin{equation}
+        \label{eq:quantified-biconditional-for-commutativity-of-logical-or}
+        \forall x \, \mleft( x \in A \lor x \in B \iff x \in B \lor x \in A \mright)
+    \end{equation}
+    Applying \cref{thm:union-in-terms-of-logical-or} to \eqref{eq:quantified-biconditional-for-commutativity-of-logical-or}
+    yields,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \union B \iff x \in B \union A \mright)
+    \end{equation*}
+    And finally, by the \nameref{axm:axiom-of-extensionality}, \( A \union B = B \union A \).
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:any-set-union-empty-set-equals-the-set-itself}
+    For any set \( A \), \( A \union \emptyset = \emptyset \union A = A \)
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. \cref{set-identities:commutativity-of-union} already implies \( A \union \emptyset = \emptyset \union A \).
+    Thus, it suffices to prove that \( A \union \emptyset = A \). Suppose that \( x_{0} \in A \union \emptyset \) for some arbitrary \( x_{0} \). By
+    \cref{thm:union-in-terms-of-logical-or}, we have \( x_{0} \in A \lor x_{0} \in \emptyset\). Since \( \forall x \, \mleft( x \notin \emptyset \mright) \),
+    we conclude \( x_{0} \in A \) by Disjunction Elimination. Thus, \( x_{0} \in A \union \emptyset \implies x_{0} \in A \). To prove the converse, suppose that
+    \( x_{0} \in A \); then \( x_{0} \in A \lor x_{0} \in \emptyset \) is obviously true. Thus, \( x_{0} \in A \implies x_{0} \in A \union \emptyset \).
+    \begin{equation*}
+        \therefore \, x_{0} \in A \union \emptyset \iff x_{0} \in A
+    \end{equation*}
+    The theorem follows from Universal Generalization and \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\begin{thm}[Associativity]
+    \label{set-identities:associativity-of-unions}
+    \( A \union \mleft( B \union C \mright) = \mleft( A \union B \mright) \union C \) for any arbitrary sets \( A \), \( B \), and \( C \).
+    \begin{equation*}
+        \forall A,B,C \, \big( A \union \mleft( B \union C \mright) = \mleft( A \union B \mright) \union C \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object. By the laws of propositional logic,
+    \begin{equation}
+        \label{eq:associativity-of-logical-or-operator}
+        x_{0} \in A \lor \mleft( x_{0} \in B \lor x_{0} \in C \mright)
+        \iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright) \lor x_{0} \in C
+    \end{equation}
+    Applying \cref{thm:union-in-terms-of-logical-or} to each formula in the parentheses, we have,
+    \begin{align}
+        x_{0} \in B \union C &\iff x_{0} \in B \lor x_{0} \in C
+        \label{eq:B-union-C-in-terms-of-B-or-C} \\
+        x_{0} \in A \union B &\iff x_{0} \in A \lor x_{0} \in B 
+        \label{eq:A-union-B-in-terms-of-A-or-B}
+    \end{align}
+    Applying \eqref{eq:B-union-C-in-terms-of-B-or-C} and \eqref{eq:A-union-B-in-terms-of-A-or-B} 
+    into \eqref{eq:associativity-of-logical-or-operator} yields,
+    \begin{align}
+        x_{0} \in A \lor x_{0} \in B \union C &\iff 
+        x_{0} \in A \,\,{\lor} \mleft( x_{0} \in B \lor x_{0} \in C \mright)
+        \label{eq:A-union-B-union-C-in-terms-of-logical-or}\\
+        x_{0} \in A \union B \lor x_{0} \in C &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright) \lor x_{0} \in C
+        \label{eq:A-union-B-group-union-C-in-terms-of-logical-or}
+    \end{align}
+    Finally, applying \cref{thm:union-in-terms-of-logical-or} to \eqref{eq:A-union-B-union-C-in-terms-of-logical-or}
+    and \eqref{eq:A-union-B-group-union-C-in-terms-of-logical-or} yields,
+    \begin{align*}
+        x_{0} \in A \union \mleft( B \union C \mright)
+        &\iff 
+        x_{0} \in A \lor x_{0} \in B \union C\\
+        &\iff
+        x_{0} \in A \,\,{\lor} \mleft( x_{0} \in B \lor x_{0} \in C \mright)\\
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright) \lor x_{0} \in C\\
+        &\iff 
+        x_{0} \in A \union B \lor x_{0} \in C\\ 
+        &\iff 
+        x_{0} \in \mleft( A \union B \mright) \union C
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \Big( x \in A \union \mleft( B \union C \mright) \iff 
+        x \in \mleft( A \union B \mright) \union C  \Big)
+    \end{equation*}
+    Thus, \( A \union \mleft( B \union C \mright) = A \union \mleft( B \union C \mright) \) by the \nameref{axm:axiom-of-extensionality}.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+\subsection{Intersection}
+\begin{thm}[Idempotence]
+    \label{set-identities:idempotence-of-intersections}
+    For any set \( A \), \( A \intersect A = A \)
+    \begin{equation*}
+        \forall A \, \mleft( A \intersect A = A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x_{0} \) be an arbitrary object.
+    By elementary propositional logic and \cref{thm:intersection-in-terms-of-logical-and},
+    \begin{align*}
+        x_{0} \in A 
+        &\iff 
+        x_{0} \in A \land x_{0} \in A \\ 
+        &\iff 
+        x_{0} \in A \intersect A
+    \end{align*}
+    By Universal Generalization and \nameref{axm:axiom-of-extensionality}, \( A = A \intersect A \).
+\end{proof}
+
+\begin{thm}[Commutativity]
+    \label{set-identities:commutativity-of-intersection}
+    For any two sets \( A \) and \( B \), \( A \intersect B = B \intersect A\).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \intersect B = B \intersect A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets. Let \( x_{0} \) be an arbitrary object.
+    By elementary propositional logic and \cref{thm:intersection-in-terms-of-logical-and},
+    \begin{align*}
+        x_{0} \in A \intersect B 
+        &\iff 
+        x_{0} \in A \land x_{0} \in B \\
+        &\iff 
+        x_{0} \in B \land x_{0} \in A \\
+        &\iff 
+        x_{0} \in B \intersect A
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \intersect B \iff x \in B \intersect A \mright)
+    \end{equation*}
+    Finally, the \nameref{axm:axiom-of-extensionality} implies \( A \intersect B = B \intersect A \).
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Absorption]
+    \label{set-identities:intersection-of-any-set-with-empty-set-is-always-empty}
+    For any set \( A \), \( A \intersect \emptyset = \emptyset \intersect A = \emptyset \).
+    \begin{equation*}
+        \forall A \, \mleft( A \intersect \emptyset = \emptyset \intersect A = \emptyset \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. \cref{set-identities:commutativity-of-intersection} already implies
+    \( A \intersect \emptyset = \emptyset \intersect A \). 
+    Thus, it suffices to prove that \( A \intersect \emptyset = \emptyset \). Let \( x_{0} \) be 
+    an arbitrary object. \cref{thm:intersection-in-terms-of-logical-and} implies that,
+    \begin{equation*}
+        x_{0} \in A \intersect \emptyset \iff x_{0} \in A \land x_{0} \in \emptyset
+    \end{equation*}
+    But \cref{dfn:empty-set} implies that \( \forall x \, \mleft( x \notin \emptyset \mright) \).
+    \begin{equation*}
+        \therefore \, x_{0} \notin \emptyset
+    \end{equation*}
+    In other words, \( \lnot \, \mleft( x_{0} \in A \land x_{0} \in \emptyset \mright) \).
+    \begin{equation*}
+        \therefore \, x_{0} \notin A \intersect \emptyset
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \notin A \intersect \emptyset \mright)
+    \end{equation*}
+    By \cref{dfn:empty-set}, \( A \intersect \emptyset = \emptyset \).
+\end{proof}
+
+\begin{thm}[Associativity]
+    \label{set-identities:associativity-of-intersection}
+    For any three sets \( A \), \( B \), and \( C \), \( A \intersect \mleft( B \intersect C \mright) = \mleft( A \intersect B \mright) \intersect C \).
+    \begin{equation*}
+        \forall A,B,C \, \Big( A \intersect \mleft( B \intersect C \mright) = \mleft( A \intersect B \mright) \intersect C \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object. It follows 
+    from elementary propositional logic that,
+    \begin{equation*}
+        x_{0} \in A \,\,{\land} \mleft( x_{0} \in B \land x_{0} \in C \mright)
+        \iff \mleft( x_{0} \in A \land x_{0} \in B \mright) \land x_{0} \in C
+    \end{equation*}
+    By \cref{thm:intersection-in-terms-of-logical-and} the above statement is equivalent to,
+    \begin{equation*}
+        x_{0} \in A \intersect \mleft( B \intersect C \mright) \iff x_{0} \in \mleft( A \intersect B \mright) \intersect C
+    \end{equation*}
+    By Universal Generalization,
+    \begin{equation*}
+        \forall x \, \Big( x \in A \intersect \mleft( B \intersect C \mright)
+        \iff x \in \mleft( A \intersect B \mright) \intersect C \Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( A \intersect \mleft( B \intersect C \mright) = \mleft( A \intersect B \mright) \intersect C \).
+    Since the sets \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+\subsection{Difference}
+\begin{thm}
+    \label{set-identities:subtracing-empty-set-from-any-set-yields-the-set-itself}
+    For any set \( A \), \( A - \emptyset = A \).
+    \begin{equation*}
+        \forall A \, \mleft( A - \emptyset = A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x_{0} \) be an arbitrary object. By \cref{dfn:difference},
+    \begin{equation*}
+        x_{0} \in A - \emptyset \iff x_{0} \in A \land x_{0} \notin \emptyset
+    \end{equation*}
+    But \cref{dfn:empty-set} implies \( x_{0} \notin \emptyset \), thus,
+    \begin{equation*}
+        x_{0} \in A \land x_{0} \notin \emptyset \iff x_{0} \in A
+    \end{equation*}
+    Combining the two statements, we have,
+    \begin{equation*}
+        x_{0} \in A - \emptyset \iff x_{0} \in A
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A - \emptyset \iff x \in A \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that \( A - \emptyset = A \).
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:subtracting-any-set-from-empty-set-is-still-empty}
+    For any set \( A \), \( \emptyset - A = \emptyset \)
+    \begin{equation*}
+        \forall A \, \mleft( \emptyset - A = \emptyset \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x_{0} \) be an arbitrary object.
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \notin \emptyset& \\
+            x_{0} \notin \emptyset \lor x_{0} \in A& \\
+            \lnot \, \mleft( x_{0} \in \emptyset \land x_{0} \notin A \mright)& \\
+            x_{0} \notin \emptyset - A& \\
+            \forall x \, \mleft( x \notin \emptyset - A \mright)&\\
+            \emptyset - A = \emptyset&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{\cref{dfn:empty-set}}\\
+            &\quad \text{Disjunction Introduction}\\
+            &\quad \text{De Morgan's Law}\\
+            &\quad \text{\cref{dfn:difference}}\\
+            &\quad \text{Universal Generalization}\\
+            &\quad \text{\cref{dfn:empty-set}}
+        \end{aligned}
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Nilpotence]
+    \label{set-identities:nilpotence-of-relative-complements}
+    For any set \( A \), \( A - A = \emptyset \)
+    \begin{equation*}
+        \forall A \, \mleft( A - A = \emptyset \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( x_{0} \) be an arbitrary object.
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in A \lor x_{0} \notin A& \\
+            \lnot \, \mleft( x_{0} \notin A \land x_{0} \in A \mright)& \\
+            \lnot \, \mleft( x_{0} \in A \land x_{0} \notin A \mright)& \\
+            x_{0} \notin A - A& \\
+            \forall x \, \mleft( x \notin A - A \mright)& \\
+            A - A = \emptyset&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{Law of Excluded Middle}\\
+            &\quad \text{De Morgan's Law}\\
+            &\quad \text{\( \land \)-Commutativity}\\
+            &\quad \text{\cref{dfn:difference}}\\
+            &\quad \text{Universal Generalization}\\
+            &\quad \text{\cref{dfn:empty-set}}
+        \end{aligned}
+    \end{equation*}
+    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:subtract-B-minus-C-from-A}
+    For any three sets \( A \), \( B \), and \( C \), 
+    \( A - \mleft( B - C \mright) = \mleft( A - B \mright) \union \mleft( A \intersect C \mright) \)
+    \begin{equation*}
+        \forall A,B,C \, \Big( A - \mleft( B - C \mright) = \mleft( A - B \mright) \union \mleft( A \intersect C \mright)  \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), \( C \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object.
+    The goal is to use elementary propositional logic to re-express \( x_{0} \in A - \mleft( B - C \mright) \)
+    in a logically equivalent form:
+    \begin{align*}
+        x_{0} \in A - \mleft( B - C \mright)
+        &\iff 
+        x_{0} \in A \land x_{0} \notin \mleft( B - C \mright) \\ 
+        &\iff 
+        x_{0} \in A \land \lnot \, \mleft( x_{0} \in B \land x_{0} \notin C \mright)\\
+        &\iff 
+        x_{0} \in A \,\,{\land} \mleft( x_{0} \notin B \lor x_{0} \in C \mright)\\
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \notin B \mright) \lor 
+        \mleft( x_{0} \in A \land x_{0} \in C \mright)\\ 
+        &\iff 
+        x_{0} \in \mleft( A - B \mright) \lor x_{0} \in \mleft( A \intersect C \mright) \\
+        &\iff 
+        x_{0} \in \mleft( A - B \mright) \union \mleft( A \intersect C \mright)
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \Big( x \in A - \mleft( B - C \mright) \iff 
+        x \in \mleft( A - B \mright) \union \mleft( A \intersect C \mright) \Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( A - \mleft( B - C \mright) = 
+    \mleft( A - B \mright) \union \mleft( A \intersect C \mright) \). Since \( A \), \( B \),
+    and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:subtract-C-from-A-minus-B}
+    For any three sets \( A \), \( B \), and \( C \), \( \mleft( A - B \mright) - C = A - \mleft( B \union C \mright) \)
+    \begin{equation*}
+        \forall A,B,C , \Big( \mleft( A - B \mright) - C = A - \mleft( B \union C \mright) \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object. Again, we use 
+    the laws of propositional logic, \cref{dfn:difference,thm:union-in-terms-of-logical-or} to express 
+    \( x_{0} \in \mleft( A - B \mright) - C \) in another logically equivalent form:
+    \begin{align*}
+        x_{0} \in \mleft( A - B \mright) - C
+        &\iff 
+        x_{0} \in \mleft( A - B \mright) \land x_{0} \notin C \\
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \notin B \mright) 
+        \land 
+        x_{0} \notin C\\
+        &\iff 
+        x_{0} \in A \,\,{\land} \mleft( x_{0} \notin B \land x_{0} \notin C \mright)\\
+        &\iff 
+        x_{0} \in A \land \lnot \, \mleft( x_{0} \in B \lor x_{0} \in C \mright)\\
+        &\iff 
+        x_{0} \in A \land x_{0} \notin B \union C\\
+        &\iff 
+        x_{0} \in A - \mleft( B \union C \mright)
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \Big( x \in \mleft( A - B \mright) - C \iff 
+        x \in A - \mleft( B \union C \mright) \Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( \mleft( A - B \mright) - C = A - \mleft( B \union  C \mright)\).
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Nilpotence]
+    \label{set-identities:symmetric-difference-of-any-set-with-itself-is-empty}
+    For any set \( A \), \( A \symdiff A = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. By \cref{dfn:symmetric-difference},
+    \begin{equation*}
+        \forall x \, \Big( x \in A \symdiff A \iff 
+        \mleft( x \in A \lor x \in A \mright) \land 
+        \lnot \, \mleft( x \in A \land x \in A \mright)\Big)
+    \end{equation*}
+    Using the laws of propositional logic, we can transform the statement into
+    another logically equivalent form:
+    \begin{equation*}
+        \forall x \, \Big( x \in A \symdiff A \iff 
+        x \in A \land x \notin A \Big)
+    \end{equation*}
+    But by the Law of Non-Contradiction, the statement on the right-hand side of the biconditional is always false.
+    \begin{equation*}
+        \therefore \, \forall x \, \mleft( x \notin A \symdiff A \mright)
+    \end{equation*}
+    By \cref{dfn:empty-set}, \( A \symdiff A = \emptyset \).
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:symmetric-difference-in-terms-of-union-and-intersection}
+    For any two sets \( A \) and \( B \), \( A \symdiff B = \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \)
+    \begin{equation*}
+        \forall A,B \, \Big( A \symdiff B = \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object. We use the laws of logic, 
+    \cref{dfn:symmetric-difference,thm:union-in-terms-of-logical-or,thm:intersection-in-terms-of-logical-and}
+    to re-express \( x_{0} \in A \symdiff B \) in another logically equivalent form:
+    \begin{align*}
+        x_{0} \in A \symdiff B 
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright)
+        \land
+        \lnot \, \mleft( x_{0} \in A \land x_{0} \in B \mright) \\
+        &\iff 
+        x_{0} \in A \union B \land x_{0} \notin A \intersect B\\
+        &\iff 
+        x_{0} \in \big( \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \big)
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \Big( x \in A \symdiff B \iff 
+        x \in \big( \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \big)\Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( A \symdiff B = \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \).
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:symmetric-difference-as-the-union-of-differences}
+    For any two sets \( A \) and \( B \), \( A \symdiff B = \mleft( A - B \mright) \union \mleft( B - A \mright) \)
+    \begin{equation*}
+        \forall A,B \, \Big( A \symdiff B = \mleft( A - B \mright) \union \mleft( B - A \mright) \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object.
+    Again, we use the laws of propositional logic and known definitions to re-express
+    \( x_{0} \in A \symdiff B \) in an alternative form:
+    \begin{align*}
+        x_{0} \in A \symdiff B 
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright)
+        \land 
+        \lnot \, \mleft( x_{0} \in A \land x_{0} \in B \mright)\\
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright)
+        \land
+        \mleft( x_{0} \notin A \lor x_{0} \notin B \mright)\\
+        &\iff 
+        \big( \mleft( x_{0} \in A \lor x_{0} \in B \mright) \land x_{0} \notin A \big)
+        \lor 
+        \big( \mleft( x_{0} \in A \lor x_{0} \in B \mright) \land x_{0} \notin B \big)\\
+        &\iff 
+        \mleft( x_{0} \in B \land x_{0} \notin A \mright)
+        \lor
+        \mleft( x_{0} \in A \land x_{0} \notin B \mright)\\
+        &\iff 
+        x_{0} \in \mleft( A - B \mright) \lor x_{0} \in \mleft( B - A \mright)\\
+        &\iff 
+        x_{0} \in \big( \mleft( A - B \mright) \union \mleft( B - A \mright) \big)
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we have,
+    \begin{equation*}
+        \forall x \, \Big( x \in A \symdiff B \iff x \in \big( \mleft( A - B \mright) \union \mleft( B - A \mright) \big) \Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( A \symdiff B = \mleft( A - B \mright) \union \mleft( B - A \mright) \).
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Commutativity]
+    \label{set-identities:commutativity-of-symmetric-difference}
+    For any two sets \( A \) and \( B \), \( A \symdiff B = B \symdiff A \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \symdiff B = B \symdiff A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. By \cref{set-identities:symmetric-difference-as-the-union-of-differences,set-identities:commutativity-of-union},
+    \begin{align*}
+        A \symdiff B 
+        &= 
+        \mleft( A - B \mright) \union \mleft( B - A \mright)\\
+        &=
+        \mleft( B - A \mright) \union \mleft( A - B \mright)\\
+        &= 
+        B \symdiff A
+    \end{align*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Associativity]
+    \label{set-identities:associativity-of-symmetric-difference}
+    For any three sets \( A \), \( B \), and \( C \),
+    \begin{equation*}
+        A \symdiff \mleft( B \symdiff C \mright) =
+        \mleft( A \symdiff B \mright) \symdiff C
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. Let \( x_{0} \) be an arbitrary object.
+    Furthermore, suppose that \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \).
+    Then by \cref{dfn:symmetric-difference}, it follows that,
+    \begin{equation}
+        \label{eq:lhs-predicate-form}
+        \big( x_{0} \in A \land x_{0} \notin \mleft( B \symdiff C \mright) \big)
+        \lor 
+        \big( x_{0} \notin A \land x_{0} \in \mleft( B \symdiff C \mright) \big)
+    \end{equation}
+    Suppose that \( x_{0} \in A \land x_{0} \notin \mleft( B \symdiff C \mright) \) is true.
+    Using \cref{dfn:symmetric-difference} once again, we infer,
+    \begin{equation*}
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \in C \mright)
+        \lor 
+        \mleft( x_{0} \in A \land x_{0} \notin B \land x_{0} \notin C \mright)
+    \end{equation*}
+    If \( x_{0} \in A \,\,{\land} \mleft( x_{0} \in B \land x_{0} \in C \mright)\), 
+    then clearly \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \) because
+    \( x_{0} \in C \) but \( x_{0} \notin \mleft( A \symdiff B \mright) \). Similarly, if
+    \( x_{0} \in A \,\,{\land} \mleft( x_{0} \notin B \land x_{0} \notin C \mright) \),
+    then \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \) also follows because
+    \( x_{0} \in \mleft( A \symdiff B \mright) \) but \( x_{0} \notin C \). Since both disjuncts
+    imply \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \), we apply Disjunction
+    Elimination to infer,
+    \begin{equation}
+        \label{eq:left-disjunct-forward-implication}
+        x_{0} \in A \land x_{0} \notin \mleft( B \symdiff C \mright)
+        \implies 
+        x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
+    \end{equation}
+
+    \vspace{0.1cm}
+    \noindent Similarly, suppose that \( x_{0} \notin A \land x_{0} \in \mleft( B \symdiff C \mright) \) is true.
+    Applying \cref{dfn:symmetric-difference}, we infer,
+    \begin{equation*}
+        \mleft( x_{0} \notin A \land x_{0} \in B \land x_{0} \notin C \mright)
+        \lor 
+        \mleft( x_{0} \notin A \land x_{0} \notin B \land x_{0} \in C \mright)
+    \end{equation*}
+    If \( x_{0} \notin A \land x_{0} \in B \land x_{0} \notin C \),
+    then clearly \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \) because 
+    \( x_{0} \in \mleft( A \symdiff B \mright) \) but \( x_{0} \notin C \).
+    If \( x_{0} \notin A \land x_{0} \notin B \land x_{0} \in C \), 
+    then \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \) is also true because
+    \( x_{0} \notin \mleft( A \symdiff B \mright) \) but \( x_{0} \in C \). Since both disjuncts
+    imply \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \), Disjunction Elmination
+    yields,
+    \begin{equation}
+        \label{eq:right-disjunct-forward-implication}
+        x_{0} \notin A \land x_{0} \in \mleft( B \symdiff C \mright)
+        \implies 
+        x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
+    \end{equation}
+    Applying Disjunction Elimination to \eqref{eq:lhs-predicate-form}, \eqref{eq:left-disjunct-forward-implication}, 
+    and \eqref{eq:right-disjunct-forward-implication}, we infer,
+    \begin{equation}
+        \label{eq:symmetric-difference-associativity-forward-implication}
+        x_{0} \in A \symdiff \mleft( B \symdiff C \mright)
+        \implies 
+        x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
+    \end{equation}
+
+    \vspace{0.1cm}
+    \noindent To prove the converse, we suppose that \( x_{0} \in \mleft( A \symdiff B \mright) \symdiff C \).
+    Then by \cref{dfn:symmetric-difference}, it follows that,
+    \begin{equation}
+        \label{eq:rhs-predicate-form}
+        \big( x_{0} \in \mleft( A \symdiff B \mright) \land x_{0} \notin C \big)
+        \lor 
+        \big( x_{0} \notin \mleft( A \symdiff B \mright) \land x_{0} \in C \big)
+    \end{equation}
+    Suppose that \( x_{0} \in \mleft( A \symdiff B \mright) \land x_{0} \notin C \). It follows from
+    \cref{dfn:symmetric-difference} that,
+    \begin{equation*}
+        \mleft( x_{0} \in A \land x_{0} \notin B \land x_{0} \notin C \mright)
+        \lor
+        \mleft( x_{0} \notin A \land x_{0} \in B \land x_{0} \notin C \mright)
+    \end{equation*}
+    If \( \mleft( x_{0} \in A \land x_{0} \notin B \land x_{0} \notin C \mright) \),
+    then \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) because \( x_{0} \in A \) and
+    \( x_{0} \notin \mleft( B \symdiff C \mright) \).
+    Similarly, if \( \mleft( x_{0} \notin A \land x_{0} \in B \land x_{0} \notin C \mright) \),
+    then \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) is also true because
+    \( x_{0} \notin A \) and \( x_{0} \in \mleft( B \symdiff C \mright) \). Since both disjuncts imply
+    \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \), we conclude by Disjunction Elimination that,
+    \begin{equation}
+        \label{eq:left-disjunct-backward-implication}
+        x_{0} \in \mleft( A \symdiff B \mright) \land  x_{0} \notin C
+        \implies 
+        x_{0} \in A \symdiff \mleft( B \symdiff C \mright)
+    \end{equation}
+    Next, suppose that \( x_{0} \notin \mleft( A \symdiff B \mright) \land \, x_{0} \in C \) is true. Once again
+    applying \cref{dfn:symmetric-difference}, we have,
+    \begin{equation*}
+        \mleft( x_{0} \notin A \land x_{0} \notin B \land x_{0} \in C \mright)
+        \lor
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \in C \mright)
+    \end{equation*}
+    If \( \mleft( x_{0} \notin A \land x_{0} \notin B \land x_{0} \in C \mright) \), 
+    then \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) must hold because
+    \( x_{0} \notin A \) and \( x_{0} \in \mleft( B \symdiff C \mright) \).
+    If \( \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \in C \mright) \), then
+    \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) is also true because \( x_{0} \in A \)
+    and \( x_{0} \notin \mleft( B \symdiff C \mright) \). Since both disjuncts imply \( x_{0} \in 
+    A \symdiff \mleft( B \symdiff C \mright)\), we conclude by Disjunction Elimination that,
+    \begin{equation}
+        \label{eq:right-disjunct-backward-implication}
+        x_{0} \notin \mleft( A \symdiff B \mright) \land \,\, x_{0} \in C
+        \implies 
+        x_{0} \in A \mleft( B \symdiff C \mright)
+    \end{equation}
+    Applying Disjunction Elimination to \eqref{eq:rhs-predicate-form}, \eqref{eq:left-disjunct-backward-implication},
+    and \eqref{eq:right-disjunct-backward-implication} yields,
+    \begin{equation}
+        \label{eq:symmetric-difference-associativity-backward-implication}
+        x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
+        \implies 
+        x_{0} \in A \symdiff \mleft( B \symdiff C \mright)
+    \end{equation}
+    Together, \eqref{eq:symmetric-difference-associativity-forward-implication} and \eqref{eq:symmetric-difference-associativity-backward-implication}
+    establish the biconditional:
+    \begin{equation*}
+        x_{0} \in A \symdiff \mleft( B \symdiff C \mright)
+        \iff 
+        x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \Big( x \in A \symdiff \mleft( B \symdiff C \mright)
+        \iff 
+        x \in \mleft( A \symdiff B \mright) \symdiff C
+        \Big)
+    \end{equation*}
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from 
+    Universal Generalization.
+\end{proof}
+\subsection{Mixed Operations}
+\begin{thm}[Generalized De Morgan Laws]
+    \label{set-identities:generalized-de-morgan-laws}
+    For any set \( A \) and any non-empty system of sets \( S \),
+    \begin{gather*}
+        A - \Union S = 
+        \Intersect \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A - z \mright)}\\
+        A - \Intersect S = 
+        \Union \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A - z \mright)}
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let \( S \) be an arbitrary system of sets such that \( S \neq \emptyset \).
+    Let the set \( T \) be defined as,
+    \begin{equation}
+        \label{eq:T-in-set-builder-notation}
+        T = \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A - z \mright)}
+    \end{equation}
+    First, we must prove that the set \( T \) does indeed exist. Let \( x_{0} \) be an arbitrary object such that
+    \( \exists z \, \mleft( z \in S \land x_{0} = A - z \mright) \). In other words, \( x_{0} = A - z_{0} \) for 
+    some \( z_{0} \in S \). By \cref{dfn:difference}, it follows that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in x_{0} \iff x \in A \land x \notin z_{0} \mright)
+    \end{equation*}
+    But \( \forall x \, \mleft( x \in A \land x \notin z_{0} \implies x \in A \mright) \) is a tautology.
+    \begin{equation*}
+        \therefore \, \forall x \, \mleft( x \in x_{0} \implies x \in A \mright)
+    \end{equation*}
+    In other words, \( x_{0} \subseteq A \). Equivalently, \( x_{0} \in \mathcal{P}(A) \).
+    \begin{equation*}
+        \therefore \, \forall x \, \mleft( \exists z \, \mleft( z \in S \land x = A - z \mright) \implies x \in \mathcal{P}(A) \mright)
+    \end{equation*}
+    The existence of the set \( T \) is thus guaranteed by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+
+    \vspace{0.5cm}
+    \noindent 
+    Using \cref{dfn:intersection-of-sets}, we can write out the definition for \( \Intersect T \).
+    \begin{equation}
+        \label{eq:statement-for-intersection-of-T}
+        \forall x \, \mleft( x \in \Intersect T 
+        \iff 
+        \forall y \, \mleft( y \in T \implies x \in y \mright) \mright)
+    \end{equation}
+    Applying \eqref{eq:T-in-set-builder-notation} to \eqref{eq:statement-for-intersection-of-T} yields,
+    \begin{equation}
+        \label{eq:statement-for-intersection-of-T-substituted}
+        \forall x \, \mleft( x \in \Intersect T
+        \iff 
+        \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright) \implies x \in y \mright)\mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object. Applying Universal Instantiation to 
+    \eqref{eq:statement-for-intersection-of-T-substituted} yields,
+    \begin{equation}
+        \label{eq:instantiated-statement-for-intersection-of-T-substituted}
+        x_{0} \in \Intersect T 
+        \iff 
+        \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright) \implies x_{0} \in y \mright)
+    \end{equation}
+    Using elementary logic, we can re-express the predicate on the right-hand side of the biconditional 
+    in various equivalent forms:
+    \begin{equation*}
+        \begin{aligned}
+            &\forall y \, \mleft( \exists z \, \mleft( z \in S \land 
+            y = A - z \mright) \implies x_{0} \in y \mright) \\
+            &\forall y \, \mleft( \lnot \, \exists z \, \mleft( z \in S \land y = A - z \mright) \lor x_{0} \in y \mright) \\
+            &\forall y \mleft( \forall z \, \mleft( z \notin S \lor y \neq A - z \mright) \lor x_{0} \in y \mright) \\
+            &\forall y \, \forall z \, \mleft( z \notin S \lor y \neq A - z \lor x_{0} \in y \mright) \\ 
+            &\forall z \, \mleft( z \notin S \lor \forall y \, \mleft( y \neq A - z \lor x_{0} \in y \mright) \mright)\\ 
+            &\forall z \, \mleft( z \notin S \lor \forall y \, \mleft( y = A - z \implies x_{0} \in y \mright) \mright)\\
+            &\forall z \, \mleft( z \notin S \lor x_{0} \in A - z \mright)\\
+            &\forall z \, \mleft( z \notin S \,\,{\lor} \mleft( x_{0} \in A \land x_{0} \notin z \mright) \mright)\\
+            &\forall z \, \mleft( z \notin S \lor x_{0} \in A \land z \notin S \lor x_{0} \notin z \mright)\\
+            &\forall z \, \mleft( z \notin S \lor x_{0} \in A \mright) 
+            \land 
+            \forall z \, \mleft( z \notin S \lor x_{0} \notin z \mright)\\
+            &x_{0} \in A \lor \forall z \, \mleft( z \notin S \mright) \land 
+            \forall z \, \mleft( z \notin S \lor x_{0} \notin z \mright)\\
+            &x_{0} \in A \lor \forall z \, \mleft( z \notin S \mright) \land 
+            \forall z \, \mleft( z \in S \implies x_{0} \notin z \mright)\\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{by \eqref{eq:statement-for-intersection-of-T-substituted}} \\
+            &\quad \text{Definition of Conditional}\\
+            &\quad \text{De Morgan's Law}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{Definition of Conditional}\\
+            &\quad \text{\cref{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{dfn:difference}}\\
+            &\quad \text{\( \lor \)-Distributivity}\\
+            &\quad \text{Logical Equivalence}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{Definition of Conditional}\\
+        \end{aligned}
+    \end{equation*}
+    Thus, we have,
+    \begin{equation*}
+        x_{0} \in \Intersect T
+        \iff 
+        x_{0} \in A \lor  \forall z \, \mleft( z \notin S \mright) {\land}\,\,  \forall z \, \mleft( z \in S \implies x_{0} \notin z \mright)
+    \end{equation*}
+    Since \( S \neq \emptyset \), \( \forall z \, \mleft( z \notin S \mright) \) must be false. Thus, the formula reduces to,
+    \begin{equation}
+        \label{eq:final-statement-for-intersect-T}
+        x_{0} \in \Intersect T 
+        \iff 
+        x_{0} \in A \land 
+        \forall z \, \mleft( z \in S \implies x_{0} \notin z \mright)
+    \end{equation}
+    By \cref{dfn:difference,dfn:union-of-sets},
+    \begin{align}
+        \label{eq:final-statement-for-A-minus-union-S}
+        x_{0} \in A - \Union S 
+        &\iff 
+        x_{0} \in A \land x_{0} \notin \Union S \notag \\ 
+        &\iff 
+        x_{0} \in A \land \lnot \, \exists z \, \mleft( z \in S \land x_{0} \in z \mright) \notag \\ 
+        &\iff 
+        x_{0} \in A \land \forall z \, \mleft( z \notin S \lor x_{0} \notin z \mright)\notag \\
+        &\iff 
+        x_{0} \in A \land \forall z \, \mleft( z \in S \implies x_{0} \notin z \mright)
+    \end{align}
+    Comparing \eqref{eq:final-statement-for-intersect-T} and \eqref{eq:final-statement-for-A-minus-union-S}, we conclude that,
+    \begin{equation*}
+        x_{0} \in A - \Union S \iff x_{0} \in \Intersect T
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A - \Union S \iff x \in \Intersect T \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that,
+    \begin{equation*}
+        A - \Union S = \Intersect T
+    \end{equation*}
+    To prove the second identity, we start with the definition of the union of sets 
+    given by \cref{dfn:union-of-sets}.
+    \begin{equation}
+        \label{eq:statement-for-union-of-T}
+        \forall x \, \mleft( x \in \Union T 
+        \iff 
+        \exists y \, \mleft( y \in T \land x \in y \mright)\mright)
+    \end{equation}
+    Applying \eqref{eq:T-in-set-builder-notation} to \eqref{eq:statement-for-union-of-T},
+    \begin{equation}
+        \label{eq:statement-for-union-of-T-substituted}
+        \forall x \, \mleft( x \in \Union T 
+        \iff 
+        \exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright)
+        \land 
+        x \in y \mright)\mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object. 
+    From \eqref{eq:statement-for-union-of-T-substituted}, we infer by Universal Instantiation that,
+    \begin{equation}
+        \label{eq:instantiated-statement-for-union-of-T-substituted}
+        x_{0} \in \Union T
+        \iff 
+        \exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright) 
+        \land
+        x_{0} \in y \mright)
+    \end{equation}
+    Once again, we apply the laws of elementary logic to transform the predicate on the right-hand side of 
+    the biconditional into various logically equivalent forms:
+    \begin{equation*}
+        \begin{aligned}
+            &\exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright) \land x_{0} \in y \mright)\\
+            &\exists y \, \exists z \, \mleft( z \in S \land y = A - z \land x_{0} \in y \mright)\\ 
+            &\exists z \, \mleft( z \in S \land \exists y \, \mleft( y = A - z \land x_{0} \in y \mright) \mright)\\
+            &\exists z \, \mleft( z \in S \land x_{0} \in A - z \mright)\\
+            &\exists z \, \mleft( z \in S \land \mleft( x_{0} \in A \land x_{0} \notin z \mright) \mright)\\
+            &\exists z \, \mleft( x_{0} \in A \land \mleft( z \in S \land x_{0} \notin z \mright) \mright)\\
+            &x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \notin z \mright)\\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{from \eqref{eq:instantiated-statement-for-union-of-T-substituted}}\\
+            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{dfn:difference}}\\
+            &\quad \text{\( \land \)-Associativity}\\
+            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+        \end{aligned}
+    \end{equation*}
+    Thus, we have,
+    \begin{equation}
+        \label{eq:final-statement-for-union-T}
+        x_{0} \in \Union T 
+        \iff 
+        x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \notin z \mright)
+    \end{equation}
+    By \cref{dfn:intersection-of-sets,dfn:difference},
+    \begin{align}
+        \label{eq:final-statement-for-A-minus-intersect-S}
+        x_{0} \in A - \Intersect S
+        &\iff 
+        x_{0} \in A \land x_{0} \notin \Intersect S \notag \\
+        &\iff 
+        x_{0} \in A \land \lnot \, \forall z \, \mleft( z \in S \implies x_{0} \in z \mright) \notag \\
+        &\iff 
+        x_{0} \in A \land \lnot \, \forall z \, \mleft( z \notin S \lor x_{0} \in z \mright) \notag \\
+        &\iff 
+        x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \notin z \mright)
+    \end{align}
+    From \eqref{eq:final-statement-for-union-T} and \eqref{eq:final-statement-for-A-minus-intersect-S}, we conclude that,
+    \begin{equation*}
+        x_{0} \in A - \Intersect S \iff x_{0} \in \Union T
+    \end{equation*}
+    And since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A - \Intersect S \iff x \in \Union T \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality},
+    \begin{equation*}
+        A - \Intersect S = \Union T \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[De Morgan Laws]
+    \label{set-identities:de-morgan-laws}
+    For any three sets \( A \), \( B \), and \( C \),
+    \begin{gather*}
+        A - \mleft( B \union C \mright) = \mleft( A - B \mright) \intersect \mleft( A - C \mright) \\
+        A - \mleft( B \intersect C \mright) = \mleft( A - B \mright) \union \mleft( A - C \mright)
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    This is merely a special case of \cref{set-identities:generalized-de-morgan-laws} with
+    \( S = \mleft\{ B, C \mright\} \). 
+    Thus, by \cref{set-identities:generalized-de-morgan-laws,dfn:union-of-sets,dfn:unordered-pair,dfn:intersection-of-sets},
+    \begin{align*}
+        A - \mleft( B \union C \mright)
+        &=
+        A - \Union \Big\{ B, C \Big\} \\
+        &=
+        \Intersect \setbuilderbig{x \in \powerset{A}}{\exists z \, \mleft( z \in \mleft\{ A, B\mright\} \land x = A - z \mright)}\\
+        &=
+        \Intersect \Big\{ A - B, A - C \Big\} \\ 
+        &=
+        \mleft( A - B \mright) \intersect \mleft( A - C \mright)
+    \end{align*}
+    Similarly,
+    \begin{align*}
+        A - \mleft( B \intersect C \mright)
+        &= 
+        A - \Intersect \Big\{ B, C \Big\} \\
+        &=
+        \Union \setbuilderbig{x \in \powerset{A}}{\exists z \, \mleft( z \in \mleft\{ B,C \mright\} \land x = A - z \mright)}\\
+        &=
+        \Union \Big\{ A - B, A - C \Big\} \\ 
+        &=
+        \mleft( A - B \mright) \union \mleft( A - C \mright) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}[Generalized Distributive Laws]
+    \label{set-identities:generalized-distributive-laws}
+    For any set \( A \) and any non-empty system of sets \( S \),
+    \begin{gather*}
+        A \union \Intersect S = 
+        \Intersect \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A \union z \mright)}\\
+        A \intersect \Union S = 
+        \Union \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A \intersect z \mright)}
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be a set and \( S \) be a non-empty system of sets. Let the sets \( T_{1} \) and \( T_{2} \)
+    be defined as follows.
+    \begin{gather}
+        T_{1} = 
+        \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A \union z \mright)} \label{eq:define-T1} \\ 
+        T_{2} =
+        \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A \intersect z \mright)} \label{eq:define-T2}
+    \end{gather}
+    We begin by proving that \( T_{1} \) and \( T_{2} \) exist. 
+
+    \vspace{0.5cm}
+    \noindent
+    Let \( x_{0} \) be an arbitrary object such that 
+    \( \exists z \, \mleft( z \in S \land x_{0} = A \union z \mright) \) holds.
+    In other words, \( x_{0} = A \union z_{0} \) for some \( z_{0} \in S \).
+    Now consider the set \( A \union \Union S \), which exists by the \nameref{axm:axiom-of-union}.
+    Using \cref{dfn:union-of-sets,thm:union-in-terms-of-logical-or}, we can express the definition
+    of \( A \union \Union S \) like so:
+    \begin{equation}
+        \label{eq:define-A-union-the-union-of-S}
+        \forall x \, \mleft( x \in A \union \Union S 
+        \iff 
+        x \in A \lor 
+        \exists y \, \mleft( y \in S \land x \in y \mright)\mright)
+    \end{equation}
+    Since \( x_{0} = A \union z_{0} \), it follows from \cref{thm:union-in-terms-of-logical-or}
+    that,
+    \begin{equation}
+        \label{eq:predicate-for-A-union-z0}
+        \forall x \, \mleft( x \in x_{0} 
+        \iff 
+        x \in A \lor x \in  z_{0} \mright)
+    \end{equation}
+    Let \( \alpha \) be an arbitrary object such that \( \alpha \in x_{0} \). By \eqref{eq:predicate-for-A-union-z0},
+    \begin{equation*}
+        \alpha \in A \lor \alpha \in z_{0}
+    \end{equation*}
+    If \( \alpha \in A \), then \( \alpha \in A \union \Union S \) by \eqref{eq:define-A-union-the-union-of-S}. If 
+    \( \alpha \in z_{0} \), then \( \exists y \, \mleft( y \in S \land \alpha \in y \mright) \) must be true
+    because \( z_{0} \in S \). Thus, \( \alpha \in A \union \Union S \) also follows by \eqref{eq:define-A-union-the-union-of-S}.
+    By Disjunction Elimination, we conclude that,
+    \begin{equation*}
+        \alpha \in x_{0} \implies \alpha \in A \union \Union S
+    \end{equation*}
+    Since \( \alpha \) is arbitrary, we can generalize,
+    \begin{equation*}
+        \forall x \, \mleft( x \in x_{0} \implies A \union \Union S \mright)
+    \end{equation*}
+    In other words, we have proven that \( x_{0} \subseteq A \union \Union S \) and thus \( x_{0} \in \mathcal{P}(A \union \Union S) \).
+    This means that,
+    \begin{equation*}
+        \exists z \, \mleft( z \in S \land x_{0} = A \union z \mright) \implies x_{0} \in \mathcal{P}(A \union \Union S)
+    \end{equation*}
+    Generalizing once again,
+    \begin{equation*}
+        \forall x \, \mleft( \exists z \, \mleft( z \in S \land x = A \union z \mright) \implies x \in \mathcal{P}(A \union \Union S) \mright)
+    \end{equation*}
+    Therefore, \( T_{1} \) exists by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+
+    \vspace{0.5cm}
+    \noindent
+    Let \( x_{0} \) be an arbitrary object such that \( \exists z \, \mleft( z \in S \land x_{0} = A \intersect z \mright) \) holds.
+    In other words, \( x_{0} = A \intersect z_{0} \) for some \( z_{0} \in S \). 
+    Clearly, \( x_{0} \subseteq A \), so \( x_{0} \in \mathcal{P}(A) \).
+    By the Deduction Theorem, we conclude that,
+    \begin{equation*}
+        \exists z \, \mleft( z \in S \land x_{0} = A \intersect z \mright)
+        \implies 
+        x_{0} \in \mathcal{P}(A)
+    \end{equation*}
+    By Univeral Generalization,
+    \begin{equation*}
+        \forall x \, \mleft( \exists z \, \mleft( z \in S \land x = A \intersect z \mright) \implies x \in \mathcal{P}(A) \mright)
+    \end{equation*}
+    The existence of \( T_{2} \) is guaranteed by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+
+    \vspace{0.5cm}
+    \noindent
+    Having established the existences of \( T_{1} \) and \( T_{2} \), we are now ready to prove that,
+    \begin{gather*}
+        A \union \Intersect S = 
+        \Intersect T_{1} \\ 
+        A \intersect \Union S = 
+        \Union T_{2}
+    \end{gather*}
+    We do this by taking the definition of the set on the right-hand side of the equality and then 
+    transforming it (using the laws of elementary logic) into the definition of the set on the 
+    left-hand side.
+    E.g: for the first equality, we apply \cref{dfn:intersection-of-sets} to the right-hand side to obtain,
+    \begin{equation}
+        \label{eq:statement-for-the-intersection-of-T1}
+        \forall x \, \mleft( x \in \Intersect T_{1} 
+        \iff 
+        \forall y \, \mleft( y \in T_{1} \implies x \in y \mright)\mright)
+    \end{equation}
+    Next, we apply \eqref{eq:define-T1} to \eqref{eq:statement-for-the-intersection-of-T1},
+    \begin{equation}
+        \label{eq:statement-for-the-intersection-of-T1-substituted}
+        \forall x \, \mleft( x \in \Intersect T_{1}
+        \iff 
+        \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A \union z \mright) \implies x \in y \mright)\mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object.
+    Applying Universal Instantiation to \eqref{eq:statement-for-the-intersection-of-T1-substituted} yields,
+    \begin{equation}
+        \label{eq:instantiated-statement-for-the-intersection-of-T1-substituted}
+        x_{0} \in \Intersect T_{1}
+        \iff 
+        \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A \union z \mright) \implies x_{0} \in y \mright)
+    \end{equation}
+    Now we transform \eqref{eq:instantiated-statement-for-the-intersection-of-T1-substituted} into various logically
+    equivalent forms:
+    \begin{equation*}
+        \begin{aligned}
+            &\forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A \union z \mright) \implies x_{0} \in y \mright)\\
+            &\forall y \, \mleft( \lnot \, \exists z \, \mleft( z \in S \land y = A \union z \mright) \lor x_{0} \in y \mright)\\
+            &\forall y \, \mleft( \forall z \, \mleft( z \notin S \lor y \neq A \union z \mright) \lor x_{0} \in y \mright)\\
+            &\forall y \, \forall z \, \mleft( z \notin S \lor y \neq A \union z \lor x_{0} \in y \mright)\\
+            &\forall z \, \forall y \, \mleft( z \notin S \lor y \neq A \union z \lor x_{0} \in y \mright)\\
+            &\forall z \, \mleft( z \notin S \lor \forall y \, \mleft( y \neq A \union z \lor x_{0} \in y \mright) \mright)\\
+            &\forall z \, \mleft( z \notin S \lor \forall y \, \mleft( y = A \union z \implies x_{0} \in y \mright) \mright)\\
+            &\forall z \, \mleft( z \notin S \lor x_{0} \in A \union z \mright)\\
+            &\forall z \, \mleft( z \notin S \lor \mleft( x_{0} \in A \lor x_{0} \in z \mright) \mright)\\
+            &\forall z \, \mleft( \mleft( z \notin S \lor x_{0} \in A \mright) \lor x_{0} \in z \mright)\\
+            &\forall z \, \mleft( \mleft( x_{0} \in A \lor z \notin S \mright) \lor x_{0} \in z \mright)\\
+            &\forall z \, \mleft( x_{0} \in A \lor \mleft( z \notin S \lor x_{0} \in z \mright) \mright)\\
+            &x_{0} \in A \lor \forall z \, \mleft( z \notin S \lor x_{0} \in  z \mright)\\
+            &x_{0} \in A \lor \forall z \, \mleft( z \in S \implies x_{0} \in z \mright)\\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{from \eqref{eq:instantiated-statement-for-the-intersection-of-T1-substituted}}\\
+            &\quad \text{Definition of Conditional}\\
+            &\quad \text{De Morgan Laws}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{Logical Equivalence}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{Definition of Conditional}\\
+            &\quad \text{\cref{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{thm:union-in-terms-of-logical-or}}\\
+            &\quad \text{\( \lor \)-Associativity}\\
+            &\quad \text{\( \lor \)-Commutativity}\\
+            &\quad \text{\( \lor \)-Associativity}\\
+            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{Definition of Conditional}\\
+        \end{aligned}
+    \end{equation*}
+    Thus, we have, 
+    \begin{equation}
+        \label{eq:final-statement-of-intersection-T1}
+        x_{0} \in \Intersect T_{1} 
+        \iff 
+        x_{0} \in A \lor \forall z \, \mleft( z \in S \implies x_{0} \in z \mright)
+    \end{equation}
+    From \cref{thm:union-in-terms-of-logical-or,dfn:intersection-of-sets},
+    \begin{align}
+        \label{eq:final-statement-for-A-union-intersection-S}
+        x_{0} \in A \union \Intersect S
+        &\iff 
+        x_{0} \in A \lor x \in \Intersect S \notag \\
+        &\iff 
+        x_{0} \in A \lor \forall z \, \mleft( z \in S \implies x_{0} \in z \mright)
+    \end{align}
+    Comparing \eqref{eq:final-statement-of-intersection-T1} and \eqref{eq:final-statement-for-A-union-intersection-S},
+    it is clear that,
+    \begin{equation*}
+        x_{0} \in A \union \Intersect S \iff x_{0} \in \Intersect T_{1}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude from Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \union \Intersect S \iff x \in \Intersect T_{1} \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that
+    \begin{equation*}
+        A \union \Intersect S = \Intersect T_{1}
+    \end{equation*}
+    The second equality can be similarly established. Again, we start on the right-hand side, this time using 
+    \cref{dfn:union-of-sets}.
+    \begin{equation}
+        \label{eq:statement-for-the-union-of-T2}
+        \forall x \, \mleft( x \in \Union T_{2}
+        \iff 
+        \exists y \, \mleft( y \in T_{2} \land x \in y \mright)\mright)
+    \end{equation}
+    Applying \eqref{eq:define-T2} to \eqref{eq:statement-for-the-union-of-T2}, 
+    \begin{equation}
+        \label{eq:statement-for-the-union-of-T2-substituted}
+        \forall x \, \mleft( x \in \Union T_{2} \iff \exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A \intersect z \mright) \land x \in y \mright) \mright)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object. Instantiating \eqref{eq:statement-for-the-union-of-T2-substituted} yields,
+    \begin{equation}
+        \label{eq:instantiated-statement-for-the-union-of-T2-substituted}
+        x_{0} \in \Union T_{2} 
+        \iff 
+        \exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A \intersect z \mright) \land x_{0} \in y \mright)
+    \end{equation}
+    Now we begin transforming \eqref{eq:instantiated-statement-for-the-union-of-T2-substituted} into its equivalent forms:
+    \begin{equation*}
+        \begin{aligned}
+            &\exists y \, \mleft( \exists z \, \mleft( z \in S \land y = A \intersect z \mright) \,{\land}\,\, x_{0} \in y \mright)\\
+            &\exists y \, \exists z \, \mleft( z \in S \land y = A \intersect z \land x_{0} \in y \mright)\\
+            &\exists z \, \exists y \, \mleft( z \in S \land y = A \intersect z \land x_{0} \in y \mright)\\
+            &\exists z \, \mleft( z \in S \land \exists y \, \mleft( y = A \intersect z \land x_{0} \in y \mright) \mright)\\
+            &\exists z \, \mleft( z \in S \land x_{0} \in A \intersect z \mright)\\
+            &\exists z \, \mleft( z \in S \,\,{\land}\, \mleft( x_{0} \in A \land x_{0} \in z \mright)\mright)\\
+            &\exists z \, \mleft( \mleft( z \in S \land x_{0} \in A \mright) \,{\land}\,\, x_{0} \in z \mright)\\
+            &\exists z \, \mleft( \mleft( x_{0} \in A \land z \in S \mright) \,{\land}\,\, x_{0} \in z \mright)\\
+            &\exists z \, \mleft( x_{0} \in A \,\,{\land}\, \mleft( z \in S \land x_{0} \in z \mright)\mright)\\
+            &x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \in z \mright)\\
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad \text{from \eqref{eq:instantiated-statement-for-the-union-of-T2-substituted}}\\
+            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{Logical Equivalence}\\
+            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{thm:intersection-in-terms-of-logical-and}}\\
+            &\quad \text{\( \land \)-Associativity}\\
+            &\quad \text{\( \land \)-Commutativitiy}\\
+            &\quad \text{\( \land \)-Associativity}\\
+            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+        \end{aligned}
+    \end{equation*}
+    Thus, we have
+    \begin{equation}
+        \label{eq:final-statement-for-the-union-of-T2}
+        x_{0} \in \Union T_{2} 
+        \iff 
+        x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \in z \mright)
+    \end{equation}
+    And from \cref{thm:intersection-in-terms-of-logical-and,dfn:union-of-sets},
+    \begin{align}
+        \label{eq:final-statement-of-A-intersect-union-S}
+        x_{0} \in A \intersect \Union S 
+        &\iff 
+        x_{0} \in A \land x_{0} \in \Union S \notag \\
+        &\iff 
+        x_{0} \in A \land \exists z \, \mleft( z \in S \land x_{0} \in z \mright)
+    \end{align}
+    Comparing \eqref{eq:final-statement-for-the-union-of-T2} and \eqref{eq:final-statement-of-A-intersect-union-S}, 
+    it is clear that,
+    \begin{equation*}
+        x_{0} \in A \intersect \Union S \iff x_{0} \in \Union T_{2}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \intersect \Union S \iff x \in \Union T_{2}  \mright)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that,
+    \begin{equation*}
+        A \intersect \Union S = \Union T_{2} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[Distributive Laws]
+    \label{set-identities:distributive-laws}
+    For any three sets \( A \), \( B \), and \( C \),
+    \begin{gather*}
+        A \union \mleft( B \intersect C \mright)
+        = \mleft( A \union B \mright) \intersect \mleft( A \union C \mright)\\ 
+        A \intersect \mleft( B \union C \mright)
+        = \mleft( A \intersect B \mright) \union \mleft( A \intersect C \mright)
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    This is a special case of \cref{set-identities:generalized-distributive-laws} with 
+    \( S = \mleft\{ B, C \mright\} \). 
+    Thus, by \cref{set-identities:generalized-distributive-laws,dfn:intersection-of-sets} we have,
+    \begin{align*}
+        A \union \mleft( B \intersect C \mright) 
+        &= 
+        A \union \Intersect \Big\{ B, C \Big\} \\
+        &=
+        \Intersect \setbuilderbig{x}{\exists z \, \mleft( z \in \mleft\{ B,C \mright\} \land x = A \union z \mright)}\\
+        &=
+        \Intersect \Big\{ A \union B, A \union C \Big\} \\ 
+        &= 
+        \mleft( A \union B \mright) \intersect \mleft( A \union C \mright)
+    \end{align*}
+    Similarly, 
+    \begin{align*}
+        A \intersect \mleft( B \union C \mright)
+        &= 
+        A \intersect \Union \Big\{ B, C \Big\}\\
+        &=
+        \Union \setbuilderbig{x}{\exists z \, \mleft( z \in \mleft\{ B,C \mright\} \land x = A \intersect z \mright)}\\
+        &=
+        \Union \Big\{ A \intersect B, A \intersect C \Big\}\\ 
+        &=
+        \mleft( A \intersect B \mright) \union \mleft( A \intersect C \mright) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}[Absorption Laws of \( \union  \) and \( \intersect  \)]
+    \label{thm:absorption-laws-of-union-and-intersection}
+    For any two sets \( A \) and \( B \), the following equality holds:
+    \begin{equation*}
+        A \union \mleft( A \intersect B \mright) = A \intersect \mleft( A \union B \mright) = A
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets.
+    It is trivial to prove that \( A \union \mleft( A \intersect B \mright) = A \intersect \mleft( A \union B \mright) \).
+    By \cref{set-identities:distributive-laws}, we have,
+    \begin{equation*}
+        A \union \mleft( A \intersect B \mright) = \mleft( A \union A \mright) \intersect \mleft( A \union B \mright)
+    \end{equation*}
+    The \( \union  \) operation is idempotent (\cref{set-identities:idempotence-of-unions}), so \( A \union A = A \).
+    \begin{equation*}
+        \therefore \, A \union \mleft( A \intersect B \mright) = A \intersect \mleft( A \union B \mright)
+    \end{equation*}
+    Now, we simply have to prove \( A \intersect \mleft( A \union B \mright) = A \).
+    \begin{align*}
+        A \intersect \mleft( A \union B \mright)
+        &= 
+        \mleft( A \union \emptyset \mright) \intersect \mleft( A \union B \mright) \\ 
+        &=
+        \big( A \union \mleft( B - B \mright) \big) \intersect \big( A \union B \big)\\
+        &= 
+        A \union \big( \mleft( B - B \mright) \intersect B \big)\\ 
+        &= 
+        A \union \mleft( \emptyset \intersect B \mright) \\ 
+        &=
+        A \union \emptyset \\ 
+        &= 
+        A  \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}[Right Distributivity of \( - \)]
+    \label{set-identities:right-distributivity-of-difference}
+    For any three sets \( A \), \( B \), and \( C \), the following
+    equalities hold:
+    \begin{gather*}
+        \mleft( A \union B \mright) - C
+        =
+        \mleft( A - C \mright) \union \mleft( B - C \mright) \\
+        \mleft( A \intersect B \mright) - C
+        = 
+        \mleft( A - C \mright) \intersect \mleft( B - C \mright) \\ 
+        \mleft( A - B \mright) - C 
+        = 
+        \mleft( A - C \mright) - \mleft( B - C \mright) \\
+        \mleft( A \symdiff B \mright) - C 
+        =
+        \mleft( A - C \mright) \symdiff \mleft( B - C \mright) 
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    The first two identities are simple to prove. It is evident from 
+    \cref{thm:union-in-terms-of-logical-or,dfn:difference} that for 
+    some arbitrary \( x_{0} \), 
+    \begin{align*}
+        x_{0} \in \mleft( A \union B \mright) - C
+        &\iff 
+        x_{0} \in \mleft( A \union B \mright) \land x_{0} \notin C \\ 
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright) \land x_{0} \notin C \\
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \notin C \mright) \lor
+        \mleft( x_{0} \in B \land x_{0} \notin C \mright) \\
+        &\iff 
+        x_{0} \in \mleft( A - C \mright) \lor x_{0} \in \mleft( B - C \mright) \\
+        &\iff 
+        x_{0} \in \mleft( A - C \mright) \union \mleft( B - C \mright)
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, the formula can be generalized,
+    \begin{equation*}
+        \forall x \, \Big( x \in \mleft( A \union B \mright) - C
+        \iff 
+        x \in \mleft( A - C \mright) \union \mleft( B - C \mright)  \Big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, \( \mleft( A \union B \mright) - C = \mleft( A - C \mright) \union \mleft( B - C \mright) \).
+
+    \vspace{0.5cm}
+    \noindent
+    To prove the second identitiy, we follow a similar procedure. Let \( x_{0} \) be an arbitrary object. Thus,
+    \begin{align*}
+        x_{0} \in \mleft( A \intersect B \mright) - C
+        &\iff 
+        x_{0} \in \mleft( A \intersect B \mright) \land x_{0} \notin C\\ 
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \in B \mright) \land x_{0} \notin C\\
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \in B \mright)
+        \land 
+        \mleft( x_{0} \notin C \land x_{0} \notin C \mright)\\
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \notin C \mright)
+        \land 
+        \mleft( x_{0} \in B \land x_{0} \notin C \mright)\\
+        &\iff 
+        x_{0} \in \mleft( A - C \mright) \land x_{0} \in \mleft( B - C \mright)\\
+        &\iff 
+        x_{0} \in \mleft( A - C \mright) \intersect \mleft( B - C \mright)
+    \end{align*}
+    The proof for the third identity is slightly more involved. 
+    We shall employ a neat trick from propositional logic that
+    allows us to derive an equivalent formula from any formula by 
+    introducing a false disjunct. That is, for any two formulas 
+    \( \varphi \) and \( \Psi \), the following equivalence holds:
+    \begin{equation*}
+        \varphi \equiv \varphi \lor \mleft( \Psi \land \lnot \, \Psi \mright)
+    \end{equation*}
+    Thus,
+    \begin{align*}
+        x_{0} \in \mleft( A - B \mright) - C 
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \notin B \mright) \land x_{0} \notin C \\
+        &\iff 
+        \big( \mleft( x_{0} \in A \land x_{0} \notin B \mright) \land x_{0} \notin C \big) \lor 
+        \big( x_{0} \in C \land x_{0} \notin C \big)\\
+        &\iff 
+        \big( \mleft( x_{0} \in A \land x_{0} \notin B \mright) \lor x_{0} \in C \big)
+        \land 
+        x_{0} \notin C \\
+        &\iff 
+        \big( \mleft( x_{0} \in A \lor x_{0} \in C \mright) \land \mleft( x_{0} \notin B \lor x_{0} \in C \mright) \big)
+        \land 
+        x_{0} \notin C\\
+        &\iff 
+        \big( \mleft( x_{0} \in A \lor x_{0} \in C \mright) \land x_{0} \notin C \big)
+        \land 
+        \big( x_{0} \notin B \lor x_{0} \in C \big)\\
+        &\iff 
+        \big( x_{0} \in A \land x_{0} \notin C \big)
+        \land 
+        \lnot \, \big( x_{0} \in B \land x_{0} \notin C \big)\\
+        &\iff 
+        x_{0} \in \mleft( A - C \mright) \land x_{0} \notin \mleft( B - C \mright)\\
+        &\iff 
+        x_{0} \in \big( \mleft( A - C \mright) - \mleft( B - C \mright) \big)
+    \end{align*}
+    And finally, we prove the fourth identity using the previous three identities.
+    Applying \cref{set-identities:symmetric-difference-in-terms-of-union-and-intersection}, 
+    we get,
+    \begin{equation*}
+        \mleft( A \symdiff B \mright) - C = \Big( \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \Big) - C
+    \end{equation*}
+    Using the third identity, the expression becomes,
+    \begin{equation*}
+        \mleft( A \symdiff B \mright) - C 
+        = 
+        \Big( \mleft( A \union B \mright) - C - \mleft( A \intersect B \mright) - C \Big)
+    \end{equation*}
+    Then apply the first two identities,
+    \begin{equation*}
+        \mleft( A \symdiff B \mright) - C 
+        = 
+        \Big( \mleft( A - C \mright) \union \mleft( B - C \mright) - \mleft( A - C \mright) \intersect \mleft( B - C \mright) \Big)
+    \end{equation*}
+    Now apply \cref{set-identities:symmetric-difference-in-terms-of-union-and-intersection} again to obtain,
+    \begin{equation*}
+        \mleft( A \symdiff B \mright) - C = \mleft( A - C \mright) \symdiff \mleft( B - C\mright) \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:associativity-of-intersection-difference}
+    For any three sets \( A \), \( B \), and \( C \):
+    \begin{equation*}
+        A \intersect \mleft( B - C \mright)
+        = \mleft( A \intersect B \mright) - C
+        = \mleft( A - C \mright) \intersect \mleft( B - C \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    The equality follows from the associativity of the logical-\( \land \) operator.
+    Thus, for any arbitrary \( x_{0} \),
+    \begin{align*}
+        x_{0} \in A \intersect \mleft( B - C \mright)
+        &\iff 
+        x_{0} \in A \land x_{0} \in B - C\\
+        &\iff 
+        x_{0} \in A \land \mleft( x_{0} \in B \land x_{0} \notin C \mright)\\ 
+        &\iff 
+        \mleft( x_{0} \in A \land x_{0} \in B \mright) \land x_{0} \notin C\\
+        &\iff 
+        \mleft( x_{0} \in A \intersect B \mright) \land \mleft( x_{0} \notin C \mright)\\
+        &\iff 
+        x_{0} \in \mleft( A \intersect B \mright) - C
+    \end{align*}
+    To prove that \( A \intersect \mleft( B \intersect C \mright) = \mleft( A - C \mright) \intersect \mleft( B - C \mright) \),
+    we simply apply \cref{set-identities:right-distributivity-of-difference} to 
+    \( \mleft( A \intersect B \mright) - C \).
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:union-difference}
+    For any three sets \( A \), \( B \), and \( C \), the following equality holds:
+    \begin{equation*}
+        A \union \mleft( B - C \mright) = \mleft( A \union B \mright) - \mleft( C - A \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( x_{0} \) be an arbitrary object. By \cref{thm:union-in-terms-of-logical-or,dfn:difference}, we have,
+    \begin{equation*}
+        x_{0} \in A \union \mleft( B - C \mright)
+        \iff 
+        x_{0} \in A \lor \mleft( x_{0} \in B \land x_{0} \notin C \mright)
+    \end{equation*}
+    Since \( \lor \) distributes over \( \land \),
+    \begin{equation*}
+        x_{0} \in A \union \mleft( B - C \mright) 
+        \iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright)
+        \land 
+        \mleft( x_{0} \in A \lor x_{0} \notin C \mright)
+    \end{equation*}
+    Applying De Morgan Laws,
+    \begin{align*}
+        x_{0} \in A \union \mleft( B - C \mright)
+        &\iff 
+        \mleft( x_{0} \in A \lor x_{0} \in B \mright)
+        \land \lnot \, 
+        \mleft( x_{0} \in C \land x_{0} \notin A \mright)\\
+        &\iff 
+        x_{0} \in \mleft( A \union B \mright)
+        \land 
+        x_{0} \notin \mleft( C - A \mright)\\
+        &\iff 
+        x_{0} \in \Big( \mleft( A \union B \mright) - \mleft( C - A \mright) \Big) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}[Distributivity of \( \intersect  \) over \( \symdiff  \)]
+    \label{set-identities:distributivity-of-intersection-over-symmetric-difference}
+    For any three sets \( A \), \( B \), and \( C \), the following equalities hold:
+    \begin{gather*}
+        A \intersect (B \symdiff C) 
+        = 
+        \mleft( A \intersect B \mright) \symdiff \mleft( A \intersect C \mright)\\ 
+        \mleft( A \symdiff B \mright) \intersect C 
+        = 
+        \mleft( A \intersect C \mright) \symdiff \mleft( B \intersect C \mright)
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    We start by proving the first equality and then use it to prove the second equality.
+    Let \( x_{0} \) be an arbitrary object. By definition,
+    \begin{align*}
+        x_{0} \in A \intersect \mleft( B \symdiff C \mright)
+        &\iff 
+        x_{0} \in A \land x_{0} \in \mleft( B \symdiff C \mright)\\
+        &\iff 
+        x_{0} \in A \, \land \mleft( x_{0} \in B \land x_{0} \notin C \lor x_{0} \notin B \land x_{0} \in C \mright)
+    \end{align*}
+    Simplifying using the distributivity of logical operators,
+    \begin{equation}
+        \label{eq:working-expression}
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \notin C \mright)
+        \lor 
+        \mleft( x_{0} \in A \land x_{0} \notin B \land x_{0} \in C \mright)
+    \end{equation}
+    For the next step, we utilize the fact that for any formula \( \varphi \),
+    \begin{equation*}
+        \varphi \equiv \varphi \lor \bot
+    \end{equation*}
+    For instance, the disjunct on the left-hand side of \eqref{eq:working-expression} is equivalent
+    to,
+    \begin{equation*}
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \notin A \mright)
+        \lor 
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \notin C \mright)
+    \end{equation*}
+    We can simply the formula even further using the distributivity of logical operators.
+    \begin{equation}
+        \label{eq:left-disjunct-final-form}
+        \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \notin C \mright)
+        \iff 
+        \mleft( x_{0} \in A \land x_{0} \in B \mright)
+        \land 
+        \mleft( x_{0} \notin A \lor x_{0} \notin C \mright)
+    \end{equation}
+    The same can be done for the disjunct on the right-hand side of \eqref{eq:working-expression} this time using 
+    \( x_{0} \in A \land x_{0} \in C \land x_{0} \notin A\) as the contradictory formula.
+    \begin{equation}
+        \label{eq:right-disjunct-final-form}
+        \mleft( x_{0} \in A \land x_{0} \notin B \land x_{0} \in C \mright)
+        \iff 
+        \mleft( x_{0} \in A \land x_{0} \in C \mright)
+        \land 
+        \mleft( x_{0} \notin A \lor x_{0} \notin B \mright)
+    \end{equation}
+    Applying \eqref{eq:left-disjunct-final-form} and \eqref{eq:right-disjunct-final-form} into
+    \eqref{eq:working-expression} yields,
+    \begin{multline*}
+        \Big( \mleft( x_{0} \in A \land x_{0} \in B \mright)
+        \land 
+        \mleft( x_{0} \notin A \lor x_{0} \notin C \mright)\Big)
+        \lor \\
+        \Big( \mleft( x_{0} \in A \land x_{0} \in C \mright)
+        \land 
+        \mleft( x_{0} \notin A \lor x_{0} \notin B \mright)\Big)
+    \end{multline*}
+    which is equivalent to,
+    \begin{equation}
+        \label{eq:final-equivalent-form}
+        \Big( x_{0} \in \mleft( A \intersect B \mright) \land x_{0} \notin \mleft( A \intersect C \mright)  \Big)
+        \lor 
+        \Big( x_{0} \in \mleft( A \intersect C \mright) \land x_{0} \notin \mleft( A \intersect B \mright) \Big)
+    \end{equation}
+    And by \cref{dfn:symmetric-difference}, \eqref{eq:final-equivalent-form} is equivalent to 
+    \( x_{0} \in  \mleft( A \intersect B \mright) \symdiff \mleft( A \intersect C \mright) \).
+    \begin{equation*}
+        \therefore \, x_{0} \in A \intersect \mleft( B \symdiff C \mright)
+        \iff 
+        x_{0} \in \mleft( A \intersect B \mright) \symdiff \mleft( A \intersect C \mright)
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, 
+    \( A \intersect \mleft( B \symdiff C \mright) = \mleft( A \intersect B \mright) \symdiff \mleft( A \intersect C \mright)\)
+    follows from Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+
+    \vspace{0.5cm}
+    \noindent
+    With the first equality at our disposal, the proof for the second equality becomes trivial.
+    Due to the commutativity of \( \intersect \), the problem is reduced to the first equality:
+    \begin{align*}
+        \mleft( A \symdiff B \mright) \intersect C 
+        &= 
+        C \intersect \mleft( A \symdiff B \mright)\\
+        &=
+        \mleft( C \intersect A \mright) \symdiff \mleft( C \intersect B \mright) \\
+        &=
+        \mleft( A \intersect C \mright) \symdiff \mleft( B \intersect C \mright) \qedhere
+    \end{align*}
+\end{proof}

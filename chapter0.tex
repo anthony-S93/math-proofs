@@ -1,0 +1,64 @@
+\chapter{The Axioms of Set Theory} \label{ch:zfc-axioms}
+
+The following is a list of axioms from which every other statement in set theory can be deduced.
+
+\begin{axm}[Axiom of Existence]
+    \label{axm:axiom-of-existence}
+    There exists a set without any elements.
+
+    \begin{equation*}
+        \exists A \, \forall x \, \mleft( x \notin A \mright) 
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom of Extensionality]
+    \label{axm:axiom-of-extensionality}
+    If every element of \( A \) is an element of \( B \) and every element of \( B \) is also an element of \( A \), then \( A = B \).
+    \begin{equation*}
+        \forall A,B \, \Big[\, \forall x \left( x \in A \iff x \in B \right) \implies A = B \,\Big]
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom of Pairing]
+    \label{axm:axiom-of-pairing}
+    For any objects \( a \) and \( b \), there exists a set \( S \) such that \( S \) contains exactly \( a \) and \( b \). 
+    \begin{equation*}
+        \forall a, b \, \exists S \, \forall x \Big( x \in S \iff (x = a \lor x = y) \Big)
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom Schema of Specification]
+    \label{axm:axiom-schema-of-specification}
+    Given any predicate \( \varphi \) and any existing set \( A \), there exists a set \( S \)
+    such that \( x \in S \) if and only if \( x \in A \land \varphi(x) \).
+    \begin{equation*}
+        \forall A \, \exists S \, \forall x \Big[\, x \in S \iff x \in A \land \varphi(x) \,\Big]
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom of Union]
+    \label{axm:axiom-of-union}
+    For any set \( A \), there exists a set \( U \) such that \( x \in U \) if and only if \( x \in S \) for some \( S \in A \). 
+
+    \begin{equation*}
+        \forall A \, \exists U \, \forall x \Big[\, x \in U \iff  \exists S \,{\in}\, A \, \big(x \in S\big) \,\Big] 
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom of Power Set]
+    \label{axm:axiom-of-power-set}
+    For any set \( A \), there exists a set \( P \) such that for any \( x \), \( x \in P \) if and only if \,\( \forall y \bigl( y \in x \implies y \in A \bigr) \)
+
+    \begin{equation*}
+        \forall A \, \exists P \, \forall x \Big( x \in P \iff \forall y \big( y \in x \implies y \in A \big)\Big)
+    \end{equation*}
+\end{axm}
+
+\begin{axm}[Axiom of Infinity]
+    \label{axm:axiom-of-infinity}
+    An inductive set exists.
+
+    \begin{equation*}
+        \exists I \Big( \emptyset \in I \land \forall x \, \big( x \in I \implies x \cup \{x\} \in I\big)\Big)
+    \end{equation*}
+\end{axm}
