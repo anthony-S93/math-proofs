@@ -1,0 +1,612 @@
+\newpage
+\appendix
+\chapter{Results from Elementary Logic}
+
+\begin{thm}
+    \label{logic:grouping-disjuncts-into-quantified-statement-universal}
+    Given any well-formed formulas \( \Gamma \) and \( \varphi \)
+    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and 
+    \(\beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})  \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty domain \( D \).
+    Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) represent objects
+    in \( D \).
+
+    \vspace{0.5cm}
+    \noindent Suppose that the formula,
+    \begin{equation}
+        \label{eq:lhs-statement}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+    holds. From the truth table for the logical-\( \lor \) operator,
+    it is clear that there are only three possible cases in which 
+    \eqref{eq:lhs-statement} is true.
+    
+    % Case 1
+    \vspace{0.5cm}
+    \noindent {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \). 
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds, then by Disjunction Introduction,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    for any \( x_{0} \in D \). Since \( x_{0} \) is arbitrary, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+    \lor \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from Universal Generalization.
+
+
+    % Case 2
+    \vspace{0.5cm}
+    \noindent {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\). 
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x_{0} \in D \) be arbitrary. Since \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
+    is true, then \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) follows from Universal Instantiation. By Disjunction
+    Introduction, we thus have,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we have \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
+    \lor
+    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) as needed.
+
+
+    % Case 3
+    \vspace{0.5cm}
+    \noindent {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x_{0} \in D \) be arbitrary. Clearly, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true. Thus,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    follows from Disjunction Introduction. With \( x_{0} \) being arbitrary, we conclude by Universal Generalization
+    that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+
+
+    \vspace{0.5cm}
+    \noindent
+    In all three cases, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from the initial assumption that 
+    \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+    \begin{equation*}
+        \therefore \,
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation*}
+    Furthermore, this implication holds regardless of any interpretation.
+    Thus,
+    \begin{equation}
+        \label{eq:disjunct-into-universal-quantifier-forward-entailment}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation}
+
+    \noindent
+    Next, we show that the logical consequence also holds in the opposite direction. For that, we suppose that
+    the formula,
+    \begin{equation}
+        \label{eq:rhs-statement}
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation}
+    holds. Clearly, there are only 2 possible cases in which \eqref{eq:rhs-statement} can be true.
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds. 
+
+    \vspace{0.1cm}
+    \noindent
+    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\).
+
+    \vspace{0.5cm}
+    \noindent
+    In both cases,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    follows trivially by Disjunction Introduction.
+    \begin{equation*}
+        \therefore \, 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+        \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Since the implication is independent of the interpretation, we have,
+    \begin{equation}
+        \label{eq:disjunct-into-universal-quantifier-backward-entailment}
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+        \models 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+
+    \vspace{0.5cm}
+    \noindent
+    The theorem follows directly from \eqref{eq:disjunct-into-universal-quantifier-forward-entailment}
+    and \eqref{eq:disjunct-into-universal-quantifier-backward-entailment}.
+\end{proof}
+
+\begin{thm}
+    \label{logic:grouping-conjuncts-into-quantified-statement-universal}
+    Given any well-formed formulas \( \Gamma \) and \( \varphi \)
+    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and 
+    \(\beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context
+    of an arbitrary, non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and 
+    \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
+
+    \vspace{0.5cm}
+    \noindent
+    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) holds.
+    Now, let \( x_{0} \in D \) be arbitrary.
+    Since \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true,
+    \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) follows by Universal Instantiation.
+    By Conjunction Introduction and Universal Generalization, it follows that,
+    \begin{equation*}
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation*}
+    Using the Deduction Theorem, we derive the implication:
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation*}
+    Given that the interpretation of all the formulas is arbitrary, it follows that,
+    \begin{equation}
+        \label{eq:conjunct-into-universal-quantifier-forward-entailment}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \land 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation}
+
+    \vspace{0.5cm}
+    \noindent
+    Conversely, if \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) holds, then \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
+    must be true. Let
+    \( x_{0} \) be an arbitrary object in the domain. Again, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
+    follows directly from the initial hypothesis. Since \( x_{0} \) is arbitrary, Universal Generalization permits
+    us to conclude \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \). By Conjunction Introduction,
+    we have,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \varphi(x, \beta_{1}, \beta_{m}) \big)
+    \end{equation*}
+    Using the Deduction Theorem, we infer,
+    \begin{equation*}
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \land 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    And since the interpretation is arbitrary,
+    \begin{equation}
+        \label{eq:conjunct-into-universal-quantifier-backward-entailment}
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \land 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+    Together, \eqref{eq:conjunct-into-universal-quantifier-forward-entailment} and \eqref{eq:conjunct-into-universal-quantifier-backward-entailment}
+    establish the logical equivalence.
+\end{proof}
+
+\begin{thm}
+    \label{logic:grouping-disjuncts-into-quantified-statement-existential}
+    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
+    \( \alpha_{1}, \dots \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty domain \( D \).
+    Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
+
+    \vspace{0.5cm}
+    \noindent
+    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
+    is true, which is only possible in three scenarios.  
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \neg \, \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, it follows that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+    \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true. Since the domain \( D \) is non-empty,
+    \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+    \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is necessarily true.
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x_{0} \) be an object in the domain such that \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \). By Disjunction Introduction,
+    clearly \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true. And by Existential
+    Introduction, we have, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, this reduces to the first case.
+
+    \vspace{0.5cm}
+    \noindent
+    Evidently, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is implied 
+    in all three cases. Using the Deduction Theorem, we conclude,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Since the implication was derived using an arbitrary interpretation, we can derive the following entailment:
+    \begin{equation}
+        \label{eq:disjunct-into-existential-quantifier-forward-entailment}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+
+    \vspace{0.5cm}
+    \noindent
+    Proving the converse is also fairly straightforward. Naturally, if
+    \begin{equation*}
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    is true, then there are only two possible scenarios to consider\,\footnote{Again, this is the Law of Excluded Middle at play.}.
+
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
+
+    \vspace{0.1cm}
+    \noindent
+    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
+
+    \vspace{0.5cm}
+    \noindent
+    In the first case, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) follows 
+    readily from Disjunction Introduction. 
+    In the second case, we use Disjunctive Syllogism to conclude that \( \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+    Again, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \mleft( \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \) follows from Disjunction
+    Introduction. Applying the Deduction Theorem, we infer,
+    \begin{equation*}
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    And since the implication is independent of implication, we have,
+    \begin{equation}
+        \label{eq:disjunct-into-existential-quantifier-backward-implication}
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+    Together, \eqref{eq:disjunct-into-existential-quantifier-forward-entailment} and \eqref{eq:disjunct-into-existential-quantifier-backward-implication}
+    establish the logical equivalence.
+\end{proof}
+
+\begin{thm}
+    \label{logic:grouping-conjuncts-into-quantified-statement-existential}
+    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
+    \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed fomulas interpreted in the context of an
+    arbitrary, non-empty domain, \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and 
+    \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
+
+    \vspace{0.5cm}
+    \noindent
+    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \exists x \mleft( \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \)
+    is true. Clearly, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true for some \( x_{0} \in D \). Thus, by Conjunction Introduction,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    And by Existential Instantiation,
+    \begin{equation*}
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Thus,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+    \end{equation*}
+    
+    \vspace{0.5cm}
+    \noindent
+    Proving the converse is trivial. If \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) is true, then clearly,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    for some \( x_{0} \in D \). By Conjunction Elimination, obviously \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
+    is true for some \( x_{0} \in D \). By Existential Generalization, we thus conclude,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    And therefore, 
+    \begin{equation*}
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
+        \models 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{logic:grouping-conditionals-into-quantified-statement-rhs-universal}
+    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
+    \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \implies 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty 
+    domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) be objects in \( D \).
+    Using the truth table for logical implication and \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, 
+    we transform one of the statement into the other like so:
+    \begin{align*}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        {\implies} 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        &\iff 
+        \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor 
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\\
+        &\iff 
+        \forall x \big( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+        \lor 
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\\
+        &\iff 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+        {\implies}
+        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{align*}
+    The biconditional holds regardless of the interpretation of choice. Thus, the two statements are logically equivalent.
+\end{proof}
+
+\begin{thm}
+    \label{logic:grouping-conditionals-into-quantified-statement-lhs-universal}
+    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
+    \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
+    \begin{equation*}
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        {\implies}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \equiv 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m})
+        {\implies}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary,
+    non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \)
+    be objects in \( D \). Using the truth table of the logical implication and 
+    \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, we can transform one statement into
+    another like so:
+    \begin{align*}
+        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        {\implies}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        &\iff 
+        \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})\\
+        &\iff 
+        \exists x \big( \neg \, \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})\\
+        &\iff 
+        \exists x \big( \neg \, \varphi(x, \beta_{1}, \dots, \beta_{m}) 
+        \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \big)\\
+        &\iff 
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) 
+        {\implies}
+        \Gamma(\alpha_{1}, \dots, \alpha_{n})\big)
+    \end{align*}
+    Clearly, the biconditional holds for any interpretation. Therefore, the statements are indeed
+    logically equivalent.
+\end{proof}
+
+\begin{thm}
+    \label{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}
+    For any well-formed formula \( \varphi \) and free variables 
+    \( \alpha, \beta_{1}, \dots, \beta_{m} \),
+    \begin{equation*}
+        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be a well-formed formula interpreted in the context of a non-empty
+    domain, \( D \). Let \( \alpha, \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \). 
+    Suppose that the well-formed formula 
+    \( \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true.
+    Then by Universal Instantiation, we have,
+    \begin{equation*}
+        \alpha = \alpha \implies \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    Since \( \alpha = \alpha \) is trivially true, we conclude by Modus Ponens that 
+    \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is also true.
+    \begin{equation*}
+        \therefore \, \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) 
+        \implies 
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    Since the domain set \( D \) (the interpretation) is arbitrary selected, it follows that,
+    \begin{equation}
+        \label{eq:all-x-equals-alpha-implies-phi-x-entails-phi-alpha}
+        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) 
+        \models 
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation}
+    Conversely, suppose that \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true for an arbitrary interpretation. 
+    Let \( x_{0} \in D \) such that \( x_{0} = \alpha \).
+    Since \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true and \( x_{0} = \alpha \) , 
+    it follows that \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is also true.
+    Thus, \( x_{0} = \alpha \implies \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})\).
+    Since \( x_{0} \) is arbitrary, Universal Generalization yields
+    \( \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+    \begin{equation*}
+        \therefore \, \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) 
+        \implies 
+        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Again, since the interpretation is arbitrary, it follows that,
+    \begin{equation}
+        \label{eq:phi-alpha-entails-all-x-equals-alpha-implies-phi-x}
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) 
+        \models 
+        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation}
+    Together, \eqref{eq:all-x-equals-alpha-implies-phi-x-entails-phi-alpha} and \eqref{eq:phi-alpha-entails-all-x-equals-alpha-implies-phi-x}
+    establish the equivalence as needed.
+\end{proof}
+
+\begin{thm}
+    \label{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}
+    For any well-formed formula \( \varphi \) and free variables \( \alpha, \beta_{1}, \dots, \beta_{m} \),
+    \begin{equation*}
+        \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \equiv
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be a well-formed formula interpreted in the context of a non-empty domain, \( D \).
+    Let \( \alpha, \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \). Supposed that the well-formed
+    formula \( \exists x \mleft( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \)
+    is true. Then clearly, 
+    \begin{equation*}
+        x_{0} = \alpha \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    for some \( x_{0} \in D \). Since \( x_{0} = \alpha \), it follows that 
+    \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) must also be true.
+    In other words,
+    \begin{equation*}
+        \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models  
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+    \end{equation*}
+    Conversely, if \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true, then clearly 
+    \( \alpha = \alpha \land \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \). Since 
+    \( \alpha \in D \), then we can use Existential Generalization to conclude,
+    \begin{equation*}
+        \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Thus,
+    \begin{equation*}
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+        \models 
+        \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+    \end{equation*}
+    Since the entailment has been established in both directions, the two formulas are indeed logically
+    equivalent.
+\end{proof}
