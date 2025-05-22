@@ -1629,6 +1629,40 @@ are being studied.
     \( \Union \emptyset = \emptyset \) follows readily from \cref{dfn:empty-set}.
 \end{proof}
 
+\begin{thm}
+    \label{thm:union-of-a-singleton}
+    For any set \( A \), \( \Union \mleft\{ A \mright\} = A \)
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. By \cref{dfn:union-of-sets}, 
+    \begin{equation}
+        \label{eq:express-the-union-of-singleton-using-first-order-logic}
+        \forall x \, \Big[ x \in \Union \mleft\{ A \mright\} 
+        \iff 
+        \exists S \, \big( S \in \mleft\{ A \mright\} \land x \in S \big) \Big]
+    \end{equation}
+    But \( \forall x \, \big( x \in \mleft\{ A \mright\} \iff x = A \big) \) by \cref{dfn:unordered-pair}. 
+    Thus, \eqref{eq:express-the-union-of-singleton-using-first-order-logic} can be equivalently re-expressed as,
+    \begin{equation*}
+        \forall x \, \Big[ x \in \Union \mleft\{ A \mright\} 
+        \iff 
+        \exists S \, \big( S = A \land x \in S \big)
+        \Big]
+    \end{equation*}
+    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate},
+    this becomes,
+    \begin{equation*}
+        \forall x \, \Big[ x \in \Union \mleft\{ A \mright\}
+        \iff 
+        x \in A \Big]
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, we thus have,
+    \begin{equation*}
+        \Union \mleft\{ A \mright\} = A \qedhere
+    \end{equation*}
+\end{proof}
+
 \begin{thm}[Idempotence]
     \label{set-identities:idempotence-of-unions}
     For any set \( A \), \( A \union A = A\).
