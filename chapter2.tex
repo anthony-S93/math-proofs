@@ -1,0 +1,2546 @@
+\chapter{Functions}
+\section{Preliminary Remarks}
+The concept of a function is prevalent in mathematics. As such, there is a compelling need 
+to provide a rigorous definition for it. Fortunately, as we shall soon see, 
+it is entirely possible (and indeed sufficient) to represent functions as simply sets with
+certain properties. Before a set-theoretic definition for functions can be stated, however,
+a more fundamental concept has to be introduced:
+\keyword{ordered pairs}.
+
+\section{Ordered Pairs}
+
+\begin{dfn}[Kuratowski's Definition]
+    \label{dfn:kuratowski-ordered-pairs}
+    For any two objects \( a \) and \( b \), the \keyword{ordered pair} \orderedpair{a}{b} 
+    is defined as the set \kuratowski{a}{b}.
+    \begin{equation*}
+        \orderedpair{a}{b} \coloneq \kuratowski{a}{b}
+    \end{equation*}
+    Using \cref{dfn:unordered-pair}, we can formulate this definition as,
+    \begin{equation*}
+        \forall a,b \, \forall x \, \mleft( x \in \orderedpair{a}{b} 
+        \iff 
+        x = \mleft\{ a \mright\}
+        \lor 
+        x = \mleft\{ a, b \mright\}
+        \mright)
+    \end{equation*}
+    Note that if \( a = b\), then \orderedpair{a}{a} = \kuratowski{a}{a} = \( \mleft\{ \mleft\{ a \mright\} \mright\} \).
+    For any ordered pair \orderedpair{a}{b}, we refer to \( a \) and \( b \) as its first and second coordinates respectively.
+\end{dfn}
+
+\begin{thm}[Existence]
+    \label{thm:existence-of-ordered-pair}
+    An ordered pair exists.
+\end{thm}
+
+\begin{proof}
+    By the \nameref{axm:axiom-of-existence}, the empty set \( \emptyset \) exists. Since \( \emptyset \) exists,
+    then the \nameref{axm:axiom-of-pairing} guarantees that the set \( \mleft\{ \emptyset \mright\} \) exists. 
+    And since \( \mleft\{ \emptyset \mright\} \) exists, we apply the \nameref{axm:axiom-of-pairing} once again
+    to infer that the set \( \mleft\{ \mleft\{ \emptyset \mright\} \mright\} \) exists. But by \cref{dfn:kuratowski-ordered-pairs},
+    \begin{equation*}
+        \orderedpair{\emptyset}{\emptyset} = \kuratowski{\emptyset}{\emptyset} = \mleft\{ \mleft\{ \emptyset \mright\} \mright\}
+    \end{equation*}
+    Thus the ordered pair \orderedpair{\emptyset}{\emptyset} exists.
+\end{proof}
+
+\begin{thm}[Ordered Pair Equality]
+    \label{thm:equality-of-ordered-pairs}
+    For any two ordered pairs \orderedpair{a}{b} and \orderedpair{c}{d}, \( \orderedpair{a}{b} = \orderedpair{c}{d} \) 
+    if and only if \( a = c \) and \( b = d \).
+    \begin{equation*}
+        \forall a,b,c,d \, \big( \orderedpair{a}{b} = \orderedpair{c}{d}
+        \iff 
+        \mleft( a = c \mright) \land \mleft( b = d \mright) \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \alpha = \orderedpair{a}{b} \) and \( \beta = \orderedpair{c}{d} \) be arbitrary ordered pairs.
+    Thus, by \cref{dfn:kuratowski-ordered-pairs}, the following statements must hold:
+    \begin{gather}
+        \forall x \, \mleft( x \in \alpha \iff x = \mleft\{ a \mright\} \lor x = \mleft\{ a, b \mright\} \mright)
+        \label{eq:predicate-for-alpha}\\ 
+        \forall x \, \mleft( x \in \beta \iff x = \mleft\{ c \mright\} \lor x = \mleft\{ c, d \mright\} \mright) \label{eq:predicate-for-beta}
+    \end{gather}
+    Now, suppose that \( \alpha = \beta \). By the \nameref{axm:axiom-of-extensionality}, we have,
+    \begin{equation}
+        \label{eq:alpha-beta-biconditional}
+        \forall x \, \mleft( x \in \alpha \iff x \in \beta \mright)\\
+    \end{equation}
+    By the Law of Excluded Middle, obviously, 
+    \begin{equation*}
+        a = b \lor a \neq b
+    \end{equation*}
+    {\scshape Case 1}: \( a = b \). From \eqref{eq:predicate-for-alpha}, 
+    \( x \in \alpha \iff x = \mleft\{ a \mright\} \) for any \( x \). 
+    Clearly, \( \mleft\{ a \mright\} \in \alpha \), 
+    so by \eqref{eq:alpha-beta-biconditional}, we infer \( \mleft\{ a \mright\} \in \beta \).
+    By \eqref{eq:predicate-for-beta}, we have \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \lor \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \).
+    In either case, \( a = c \) is implied. Since \( a = b = c = d\), \( b = d \) also follows.
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Case 2}: \( a \neq b \). It follows from \eqref{eq:predicate-for-alpha} that \( \mleft\{ a \mright\} \in \alpha \) 
+    and \( \mleft\{ a, b \mright\} \in \alpha \). By \eqref{eq:alpha-beta-biconditional}, we have \( \mleft\{ a \mright\} \in \beta \) 
+    and \( \mleft\{ a, b \mright\} \in \beta \). Thus, the following statements are both true by \eqref{eq:predicate-for-beta},
+    \begin{gather}
+        \mleft\{ a \mright\} = \mleft\{ c \mright\} \lor \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \label{eq:for-curly-a}\\ 
+        \mleft\{ a, b \mright\} = \mleft\{ c \mright\} \lor \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \label{eq:for-curly-ab}
+    \end{gather}
+    Since \( a \neq b \), necessarily \( \mleft\{ a, b \mright\} \neq \mleft\{ c \mright\} \). Therefore, \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \)
+    must hold by \eqref{eq:for-curly-ab}. Now suppose that \( \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \). But this would imply \( a = c = d \). But 
+    \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \). This means that \( \mleft\{ c, b \mright\} = \mleft\{ c \mright\} \), so that \( a = c = b \), 
+    a contradiction. Thus, \( \mleft\{ a \mright\} \neq \mleft\{ c, d \mright\} \). By applying 
+    Disjunctive Syllogism to \eqref{eq:for-curly-a}, we conclude that \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \).
+    \begin{equation*}
+        \therefore \, a = c
+    \end{equation*}
+    With that, \( b = d \) follows immediately from the fact that \( \mleft\{ a, b \mright\} = \mleft\{ c, d\mright\} \).
+    
+    \vspace{0.5cm}
+    \noindent
+    In both cases, \( a = c \land b = d \) is implied. Thus,
+    \begin{equation}
+        \label{eq:ordered-pair-equality-forward-implication}
+        \orderedpair{a}{b} = \orderedpair{c}{d} \implies \mleft( a = c \land b = d \mright)
+    \end{equation}
+    Proving the converse is trivial. Suppose that \( a = c \) and \( b = d \) for arbitrary ordered pairs \( \alpha = \orderedpair{a}{b} \) 
+    and \( \beta = \orderedpair{c}{d} \). Then \( \alpha = \beta \) is necessarily true because \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \)
+    and \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \). Thus,
+    \begin{equation}
+        \label{eq:ordered-pair-equality-backward-implication}
+        \mleft( a = c \land b = d \mright) \implies \orderedpair{a}{b} = \orderedpair{c}{d}
+    \end{equation}
+    Together, \eqref{eq:ordered-pair-equality-forward-implication} and \eqref{eq:ordered-pair-equality-backward-implication} establish 
+    the required biconditional.
+\end{proof}
+
+\begin{thm}
+    \label{thm:ordered-pair-belongs-to-the-power-set-of-the-powerset}
+    If \( a \in A \) and \( b \in A \), then \( \orderedpair{a}{b} \in \powerset{\powerset{A}} \).
+    \begin{equation*}
+        \forall a,b \, \forall A \, \mleft( a \in A \land b \in A \implies \orderedpair{a}{b} \in \powerset{\powerset{A}} \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Suppose that \( a \in A \) and \( b \in A \). Clearly, \( \mleft\{ a \mright\} \subseteq A \)
+    and \( \mleft\{ a, b \mright\} \subseteq A \). Therefore, \( \mleft\{ a \mright\} \in \powerset{A} \) and
+    \( \mleft\{ a, b \mright\} \in \powerset{A} \). Now let \( x_{0} \in \orderedpair{a}{b}\) 
+    be arbitrary. By \cref{dfn:kuratowski-ordered-pairs}, it follows that,
+    \begin{equation*}
+        x_{0} = \mleft\{ a \mright\} \lor x_{0} = \mleft\{ a, b \mright\}
+    \end{equation*}
+    Since \( \mleft\{ a \mright\} \in \powerset{A} \) and \( \mleft\{ a, b \mright\} \in \powerset{A} \) are both true, it follows 
+    by Disjunction Elimination that \( x_{0} \in \powerset{A} \). In other words, \( x_{0} \in \orderedpair{a}{b} \implies x_{0} \in \powerset{A} \)
+    for any arbitrary \( x_{0} \). Thus, by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \mleft( x \in \orderedpair{a}{b} \implies x \in \powerset{A} \mright)
+    \end{equation*}
+    By \cref{dfn:subset,dfn:power-set}, this means that \( \orderedpair{a}{b} \subseteq \powerset{A} \) and \( \orderedpair{a}{b} \in \powerset{\powerset{A}} \).
+    \begin{equation*}
+        \therefore \, 
+        a \in A \land b \in A 
+        \implies 
+        \orderedpair{a}{b} \in \powerset{\powerset{A}}
+    \end{equation*}
+    Since \( a \), \( b \), \( A \) are all arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-coordinates-of-an-orderedpair-belongs-to-the-union-of-the-union-of-the-set-containing-the-orderpair}
+    If \( \orderedpair{a}{b} \in A \), then \( a \in \Union{\Union{A}} \land b \in \Union{\Union{A}} \). 
+    \begin{equation*}
+        \forall a,b \, \forall A \, \mleft( \orderedpair{a}{b} \in A \implies 
+        a \in \Union{\Union{A}} \land b \in \Union{\Union{A}}\mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set and \orderedpair{a}{b} be an arbitrary ordered pair.
+    Suppose that \( \orderedpair{a}{b} \in A \). 
+    Since \( \mleft\{ a, b \mright\} \in \orderedpair{a}{b} \) by \cref{dfn:kuratowski-ordered-pairs}
+    and \( \orderedpair{a}{b} \in A \), it follows that,
+    \begin{equation*}
+        \exists S  \mleft( S \in A \land \mleft\{ a, b \mright\} \in S \mright) 
+    \end{equation*}
+    Then, by \cref{dfn:union-of-sets}, it follows that \( \mleft\{ a, b \mright\} \in \Union{A} \). 
+    But \( a \in \mleft\{ a, b \mright\} \) and \( b \in \mleft\{ a, b \mright\} \), so we have,
+    \begin{gather*}
+        \exists S  \mleft( S \in \Union{A} \land a \in S \mright) \\ 
+        \exists S  \mleft( S \in \Union{A} \land b \in S \mright)
+    \end{gather*}
+    Again, by \cref{dfn:union-of-sets}, we have \( a \in \Union{\Union{A}} \) and 
+    \( b \in \Union{\Union{A}} \).
+\end{proof}
+
+\section{Sets of Ordered Pairs}
+Having rigorously defined ordered pairs as sets, the obvious next step would be to  
+collect them together into sets---that is, to form sets of ordered pairs. 
+However, whenever one attempts to introduce new sets, it is crucial to first establish
+their existence on the basis of the axioms of set theory. This is the subject of the 
+next two theorems, which describe the sufficient conditions for the existence of sets of ordered pairs.
+
+\begin{thm}
+    \label{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-1}
+    Given any binary predicate \( \varphi \), 
+    \begin{equation*}
+        \exists A \, \forall x,y \, \Big( \varphi(x,y) {\implies} \orderedpair{x}{y} \in A \Big)
+        {\implies}
+        \exists! S \, \forall x \, \Big( x \in S {\iff} \exists a,b \, \big[ x = \orderedpair{a}{b} \land \varphi(a,b) \big] \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be a binary predicate\,\footnote{A predicate with two free variables.} such that,
+    \begin{equation}
+        \label{eq:phi-guarantees-ordered-pair-belonging-to-an-existing-set}
+        \forall x,y \, \Big( \varphi(x,y) \implies \orderedpair{x}{y} \in A \Big)
+    \end{equation}
+    for some set \( A \). Now define a unary predicate \( \Gamma \) as follows,
+    \begin{equation}
+        \label{eq:define-gamma}
+        \Gamma(x) \coloneq
+        \exists a,b \, \Big( x = \orderedpair{a}{b} \land \varphi(a, b) \Big)
+    \end{equation}
+    Let \( x_{0} \) be arbitrary object such that \( \Gamma(x_{0}) \) holds. Thus, by 
+    \eqref{eq:define-gamma}, \( x_{0} = \orderedpair{a}{b} \land \varphi(a, b) \) 
+    for some \( a \) and \( b \). Since \( \varphi(a,b) \), \( \orderedpair{a}{b} \in A \)
+    by \eqref{eq:phi-guarantees-ordered-pair-belonging-to-an-existing-set}.
+    Since \( x_{0} = \orderedpair{a}{b} \), it follows that \( x_{0} \in A \).
+    \begin{equation*}
+        \therefore \, \Gamma(x_{0}) \implies x_{0} \in A
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we have,
+    \begin{equation*}
+        \forall x \, \big( \Gamma(x) \implies x \in A \big)
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, there exists a unique 
+    set \( S \) such that,
+    \begin{equation*}
+        S = \setbuilderbig{x}{\Gamma(x)}
+          = \setbuilderbig{x}{\exists a,b \, \big[ x = \orderedpair{a}{b} \land \varphi(a,b) \big]} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-2}
+    Given any binary predicate \( \varphi \),
+    \begin{multline*}
+        \exists A,B \, \forall x,y \, \Big( \varphi(x,y) \implies x \in A \land y \in B \Big)
+        \implies \\ 
+        \exists! S \, \forall x \, \Big( x \in S \iff \exists a,b \, \big[ x = \orderedpair{a}{b} \land \varphi(a,b) \big] \Big)
+    \end{multline*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be any binary predicate. Suppose that, 
+    \begin{equation}
+        \label{eq:phi-xy-only-if-x-in-A-and-y-in-B}
+        \forall x,y \, \Big( \varphi(x,y) \implies x \in A \land y \in B \Big)
+    \end{equation}
+    for some \( A \) and \( B \). Let \( x_{0} \) and \( y_{0} \) be arbitrary objects
+    such that \( \varphi(x_{0}, y_{0}) \) is satisfied. By \eqref{eq:phi-xy-only-if-x-in-A-and-y-in-B},
+    it follows that \( x_{0} \in A \) and \( y_{0} \in B \). Thus, \( x_{0} \in A \union B \) and 
+    \( y_{0} \in A \union B\), 
+    so necessarily \( \orderedpair{x_{0}}{y_{0}} \in \powerset{\powerset{A \union B}} \)
+    by \cref{thm:ordered-pair-belongs-to-the-power-set-of-the-powerset}.
+    \begin{equation*}
+        \therefore \, \varphi(x_{0}, y_{0}) \implies \orderedpair{x_{0}}{y_{0}} \in \powerset{\powerset{A \union B}}
+    \end{equation*}
+    Since \( x_{0} \) and \( y_{0} \) are arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x,y \, \Big( \varphi(x,y) \implies \orderedpair{x}{y} \in \powerset{\powerset{A \union B}} \Big)
+    \end{equation*}
+    The theorem follows immediately from \cref{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-1}.
+\end{proof}
+
+\begin{dfn}[Set-Builder Notation]
+    \label{dfn:set-builder-notation-ordered-pair}
+    For any binary predicate \( \varphi \), \setbuilder{\orderedpair{x}{y}}{\varphi(x)} denotes the set
+    of all ordered pairs whose coordinates satisfy \( \varphi \). In other words,
+    \begin{equation*}
+        \forall x \, \Big( x \in \big\{ \orderedpair{a}{b} \mid \varphi(a,b) \big\} \iff 
+        \exists a,b \, \big[ x = \orderedpair{a}{b} \land \varphi(a,b) \big] \Big)
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-the-domain-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the set 
+    \setbuilderbig{x}{\exists y \, \mleft( \orderedpair{x}{y} \in R \mright)} exists.
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x) \coloneq \exists y \, \big( \orderedpair{x}{y} \in R \big)
+    \end{equation*}
+    Let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) holds. Thus, by the definition of \( \varphi \),
+    \( \orderedpair{x_{0}}{y_{0}} \in R \) for some \( y_{0} \). 
+    By \cref{thm:the-coordinates-of-an-orderedpair-belongs-to-the-union-of-the-union-of-the-set-containing-the-orderpair},
+    it follows that \( x_{0} \in \Union{\Union{R}} \). Thus,
+    \begin{equation*}
+        \varphi(x_{0}) \implies x_{0} \in \Union{\Union{R}}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, 
+    \begin{equation*}
+        \forall x \, \mleft( \varphi(x) \implies x \in \Union{\Union{R}} \mright)
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, 
+    the set \( \setbuilderbig{x}{\varphi(x)} = \setbuilderbig{x}{\exists y \, \mleft( \orderedpair{x}{y} \in R \mright)} \)
+    exists.
+\end{proof}
+
+\begin{dfn}[Domain]
+    \label{dfn:domain-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the \keyword{domain} of \( R \) is the set given by,
+    \begin{equation*}
+        \dom R \coloneq \setbuilderbig{x}{\exists y \, \big(\orderedpair{x}{y} \in R\big)}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-the-range-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the set 
+    \setbuilderbig{y}{\exists x \, \mleft(\orderedpair{x}{y} \in R\mright)} exists.
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(y) \coloneq \exists x \, \big( \orderedpair{x}{y} \in R \big)
+    \end{equation*}
+    Let \( y_{0} \) be an arbitrary object such that \( \varphi(y_{0}) \) is satisfied. By the definition
+    of \( \varphi \), this means that \( \orderedpair{x_{0}}{y_{0}} \in R \) for some \( x_{0} \). By
+    \cref{thm:the-coordinates-of-an-orderedpair-belongs-to-the-union-of-the-union-of-the-set-containing-the-orderpair},
+    it follows that \( y_{0} \in \Union{\Union{f}} \). Thus,
+    \begin{equation*}
+        \varphi(y_{0}) \implies y_{0} \in \Union{\Union{R}}
+    \end{equation*}
+    Since \( y_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall y \, \mleft( \varphi(y) \implies y \in \Union{\Union{R}} \mright)
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, the set
+    \setbuilder{y}{\exists x \, \mleft( \orderedpair{x}{y} \in R \mright)} exists.
+\end{proof}
+
+\begin{dfn}[Range]
+    \label{dfn:range-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the \keyword{range} of \( R \) is the set given by,
+    \begin{equation*}
+        \ran R \coloneq \setbuilderbig{y}{\exists x \, \mleft( \orderedpair{x}{y} \in R \mright)}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Image]
+    \label{dfn:image-of-a-set-of-ordered-pairs}
+    For any set \( A \) and any set of ordered pairs \( R \), the \keyword{image} of \( A \) under \( R \)
+    is the set given by,
+    \begin{equation*}
+        \imageSet{R}{A} \coloneq \setbuilder{y \in \ran R}{\exists x \, \big( x \in A \land \orderedpair{x}{y} \in R \big)}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-the-inverse-of-a-set-of-ordered-pairs}
+    For any set of ordered pairs \( R \), the set \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R} exists.
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. 
+    By \cref{thm:existence-of-the-domain-of-a-set-of-ordered-pairs,thm:existence-of-the-range-of-a-set-of-ordered-pairs}, \( \dom R \) 
+    and \( \ran R \) exist and are given by,
+    \begin{align}
+        \dom R &=
+        \setbuilderbig{x}{\exists y \, \big( \orderedpair{x}{y} \in R \big)} \label{eq:domain-of-f-set-builder-form}\\ 
+        \ran R &=
+        \setbuilderbig{y}{\exists x \, \big( \orderedpair{x}{y} \in R \big)} \label{eq:range-of-f-set-builder-form}
+    \end{align}
+    Let the binary predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(y, x) \coloneq \orderedpair{x}{y} \in R
+    \end{equation*}
+    Let \( y_{0} \) and \( x_{0} \) be arbitrary objects such that \( \varphi(y_{0}, x_{0}) \) is satisfied. Thus, by 
+    the definition of \( \varphi \), it follows that \( \orderedpair{x_{0}}{y_{0}} \in R \), which implies,
+    \begin{gather*}
+        \exists x \, \big( \orderedpair{x}{y_{0}} \in R \big) \\
+        \exists y \, \big( \orderedpair{x_{0}}{y} \in R \big)
+    \end{gather*}
+    Thus, \( y_{0} \in \ran R \) and \( x_{0} \in \dom f \) by \eqref{eq:range-of-f-set-builder-form}
+    and \eqref{eq:domain-of-f-set-builder-form}. Clearly,
+    \begin{equation*}
+        y_{0} \in \mleft( \dom R \union \ran R \mright)
+        \land 
+        x_{0} \in \mleft( \dom R \union \ran R \mright)
+    \end{equation*}
+    Since \( y_{0} \) and \( x_{0} \) are arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall y \, \forall x \, \big( \varphi(y, x) \implies y \in \mleft( \dom R \union \ran R \mright)
+        \land x \in \mleft( \dom R \union \ran R \mright) \big)
+    \end{equation*}
+    Thus, the set \( \setbuilderbig{\orderedpair{y}{x}}{\varphi(y,x)} = \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R} \)
+    exists by \cref{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-2}.
+\end{proof}
+
+\begin{dfn}[Inverse]
+    \label{dfn:inverse-of-a-set-of-ordered-pairs}
+    For any set of ordered pairs \( R \), the \keyword{inverse} of \( R \) is the set given by,
+    \begin{equation*}
+        R^{-1} \coloneq \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-the-composition-of-two-sets-of-ordered-pairs}
+    If \( R \) and \( S \) are sets of ordered pairs, then the set, 
+    \begin{equation*}
+        \setbuilderbig{\orderedpair{x}{y}}{\exists z \, \big( \orderedpair{x}{z} \in S \land \orderedpair{z}{y} \in R \big)}
+    \end{equation*}
+    exists.
+\end{thm}
+
+\begin{proof}
+    Let \( R \) and \( S \) be arbitrary sets of ordered pairs. Let the binary predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x,y) \coloneq \exists z \, \big( \orderedpair{x}{z} \in S \land \orderedpair{z}{y} \in R \big)
+    \end{equation*}
+    Let \( x_{0} \) and \( y_{0} \) be arbitrary objects such that \( \varphi(x_{0}, y_{0}) \) is satisfied. Thus, 
+    \( \orderedpair{x_{0}}{z_{0}} \in S \) and \( \orderedpair{z_{0}}{y_{0}} \in R \) for some \( z_{0} \).
+    \begin{equation*}
+        \therefore \, \exists z \, \big( \orderedpair{x_{0}}{z} \in S \big) \land \exists z \, \big( \orderedpair{z}{y_{0}} \in R \big)
+    \end{equation*}
+    It follows from \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:range-of-a-set-of-ordered-pairs} that 
+    \( x_{0} \in \dom S \) and \( y_{0} \in \ran R \). In other words, for any \( x_{0} \) and \( y_{0} \),
+    \begin{equation*}
+        \varphi(x_{0}, y_{0}) \implies x_{0} \in \dom S \land y_{0} \in \ran R
+    \end{equation*}
+    By Universal Generalization, we have,
+    \begin{equation*}
+        \forall x,y \, \Big( \varphi(x,y) \implies x \in \dom S \land y \in \ran R \Big)
+    \end{equation*}
+    Thus, the set \(\setbuilderbig{\orderedpair{x}{y}}{\exists z \, \big( \orderedpair{x}{y} \in S \land \orderedpair{y}{z} \in R \big)} \)
+    exists by \cref{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-2}.
+\end{proof}
+
+\begin{dfn}[Composition]
+    \label{dfn:composition-of-two-sets-of-ordered-pairs}
+    If \( R \) and \( S \) are sets of ordered pairs, then the \keyword{composition} of \( S \) and \( R \) is the set,
+    \begin{equation*}
+        \composition{R}{S} \coloneq \setbuilderbig{\orderedpair{x}{y}}{\exists z \, \big( \orderedpair{x}{z} \in S \land \orderedpair{z}{y} \in R \big)}
+    \end{equation*}
+\end{dfn}
+
+\subsection{Properties of Sets of Ordered Pairs} \label{ssec:properties-of-sets-of-ordered-pairs}
+\begin{thm}
+    \label{thm:empty-image-of-a-set-of-ordered-pairs}
+    For any set of ordered pairs \( R \), \( \imageSet{R}{\emptyset} = \emptyset\).
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. By \cref{dfn:image-of-a-set-of-ordered-pairs},
+    \begin{equation*}
+        \imageSet{R}{\emptyset} = \setbuilderBig{y \in \ran R}{\exists x \, \big( x \in \emptyset \land \orderedpair{x}{y} \in R \big)}
+    \end{equation*}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation}
+        \label{eq:let-phi-represent-the-predicate-for-the-image-of-R-under-empty}
+        \varphi(y) \coloneq \exists x \, \big( x \in \emptyset \land \orderedpair{x}{y} \in R \big)
+    \end{equation}
+    Thus, 
+    \begin{equation}
+        \label{eq:restating-the-image-of-R-under-empty-in-terms-of-phi}
+        \forall y \, \Big( y \in \imageSet{R}{\emptyset}
+        \iff 
+        y \in \ran R 
+        \land 
+        \varphi(y)
+        \Big)
+    \end{equation}
+    Using the laws of elementary logic, we can re-express formula \eqref{eq:let-phi-represent-the-predicate-for-the-image-of-R-under-empty} 
+    equivalently as,
+    \begin{align}
+        \label{eq:phi-reformulated-equivalently}
+        \varphi(y) &\iff \exists x \, \big( x \in \emptyset \land \orderedpair{x}{y} \in R \big) \notag \\
+        &\iff 
+        \lnot \, \lnot \, \exists x \, \big( x \in \emptyset \land \orderedpair{x}{y} \in R \big) \notag \\
+        &\iff 
+        \lnot \, \forall x \, \big( x \notin \emptyset \lor \orderedpair{x}{y} \notin R \big) \notag \\
+        &\iff 
+        \lnot \, \forall x \, \big( x \in \emptyset \implies \orderedpair{x}{y} \notin R \big)
+    \end{align}
+    Let \( y_{0} \in \ran R \) be arbitrary. Let \( x_{0} \) be an arbitrary object. By \cref{dfn:empty-set},
+    clearly \( x_{0} \notin \emptyset \). Thus, the formula \( x_{0} \in \emptyset \implies \orderedpair{x_{0}}{y_{0}} \notin R \)
+    is vacuously true. Since \( x_{0} \) is arbitrary, we infer by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \big( x \in \emptyset \implies \orderedpair{x}{y_{0}} \notin R \big)
+    \end{equation*}
+    Thus, \( \lnot \, \varphi(y_{0}) \) by \eqref{eq:phi-reformulated-equivalently}. Furthermore, \( y_{0} \notin \imageSet{R}{\emptyset} \)
+    by \eqref{eq:restating-the-image-of-R-under-empty-in-terms-of-phi}. Since \( y_{0} \) is arbitrary, we conclude by Universal Generalization
+    that,
+    \begin{equation*}
+        \forall y \, \big( y \notin \imageSet{R}{\emptyset} \big)
+    \end{equation*}
+    By \cref{dfn:empty-set}, it follows that \( \imageSet{R}{\emptyset} = \emptyset \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:inverse-of-the-inverse-is-the-set-itself}
+    For any set of ordered pairs \( R \), \( R = \mleft( R^{-1} \mright)^{-1} \)
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. \cref{dfn:inverse-of-a-set-of-ordered-pairs} yields the following equalities:
+    \begin{equation*}
+        \mleft( R^{-1} \mright)^{-1} 
+        = \setbuilderbig{\orderedpair{x}{y}}{\orderedpair{y}{x} \in R^{-1}}
+        = \setbuilderbig{\orderedpair{x}{y}}{\orderedpair{x}{y} \in R}
+        = R \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:domain-is-the-range-of-inverse-and-vice-versa}
+    If \( R \) is a set of ordered pairs, then,
+    \begin{gather*}
+        \dom R = \ran R^{-1} \\ 
+        \ran R = \dom R^{-1}
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. By \cref{dfn:inverse-of-a-set-of-ordered-pairs}, \( R^{-1} \) 
+    is given by,
+    \begin{equation*}
+        R^{-1} = \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R}
+    \end{equation*}
+    Let \( x_{0} \) be an arbitrary object. By \cref{dfn:range-of-a-set-of-ordered-pairs}, we have,
+    \begin{align*}
+        x_{0} \in \ran R^{-1} 
+        &\iff
+        \exists y \, \big( \orderedpair{y}{x_{0}} \in R^{-1} \big)\\
+        &\iff
+        \exists y \, \big( \orderedpair{x_{0}}{y} \in R \big)\\
+        &\iff
+        x_{0} \in \dom R
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, we have,
+    \begin{equation*}
+        \forall x \, \mleft( x \in \dom R \iff x \in \ran R^{-1} \mright)
+    \end{equation*}
+    Thus, \( \dom R = \ran R^{-1} \) follows immediately from the \nameref{axm:axiom-of-extensionality}.
+
+    \vspace{0.3cm}
+    \noindent
+    The second equality can be proven the same way. Let \( y_{0} \) be an arbitrary object
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs}, we have,
+    \begin{align*}
+        y_{0} \in \dom R^{-1}
+        &\iff
+        \exists x \, \big( \orderedpair{y_{0}}{x} \in R^{-1} \big)\\ 
+        &\iff
+        \exists x \, \big( \orderedpair{x}{y_{0}} \in R \big)\\
+        &\iff
+        y_{0} \in \ran R
+    \end{align*}
+    By Universal Generalization and the \nameref{axm:axiom-of-extensionality}, we conclude,
+    \begin{equation*}
+        \dom R^{-1} = \ran R \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:image-under-a-union-is-equal-to-the-union-of-individual-images}
+    If \( R \) is a set of ordered pairs and \( S \) is a non-empty system of sets, then,
+    \begin{equation*}
+        \imageSet{R}{\Union S} = \Union \setbuilderBig{t}{\exists z \, \mleft( z \in S \land t = \imageSet{R}{z} \mright)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be a set of ordered pairs. Let \( S \) be a non-empty system of sets. Let the set \( T \) be defined as,
+    \begin{equation}
+        \label{eq:T-as-the-set-of-all-images-under-R}
+        T = \setbuilderBig{t}{\exists z \, \big( z \in S \land t = \imageSet{R}{z} \big)}
+    \end{equation}
+    We first prove \( T \)'s existence. Let \( t_{0} \) be an arbitrary object such that,
+    \begin{equation*}
+        \exists z \, \big( z \in S \land t_{0} = \imageSet{R}{z} \big)
+    \end{equation*}
+    Therefore, we have \( t_{0} = \imageSet{R}{z_{0}} \) for some \( z_{0} \in S \). By \cref{dfn:image-of-a-set-of-ordered-pairs},
+    it follows that \( \imageSet{R}{z_{0}} \subseteq \ran R \). Thus, \( t_{0} \subseteq \ran R \), which in turn implies 
+    \( t_{0} \in \powerset{\ran R} \).
+    \begin{equation*}
+        \therefore \, \forall t \, \Big( \exists z \, \big( z \in S \land t = \imageSet{R}{z} \big) \implies t \in \powerset{\ran R} \Big)
+    \end{equation*}
+    Thus, \( T \) exists by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+
+    \vspace{0.3cm}
+    \noindent
+    Naturally, the main goal is to prove that,
+    \begin{equation*}
+        \imageSet{R}{\Union S} = \Union T
+    \end{equation*}
+    To do so, we first let \( y_{0} \) represent an arbitrary object and then apply 
+    Universal Instantiation on \cref{dfn:image-of-a-set-of-ordered-pairs} to obtain,
+    \begin{equation}
+        \label{eq:initial-statement-for-the-image-of-union-S-under-R}
+        y_{0} \in \imageSet{R}{\Union S} 
+        \iff
+        \exists x \, \mleft( x \in \Union S \land \orderedpair{x}{y_{0}} \in R \mright)
+    \end{equation}
+    The laws of elementary logic (\cref{logic:grouping-conjuncts-into-quantified-statement-existential}) 
+    can then be applied to transform \eqref{eq:initial-statement-for-the-image-of-union-S-under-R}
+    into a series of equivalent formulas:
+    \begin{align}
+        \label{eq:final-statement-for-the-image-of-union-S-under-R}
+        y_{0} \in \imageSet{R}{\Union S}
+        &\iff
+        \exists x \, \mleft( x \in \Union S \land \orderedpair{x}{y_{0}} \in R \mright) \notag \\ 
+        &\iff
+        \exists x \, \Big( \exists z \, \mleft( z \in S \land x \in z \mright) \land \orderedpair{x}{y_{0}} \in R \Big) \notag \\
+        &\iff
+        \exists x \, \exists z \, \Big( z \in S \land x \in z \land \orderedpair{x}{y_{0}} \in R \Big) \notag \\ 
+        &\iff
+        \exists z \, \exists x \, \Big( z \in S \land x \in z \land \orderedpair{x}{y_{0}} \in R \Big) \notag \\
+        &\iff
+        \exists z \, \Big( z \in S \land \exists x \, \big( x \in z \land \orderedpair{x}{y_{0}} \in R \big) \Big) \notag \\ 
+        &\iff
+        \exists z \, \Big( z \in S \land y_{0} \in \imageSet{R}{z} \Big)
+    \end{align}
+    We then repeat the process for the right-hand side of the equality. Start by applying \cref{dfn:union-of-sets} 
+    and \eqref{eq:T-as-the-set-of-all-images-under-R} to \( \Union T \).
+    \begin{equation*}
+        y_{0} \in \Union T
+        \iff
+        \exists t \, \mleft( t \in T \land y_{0} \in t \mright)
+        \iff 
+        \exists t \, \Big( \exists z \, \big( z \in S \land t = \imageSet{R}{z} \big) \land y_{0} \in t \Big)
+    \end{equation*}
+    Using \cref{logic:grouping-conjuncts-into-quantified-statement-existential}, the formula becomes,
+    \begin{equation*}
+        y_{0} \in \Union T 
+        \iff
+        \exists z \, \Big( z \in S \land \exists t \, \mleft( t = \imageSet{R}{z} \land y_{0} \in t \mright) \Big)
+    \end{equation*}
+    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}, we have, 
+    \begin{equation*}
+        \exists t \, \big( t = \imageSet{R}{z} \land y_{0} \in t \big)
+        \iff
+        y_{0} \in \imageSet{R}{z}
+    \end{equation*}
+    Thus,
+    \begin{equation}
+        \label{eq:final-statement-of-the-union-of-T}
+        y_{0} \in \Union T 
+        \iff
+        \exists z \, \Big( z \in S \land y_{0} \in \imageSet{R}{z} \Big)
+    \end{equation}
+    Comparing \eqref{eq:final-statement-for-the-image-of-union-S-under-R} and \eqref{eq:final-statement-of-the-union-of-T},
+    it is clear that,
+    \begin{equation*}
+        y_{0} \in \imageSet{R}{\Union S} \iff y_{0} \in \Union T
+    \end{equation*}
+    Since \( y_{0} \) is arbitrary, we conclude,
+    \begin{equation*}
+        \forall y \, \mleft( y \in \imageSet{R}{\Union S} \iff y \in \Union T \mright)
+    \end{equation*}
+    The theorem follows readily from the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\begin{cor}
+    \label{thm:image-of-A-union-B-under-R-is-the-union-of-the-image-of-A-under-R-and-the-image-of-B-under-R}
+    Let \( R \) be a set of ordered pairs. Let \( A \) and \( B \) be two sets. 
+    Then \( \imageSet{R}{A \union B} = \imageSet{R}{A} \union \imageSet{R}{B} \).
+\end{cor}
+
+\begin{thm}
+    \label{thm:image-of-an-intersection-is-a-subset-of-the-intersection-of-all-individual-images}
+    If \( R \) is a set of ordered pairs and \( S \) is a non-empty system of sets, then,
+    \begin{equation*}
+        \imageSet{R}{\Intersect S} \subseteq \Intersect \setbuilderBig{t}{\exists z \, \big( z \in S \land t = \imageSet{R}{z} \big)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( R \) be an arbitrary set of ordered pairs. Let \( S \) be a non-empty system of sets. 
+    Let \( T \) be the same set defined in \eqref{eq:T-as-the-set-of-all-images-under-R}. The goal
+    is to prove that,
+    \begin{equation*}
+        \forall y \, \mleft( y \in \imageSet{R}{\Intersect S} \implies y \in \Intersect T \mright)
+    \end{equation*}
+    Let \( y_{0} \) represent an arbitrary object. By \eqref{eq:T-as-the-set-of-all-images-under-R} and 
+    \cref{dfn:intersection-of-sets}, it follows that,
+    \begin{align}
+        \label{eq:condition-for-y0-to-belong-to-the-intersection-of-T}
+        y_{0} \in \Intersect T 
+        &\iff
+        \forall t \, \Big( t \in T \implies y_{0} \in t \Big) \notag \\
+        &\iff
+        \forall t \, \Big( \exists z \, \big( z \in S \land t = \imageSet{R}{z} \big) \implies y_{0} \in t \Big) \notag \\
+        &\iff
+        \forall t \, \Big( \forall z \, \big( z \notin S \lor t \neq \imageSet{R}{z} \big) \lor y_{0} \in t \Big) \notag \\ 
+        &\iff
+        \forall t \, \forall z \, \Big( z \notin S \lor t \neq \imageSet{R}{z} \lor y_{0} \in t \Big) \notag \\ 
+        &\iff
+        \forall z \, \forall t \, \Big( z \notin S \lor t \neq \imageSet{R}{z} \lor y_{0} \in t \Big) \notag \\ 
+        &\iff
+        \forall z \, \Big( z \in S \implies \forall t \, \mleft( t = \imageSet{R}{z} \implies y_{0} \in t \mright) \Big) \notag \\ 
+        &\iff
+        \forall z \, \Big( z \in S \implies y_{0} \in \imageSet{R}{z} \Big)
+    \end{align}
+    Now suppose that \( y_{0} \in \imageSet{R}{\Intersect S} \). 
+    By \cref{dfn:image-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{x_{0}}{y_{0}} \in R \) 
+    for some \( x_{0} \in \Intersect S \). 
+    By \cref{dfn:intersection-of-sets}, necessarily,
+    \begin{equation}
+        \label{eq:x0-belongs-to-all-members-of-S}
+        \forall z \, \mleft( z \in S \implies x_{0} \in z \mright)
+    \end{equation}
+    Let \( z_{0} \in S \) be arbitrary. By \eqref{eq:x0-belongs-to-all-members-of-S}, it follows that \( x_{0} \in z_{0} \). Thus, we have,
+    \begin{gather*}
+        z_{0} \in S \implies x_{0} \in z_{0} \land \orderedpair{x_{0}}{y_{0}} \in R \\ 
+        \therefore \, z_{0} \in S \implies \exists x \, \big( x \in z_{0} \land \orderedpair{x}{y_{0}} \in R \big)
+    \end{gather*}
+    In other words, \( y_{0} \in \imageSet{R}{z_{0}} \) for any \( z_{0} \in S \). Since \( z_{0} \) is arbitrary, we have,
+    \begin{equation*}
+        \forall z \, \big( z \in S \implies y_{0} \in \imageSet{R}{z} \big)
+    \end{equation*}
+    Thus, \( y_{0} \in \Intersect T \) by \eqref{eq:condition-for-y0-to-belong-to-the-intersection-of-T}.
+    \begin{equation*}
+        \therefore \, y_{0} \in \imageSet{R}{\Intersect S} \implies y_{0} \in \Intersect T
+    \end{equation*}
+    Given that \( y_{0} \) is arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+
+\begin{cor}
+    \label{thm:the-image-of-A-intersect-B-under-R-is-a-subset-of-the-image-of-A-under-R-intersect-the-image-of-B-under-R}
+    Let \( R \) be a set of ordered pairs. Let \( A \) and \( B \) be two sets. 
+    Then \( \imageSet{R}{A \intersect B} \subseteq \imageSet{R}{A} \intersect \imageSet{R}{B} \).
+\end{cor}
+
+\begin{thm}
+    \label{thm:the-difference-of-image-is-a-subset-of-the-image-of-difference}
+    Let \( R \) be a set of ordered pairs. Let \( A \) and \( B \) be two sets. Then \( \imageSet{R}{A} - \imageSet{R}{B} \subseteq \imageSet{R}{A - B} \)
+\end{thm}
+
+\begin{proof}
+    Let \( y_{0} \) be an arbitrary object. We start by applying the definitions for \( \imageSet{R}{A} - \imageSet{R}{B} \) and \( \imageSet{R}{A-B} \).
+    \begin{align}
+        &y_{0} \in \imageSet{R}{A} - \imageSet{R}{B} \notag \\
+        &\iff
+        \exists x \, \big[ x \in A \land \orderedpair{x}{y_{0}} \in R \big]\land \lnot \, \exists x \, \big[ x \in B \land \orderedpair{x}{y_{0}} \in R \big] \notag \\ 
+        &\iff
+        \exists x \, \big[ x \in A \land \orderedpair{x}{y_{0}} \in R \big] 
+        \land 
+        \forall x \, \big[ x \in B \implies \orderedpair{x}{y_{0}} \notin R \big] \label{eq:y0-belongs-to-RA-minus-RB} \\
+        \text{   } \notag \\
+        &y_{0} \in \imageSet{R}{A-B} \notag \\ 
+        &\iff
+        \exists x \, \big[ x \in A \land x \notin B \land \orderedpair{x}{y_{0}} \in R \big] \label{eq:y0-belongs-to-R-A-minus-B}
+    \end{align}
+    Suppose that \( y_{0} \in \imageSet{R}{A} - \imageSet{R}{B} \). By \eqref{eq:y0-belongs-to-RA-minus-RB}, it follows that:
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{0}}{y_{0}} \in R&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\text{for some \( x_{0} \in A \)}
+        \end{aligned}
+    \end{equation*}
+    Universal Instantiation on the second conjunct of \eqref{eq:y0-belongs-to-RA-minus-RB} yields,
+    \begin{equation*}
+        x_{0} \in B \implies \orderedpair{x_{0}}{y_{0}} \notin R
+    \end{equation*}
+    Since \( \orderedpair{x_{0}}{y_{0}} \in R\), we conclude by Modus Tollens that \( x_{0} \notin B \). 
+    \begin{equation*}
+        \therefore \, \exists x \, \big[ x \in A \land x \notin B \land \orderedpair{x}{y_{0}} \in R \big]
+    \end{equation*}
+    By \eqref{eq:y0-belongs-to-R-A-minus-B}, it follows that \( y_{0} \in \imageSet{R}{A-B} \). By Universal Generalization
+    and the Deduction Theorem,
+    \begin{equation*}
+        \forall y \, \Big[ y \in \imageSet{R}{A} - \imageSet{R}{B} \implies y \in \imageSet{R}{A-B} \Big]
+    \end{equation*}
+    Thus, \( \imageSet{R}{A} - \imageSet{R}{B} \subseteq \imageSet{R}{A-B} \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-symdiff-of-image-is-a-subset-of-the-image-of-symdiff}
+    Let \( R \) be a set of ordered pairs. Let \( A \) and \( B \) be two sets. 
+    Then \( \imageSet{R}{A} \symdiff \imageSet{R}{B} \subseteq \imageSet{R}{A \symdiff B} \)
+\end{thm}
+
+\begin{proof}
+    By \cref{set-identities:symmetric-difference-as-the-union-of-differences,thm:image-of-A-union-B-under-R-is-the-union-of-the-image-of-A-under-R-and-the-image-of-B-under-R}, 
+    we have,
+    \begin{align*}
+        \imageSet{R}{A \symdiff B} &= \imageSet{R}{\mleft( A - B \mright) \union \mleft( B - A \mright)} = \imageSet{R}{A - B} \union \imageSet{R}{B - A} \\ 
+        \imageSet{R}{A} \symdiff \imageSet{R}{B} &= \big(\imageSet{R}{A} - \imageSet{R}{B} \big) \union \big( \imageSet{R}{B} - \imageSet{R}{A} \big)
+    \end{align*}
+    By \cref{thm:the-difference-of-image-is-a-subset-of-the-image-of-difference}, \( \imageSet{R}{A} - \imageSet{R}{B} \subseteq \imageSet{R}{A - B} \)
+    and \( \imageSet{R}{B} - \imageSet{R}{A} \subseteq  \imageSet{R}{B - A} \). And finally, by \cref{thm:the-union-of-subsets-is-a-subset-of-the-union}, 
+    \begin{gather*}
+        \big( \imageSet{R}{A} - \imageSet{R}{B} \big) \union \big( \imageSet{R}{B} - \imageSet{R}{A} \big) 
+        \subseteq 
+        \imageSet{R}{A - B} \union \imageSet{R}{B - A} \\
+        \therefore \, \imageSet{R}{A} \symdiff \imageSet{R}{B} \subseteq \imageSet{R}{A \symdiff B} \qedhere
+    \end{gather*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:A-subset-B-implies-image-of-A-under-R-subset-image-of-B-under-R}
+    Let \( R \) be a set of ordered pairs. Let \( A \) and \( B \) be sets. Then, 
+    \begin{equation*}
+        A \subseteq B \implies \imageSet{R}{A} \subseteq \imageSet{R}{B}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( y_{0} \) be an arbitrary object such that \( y_{0} \in \imageSet{R}{A} \). Thus 
+    \( \orderedpair{x_{0}}{y_{0}} \in R \) for some \( x_{0} \in A \) by \cref{dfn:image-of-a-set-of-ordered-pairs}.
+    Since \( A \subseteq B \), \( x_{0} \in A \) implies \( x_{0} \in B \).
+    \begin{equation*}
+        \therefore \, \exists x \, \big( x \in B \land \orderedpair{x}{y_{0}} \in R \big)
+    \end{equation*}
+    By \cref{dfn:image-of-a-set-of-ordered-pairs}, \( y_{0} \in \imageSet{R}{B} \). In other words,
+    \begin{equation*}
+        y_{0} \in \imageSet{R}{A} \implies y_{0} \in \imageSet{R}{B}
+    \end{equation*}
+    Since \( y_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \big( x \in \imageSet{R}{A} \implies x \in \imageSet{R}{B} \big)
+    \end{equation*}
+    By \cref{dfn:subset}, it follows that \( \imageSet{R}{A} \subseteq \imageSet{R}{B} \). 
+    \begin{equation*}
+        \therefore \, A \subseteq B \implies \imageSet{R}{A} \subseteq \imageSet{R}{B} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[Associativity]
+    \label{thm:associativity-of-composition}
+    Let \( R \), \( S \), and \( T \) be sets of ordered pairs. Then,
+    \begin{equation*}
+        \composition{\mleft( \composition{R}{S} \mright)}{T} = \composition{R}{\mleft( \composition{S}{T} \mright)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( R \), \( S \), and \( T \) be sets of ordered pairs.
+    Let \( x_{0} \) be an arbitrary object. By \cref{dfn:composition-of-two-sets-of-ordered-pairs},
+    \begin{align}
+        \label{eq:x0-belongs-to-lhs}
+        &x_{0} \in \composition{\mleft( \composition{R}{S} \mright)}{T} \notag \\ 
+        &\iff 
+        \exists a \, \exists b \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \exists c \, \big( \orderedpair{a}{c} \in T \land \orderedpair{c}{b} \in \composition{R}{S} \big) \Big] \notag \\
+        &\iff
+        \exists a \, \exists b \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \exists c \, \big( \orderedpair{a}{c} \in T \land 
+        \exists d \, \mleft( \orderedpair{c}{d} \in S \land \orderedpair{d}{b} \in R \mright) \big) \Big] \notag \\
+        &\iff
+        \exists a \, \exists b \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \exists c \, \exists d \, 
+        \big( \orderedpair{a}{c} \in T \land \orderedpair{c}{d} \in S \land \orderedpair{d}{b} \in R \big) \Big] \notag \\
+        &\iff
+        \exists a \, \exists b \, \exists c \, \exists d \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \orderedpair{a}{c} \in T \land \orderedpair{c}{d} \in S \land \orderedpair{d}{b} \in  R \Big]
+    \end{align}
+    Similarly, 
+    \begin{align}
+        \label{eq:x0-belongs-to-rhs}
+        &x_{0} \in \composition{R}{\mleft( \composition{S}{T} \mright)} \notag \\ 
+        &\iff
+        \exists a \, \exists b \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \exists d \, \big( \orderedpair{a}{d} \in \composition{S}{T} \land \orderedpair{d}{b} \in R \big) \Big] \notag \\
+        &\iff
+        \exists a \, \exists b \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \exists d \, \big( \exists c \, 
+        \mleft( \orderedpair{a}{c} \in T \land \orderedpair{c}{d} \in S \mright) \land \orderedpair{d}{b} \in R \big) \Big] \notag \\
+        &\iff
+        \exists a \, \exists b \, \exists c \,  \exists d \, 
+        \Big[ x_{0} = \orderedpair{a}{b} \land \orderedpair{a}{c} \in T \land \orderedpair{c}{d} \in S \land \orderedpair{d}{b} \in R \Big]
+    \end{align}
+    Comparing \eqref{eq:x0-belongs-to-lhs} and \eqref{eq:x0-belongs-to-rhs}, it is clear that, 
+    \begin{equation*}
+        x_{0} \in \composition{ \mleft( \composition{R}{S} \mright) }{T} \iff x_{0} \in \composition{R}{\mleft( \composition{S}{T} \mright)}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we have by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \Big( x \in \composition{\mleft( \composition{R}{S} \mright)}{T} \iff x \in \composition{R}{\mleft( \composition{S}{T} \mright)} \Big)
+    \end{equation*}
+    The theorem follows readily from the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:inverse-of-composition}
+    If \( R \) and \( S \) are sets of ordered pairs, then \( \mleft( \composition{R}{S} \mright)^{-1} = \composition{S^{-1}}{R^{-1}} \).
+\end{thm}
+
+\begin{proof}
+    Let \( R \) and \( S \) be sets of ordered pairs.
+    Let \( x_{0} \) be an arbitrary object. Thus, by \cref{dfn:inverse-of-a-set-of-ordered-pairs,dfn:composition-of-two-sets-of-ordered-pairs},
+    \begin{align*}
+        &x_{0} \in \mleft( \composition{R}{S} \mright)^{-1} \\ 
+        &\iff 
+        \exists a \, \exists b \, \Big[ x_{0} = \orderedpair{a}{b} \land \orderedpair{b}{a} \in \composition{R}{S} \Big] \\
+        &\iff
+        \exists a \, \exists b \, \Big[ x_{0} = \orderedpair{a}{b} \land 
+        \exists c \, \big( \orderedpair{b}{c} \in S \land \orderedpair{c}{a} \in R \big) \Big] \\
+        &\iff
+        \exists a \, \exists b \, \Big[ x_{0} = \orderedpair{a}{b} \land 
+        \exists c \, \big( \orderedpair{c}{b} \in S^{-1} \land \orderedpair{a}{c} \in R^{-1} \big)\Big] \\
+        &\iff
+        \exists a \, \exists b \, \Big[ x_{0} = \orderedpair{a}{b} \land \orderedpair{a}{b} \in \composition{S^{-1}}{R^{-1}} \Big]\\
+        &\iff
+        x_{0} \in \composition{S^{-1}}{R^{-1}}
+    \end{align*}
+    Since \( x_{0} \) is arbitrary, the theorem follows by Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\section{Cartesian Products}
+\begin{dfn}[Cartesian Product]
+    \label{dfn:cartesian-product}
+    For any two sets \( A \) and \( B \), the \keyword{cartesian product} of 
+    \( A \) and \( B \) is the set defined as,
+    \begin{equation*}
+        A \times B \coloneq \setbuilderbig{\orderedpair{x}{y}}{x \in A \land y \in B}
+    \end{equation*}
+    More formally,
+    \begin{equation*}
+        \forall A,B \, \forall x  \, \Big( x \in A \times B \iff 
+        \exists a,b \, \big[ \, x = \orderedpair{a}{b} \land a \in A \land b \in B \, \big]\Big)
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-cartesian-product}
+    For any two sets \( A \) and \( B \), \( A \times B \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x,y) \coloneq x \in A \land y \in B
+    \end{equation*}
+    Let \( a \) and \( b \) be arbitrary objects such that \( \varphi(a,b) \) holds.
+    Thus, by the definition of \( \varphi \), it follows that,
+    \begin{equation*}
+        a \in A \land b \in B
+    \end{equation*}
+    Clearly, \( a \in A \union B \) and \( b \in A \union B \). 
+    \begin{equation*}
+        \therefore \, \varphi(a,b) \implies a \in A \union B \land b \in A \union B
+    \end{equation*}
+    Since \( a \) and \( b \) are arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x,y \, \Big( \varphi(x,y) \implies x \in A \union B \land y \in A \union B \Big)
+    \end{equation*}
+    Thus, by \cref{thm:sufficient-condition-for-the-existence-of-sets-of-ordered-pairs-2}, the set
+    \( \setbuilder{\orderedpair{x}{y}}{\varphi(x,y)} = \setbuilder{\orderedpair{x}{y}}{x \in A \land y \in B} \)
+    exists. By \cref{dfn:cartesian-product}, this set is precisely \( A \times B \).
+\end{proof}
+
+\subsection{Properties of Cartesian Products}
+Like all other operations involving sets (\( \union, \intersect, -, \symdiff\)), the cartesian product of two sets 
+obeys certain laws.
+
+\begin{thm}
+    \label{thm:non-empty-sets-have-non-empty-cartesian-products}
+    For any two sets \( A \) and \( B \), \( A \times B = \emptyset \) if and only if \( A = \emptyset \)
+    or \( B = \emptyset \).
+    \begin{equation*}
+        \forall A,B \, \mleft( A \times B = \emptyset \iff A = \emptyset \lor B = \emptyset \mright)
+    \end{equation*}
+\end{thm}
+
+\noindent We will give two proofs here.
+\begin{proof}[Proof 1.]
+    Let \( A \) and \( B \) be arbitrary sets such that \( A \times B = \emptyset \). Suppose it is {\bfseries not}
+    the case that \( A = \emptyset \lor B = \emptyset \). In other words, \( A \neq \emptyset \) and 
+    \( B \neq \emptyset \). By \cref{dfn:empty-set}, this implies,
+    \begin{equation*}
+        \exists x \, \mleft( x \in A \mright)
+        \land 
+        \exists x \, \mleft( x \in B \mright)
+    \end{equation*}
+    Let \( a \) and \( b \) be two objects such that \( a \in A \) and \( b \in B \). But by \cref{dfn:cartesian-product},
+    this would mean that \( \orderedpair{a}{b} \in A \times B \), which contradicts the fact that \( A \times B = \emptyset \).
+    Therefore, by Reduction ad Absurdum, the supposition that \( A \neq \emptyset \land B \neq \emptyset \) must be 
+    false.
+    \begin{equation*}
+        \therefore \, A = \emptyset \lor B = \emptyset
+    \end{equation*}
+    Thus, by the Deduction Theorem, we derive,
+    \begin{equation}
+        \label{eq:empty-cartesian-product-implies-at-least-one-empty-set}
+        \mleft( A \times B = \emptyset \mright) \implies \mleft( A = \emptyset \lor B = \emptyset \mright)
+    \end{equation}
+    To prove the converse, suppose that \( A = \emptyset \lor B = \emptyset \). 
+    Let \( x_{0} = \orderedpair{a}{b} \) be an arbitrary ordered pair. 
+    If \( A = \emptyset \), then clearly \( a \notin A \). Thus, by \cref{dfn:cartesian-product},
+    it follows that \( x_{0} \notin A \times B \). Since \( x_{0} \) is arbitrary, 
+    we conclude that \( \forall x \, \mleft( x \notin A \times B \mright) \). Thus, \( A \times B = \emptyset \)
+    by \cref{dfn:empty-set}. If \( B = \emptyset \), the exact same argument applies. Since \( B = \emptyset \),
+    \( b \notin B \) for any \( x_{0} = \orderedpair{a}{b} \). Thus, \( x_{0} \notin A \times B \) for any arbitrary
+    \( x_{0} \), so \( A \times B = \emptyset \).
+    \begin{equation}
+        \label{eq:at-least-one-empty-set-implies-empty-cartesian-product}
+        \mleft( A = \emptyset \lor B = \emptyset \mright)
+        \implies 
+        \mleft( A \times B = \emptyset \mright)
+    \end{equation}
+    Having derived \eqref{eq:empty-cartesian-product-implies-at-least-one-empty-set} and \eqref{eq:at-least-one-empty-set-implies-empty-cartesian-product},
+    we can now conclude the biconditional,
+    \begin{equation*}
+        \mleft( A = \emptyset \lor B = \emptyset \mright)
+        \iff 
+        \mleft( A \times B = \emptyset \mright)
+    \end{equation*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+
+\begin{proof}[Proof 2.]
+    Let \( A \) and \( B \) be arbitrary sets. By \cref{dfn:cartesian-product,dfn:empty-set},
+    \begin{align}
+        \label{eq:A-cross-B-equals-empty-predicate-form}
+        \mleft( A \times B = \emptyset \mright)
+        &\iff 
+        \forall x \, \big( \lnot \, \exists a,b \, \big[\, x = \orderedpair{a}{b} \land a \in A \land b \in B \,\big] \big) \notag \\
+        &\iff 
+        \forall x \, \forall a,b \, \big( x = \orderedpair{a}{b} \implies \mleft( a \notin A \lor b \notin B \mright) \big)
+    \end{align}
+    Define the predicates \( \Gamma \) and \( \varphi \) as follows:
+    \begin{align}
+        \varphi(x,y) &\coloneq x \notin A \lor y \notin B \label{eq:define-inner-predicate} \\ 
+        \Gamma(x)    &\coloneq \forall a,b \, \mleft( x = \orderedpair{a}{b} \implies \varphi(a,b) \mright) \label{eq:define-outer-predicate}
+    \end{align}
+    \eqref{eq:A-cross-B-equals-empty-predicate-form} can thus be re-expressed as,
+    \begin{equation}
+        \label{eq:A-cross-B-equals-empty-predicate-expressed-in-terms-of-Gamma}
+        \mleft( A \times B = \emptyset \mright) \iff \forall x \, \Gamma(x)
+    \end{equation}
+    Now, we will use \eqref{eq:define-outer-predicate} to prove that,
+    \begin{equation*}
+        \forall x \, \Gamma(x) \iff \forall a \, \forall b \, \varphi(a,b)
+    \end{equation*}
+    Suppose that \( \forall x \, \Gamma(x) \). Let \( \alpha \) and \( \beta \) be arbitrary objects. Since \( \forall x \, \Gamma(x) \), 
+    then \( \Gamma(\orderedpair{\alpha}{\beta}) \) must hold by Universal Instantiation. By \eqref{eq:define-outer-predicate}, 
+    this implies,
+    \begin{equation*}
+        \forall a,b \, \mleft( \orderedpair{\alpha}{\beta} = \orderedpair{a}{b} \implies \varphi(a,b) \mright)
+    \end{equation*}
+    By Universal Instantiation, we have,
+    \begin{equation*}
+        \orderedpair{\alpha}{\beta} = \orderedpair{\alpha}{\beta} \implies \varphi(\alpha, \beta)
+    \end{equation*}
+    Since \( \orderedpair{\alpha}{\beta} = \orderedpair{\alpha}{\beta} \) is trivially true, then 
+    \( \varphi(\alpha, \beta) \) must also be true by Modus Ponens. Since \( \alpha \) and \( \beta \)
+    are arbitrary, we have,
+    \begin{equation*}
+        \forall a,b \, \varphi(a,b)
+    \end{equation*}
+    And by the Deduction Theorem,
+    \begin{equation*}
+        \forall x \, \Gamma(x) \implies \forall a,b \, \varphi(a,b)
+    \end{equation*}
+    To prove the converse, suppose that \( \forall a,b \, \varphi(a,b) \) is true. Let \( x_{0} \) be 
+    an arbitrary object. Obviously, \( x_{0} \) is either an ordered pair or it isn't an ordered pair.
+    If \( x_{0} \) is {\bfseries not} an ordered pair, then \( \forall a,b \, \mleft( x_{0} \neq \orderedpair{a}{b} \mright) \).
+    As a result, \( \forall a,b \, \mleft( x_{0} = \orderedpair{a}{b} \implies \varphi(a,b) \mright) \) would be 
+    vacuously  true. Thus, \( \Gamma(x_{0}) \) holds by \eqref{eq:define-outer-predicate}. If \( x_{0} \) is an ordered pair,
+    then clearly \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \) and \( \beta \). Since \( \forall a,b \, \varphi(a,b)\),
+    it follows that \( \varphi(\alpha,\beta) \) must hold. Let \( a_{0} \) and \( b_{0} \) be arbitrary objects. 
+    If \( x_{0} = \orderedpair{\alpha}{\beta} = \orderedpair{a_{0}}{b_{0}} \), then \( \alpha = a_{0} \) and \( \beta = b_{0} \) by
+    \cref{thm:equality-of-ordered-pairs}. Since \( \varphi(\alpha, \beta) \) is true, it follows that \( \varphi(a_{0}, b_{0}) \) is also true.
+    Given that \( a_{0} \) and \( b_{0} \) are arbitrary, 
+    we have by Universal Generalization \( \forall a,b \, \mleft( x_{0} = \orderedpair{a}{b} \implies \varphi(a,b) \mright) \).
+    In other words, \( \Gamma(x_{0}) \) holds. 
+
+    \vspace{0.5cm}
+    \noindent
+    We have shown that \( \Gamma(x_{0}) \) follows from \( \forall a,b \, \varphi(a,b) \) regardless
+    of whether \( x_{0} \) is an ordered pair. Since \( x_{0} \) is arbitrary, we can conclude by Universal Generalization that
+    \( \forall x \, \Gamma(x) \). Therefore,
+    \begin{equation*}
+        \forall a,b \, \varphi(a,b) \implies \forall x \, \Gamma(x)
+    \end{equation*}
+    Having proven both implications, we are now in the position to conclude that,
+    \begin{equation*}
+        \forall x \, \Gamma(x) \iff \forall a,b \, \varphi(a,b) 
+    \end{equation*}
+    From \eqref{eq:A-cross-B-equals-empty-predicate-expressed-in-terms-of-Gamma}, we thus have,
+    \begin{equation}
+        \label{eq:A-cross-B-equals-empty-final-statement}
+        \mleft( A \times B = \emptyset \mright) \iff \forall x,y \, \varphi(a,b) \iff \forall x,y \, \mleft( x \notin A \lor y \notin B \mright)
+    \end{equation}
+    Using \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, we can simplify \eqref{eq:A-cross-B-equals-empty-final-statement}
+    even further.
+    \begin{align*}
+        \mleft( A \times B = \emptyset \mright) 
+        &\iff 
+        \forall x \, \mleft[\, \forall y \, \mleft( x \notin A \lor y \notin B \mright) \,\mright] \\
+        &\iff 
+        \forall x \, \mleft[\, x \notin A \lor \forall y \, \mleft( y \notin B \mright) \,\mright]\\
+        &\iff 
+        \forall x \, \big( x \notin A \big) \lor \forall y \, \mleft( y \notin B \mright) \\ 
+        &\iff 
+        \forall x \, \mleft( x \notin A \mright) \lor \forall x \, \mleft( x \notin B \mright) \\ 
+        &\iff 
+        A = \emptyset \lor B = \emptyset
+    \end{align*}
+    Since \( A \) and \( B \) are arbitrary, the theorem follows by Universal Generalization.
+\end{proof}
+
+\begin{thm}
+    \label{thm:relationship-between-subset-and-cartesian-products}
+    If \( S \) is a non-empty set, then \( A \subseteq B \) if and only if \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \) for any \( A \) and \( B \).
+    \begin{equation*}
+        \forall S \, \Big( S \neq \emptyset \implies \forall A,B \, \big( A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright)\big) \Big) 
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( S \) be arbitrary sets such that \( S \neq \emptyset \). Suppose that \( A \subseteq B \). By \cref{dfn:subset},
+    we have,
+    \begin{equation}
+        \label{eq:every-element-of-A-is-also-an-element-of-B}
+        \forall x \, \mleft( x \in A \implies x \in B \mright)
+    \end{equation}
+    Let \( x_{0} \in \mleft( A \times S \mright) \) be arbitrary. 
+    Thus \( x_{0} = \orderedpair{a_{0}}{b_{0}} \) 
+    for some \( a_{0} \in A \) and \( b_{0} \in S \) by \cref{dfn:cartesian-product}.
+    By \eqref{eq:every-element-of-A-is-also-an-element-of-B}, necessarily \( a_{0} \in B \).
+    Thus, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in \mleft( B \times S \mright) \).
+    \begin{equation*}
+        \therefore \, x_{0} \in \mleft( A \times S \mright) \implies x_{0} \in \mleft( B \times S \mright)
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, it follows that,
+    \begin{equation*}
+        \forall x \, \Big( x \in \mleft( A \times S \mright) \implies x \in \mleft( B \times S \mright) \Big)
+    \end{equation*}
+    Thus \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \) by \cref{dfn:subset}.
+    \begin{equation}
+        \label{eq:A-subset-B-implies-A-times-S-subset-B-times-S}
+        \therefore \, 
+        A \subseteq B \implies \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright)
+    \end{equation}
+    To prove the converse, suppose that \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \).
+    Let \( x_{0} \in A \) be arbitrary. Since \( S \neq \emptyset \), it follows that there exists a \( z \in S \).
+    Since \( x_{0} \in A \land z \in S \), it follows that \( \orderedpair{x_{0}}{z} \in \mleft( A \times S \mright) \).
+    And since \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \), 
+    \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \) must also be true. By \cref{dfn:cartesian-product}, 
+    \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \iff x_{0} \in B \land z \in S \). 
+    Thus, we infer \( x_{0} \in B \) by Modus Ponens. By the Deduction Theorem,
+    \begin{equation*}
+        x_{0} \in A \implies x_{0} \in B
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( x \in A \implies x \in B \mright)
+    \end{equation*}
+    By \cref{dfn:subset}, it follows that \( A \subseteq B\). 
+    \begin{equation}
+        \label{eq:A-times-S-subset-B-times-S-implies-A-subset-B}
+        \therefore \, \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \implies A \subseteq B
+    \end{equation}
+    And from \eqref{eq:A-subset-B-implies-A-times-S-subset-B-times-S} and \eqref{eq:A-times-S-subset-B-times-S-implies-A-subset-B},
+    we infer,
+    \begin{equation*}
+        A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright)
+    \end{equation*}
+    Thus, by the Deduction Theorem,
+    \begin{equation*}
+        S \neq \emptyset \implies \Big( A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \Big)
+    \end{equation*}
+    Since \( A \), \( B \), and \( S \) are arbitrary, the theorem follows from Universal Generalization.
+\end{proof}
+
+\begin{thm}[Right Distributivity of \( \times \) over \( \union, \intersect, -, \symdiff \)]
+    \label{set-identities:right-distributivity-of-cartesian-products}
+    For any three sets \( A \), \( B \) and \( C \), the following identities hold:
+    \begin{gather*}
+        \mleft( A \union B \mright) \times C = \mleft( A \times C \mright) \union \mleft( B \times C \mright)\\ 
+        \mleft( A \intersect B \mright) \times C = \mleft( A \times C \mright) \intersect \mleft( B \times C \mright)\\ 
+        \mleft( A - B \mright) \times C = \mleft( A \times C \mright) - \mleft( B \times C \mright)\\
+        \mleft( A \symdiff B \mright) \times C = \mleft( A \times C \mright) \symdiff \mleft( B \times C \mright)
+    \end{gather*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets. To prove the first three equalities,
+    we shall write down the predicates for the set on each side of the equality, and then 
+    prove that they are equivalent.
+
+    \vspace{0.5cm}
+    \noindent
+    For the first equality, define the predicates \( \Gamma \) and \( \varphi \) as follows.
+    \begin{align*}
+        \Gamma(x) 
+        &\coloneq 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \lor a \in B \mright) \land b \in C \big] \\ 
+        \varphi(x)
+        &\coloneq 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+        \lor 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in B \land b \in C \big]
+    \end{align*}
+    By \cref{thm:union-in-terms-of-logical-or,dfn:cartesian-product}, clearly,
+    \begin{gather*}
+        \forall x \, \Big( x \in \mleft( A \union B \mright) \times C \iff \Gamma(x)\Big)\\ 
+        \forall x \, \Big( x \in \mleft( A \times C \mright) \union \mleft( B \times C \mright) \iff \varphi(x) \Big)
+    \end{gather*}
+    Let \( x_{0} \) be arbitrary. By definition,
+    \begin{equation*}
+        \begin{split}
+            \Gamma(x_{0})
+            &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \lor a \in B \mright) \land b \in C \big] \\
+            &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land 
+            \big( \mleft( a \in A \land b \in C \mright) \lor \mleft( a \in B \land b \in C \mright) \big) \big] \\
+            &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+            \lor 
+            \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in B \land b \in C \big]\\
+            &\iff \varphi(x_{0})
+        \end{split}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we conclude by Univesal Generalization that \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
+    Thus,
+    \begin{equation*}
+        \forall x \, \Big( x \in \mleft( A \union B \mright) \times C \iff 
+        \Gamma(x) \iff \varphi(x) \iff x \in \mleft( A \times C \mright) \union \mleft( B \times C \mright)\Big)
+    \end{equation*}
+    The first identity follows immediately from the \nameref{axm:axiom-of-extensionality}.
+
+    \vspace{0.5cm}
+    \noindent
+    For the second equality, we define \( \Gamma \) and \( \varphi \) as follows:
+    \begin{align*}
+        \Gamma(x) 
+        &\coloneq 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \land a \in B \mright) \land b \in C \big] \\
+        \varphi(x)
+        &\coloneq 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \land b \in C \mright) \big]
+        \land 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in B \land b \in C \mright) \big]
+    \end{align*}
+    By \cref{thm:intersection-in-terms-of-logical-and,dfn:cartesian-product}, clearly,
+    \begin{gather*}
+        \forall x \, \Big( x \in \mleft( A \intersect B \mright) \times C \iff \Gamma(x) \Big) \\ 
+        \forall x \, \Big( x \in \mleft( A \times C \mright) \intersect \mleft( B \times C \mright) \iff \varphi(x) \Big)
+    \end{gather*}
+    Let \( x_{0} \) be an arbitrary object such that \( \Gamma(x_{0}) \) holds true. It follows from the definition of \( \Gamma \)
+    that \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \) and \( \beta \) where \( \alpha \in A \land \alpha \in B \) 
+    and \( \beta \in C \). Clearly, \( \varphi(x_{0}) \) also holds. Therefore, \( \Gamma(x_{0}) \implies \varphi(x_{0}) \). To prove 
+    the converse, suppose that \( \varphi(x_{0}) \) is true. By the definition of \( \varphi \), 
+    it follows that \( x_{0} = \orderedpair{\alpha}{\beta} = \orderedpair{\gamma}{\delta}\) where \( \alpha \in A \), \( \beta \in C \),
+    \( \gamma \in B \), and \( \delta \in C \). Since \( \orderedpair{\alpha}{\beta} = \orderedpair{\gamma}{\delta} \), necessarily 
+    \( \alpha = \gamma \) and \( \beta = \delta \) by \cref{thm:equality-of-ordered-pairs}. Since \( \alpha = \gamma \) and 
+    \( \alpha \in A \land \gamma \in B \), it follows that \( \alpha \in A \land \alpha \in B \) must be true. Therefore,
+    \( x_{0} = \orderedpair{\alpha}{\beta} \land (\alpha \in A \land \alpha \in B) \land \beta \in C \) is true. In other words, 
+    \( \Gamma(x_{0}) \) holds. Thus, \( \varphi(x_{0}) \implies \Gamma(x_{0}) \).
+
+    \vspace{0.2cm}
+    \noindent
+    Having established the biconditional \( \Gamma(x_{0}) {\iff} \varphi(x_{0}) \), we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright)
+    \end{equation*}
+    Therefore, 
+    \begin{equation*}
+        \forall x \, \Big( x \in \mleft( A \intersect B \mright) \times C \iff \Gamma(x) \iff \varphi(x) \iff x \in \mleft( A \times C \mright) \intersect \mleft( B \times C \mright)\Big)
+    \end{equation*}
+    The second equality follows readily from the \nameref{axm:axiom-of-extensionality}.
+
+    \vspace{0.2cm}
+    \noindent
+    For the third equality, we define \( \Gamma \) and \( \varphi \) as follows:
+    \begin{align*}
+        \Gamma(x)
+        &\coloneq
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \land a \notin B \mright) \land b \in C \big] \\ 
+        \varphi(x)
+        &\coloneq 
+        \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+        \land 
+        \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies a \notin B \lor b \notin C \big]
+    \end{align*}
+    It is not difficult to see that \( \forall x \, \big( x \in \mleft( A - B \mright) \times C \iff \Gamma(x) \big) \). The relationship between
+    \( \varphi(x) \) and \( \mleft( A \times C \mright) - \mleft( B \times C \mright) \) is more subtle but should be perfectly intelligible after 
+    an application of the laws of logic. As in, for any arbitrary \( x \),
+    \begin{equation*}
+        \begin{split}
+            &x \in \mleft( A \times C \mright) - \mleft( B \times C \mright)\\
+            &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+            \land \lnot \, 
+            \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in B \land b \in C \big] \\
+            &\iff 
+            \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+            \land 
+            \forall a \, \forall b \, \big[ x \neq \orderedpair{a}{b} \lor \mleft( a \notin B \lor b \notin C \mright) \big]\\
+            &\iff 
+            \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+            \land 
+            \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies \mleft( a \notin B \lor b \notin C \mright) \big]\\
+            &\iff 
+            \varphi(x)
+        \end{split}
+    \end{equation*}
+    It remains to prove that \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \). Let \( x_{0} \) be an arbitrary object 
+    such that \( \Gamma(x_{0}) \) is satisfied. Thus, \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \) and \( \beta \) 
+    such that \( \alpha \in A \land \alpha \notin B \) and \( \beta \in C \). Since \( \alpha \in A \) and \( \beta \in C \) and 
+    \( x_{0} = \orderedpair{\alpha}{\beta}\), it follows that,
+    \begin{equation*}
+        \exists a \, \exists b \, \big[ x_{0} = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+    \end{equation*}
+    Let \( a_{0} \) and \( b_{0} \) be arbitrary objects such that \( x_{0} = \orderedpair{a_{0}}{b_{0}} \). Since \( x_{0} = \orderedpair{\alpha}{\beta} \),
+    it follows from \cref{thm:equality-of-ordered-pairs} that \( a_{0} = \alpha \) and \( b_{0} = \beta \). Since \( a_{0} = \alpha \) and 
+    \( \alpha \notin B \), it follows that \( a_{0} \notin B \). By Disjunction Introduction, we conclude \( a_{0} \notin B \lor b_{0} \notin C \).
+    In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \implies \mleft( a_{0} \notin B \lor b_{0} \notin C \mright) \) for any arbitrary
+    \( a_{0} \) and \( b_{0} \). By Universal Generalization, we have,
+    \begin{equation*}
+        \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies \mleft( a \notin B \lor b \notin C \mright) \big]
+    \end{equation*}
+    By Conjunction Introduction, it follows that,
+    \begin{equation*}
+        \exists a \, \exists b \, \big[ x_{0} = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+        \land 
+        \forall a \, \forall b \, \big[ x_{0} = \orderedpair{a}{b} {\implies} \mleft( a \notin B \lor b \notin C \mright) \big]
+    \end{equation*}
+    In other words, we have just derived \( \varphi(x_{0}) \) from the supposition of \( \Gamma(x_{0}) \)'s truth.
+    \begin{equation*}
+        \therefore \, \Gamma(x_{0}) \implies \varphi(x_{0})
+    \end{equation*}
+
+    \vspace{0.2cm}
+    \noindent
+    To prove the converse, suppose that \( \varphi(x_{0}) \) holds. By the definition of \( \varphi \), 
+    \begin{equation*}
+        \exists a \, \exists b \, \big[ x_{0} = \orderedpair{a}{b} \land a \in A \land b \in C \big]
+        \land 
+        \forall a \, \forall b \, \big[ x_{0} = \orderedpair{a}{b} {\implies} \mleft( a \notin B \lor b \notin C \mright) \big]
+    \end{equation*}
+    The left conjunct implies that \( x_{0} = \orderedpair{\alpha}{\beta}\) for some \( \alpha \) and \( \beta \) 
+    where \( \alpha \in A \) and \( \beta \in C \). On the other hand, the right conjunct implies,
+    \begin{equation*}
+        \alpha \notin B \lor \beta \notin C
+    \end{equation*}
+    But it has already been established that \( \beta \in C \), so by Disjunctive Syllogism, \( \alpha \notin B \) must be 
+    true. Therefore, \( x_{0} = \orderedpair{\alpha}{\beta} \land \alpha \in A \land \alpha \notin B \land \beta \in C \),
+    so \( \Gamma(x_{0}) \) is indeed satisfied.
+    \begin{equation*}
+        \therefore \, \varphi(x_{0}) \implies \Gamma(x_{0})
+    \end{equation*}
+    Thus the biconditional \( \Gamma(x_{0}) \iff \varphi(x_{0}) \) holds. Since \( x_{0} \) is arbitrary, we conclude
+    \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \) by Universal Generalization. The third equality is a direct
+    consequence of \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
+
+    \vspace{0.5cm}
+    \noindent
+    The fourth equality can be proven using the first and third equalities.
+    \begin{align*}
+        \mleft( A \symdiff B \mright) \times C
+        &= 
+        \big[ \mleft( A - B \mright) \union \mleft( B - A \mright) \big] \times C \\ 
+        &= 
+        \big[  \mleft( A - B \mright) \times C \big] \union \big[ \mleft( B - A \mright) \times C \big] \\ 
+        &=
+        \big[ \mleft( A \times C \mright) - \mleft( B \times C \mright) \big]
+        \union 
+        \big[ \mleft( B \times C \mright) - \mleft( A \times C \mright) \big] \\
+        &=
+        \mleft( A \times C \mright) \symdiff \mleft( B \times C \mright) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{rem}
+    The cartesian product is also \keyword{left-distributive}. This can be proven in the exact same way as above.
+\end{rem}
+
+\section{Set-theoretic Definition of Functions}
+\begin{dfn}
+    \label{dfn:function-basic}
+    A set \( f \) is a \keyword{function} if and only if the following statement holds:
+    \begin{equation*}
+        \forall x \, \Big( x \in f \implies \exists a \, \exists b \, \mleft( x = \orderedpair{a}{b} \mright) \Big)
+        \land  
+        \forall x \, \forall y \, \forall z \, \Big( {\orderedpair{x}{y}} \in f \land \orderedpair{x}{z} \in f \implies y = z \Big)
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    A function is a set of ordered pairs such that the first coordinate of every ordered pair it contains is unique. 
+    It isn't difficult to see that this definition is consistent with how we intuitively think about functions---as rules 
+    that associate an object with a single unique object. Also, since functions are sets of ordered pairs, all the properties
+    presented in \cref{ssec:properties-of-sets-of-ordered-pairs} also apply to functions.
+\end{rem}
+
+
+\begin{dfn}[Arrow Notation]
+    \label{dfn:arrow-notation}
+    Let \( A \) and \( B \) be sets and \( f \) be a function. We use the notation
+    \function{f}{A}{B} when \( \dom f = A \) and \( \ran f \subseteq B \).
+    Informally, \function{f}{A}{B} can be read as ``\( f \) is a function on \( A \) into \( B \).''
+\end{dfn}
+
+\begin{dfn}[Functional Notation]
+    \label{dfn:functional-notation}
+    For any function \( f \), if \( \orderedpair{x}{y} \in f \) for some \( x \in \dom f \), then 
+    \( y \) is the \keyword{value} of \( f \) at \( x \) and is denoted by \( f(x) \). 
+    In first-order logic,
+    \begin{equation*}
+        \forall x \, \forall y \, \Big(
+        \orderedpair{x}{y} \in f 
+        \iff
+        y = f(x) \Big)
+    \end{equation*}
+\end{dfn}
+
+\begin{cor}
+    \label{thm:express-the-range-of-a-function-using-functional-notation}
+    For any function \( f \), \( \ran f = \setbuilderbig{y}{\exists x \, \mleft( y = f(x) \mright)} \)
+\end{cor}
+
+\begin{dfn}[Index Notation]
+    \label{dfn:index-notation}
+    The value of a function \( f \) at \( x \) can also be denoted as \( f_{x} \).
+\end{dfn}
+
+\begin{dfn}[Injection]
+    \label{dfn:injection}
+    A function \( f \) is \keyword{injective} if and only if, 
+    \begin{equation*}
+        \forall x \, \forall y \, \Big( x \in \dom f \land y \in \dom f \implies \big( f(x) = f(y) \implies x = y \big)\Big)
+    \end{equation*}
+    We use the notation \injection{f}{A}{B} to mean,
+    ``\( f \) is a injective/one-to-one function on \( A \) into \( B \),''
+    or
+    ``\( f \) is an injection from \( A \) to \( B \).''
+\end{dfn}
+
+\begin{dfn}[Surjection]
+    \label{dfn:surjection}
+    A function \function{f}{A}{B} is \keyword{surjective} if and only if,
+    \begin{equation*}
+        \forall y \, \mleft( y \in B \iff \exists x \, \mleft( x \in A \land \orderedpair{x}{y} \in f \mright) \mright)
+    \end{equation*}
+    In other words, \function{f}{A}{B} is surjective if and only if \( \ran f = B \).
+    The notation \surjection{f}{A}{B} reads, ``\( f \) is a function on \( A \) onto \( B \),'' or
+    ``\( f \) is a surjection from \( A \) to \( B \).''
+\end{dfn}
+
+\begin{cor}
+    \label{thm:every-function-on-its-domain-into-its-range-is-surjective}
+    If \( f \) is a function, then \function{f}{\dom f}{\ran f} is surjective.
+    \begin{equation*}
+        \forall A,B \, \forall f \, \Big( \function{f}{A}{B} \implies \surjection{f}{A}{\ran f} \Big)
+    \end{equation*}
+\end{cor}
+
+\begin{rem}
+    The notion of ``surjection'' is only relevant in contexts where a function is described in relation
+    to another set---typically a set that contains the function's range. Incidentally, this is also the 
+    sole purpose for the usage of the \nameref{dfn:arrow-notation}. A function can be fully described 
+    without the use of the \nameref{dfn:arrow-notation}; after all, a function is simply a set 
+    of ordered pairs. The \nameref{dfn:arrow-notation} is only useful when one intends to describe the 
+    relationship between the function and another set.
+\end{rem}
+
+\begin{dfn}[Bijection]
+    \label{dfn:bijection}
+    A function \( f \) is \keyword{bijective} if and only if 
+    it is both injective and surjective. 
+    We use the notation \bijection{f}{A}{B} to mean, ``\( f \) is a one-to-one 
+    function on \( A \) onto \( B \),'' 
+    or ``\( f \) is a bijection between \( A \) and \( B \).''
+\end{dfn}
+
+\begin{cor}
+    \label{thm:every-injective-function-on-its-domain-into-its-range-is-a-bijection}
+    If \( f \) is an injective function, then \function{f}{\dom f}{\ran f} is bijective.
+    \begin{equation*}
+        \forall A,B \, \forall f \, \Big( \injection{f}{A}{B} \implies \bijection{f}{A}{\ran f} \Big)
+    \end{equation*}
+\end{cor}
+
+\begin{dfn}[Invertibility]
+    \label{dfn:invertibility-of-functions}
+    A function \( f \) is \keyword{invertible} if and only if \( f^{-1} \) is also a function.
+\end{dfn}
+
+\begin{rem}
+    Although \( f^{-1} \) exists for any function \( f \) 
+    (\cref{thm:existence-of-the-inverse-of-a-set-of-ordered-pairs}),
+    it is not necessarily a function. Unless it has been proven that 
+    \( f^{-1} \) satisfies \cref{dfn:function-basic}, \( f^{-1} \) should
+    be treated as nothing more than a set of ordered pairs.
+\end{rem}
+
+\begin{dfn}[Restriction]
+    \label{dfn:restricted-functions}
+    If \( f \) is a function and \( A \) is a set, then the \keyword{restriction} of \( f \) to \( A \)
+    is the set given by, 
+    \begin{equation*}
+        \restrictedfunction{f}{A} \coloneq \setbuilderbig{\orderedpair{x}{y} \in f}{x \in A}
+    \end{equation*}
+    We also say that \( f \) is an \keyword{extension} of \restrictedfunction{f}{A}.
+\end{dfn}
+
+\begin{dfn}[System of Functions]
+    \label{dfn:system-of-functions}
+    A non-empty set \( F \) is called a \keyword{system} or \keyword{family} of functions
+    if and only if every element of \( F \) is a function.
+\end{dfn}
+
+\begin{dfn}[Compatibility]
+    \label{dfn:compatibility-of-a-system-of-functions}
+    If \( F \) is a system of functions, then \( F \) is a \keyword{compatible} if and only if,
+    \begin{equation*}
+        \forall x \, 
+        \Big( x \in \Intersect\setbuilderBig{\dom f}{f \in F} 
+        \implies 
+        \forall f \, \forall g \, \big( f \in F \land g \in F \implies f(x) = g(x) \big) \Big)
+    \end{equation*}
+\end{dfn}
+
+\begin{cor}
+    \label{thm:compatibility-of-two-functions}
+    Two functions \( f \) and \( g \) are compatible if and only if,
+    \begin{equation*}
+        \forall x \, \Big[ x \in \mleft( \dom f \intersect \dom g \mright) \implies f(x) = g(x) \Big]
+    \end{equation*}
+\end{cor}
+
+\subsection{Properties of Functions}
+\begin{thm}
+    \label{thm:a-function-is-a-subset-of-the-cartesian-product-between-its-domain-and-range}
+    If \( f \) is a function, then \( f \subseteq \mleft( \dom f \times \ran f \mright) \)
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be a function. By \cref{dfn:cartesian-product}, 
+    \begin{equation}
+        \label{eq:cartesian-product-of-domain-and-range}
+        \dom f \times \ran f = \setbuilderbig{\orderedpair{x}{y}}{x \in \dom f \land y \in \ran f}
+    \end{equation}
+    Suppose that \( \alpha \in f \). Since \( f \) is a function, it follows from \cref{dfn:function-basic}
+    that,
+    \begin{equation*}
+        \begin{aligned}
+            \alpha = \orderedpair{x_{0}}{y_{0}} &
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( x_{0} \) and \( y_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:range-of-a-set-of-ordered-pairs}, clearly 
+    \( x_{0} \in \dom f\) and \( y_{0} \in \ran f \). By \eqref{eq:cartesian-product-of-domain-and-range},
+    it follows that \( \alpha = \orderedpair{x_{0}}{y_{0}} \in \mleft( \dom f \times \ran f \mright) \).
+    Since \( \alpha \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \big( x \in f \implies x \in \mleft( \dom f \times \ran f \mright) \big)
+    \end{equation*}
+    By \cref{dfn:subset}, this means that \( f \subseteq \mleft( \dom f \times \ran f \mright) \).
+\end{proof}
+
+\begin{cor}
+    \label{thm:a-function-on-A-into-B-is-a-subset-of-the-cartesian-product-between-A-and-B}
+    If \function{f}{A}{B}, then \( f \subseteq A \times B \) because \( \dom f = A \) and \( \ran f \subseteq B \)
+    so that \( f \subseteq \mleft( A \times \ran f \mright) \subseteq \mleft( A \times B \mright) \).
+\end{cor}
+
+\begin{thm}
+    \label{thm:full-definition-of-the-arrow-notation}
+    For any three sets \( f \), \( A \), and \( B \),
+    \begin{multline*}
+        \function{f}{A}{B}
+        \iff 
+        \bigg(
+        \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in A \land b \in B \big) \Big] \\
+        \land
+        \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]\bigg)
+    \end{multline*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \), \( A \), and \( B \) be arbitrary sets. Suppose that \function{f}{A}{B}. That is, \( f \) is a function with
+    \( \dom f = A \) and \( \ran f \subseteq B \). Let \( x_{0} \) be an arbitrary object such that \( x_{0} \in f \). By
+    \cref{dfn:function-basic}, it follows that,
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} = \orderedpair{\alpha}{\beta}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( \alpha \) and \( \beta \)}
+        \end{aligned}
+    \end{equation*}
+    Since \( x_{0} = \orderedpair{\alpha}{\beta} \) and \( x_{0} \in f \), it follows from \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:range-of-a-set-of-ordered-pairs}
+    that \( \alpha \in \dom f \) and \( \beta \in \ran f \). And since \( \dom f = A \) and \( \ran f \subseteq B\), it follows that \( \alpha \in A \) and \( \beta \in B \).
+    \begin{equation}
+        \label{eq:first-conjunct}
+        \therefore \, \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in A \land b \in B \big) \Big]
+    \end{equation}
+    Now, let \( x_{0} \in A \) be arbitrary. Since \( \dom f = A \), \( x_{0} \in \dom f \) by the \nameref{axm:axiom-of-extensionality}.
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:range-of-a-set-of-ordered-pairs}, this means that,
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{0}}{y_{0}} \in f&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( y_{0} \in \ran f \)}
+        \end{aligned}
+    \end{equation*}
+    And since \( \ran f \subseteq B \), it follows from \cref{dfn:subset} that \( y_{0} \in B \). Suppose there exists another \( z_{0} \) such that
+    \( \orderedpair{x_{0}}{z_{0}} \in f \). But \( f \) is a function, so,
+    \begin{equation*}
+        \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
+    \end{equation*}
+    by \cref{dfn:function-basic}. Thus, \( y_{0} \) is unique. By the Deduction Theorem and Universal Generalization, we infer,
+    \begin{equation}
+        \label{eq:second-conjunct}
+        \therefore \, 
+        \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]
+    \end{equation}
+    Since \eqref{eq:first-conjunct} and \eqref{eq:second-conjunct} are provable from the assumption that \function{f}{A}{B},
+    we conclude by the Deduction Theorem that,
+    \begin{multline}
+        \label{eq:f-A-B-implies-element-of-pairs-and-uniqueness-of-y}
+        \function{f}{A}{B} 
+        \implies 
+        \bigg( \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in A \land b \in B \big) \Big] \\ 
+        \land 
+        \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]
+        \bigg)
+    \end{multline}
+
+    \vspace{0.2cm}
+    \noindent
+    To prove the converse, we start with the supposition that \( f \) is a set for which the following two statements hold true:
+    \begin{gather}
+        \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in A \land b \in B \big) \Big]
+        \label{eq:assumed-first-conjunct} \\ 
+        \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]
+        \label{eq:assumed-second-conjunct}
+    \end{gather}
+    The goal is to prove that \eqref{eq:assumed-first-conjunct} and 
+    \eqref{eq:assumed-second-conjunct} do indeed imply \function{f}{A}{B}.
+    This can be done by proving that \( f \) satisfies \cref{dfn:function-basic} 
+    and that \( \dom f = A \) and \( \ran f \subseteq B \).
+
+    \vspace{0.3cm}
+    \noindent 
+    Suppose that \( x_{0} \in f \). Thus, \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \in A \) and \( \beta \in B \)
+    by \eqref{eq:assumed-first-conjunct}. Clearly, \( x_{0} \) is an ordered pair, so,
+    \begin{equation}
+        \label{eq:first-conjunct-of-function-definition}
+        \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \big) \Big]
+    \end{equation}
+    Next, let \( x_{0} \), \( y_{0} \), and \( z_{0} \) be arbitrary objects such that \( \orderedpair{x_{0}}{y_{0}} \in f \)
+    and \( \orderedpair{x_{0}}{z_{0}} \in f \). By \eqref{eq:assumed-first-conjunct}, this means that,
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{0}}{y_{0}} = \orderedpair{\alpha}{\beta}& \\
+            \orderedpair{x_{0}}{z_{0}} = \orderedpair{\gamma}{\delta}& \\
+        \end{aligned}
+        \begin{aligned}
+            &\quad\text{for some \( \alpha \in A \) and \( \beta \in B \)}\\
+            &\quad\text{for some \( \gamma \in A \) and \( \delta \in B \)}
+        \end{aligned}
+    \end{equation*}
+    By \cref{thm:equality-of-ordered-pairs}, it follows that \( x_{0} = \alpha = \gamma \), 
+    \( y_{0} = \beta \), \( z_{0} = \delta \). 
+    By Universal Instantiation of \eqref{eq:assumed-second-conjunct}, we have,
+    \begin{equation*}
+        \alpha \in A \implies \exists! y \, \big( y \in B \land \orderedpair{\alpha}{y} \in f \big)
+    \end{equation*}
+    Since \( \alpha \in A \), we infer \( \exists! y \, \mleft( y \in B \land \orderedpair{\alpha}{y} \in f \mright) \) by 
+    Modus Ponens. Equivalently,
+    \begin{equation}
+        \label{eq:re-express-uniqueness-equivalently}
+        \exists y \, \Big[ \mleft( y \in B \land \orderedpair{\alpha}{y} \in f \mright) \land 
+        \forall z \, \big( \mleft( z \in B \land \orderedpair{\alpha}{z} \in f \mright) \implies y = z \big)\Big]
+    \end{equation}
+    Thus, by applying Existential Instantiation on \eqref{eq:re-express-uniqueness-equivalently}, we know that 
+    there exists some \( \mu \) such that \( \mu \in B \land \orderedpair{\alpha}{\mu} \in f \) and,
+    \begin{equation}
+        \label{eq:mu-is-unique}
+        \forall z \, \Big[ \mleft( z \in B \land \orderedpair{\alpha}{z} \in f \mright) \implies \mu = z \Big]
+    \end{equation}
+    Since \( \orderedpair{\alpha}{y_{0}} \in f \) and \( \orderedpair{\alpha}{z_{0}} \in f \) where \( y_{0} \in B \)
+    and \( z_{0} \in B \), we conclude by Modus Ponens and \eqref{eq:mu-is-unique} that \( \mu = y_{0} = z_{0} \).
+    We have just derived \( y_{0} = z_{0} \) from the supposition that 
+    \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \). Thus, by the Deduction Theorem, we 
+    conclude,
+    \begin{equation*}
+        \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
+    \end{equation*}
+    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, Universal Generalization yields,
+    \begin{equation}
+        \label{eq:second-conjunct-of-function-definition}
+        \forall x \, \forall y \, \forall z \, \Big[ \orderedpair{x}{y} \in f \land \orderedpair{x}{z} \in f \implies y = z \Big]
+    \end{equation}
+    With both \eqref{eq:first-conjunct-of-function-definition} and \eqref{eq:second-conjunct-of-function-definition} being true, 
+    it follows that \( f \) is indeed a function (see \cref{dfn:function-basic}). 
+
+    \vspace{0.3cm}
+    \noindent
+    Proving that \( \dom f = A \) and \( \ran f \subseteq B \)
+    is quite straightforward. Suppose, for instance, that \( x_{0} \in A \).
+    Then by \eqref{eq:assumed-second-conjunct}, it follows that 
+    \( \orderedpair{x_{0}}{y_{0}} \in f \) for some unique \( y_{0} \in B \).
+    Thus, \( x_{0} \in \dom f \) by \cref{dfn:domain-of-a-set-of-ordered-pairs}.
+    Conversely, if \( x_{0} \in \dom f \), then \( \orderedpair{x_{0}}{y_{0}} \)
+    for some \( y_{0} \). Since \( \orderedpair{x_{0}}{y_{0}} \in f \), it follows
+    from \eqref{eq:assumed-first-conjunct} that 
+    \( \orderedpair{x_{0}}{y_{0}} = \orderedpair{\alpha}{\beta} \) for some 
+    \( \alpha \in A \) and \( \beta \in B \). By \cref{thm:equality-of-ordered-pairs}, 
+    this means that \( x_{0} = \alpha \) and \( y_{0} = \beta \). Since \( \alpha \in A \)
+    and \( x_{0} \in \alpha \), necessarily \( x_{0} \in A \). In other words,
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in \dom f \iff x_{0} \in A&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( x_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By Universal Generalization and \nameref{axm:axiom-of-extensionality}, it follows that,
+    \begin{equation*}
+        \dom f = A
+    \end{equation*}
+    We can use a similar argument to show that \( \ran f \subseteq B \). Let \( y_{0} \)
+    be an arbitrary object such that \( y_{0} \in \ran f \). Thus \( \orderedpair{x_{0}}{y_{0}} \in f \)
+    for some \( x_{0} \) by \cref{dfn:range-of-a-set-of-ordered-pairs}. But if \( \orderedpair{x_{0}}{y_{0}} \in f \),
+    then by \eqref{eq:assumed-first-conjunct}, there must exist some \( \alpha \in A \) and \( \beta \in B \) such 
+    that \( \orderedpair{x_{0}}{y_{0}} = \orderedpair{\alpha}{\beta} \), which in turn implies \( x_{0} \in A \)
+    and \( y_{0} \in B \). Thus,
+    \begin{equation*}
+        \begin{aligned}
+            y_{0} \in \ran f \implies y_{0} \in B&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( y_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By Universal Generalization and \cref{dfn:subset}, necessarily \( \ran f \subseteq B \). Since \( f \) is a 
+    function with \( \dom f = A \) and \( \ran f \subseteq B \), it follows that,
+    \begin{equation*}
+        \function{f}{A}{B}
+    \end{equation*}
+    Thus, having derived \function{f}{A}{B} from \eqref{eq:assumed-first-conjunct} and \eqref{eq:assumed-second-conjunct}, 
+    we conclude by the Deduction Theorem,
+    \begin{multline}
+        \label{eq:element-of-pairs-and-uniqueness-of-y-implies-f-A-B}
+        \bigg( 
+        \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in A \land b \in B \big) \Big] \\
+        \land
+        \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]
+        \bigg)
+        \implies 
+        \function{f}{A}{B}
+    \end{multline}
+    Together, \eqref{eq:f-A-B-implies-element-of-pairs-and-uniqueness-of-y} and \eqref{eq:element-of-pairs-and-uniqueness-of-y-implies-f-A-B}
+    establish the required biconditional.
+\end{proof}
+
+\begin{thm}[Equality]
+    \label{thm:equality-of-functions}
+    If \( f \) and \( g \) are functions, then \( f = g \) if and only if, 
+    \begin{equation*}
+        \Big( \dom f = \dom g \Big) \land \forall x \, \Big( x \in \dom f \implies f(x) = g(x) \Big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be arbitrary functions. If \( f = g \), then by the \nameref{axm:axiom-of-extensionality},
+    \begin{equation}
+        \label{eq:f-and-g-have-the-same-elements}
+        \forall x \, \mleft( x \in f \iff x \in g \mright)
+    \end{equation}
+    Let \( x_{0} \in \dom f \) be arbitrary. By \cref{dfn:domain-of-a-set-of-ordered-pairs}, clearly
+    \( \orderedpair{x_{0}}{y_{0}} \in f \) for some \( y_{0} \). Thus, \( \orderedpair{x_{0}}{y_{0}} \in g \)
+    by \eqref{eq:f-and-g-have-the-same-elements} so that \( \exists y \, \big( \orderedpair{x_{0}}{y} \in g \big) \).
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs}, it follows that \( x_{0} \in \dom g \). 
+    Note that \( f(x_{0}) = y_{0} = g(x_{0}) \).
+    \begin{equation}
+        \label{eq:forward-implication-first-half}
+        \therefore \, \forall x \, \Big( x \in \dom f \implies x \in \dom g \Big) 
+        \land 
+        \forall x \, \Big( x \in \dom f \implies f(x) = g(x) \Big)
+    \end{equation}
+    On the other hand, let \( x_{0} \in \dom g \) be arbitrary. Once again, \( \orderedpair{x_{0}}{y_{0}} \in g \) 
+    for some \( y_{0} \). And by \eqref{eq:f-and-g-have-the-same-elements}, necessarily \( \orderedpair{x_{0}}{y_{0}} \in f \)
+    so that \( \exists y \, \big( \orderedpair{x_{0}}{y} \in f \big) \).
+    \begin{equation}
+        \label{eq:forward-implication-second-half}
+        \therefore \, \forall x \, \Big( x \in \dom g \implies x \in \dom f \Big)
+    \end{equation}
+    Combining \eqref{eq:forward-implication-first-half} and \eqref{eq:forward-implication-second-half} yields,
+    \begin{equation*}
+        \Big( \dom f = \dom g \Big) \land \forall x \, \Big( x \in \dom f \implies f(x) = g(x) \Big)
+    \end{equation*}
+    Since the statement was derived on the assumption that \( f = g \), we conclude by the Deduction Theorem that,
+    \begin{equation}
+        \label{eq:f-equals-g-implies-equal-domains-and-equal-ranges}
+        \Big( f = g \Big) \implies \Big( \big( \dom f = \dom g \big) \land \forall x \, \big( x \in \dom f \implies f(x) = g(x) \big) \Big)
+    \end{equation}
+    To prove the converse, suppose that, 
+    \begin{gather}
+        \dom f = \dom g \label{eq:suppose-equal-domain} \\ 
+        \forall x \, \big( x \in \dom f \implies f(x) = g(x) \big) \label{eq:suppose-equal-values}
+    \end{gather}
+    Let \( x_{0} \in f\) be arbitrary. 
+    Since \( f \) is a function, it follows from \cref{dfn:function-basic} that 
+    \( x_{0} = \orderedpair{a_{0}}{b_{0}} \) for some \( a_{0} \) and \( b_{0} \). 
+    Applying Universal Instantiation on \eqref{eq:suppose-equal-values} yields,
+    \begin{equation*}
+        a_{0} \in \dom f \implies f(a_{0}) = g(a_{0})
+    \end{equation*}
+    Clearly \( a_{0} \in \dom f\), so \( f(a_{0}) = g(a_{0}) \) by Modus Ponens.
+    Since \( \orderedpair{a_{0}}{b_{0}} \in f \), it follows from
+    \cref{dfn:functional-notation} that \( b_{0} = f(a_{0}) \). Thus, \( g(a_{0}) = f(a_{0}) = b_{0} \).
+    Since \( b_{0} = g(a_{0}) \), it follows from \cref{dfn:functional-notation} that \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in g \).
+    \begin{equation}
+        \label{eq:f-is-subset-of-g}
+        \therefore \, x_{0} \in f \implies x_{0} \in g
+    \end{equation}
+    On the other hand, suppose that \( x_{0} \in g \). Again, \( g \) is a function, so \( x_{0} = \orderedpair{a_{0}}{b_{0}}\) for some 
+    \( a_{0} \) and \( b_{0} \) with \( a_{0} \in \dom g \) and \( b_{0} = g(a_{0}) \). But \( \dom f = \dom g \) by \eqref{eq:suppose-equal-domain},
+    so \( a_{0} \in \dom g \) implies \( a_{0} \in \dom f \) by the \nameref{axm:axiom-of-extensionality}. Since \( a_{0} \in \dom f \), we have 
+    \( f(a_{0}) = g(a_{0}) = b_{0} \) by Modus Ponens and \eqref{eq:suppose-equal-values}. In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in f \).
+    \begin{equation}
+        \label{eq:g-is-subset-of-f}
+        \therefore \, x_{0} \in f \implies x_{0} \in f
+    \end{equation}
+    From \eqref{eq:f-is-subset-of-g} and \eqref{eq:g-is-subset-of-f}, we infer the biconditional,
+    \begin{equation*}
+        x_{0} \in f \iff x_{0} \in g
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we can generalize, 
+    \begin{equation*}
+        \forall x \, \big( x \in f \iff x \in g \big)
+    \end{equation*}
+    And by the \nameref{axm:axiom-of-extensionality}, \( f = g \). Given that \( f = g \) is provable from the assumption that 
+    \( \dom f = \dom g \) and \( \forall x \, \big( x \in \dom f \implies f(x) = g(x) \big) \), we conclude by the Deduction 
+    Theorem that,
+    \begin{equation}
+        \label{eq:equal-domains-and-equal-ranges-implies-f-equals-g}
+        \Big( \dom f = \dom g \Big) \land \forall x \, \Big( x \in \dom f \implies f(x) = g(x) \Big) \implies \Big( f = g \Big)
+    \end{equation}
+    Together, \eqref{eq:f-equals-g-implies-equal-domains-and-equal-ranges} and \eqref{eq:equal-domains-and-equal-ranges-implies-f-equals-g}
+    establish the required biconditional.
+\end{proof}
+
+\begin{thm}[Composite Functions]
+    \label{thm:the-composition-of-any-two-functions-is-also-a-function}
+    If \( f \) and \( g \) are functions, then \composition{g}{f} is also a function. Furthermore:
+    \begin{enumerate}[noitemsep,label=(\roman*)]
+        \item \( \dom \mleft( \composition{g}{f} \mright) = \imageSet{f^{-1}}{\dom g} \) \label{enum:composite-function-claim-1}
+        \item \( \forall x \, \big( x \in \dom \mleft( \composition{g}{f} \mright) \implies \mleft( \composition{g}{f} \mright)(x) = g(f(x)) \big) \)
+        \label{enum:composite-function-claim-2}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be arbitrary functions. 
+    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, 
+    \composition{g}{f} is clearly a set of ordered pairs. 
+    To prove that \composition{g}{f} is a function, let \( x_{0} \) be an arbitrary object such that 
+    \( \orderedpair{x_{0}}{y_{1}} \in \composition{g}{f} \) and \( \orderedpair{x_{0}}{y_{2}} \in \composition{g}{f} \) 
+    for some \( y_{1} \) and \( y_{2} \). Thus, there exists some \( z_{1} \) and \( z_{2} \) such that,
+    \begin{gather*}
+        \orderedpair{x_{0}}{z_{1}} \in f \land \orderedpair{z_{1}}{y_{1}} \in g \\ 
+        \orderedpair{x_{0}}{z_{2}} \in f \land \orderedpair{z_{2}}{y_{2}} \in g
+    \end{gather*}
+    Since \( f \) is a function, \( \orderedpair{x_{0}}{z_{1}} \in f \land \orderedpair{x_{0}}{z_{2}} \in f \) implies 
+    \( z_{1} = z_{2} \). Since \( g \) is also a function, \( z_{1} = z_{2} \) then implies \( y_{1} = y_{2} \). In other words,
+    \begin{equation*}
+        \orderedpair{x_{0}}{y_{1}} \in \composition{g}{f} \land \orderedpair{x_{0}}{y_{2}} \in \composition{g}{f}
+        \implies
+        y_{1} = y_{2}
+    \end{equation*}
+    Since \( x_{0} \), \( y_{1} \), and \( y_{2} \) are arbitrary, we have by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \forall y \, \forall z \, 
+        \Big( \orderedpair{x}{y} \in \composition{g}{f} \land \orderedpair{x}{z} \in \composition{g}{f}
+        \implies y = z \Big)
+    \end{equation*}
+    By \cref{dfn:function-basic}, \composition{g}{f} is indeed a function. 
+
+    \vspace{0.3cm}
+    \noindent
+    To prove \ref{enum:composite-function-claim-1}, let \( x_{0} \) be an arbitrary object. 
+    It is easy to show that \( x_{0} \in \dom \mleft( \composition{g}{f} \mright) \) and 
+    \( x_{0} \in \imageSet{f}{\dom g} \) are indeed equivalent statements. 
+    We proceed by applying 
+    \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:inverse-of-a-set-of-ordered-pairs,dfn:image-of-a-set-of-ordered-pairs}:
+    \begin{align*}
+        &x_{0} \in \dom \mleft( \composition{g}{f} \mright) \\ 
+        &\iff
+        \exists y \, \Big[ \orderedpair{x_{0}}{y} \in \composition{g}{f} \Big] \\ 
+        &\iff
+        \exists y \, \Big[ \exists z \, \big( \orderedpair{x_{0}}{z} \in f \land \orderedpair{z}{y} \in g \big) \Big] \\
+        &\iff
+        \exists z \, \Big[ \orderedpair{x_{0}}{z} \in f \land \exists y \, \big( \orderedpair{z}{y} \in g \big) \Big] \\ 
+        &\iff
+        \exists z \, \Big[ \orderedpair{x_{0}}{z} \in f \land z \in \dom g \Big] \\ 
+        &\iff
+        \exists z \, \Big[ z \in \dom g \land \orderedpair{x_{0}}{z} \in f \Big] \\ 
+        &\iff
+        \exists z \, \Big[ z \in \dom g \land \orderedpair{z}{x_{0}} \in f^{-1} \Big] \\ 
+        &\iff
+        x_{0} \in \imageSet{f^{-1}}{\dom g}
+    \end{align*}
+    By Universal Generalization and the \nameref{axm:axiom-of-extensionality}, 
+    we conclude, 
+    \begin{equation*}
+        \dom \mleft( \composition{g}{f} \mright) = \imageSet{f^{-1}}{\dom g}
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    To prove \ref{enum:composite-function-claim-2}, we let \( x_{0} \in \dom \mleft( \composition{g}{f} \mright) \) be arbitrary.
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{x_{0}}{y_{0}} \in \composition{g}{f} \) for 
+    some \( y_{0} \). Also, \( \orderedpair{x_{0}}{z_{0}} \in f \) and \( \orderedpair{z_{0}}{y_{0}} \in g \) for some \( z_{0} \).
+    Applying \cref{dfn:functional-notation}, it is clear that \( z_{0} = f(x_{0}) \) and 
+    \( y_{0} = g(z_{0}) = g(f(x_{0})) = \mleft( \composition{g}{f} \mright)(x_{0}) \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:a-function-is-invertible-if-and-only-if-it-is-injective}
+    A function \( f \) is invertible if and only if it is injective.
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an arbitrary function. Suppose that \( f \) is injective. That is,
+    \begin{equation}
+        \label{eq:f-is-injective}
+        \forall x \, \forall y \, \big[ x \in \dom f \land y \in \dom f \implies \big( f(x) = f(y) \implies x = y \big) \big]
+    \end{equation}
+    Clearly, \( f^{-1} \) exists and is a set of ordered pairs. Let \( x_{0} \), \( y_{0} \), and \( z_{0} \) be arbitrary
+    objects such that \( \orderedpair{x_{0}}{y_{0}} \in f^{-1} \) and \( \orderedpair{x_{0}}{z_{0}} \in f^{-1} \). By, 
+    \cref{dfn:inverse-of-a-set-of-ordered-pairs}, this implies \( \orderedpair{y_{0}}{x_{0}} \in f \) and \( \orderedpair{z_{0}}{x_{0}} \in f \).
+    This also means that \( y_{0} \in \dom f \) and \( z_{0} \in \dom f \). But \( f \) is injective, so we have by \eqref{eq:f-is-injective},
+    \begin{equation*}
+        f(y_{0}) = f(z_{0}) \implies y_{0} = z_{0}
+    \end{equation*}
+    But \( f(y_{0}) = x_{0} = f(z_{0}) \), so by Modus Ponens, we infer \( y_{0} = z_{0} \). 
+    \begin{equation*}
+        \therefore \, \forall x \, \forall y \, \forall z \, \big[ \orderedpair{x}{y} \in f^{-1} \land 
+        \orderedpair{x}{y} \in f^{-1} \implies y = z \big]
+    \end{equation*}
+    Thus, \( f^{-1} \) is a function, so \( f \) is invertible by \cref{dfn:invertibility-of-functions}.
+    
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that  \( f \) is invertible (that is, \( f^{-1} \) is a function). 
+    Let \( x_{1} \) and \( x_{2} \) be arbitrary objects such that \( x_{1},x_{2} \in \dom f \) 
+    and \( f(x_{1}) = f(x_{2}) \). By 
+    \cref{dfn:functional-notation}, it follows that,
+    \begin{gather*}
+        \orderedpair{x_{1}}{f(x_{1})} \in f \\ 
+        \orderedpair{x_{2}}{f(x_{2})} \in f
+    \end{gather*}
+    And by \cref{dfn:inverse-of-a-set-of-ordered-pairs}, it follows that,
+    \begin{gather*}
+        \orderedpair{f(x_{1})}{x_{1}} \in f^{-1} \\ 
+        \orderedpair{f(x_{2})}{x_{2}} \in f^{-1}
+    \end{gather*}
+    Since \( f^{-1} \) is a function and \( f(x_{1}) = f(x_{2}) \), necessarily \( x_{1} = x_{2} \).
+    Thus, 
+    \begin{equation*}
+        f(x_{1}) = f(x_{2}) \implies x_{1} = x_{2}
+    \end{equation*}
+    for any \( x_{1} \in \dom f \) and \( x_{2} \in \dom f \). By Universal Generalization,
+    \begin{equation*}
+        \forall x \, \forall y \, \Big[ x \in \dom f \land y \in \dom f \implies \Big( f(x) = f(y) \implies x = y \Big) \Big]
+    \end{equation*}
+    Thus, \( f \) is injective by \cref{dfn:injection}.
+\end{proof}
+
+\begin{cor}
+    If a function \( f \) is invertible, then \( f^{-1} \) is also invertible because \( \mleft( f^{-1} \mright)^{-1} = f \) by
+    \cref{thm:inverse-of-the-inverse-is-the-set-itself}.
+\end{cor}
+
+\begin{thm}
+    \label{thm:the-composition-of-injective-functions-is-injective}
+    If \( f \) and \( g \) are injective functions, then \composition{g}{f} is also injective.
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be injective functions. It follows from \cref{thm:the-composition-of-any-two-functions-is-also-a-function} that 
+    \composition{g}{f} is a function. Let \( x_{1} \) and \( x_{2} \) be elements of \( \dom \mleft( \composition{g}{f} \mright) \) such that
+    \( \mleft( \composition{g}{f} \mright)(x_{1}) = \mleft( \composition{g}{f} \mright)(x_{2}) = y \). By \cref{dfn:functional-notation},
+    we have,
+    \begin{gather*}
+        \orderedpair{x_{1}}{y} \in \composition{g}{f} \\ 
+        \orderedpair{x_{2}}{y} \in \composition{g}{f}
+    \end{gather*}
+    Applying \cref{dfn:composition-of-two-sets-of-ordered-pairs}, we infer,
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{1}}{z_{1}} \in f \land \orderedpair{z_{1}}{y} \in g&\\
+            \orderedpair{x_{2}}{z_{2}} \in f \land \orderedpair{z_{2}}{y} \in g&
+        \end{aligned}
+        \text{  }
+        \begin{aligned}
+            &\quad\text{for some \( z_{1} \)}\\ 
+            &\quad\text{for some \( z_{2} \)}
+        \end{aligned}
+    \end{equation*}
+    Clearly, \( g(z_{1}) = g(z_{2}) = y \). Since \( g \) is injective, necessarily \( z_{1} = z_{2} \). Since \( f \) is also injective
+    and \( f(x_{1}) = z_{1} = z_{2} = f(x_{2}) \), it follows that \( x_{1} = x_{2} \). Thus, 
+    \begin{equation*}
+        x_{1} \in \dom \mleft( \composition{g}{f} \mright) 
+        \land 
+        x_{2} \in \dom \mleft( \composition{g}{f} \mright)
+        \implies
+        \Big( \mleft( \composition{g}{f} \mright)(x_{1}) = \mleft( \composition{g}{f} \mright)(x_{2}) \implies x_{1} = x_{2} \Big)
+    \end{equation*}
+    Since \( x_{1} \) and \( x_{2} \) are arbitrary, we conclude by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \forall y \, \Big[ x \in \mleft( \composition{g}{f} \mright) \land y \in \mleft( \composition{g}{f} \mright) 
+        \implies 
+        \Big( \mleft( \composition{g}{f} \mright)(x) = \mleft( \composition{g}{f} \mright)(y) \implies x = y \Big) \Big]
+    \end{equation*}
+    Thus, \composition{g}{f} is injective by \cref{dfn:injection}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:for-injective-functions-the-image-of-intersection-is-equal-to-the-intersection-of-images}
+    If \( f \) is an injective function and \( S \) is a non-empty system of sets, then,
+    \begin{equation*}
+        \imageSet{f}{\Intersect S} = \Intersect \setbuilderBig{t}{\exists z \, \big( z \in S \land t = \imageSet{f}{z} \big)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an injective function and \( S\) be a non-empty system of sets.
+    Let the set \( T \) be defined as, 
+    \begin{equation*}
+        T = \Intersect \setbuilderBig{t}{\exists z \, \big( z \in S \land t = \imageSet{f}{z} \big)}
+    \end{equation*}
+    It follows from \cref{thm:image-of-an-intersection-is-a-subset-of-the-intersection-of-all-individual-images} that
+    \begin{equation*}
+        \imageSet{f}{\Intersect S} \subseteq \Intersect T
+    \end{equation*}
+    Thus, it remains to prove the inclusion in the opposite direction.
+    Let \( y_{0} \) be an arbitrary object such that \( y_{0} \in \Intersect T \).
+    \begin{equation}
+        \label{eq:y0-belongs-to-all-members-of-T}
+        \therefore \, \forall t \, \big[ t \in T \implies y_{0} \in t \big]
+    \end{equation}
+    By the laws of logic, we can re-express \eqref{eq:y0-belongs-to-all-members-of-T} in other equivalent forms,
+    \begin{align}
+        \label{eq:y0-belongs-to-all-memebers-of-T-final-form}
+        &\forall t \, \big[ t \in T \implies y_{0} \in t \big] \notag \\
+        &\iff
+        \forall t \, \big[ \exists z \, \big( z \in S \land t = \imageSet{f}{z} \big) \implies y_{0} \in t \big] \notag \\ 
+        &\iff
+        \forall t \, \big[ \lnot \, \exists z \, \big( z \in S \land t = \imageSet{f}{z} \big) \lor  y_{0} \in t \big] \notag \\ 
+        &\iff
+        \forall t \, \forall z \, \big[ z \notin S \lor t \neq \imageSet{f}{z} \lor y_{0} \in t \big] \notag \\ 
+        &\iff
+        \forall z \, \big[ z \notin S \lor \forall t \, \big( t = \imageSet{f}{z} \implies y_{0} \in t \big) \big] \notag \\ 
+        &\iff
+        \forall z \, \big[ z \notin S \lor y_{0} \in \imageSet{f}{z} \big] \notag \\
+        &\iff
+        \forall z \, \mleft[ z \in S \implies y_{0} \in \imageSet{f}{z} \mright]
+    \end{align}
+    Since \( S \neq \emptyset \), there exists an \( r \in S \). And by \eqref{eq:y0-belongs-to-all-memebers-of-T-final-form}, 
+    necessarily \( y_{0} \in \imageSet{f}{r} \). In other words,
+    \begin{equation}
+        \label{eq:fxr-equals-y0}
+        \begin{aligned}
+            \orderedpair{x_{r}}{y_{0}} \in f &
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( x_{r} \in r \)}
+        \end{aligned}
+    \end{equation}
+    Thus, if we can prove that \( x_{r} \in \Intersect S\), then we will have proven that \( y_{0} \in \imageSet{f}{\Intersect S} \).
+
+    \vspace{0.5cm}
+    \noindent
+    To prove that \( x_{r} \in \Intersect S \), we let \( z_{0} \) be an arbitrary object. If \( z_{0} \in S \), 
+    then by \eqref{eq:y0-belongs-to-all-memebers-of-T-final-form}, we have \( y_{0} \in \imageSet{f}{z_{0}} \).
+    That means, \( \orderedpair{x_{0}}{y_{0}} \in f \) for some \( x_{0} \in z_{0} \). By \cref{dfn:functional-notation},
+    this also means that \( f(x_{0}) = y_{0} \). But by \eqref{eq:fxr-equals-y0}, \( f(x_{r}) \) is also equal to \( y_{0} \).
+    And since \( f \) is injective, we have, 
+    \begin{equation*}
+        f(x_{0}) = f(x_{r}) \implies x_{0} = x_{r}
+    \end{equation*}
+    Since \( f(x_{0}) = y_{0} = f(x_{r}) \), \( x_{0} = x_{r} \) follows by Modus Ponens. Since \( x_{r} = x_{0} \) and \( x_{0} \in z_{0} \),
+    it follows that \( x_{r} \in z_{0} \) as well. In other words,
+    \begin{equation*}
+        \begin{aligned}
+            z_{0} \in S \implies x_{r} \in z_{0}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( z_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    Since \( z_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall z \, \big( z \in S \implies x_{r} \in z \big)
+    \end{equation*}
+    By \cref{dfn:intersection-of-sets}, it follows that \( x_{r} \in \Intersect S \).
+    This means that,
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{r}}{y_{0}} \in f&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( x_{r} \in \Intersect S \)}
+        \end{aligned}
+    \end{equation*}
+    By \cref{dfn:image-of-a-set-of-ordered-pairs}, necessarily \( y_{0} \in \imageSet{f}{\Intersect S} \).
+    This entire chain of inferences shows that one can derive \( y_{0} \in \imageSet{f}{\Intersect S} \) from
+    the initial assumption \( y_{0} \in \Intersect T \). Therefore, we can conclude by the Deduction Theorem that,
+    \begin{equation*}
+        \begin{aligned}
+            y_{0} \in \Intersect T \implies y_{0} \in \imageSet{f}{\Intersect S}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( y_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By Universal Generalization and \cref{dfn:subset}, it follows that \( \Intersect T \subseteq \imageSet{f}{\Intersect S} \)
+    for any injective function \( f \). Naturally, the equality follows from the fact that \( \imageSet{f}{\Intersect S} \subseteq \Intersect T\)
+    is also true.
+\end{proof}
+
+\begin{cor}
+    \label{thm:for-injective-functions-the-image-of-A-intersect-B-is-equal-to-the-image-of-A-intersect-the-image-of-B}
+    If \( f \) is an injective function and \( A \) and \( B \) are sets, then,
+    \begin{equation*}
+        \imageSet{f}{A \intersect B} = \imageSet{f}{A} \intersect \imageSet{f}{B}
+    \end{equation*}
+\end{cor}
+
+\begin{thm}
+    \label{thm:for-injective-functions-the-difference-of-image-is-equal-to-the-image-of-difference}
+    If \( f \) is an injective function and \( A \) and \( B \) are sets, then,
+    \begin{equation*}
+        \imageSet{f}{A - B} = \imageSet{f}{A} - \imageSet{f}{B}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an injective function and \( A \) and \( B \) be arbitrary sets.
+    It follows from \cref{thm:the-difference-of-image-is-a-subset-of-the-image-of-difference} that,
+    \begin{equation*}
+        \imageSet{f}{A} - \imageSet{f}{B} \subseteq \imageSet{f}{A - B}
+    \end{equation*}
+    To establish the equality, we have to prove the inclusion relation in the opposite direction.
+
+    \vspace{0.5cm}
+    \noindent
+    Let \( y_{0} \) be an arbitrary object. If \( y_{0} \in \imageSet{f}{A-B} \), then, 
+    \begin{equation}
+        \label{eq:y0-equals-fx0}
+        \begin{aligned}
+            \orderedpair{x_{0}}{y_{0}} \in f&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( x_{0} \in A \land x_{0} \notin B \)}
+        \end{aligned}
+    \end{equation}
+    Clearly, \( y_{0} \in \imageSet{f}{A} \). So the only task left is to show that 
+    \( y_{0} \notin \imageSet{f}{B} \), which requires one to prove that,
+    \begin{equation}
+        \label{eq:y0-does-not-belong-to-image-of-f-under-B}
+        \forall x \, \big( x \in B \implies \orderedpair{x}{y_{0}} \notin f \big)
+    \end{equation}
+    Let \( \beta \in B \) be an arbitrary. Suppose that \( \orderedpair{\beta}{y_{0}} \in f \).
+    Then \( f(\beta) = y_{0} \) by \cref{dfn:functional-notation}. But from \eqref{eq:y0-equals-fx0},
+    we have \( f(x_{0}) = y_{0} \). Therefore, \( f(\beta) = f(x_{0}) \). Since \( f \) is injective,
+    \begin{equation*}
+        f(\beta) = f(x_{0}) \implies \beta = x_{0}
+    \end{equation*}
+    Thus, \( \beta = x_{0} \) by Modus Ponens. But if \( \beta = x_{0} \), then \( \beta \notin B \), 
+    an obvious contradiction. 
+    Thus, we conclude by Reductio Ad Absurdum that the supposition \( \orderedpair{\beta}{y_{0}} \in f \)
+    must be false. And by the Deduction Theorem, we infer,
+    \begin{equation*}
+        \beta \in B \implies \orderedpair{\beta}{y_{0}} \notin f
+    \end{equation*}
+    Since \( \beta \) is arbitrary, it follows from Universal Generalization that,
+    \begin{equation*}
+        \forall x \, \big( x \in B \implies \orderedpair{x}{y_{0}} \notin f \big)
+    \end{equation*}
+    Thus, \( y_{0} \notin \imageSet{f}{B} \). Since \( y_{0} \in \imageSet{f}{A} \) and \( y_{0} \notin \imageSet{f}{B} \),
+    \( y_{0} \in \imageSet{f}{A} - \imageSet{f}{B} \) by \cref{dfn:difference}.
+    \begin{equation*}
+        \begin{aligned}
+            \therefore \, y_{0} \in \imageSet{f}{A-B} \implies y_{0} \in \imageSet{f}{A} - \imageSet{f}{B}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( y_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By Universal Generalization and \cref{dfn:subset}, it follows that \( \imageSet{f}{A-B} \subseteq \imageSet{f}{A} - \imageSet{f}{B} \).
+    \( \imageSet{f}{A-B} = \imageSet{f}{A} - \imageSet{f}{B} \) follows from the fact that \( \imageSet{f}{A} - \imageSet{f}{B} \subseteq \imageSet{f}{A-B} \)
+    is also true.
+\end{proof}
+
+\begin{thm}
+    \label{thm:for-injective-functions-the-image-of-the-symdiff-is-the-symdiff-of-the-images}
+    If \( f \) is an injective function and \( A \) and \( B \) are sets, then,
+    \begin{equation*}
+        \imageSet{f}{A \symdiff B} = \imageSet{f}{A} \symdiff \imageSet{f}{B}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an injective function and \( A \) and \( B \) be arbitrary sets. By 
+    \cref{set-identities:symmetric-difference-as-the-union-of-differences}, we have, 
+    \begin{equation*}
+        A \symdiff B = \mleft( A - B \mright) \union \mleft( B - A \mright)
+    \end{equation*}
+    Therefore,
+    \begin{equation*}
+        \imageSet{f}{A \symdiff B} = \imageSet{f}{\mleft( A - B \mright) \union \mleft( B - A \mright)}
+    \end{equation*}
+    And by \cref{thm:image-of-A-union-B-under-R-is-the-union-of-the-image-of-A-under-R-and-the-image-of-B-under-R},
+    \begin{equation*}
+        \imageSet{f}{A \symdiff B} = \imageSet{f}{A - B} \union \imageSet{f}{B - A}
+    \end{equation*}
+    Since \( f \) is injective, \cref{thm:for-injective-functions-the-difference-of-image-is-equal-to-the-image-of-difference}
+    can be applied, so the equality becomes,
+    \begin{equation*}
+        \imageSet{f}{A \symdiff B} = \mleft( \imageSet{f}{A} - \imageSet{f}{B} \mright) \union \mleft( \imageSet{f}{B} - \imageSet{f}{A} \mright)
+    \end{equation*}
+    And by \cref{dfn:symmetric-difference}, we have,
+    \begin{equation*}
+        \imageSet{f}{A \symdiff B} = \imageSet{f}{A} \symdiff \imageSet{f}{B} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-union-of-a-compatible-system-of-functions-is-a-function}
+    If \( F \) is a compatible system of functions, then \( \Union F \) is a function and,
+    \begin{equation*}
+        \dom \Union F = \Union \setbuilderBig{\dom f}{f \in F}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( F \) be a compatible system of functions. Thus, \( F \neq \emptyset \) by definition
+    and every element of \( F \) is a function. To prove that \( \Union F \) is a function, we must 
+    show that it satisfies \cref{dfn:function-basic}. In other words, the following two statements must hold:
+    \begin{gather}
+        \forall x \, \mleft( x \in \Union F \implies 
+        \exists a \, \exists b \, \mleft( x = \orderedpair{a}{b} \mright) \mright) \label{eq:Union-F-is-a-set-of-ordered-pairs} \\
+        \forall x \, \forall y \, \forall z \, \mleft( \Big[\orderedpair{x}{y} \in \Union F 
+        \land \orderedpair{x}{z} \in \Union F \Big] \implies y = z \mright) \label{eq:Union-F-has-unique-first-coordinate}
+    \end{gather}
+    Proving \eqref{eq:Union-F-is-a-set-of-ordered-pairs} is quite trivial. Let \( \alpha \in \Union F \). By \cref{dfn:union-of-sets}, 
+    it follows that \( \alpha \in f \) for some \( f \in F \). Since \( F \) is a system of functions, it follows that \( f \) must
+    be a function. And since functions are sets of ordered pairs, \( \alpha \) must therefore be an ordered pair.
+
+    \vspace{0.5cm}
+    \noindent
+    To prove \eqref{eq:Union-F-has-unique-first-coordinate}, we let \orderedpair{x_{0}}{y_{0}} and \orderedpair{x_{0}}{z_{0}} be 
+    ordered pairs that belong to \( \Union F \). Again, by \cref{dfn:union-of-sets}, it follows that,
+    \begin{equation*}
+        \begin{aligned}
+            \orderedpair{x_{0}}{y_{0}} \in f& \\
+            \orderedpair{x_{0}}{z_{0}} \in g&
+        \end{aligned}
+        \begin{aligned}
+            &\quad\text{for some \( f \in F \)}\\ 
+            &\quad\text{for some \( g \in F \)}
+        \end{aligned}
+    \end{equation*}
+    Since \( \Union F \) is a compatible system of functions, \( f \) and \( g \) must be compatible with each other.
+    Thus, by \cref{thm:compatibility-of-two-functions}, we have,
+    \begin{equation}
+        \label{eq:f-and-g-have-the-same-values-where-their-domains-intersect}
+        \forall x \, \Big( x \in \mleft( \dom f \intersect \dom g \mright) \implies f(x) = g(x) \Big)
+    \end{equation}
+    Since \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in g \), clearly \( x_{0} \in \dom f \land x_{0} \in \dom g \).
+    By \cref{thm:intersection-in-terms-of-logical-and}, necessarily \( x_{0} \in \mleft( \dom f \intersect \dom g \mright) \).
+    And by \eqref{eq:f-and-g-have-the-same-values-where-their-domains-intersect}, we infer,
+    \begin{equation*}
+        f(x_{0}) = y_{0} = g(x_{0}) = z_{0}
+    \end{equation*}
+    By the Deduction Theorem,
+    \begin{equation*}
+        \Big( \orderedpair{x_{0}}{y_{0}} \in \Union F \land \orderedpair{x_{0}}{z_{0}} \in \Union F \Big) \implies y_{0} = z_{0}
+    \end{equation*}
+    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, \eqref{eq:Union-F-has-unique-first-coordinate} follows from 
+    Universal Generalization.
+
+    \vspace{0.5cm}
+    \noindent
+    To prove that \( \dom \Union F = \Union \setbuilderbig{\dom f}{f \in F} \), we let \( x_{0} \) is an arbitrary object. 
+    Thus the following series of biconditional statements must hold:
+    \begin{align*}
+        x_{0} \in \dom \Union F
+        &\iff
+        \exists y \, \Big[ \orderedpair{x_{0}}{y} \in \Union F \Big] \\
+        &\iff
+        \exists y \, \Big[ \exists f \, \big( f \in F \land \orderedpair{x_{0}}{y} \in f \big) \Big] \\
+        &\iff
+        \exists f \, \Big[ f \in F \land \exists y \, \big( \orderedpair{x_{0}}{y} \in f \big) \Big] \\ 
+        &\iff
+        \exists f \, \Big[ f \in F \land x_{0} \in \dom f \Big] \\ 
+        &\iff
+        \exists f \, \Big[ f \in F \land \exists z \, \big( z = \dom f \land x \in z \big) \Big]\\ 
+        &\iff
+        \exists z \, \Big[ \exists f \, \big( f \in F \land z = \dom f \big) \land x \in z \Big] \\ 
+        &\iff
+        \exists z \, \Big[ z \in \setbuilderbig{\dom f}{f \in F} \land x \in z \Big] \\
+        &\iff
+        x_{0} \in \Union \setbuilderBig{\dom f}{f \in F}
+    \end{align*}
+    The equality follows immediately by Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\section{Indexed System of Sets}
+
+\begin{dfn}[Indexed Sets]
+    \label{dfn:indexed-system-of-sets}
+    A set \( S \) is \keyword{an indexed system of sets} 
+    if and only if \surjection{S}{I}{R} for some set \( I \) and 
+    a system of sets \( R \). In such cases, we also say that \( R \)
+    is \keyword{indexed} by \( S \). The notations \( \sequence{ S_{i} }{ i \in I } \) 
+    and \( \setbuilder{S_{i}}{i \in I } \) can be used to denote \( S \) and \( \ran S \)
+    respectively.
+\end{dfn}
+
+\begin{dfn}[Set Exponentiation]
+    \label{dfn:set-exponentiation}
+    For any two sets \( A \) and \( B \), the set \( A^{B} \) is defined as,
+    \begin{equation*}
+        A^{B} = \setbuilderbig{f}{\function{f}{B}{A}}
+    \end{equation*}
+    That is, \( A^{B} \) is the set of all functions on \( B \) into \( A \).
+\end{dfn}
+
+\begin{dfn}[Union]
+    \label{dfn:union-of-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets, then the \keyword{union} of \( S \) is defined 
+    as,
+    \begin{equation*}
+        \Union_{i \,\in\, I} S_{i} 
+        = \Union \ran S 
+        = \Union \setbuilderBig{S_{i}}{i \in I} 
+        = \setbuilderBig{x}{\exists i \, \mleft( i \in I \land x \in S_{i} \mright)}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Intersection]
+    \label{dfn:intersection-of-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets with \( I \) and \( R \) being non-empty,
+    then the \keyword{intersection} of \( S \) is defined as,
+    \begin{equation*}
+        \Intersect_{i \,\in\, I} S_{i} 
+        = \Intersect \ran S 
+        = \Intersect \setbuilderBig{S_{i}}{i \in I} 
+        = \setbuilderBig{x}{\forall i \, \big( i \in I \implies x \in S_{i} \big)}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Product]
+    \label{dfn:product-of-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets, then the \keyword{product} of \( S \) is defined as,
+    \begin{equation*}
+        \prod S = 
+        \prod \sequence{S_{i}}{i \in I} = 
+        \prod_{i \,\in\, I} S_{i} = \setbuilderbigg{\function{f}{I}{\Union_{i \,\in\, I} S_{i}}}{\forall i \, \big( i \in I \implies f(i) \in S_{i} \big)}
+    \end{equation*}
+\end{dfn}
+
+\vspace{0.5cm}
+\noindent
+Now we will prove some theorems involving indexed systems of sets.
+\begin{thm}
+    \label{thm:any-system-of-sets-can-be-indexed}
+    If \( A \) is a system of sets, then there exists a function \( S \) such that 
+    \( A \) is indexed by \( S \).
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be the set defined as follows:
+    \begin{equation*}
+        S = \setbuilderbig{\orderedpair{x}{y}}{x \in A \land y = x}
+    \end{equation*}
+    We now prove that \( S \) is indeed a function. Let \( x_{0} \), \( y_{0} \), and \( z_{0} \)
+    be arbitrary objects such that \( \orderedpair{x_{0}}{y_{0}} \in S \) and \( \orderedpair{x_{0}}{z_{0}} \in S \).
+    By the definition of \( S \), it follows that \( y_{0} = x_{0} = z_{0} \). By Universal Generalization,
+    \begin{equation*}
+        \forall x \, \forall y \, \forall z \, \Big[ \orderedpair{x}{y} \in S \land \orderedpair{x}{z} \in S \implies y = z \Big]
+    \end{equation*}
+    By \cref{dfn:function-basic}, it follows that \( S \) is a function. It is trivial to prove that \( \dom f = A \) and \( \ran f = A \).
+    Thus,
+    \begin{equation*}
+        \surjection{S}{A}{A}
+    \end{equation*}
+    It is evident that \( S \) is an indexed system of sets with \( I = A \) and \( R = A \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:existence-of-set-exponentiation}
+    For any two sets \( A \) and \( B \), the set \( A^{B} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(f) \coloneq \function{f}{B}{A}
+    \end{equation*}
+    Let \( f \) be an arbitrary object such that \( \varphi(f) \) is satisfied. Thus,
+    \begin{equation*}
+        \function{f}{B}{A}
+    \end{equation*}
+    By \cref{thm:a-function-on-A-into-B-is-a-subset-of-the-cartesian-product-between-A-and-B},
+    it follows that \( f \subseteq B \times A \), and thus \( f \in \powerset{B \times A} \).
+    Since \( f \) is arbitrary, we infer by Universal Generalization,
+    \begin{equation*}
+        \forall f \, \Big[ \varphi(f) \implies f \in \powerset{B \times A} \Big]
+    \end{equation*}
+    Thus, the set \( A^{B} = \setbuilderbig{f}{\varphi(f)} = \setbuilderbig{f}{\function{f}{B}{A}} \) exists 
+    by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:existence-of-the-union-of-an-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets, then the union of \( S \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \surjection{S}{I}{R} be an indexed system of sets. By \cref{dfn:union-of-indexed-system-of-sets}, the 
+    union of \( S \) is defined as,
+    \begin{equation*}
+        \Union_{i \,\in\, I} S_{i} = \Union \ran S = \Union R
+    \end{equation*}
+    Since \( R \) is an existing set, the \nameref{axm:axiom-of-union} guarantees the existence of \( \Union_{i \,\in\, I} S_{i} \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:existence-of-the-intersection-of-an-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets where \( I \neq \emptyset \) and \( R \neq \emptyset \),
+    then the intersection of \( S \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x) \coloneq \forall i \, \Big[ i \in I \implies x \in S_{i} \Big]
+    \end{equation*}
+    Let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) is satisfied. Thus,
+    \begin{equation}
+        \label{eq:x0-belongs-to-all-Si}
+        \forall i \, \Big[ i \in I \implies x_{0} \in S_{i} \Big]
+    \end{equation}
+    By the \nameref{axm:axiom-of-union}, \( \Union R \) exists. Since \( I \neq \emptyset \), 
+    it follows that there exists an \( i \) such that \( i \in I \). Since \( \ran S = R \), 
+    it follows that \( S_{i} \in R \). Since \( x_{0} \in S_{i} \) by \eqref{eq:x0-belongs-to-all-Si}, 
+    and since \( S_{i} \in R \), it follows that \( x_{0} \in \Union R \). By the Deduction Theorem, 
+    we conclude,
+    \begin{equation*}
+        \varphi(x_{0}) \implies x_{0} \in \Union R 
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \Big[ \varphi(x) \implies x \in \Union R \Big]
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, the set
+    \( \Intersect_{i \,\in\, I} S_{i} = \setbuilderbig{x}{\varphi(x)} = \setbuilderbig{x}{\forall i \, \mleft( i \in I \implies x \in S_{i} \mright)} \)
+    exists.
+\end{proof}
+
+\begin{thm}
+    \label{thm:existence-of-the-product-of-an-indexed-system-of-sets}
+    If \surjection{S}{I}{R} is an indexed system of sets, then the product of \( S \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \surjection{S}{I}{R} be an indexed system of sets. By \cref{thm:existence-of-the-union-of-an-indexed-system-of-sets},
+    \( \Union_{i \,\in\, I} S_{i} \) exists. Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(f) \coloneq \function{f}{I}{\Union_{i \,\in\, I} S_{i}}
+        \land 
+        \forall i \, \big( i \in I \implies f(i) \in S_{i} \big)
+    \end{equation*}
+    Let \( f \) be an arbitrary object such that \( \varphi(f) \) is satisfied. Thus, by the definition of \( \varphi \), 
+    \begin{equation*}
+        \function{f}{I}{\Union_{i \,\in\, I} S_{i}} \land \forall i \, \big( i \in I \implies f(i) \in S_{i} \big)
+    \end{equation*}
+    Since \function{f}{I}{\Union_{i \,\in\, I} S_{i}}, 
+    it follows from \cref{thm:a-function-on-A-into-B-is-a-subset-of-the-cartesian-product-between-A-and-B}
+    that \( f \subseteq I \times \Union_{i \,\in\, I} S_{i} \). In other words, \( f \in \powerset{I \times \Union_{i \,\in\, I} S_{i}} \).
+    Thus,
+    \begin{equation*}
+        \begin{aligned}
+            \varphi(f) \implies f \in \powerset{I \times \Union_{i \,\in\, I} S_{i}}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( f \)}
+        \end{aligned}
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, the set \( \prod S = \setbuilder{f}{\varphi(f)} \) exists.
+\end{proof}
+
+\begin{thm}
+    \label{thm:product-of-an-indexed-singleton}
+    If \( A \) and \( I \) are sets and \surjection{S}{I}{\mleft\{ A \mright\}}, then 
+    \begin{equation*}
+        \prod_{i \,\in\, I} S_{i} = A^{I}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( I \) be sets. Let \( S \) be a function that indexes the singleton \( \mleft\{ A \mright\} \). That is,
+    \surjection{S}{I}{\mleft\{ A \mright\}}. By \cref{dfn:product-of-indexed-system-of-sets,thm:existence-of-the-product-of-an-indexed-system-of-sets},
+    the product of \( S \) exists and is given by:
+    \begin{equation}
+        \label{eq:express-the-product-of-S-using-set-builder-notation}
+        \prod_{i \,\in\, I} S_{i} = \setbuilderBig{\function{f}{I}{\Union_{i \,\in\, I} S_{i} }}{\forall i \, \big( i \in I \implies f(i) \in S_{i} \big)}
+    \end{equation}
+    But since \( \ran S = \mleft\{ A \mright\} \), it follows that, 
+    \begin{equation*}
+        \forall i \, \big( i \in I \implies S_{i} = A \big)
+    \end{equation*}
+    Also, \( \Union_{i \,\in\, I} S_{i} = \Union \mleft\{ A \mright\} = A \) by \cref{thm:union-of-a-singleton}. 
+    Thus, \eqref{eq:express-the-union-of-singleton-using-first-order-logic} becomes,
+    \begin{equation}
+        \label{eq:the-product-of-S-in-set-builder-notation-final-form}
+        \prod_{i \,\in\, I} S_{i} = \setbuilderBig{\function{f}{I}{A}}{\forall i \, \big( i \in I \implies f(i) \in A \big)}
+    \end{equation}
+    Let \( f \) be an arbitrary object. If \( f \in \prod_{i \,\in\, I} S_{i} \), then by \eqref{eq:the-product-of-S-in-set-builder-notation-final-form},
+    we have,
+    \begin{equation*}
+        \function{f}{I}{A} \land \forall i \, \big( i \in I \implies f(i) \in A \big)
+    \end{equation*}
+    Since \function{f}{I}{A}, clearly \( f \in A^{I} \) by \cref{dfn:set-exponentiation}.
+    Conversely, if \( f \in A^{I} \), then \function{f}{I}{A} by \cref{dfn:set-exponentiation}.
+    Thus, by \cref{thm:full-definition-of-the-arrow-notation},
+    \begin{equation}
+        \label{eq:every-i-in-I-has-a-unique-value}
+        \forall i \, \Big[ i \in I \implies \exists! y \, \big( y \in A \land \orderedpair{i}{y} \in f \big) \Big]
+    \end{equation}
+    Let \( i \in I \) be arbitrary. Thus, by \eqref{eq:every-i-in-I-has-a-unique-value}, \( \orderedpair{i}{y_{0}} \in f \)
+    for some unique \( y_{0} \in A \). Since \( y_{0} = f(i) \) by \cref{dfn:functional-notation}, necessarily \( f(i) \in A \).
+    Thus,
+    \begin{equation*}
+        i \in I \implies f(i) \in A
+    \end{equation*}
+    Since \( i \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall i \, \Big[ i \in I \implies f(i) \in A \Big]
+    \end{equation*}
+    Since \function{f}{I}{A} and \( \forall i \, \mleft( i \in I \implies f(i) \in A \mright) \) are both true, 
+    \( f \in \prod_{i \,\in\, S_{i}} \) by \eqref{eq:the-product-of-S-in-set-builder-notation-final-form}. Thus,
+    for any \( f \),
+    \begin{equation*}
+            f \in A^{I} \iff f \in \prod_{i \,\in\, I} S_{i}
+    \end{equation*}
+    The equality follows immediately from Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+\end{proof}
