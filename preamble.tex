@@ -11,3 +11,18 @@
 % Document-wide configurations
 \setcounter{chapter}{-1}
 \setlist{noitemsep}
+
+% Theorem-Like Environments
+\newtheorem{axm}{Axiom}
+\newtheorem{thm}{Theorem}[chapter]
+\newtheorem{dfn}{Definition}[chapter]
+\newtheorem{lem}{Lemma}[chapter]
+\newtheorem{cor}[thm]{Corollary}
+\theoremstyle{remark}
+\newtheorem*{rem}{Remark}
+
+% Define plural form
+\crefname{thm}{Theorem}{Theorems}
+\crefname{axm}{Axiom}{Axioms}
+\crefname{lem}{Lemma}{Lemmas}
+\crefname{dfn}{Definition}{Definitions}
