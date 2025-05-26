@@ -1784,44 +1784,6 @@ are being studied.
     Thus, \( A \union \mleft( B \union C \mright) = A \union \mleft( B \union C \mright) \) by the \nameref{axm:axiom-of-extensionality}.
     Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
 \end{proof}
-
-\begin{thm}
-    \label{thm:successor-of-x-is-equal-to-x-if-and-only-if-x-contains-itself}
-    For any set \( A \), \( A \union \mleft\{ A \mright\} = A \) if and only if \( A \in A \).
-    \begin{equation*}
-        \forall A \, \big( A \union \mleft\{ A \mright\} = A \iff A \in A \big)
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( A \) be an arbitrary set. Suppose that \( A \union \mleft\{ A \mright\} = A \). By the \nameref{axm:axiom-of-extensionality}
-    and \cref{thm:union-in-terms-of-logical-or}, it follows that, 
-    \begin{equation}
-        \label{eq:A-union-singleton-A-have-the-same-elements-as-A}
-        \forall x \, \big[ x \in A \union \mleft\{ A \mright\} 
-        \iff x \in A \lor x = A
-        \iff x \in A \big]
-    \end{equation}
-    Since \( A = A \) is trivially, true, the formula \( A \in A \lor A = A \) is always true. By \eqref{eq:A-union-singleton-A-have-the-same-elements-as-A},
-    it follows that \( A \in A \) is also true.
-    \begin{equation}
-        \label{eq:A-union-singleton-A-equals-A-implies-A-belongs-to-A}
-        \therefore \, A \union \mleft\{ A \mright\} = A \implies A \in A
-    \end{equation}
-    To prove the converse, suppose that \( A \in A \). Let \( x_{0} \) be an arbitrary element of \( A \union \mleft\{ A \mright\} \).
-    By \cref{thm:union-in-terms-of-logical-or}, it follows that \( x_{0} \in A \lor x_{0} = A \). If \( x_{0} = A \), then obviously
-    \( x_{0} \in A \) because \( A \in A \). Thus, \( \forall x \, \big[ x \in A \union \mleft\{ A \mright\} \implies x \in A \big] \).
-    Next, let \( x_{0} \in A \) be arbitrary. \( x_{0} \in A \union \mleft\{ A \mright\} \) follows immediately from 
-    \cref{thm:union-in-terms-of-logical-or}. Thus, \( \forall x \, \big[ x \in A \implies x \in A \union \mleft\{ A \mright\} \big] \).
-    By the \nameref{axm:axiom-of-extensionality}, it follows that \( A = A \union \mleft\{ A \mright\}\).
-    \begin{equation}
-        \label{eq:A-belongs-to-A-implies-A-union-singleton-A-equals-A}
-        \therefore \, A \in A \implies A \union \mleft\{ A \mright\} = A
-    \end{equation}
-    Together, \eqref{eq:A-union-singleton-A-equals-A-implies-A-belongs-to-A} and \eqref{eq:A-belongs-to-A-implies-A-union-singleton-A-equals-A}
-    establish the required biconditional.
-\end{proof}
-
 \subsection{Intersection}
 \begin{thm}[Idempotence]
     \label{set-identities:idempotence-of-intersections}
