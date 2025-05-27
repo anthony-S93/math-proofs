@@ -10,6 +10,18 @@ The following is a list of axioms from which every other statement in set theory
     \end{equation*}
 \end{axm}
 
+\begin{axm}[Axiom of Regularity]
+    \label{axm:axiom-of-regularity}
+    If a set \( A \) has at least one element, then there exists an element \( x \) in \( A \) such that
+    \( A \) and \( x \) have no element in common.
+    \begin{equation*}
+        \forall A \, \Big[ \exists x \, \mleft( x \in A \mright) 
+        \implies 
+        \exists x \, \big( x \in A \land \forall y \, \mleft( y \in x \implies y \notin A \mright) \big)
+        \Big]
+    \end{equation*}
+\end{axm}
+
 \begin{axm}[Axiom of Extensionality]
     \label{axm:axiom-of-extensionality}
     If every element of \( A \) is an element of \( B \) and every element of \( B \) is also an element of \( A \), then \( A = B \).
