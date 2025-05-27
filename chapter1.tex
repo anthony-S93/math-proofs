@@ -36,7 +36,6 @@ Common notations used in set theory will also be introduced along with a rigorou
     By the \nameref{axm:axiom-of-extensionality}, it follows that \( A = B \). Thus, the empty set is unique.
 \end{proof}
 
-
 \vspace{0.3cm}
 \noindent Since the empty set is unique, we can denote it with a single universal symbol.
 \begin{dfn}
@@ -46,7 +45,6 @@ Common notations used in set theory will also be introduced along with a rigorou
         \forall S \, \mleft( S = \emptyset \iff \forall x \, \mleft( x \notin S \mright) \mright)
     \end{equation*}
 \end{dfn}
-
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
@@ -66,7 +64,6 @@ Common notations used in set theory will also be introduced along with a rigorou
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, it follows that \( S = S^{\prime} \).
 \end{proof}
-
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
@@ -451,7 +448,6 @@ serve as the rigorous foundation for the familiar set-builder notation.
     Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
 \end{proof}
 
-
 \begin{thm}
     \label{thm:every-set-is-an-element-of-its-powerset}
     For any set \( A \), \( A \in \powerset{A} \)
@@ -463,7 +459,6 @@ serve as the rigorous foundation for the familiar set-builder notation.
 \begin{proof}
     See \cref{thm:power-set-is-always-non-empty}.
 \end{proof}
-
 
 \begin{thm}[Russell's Paradox]
     \label{thm:russell-paradox}
@@ -482,7 +477,6 @@ serve as the rigorous foundation for the familiar set-builder notation.
     impossiblity. The supposition that \setbuilder{x}{x \notin x} 
     exists must therefore be false.
 \end{proof}
-
 
 \begin{thm}
     \label{thm:the-set-of-all-sets-does-not-exist}
@@ -584,7 +578,6 @@ the predicate to define the set operation.
     \end{equation*}
 \end{proof}
 
-
 \vspace{0.3cm}
 \noindent \cref{thm:uniqueness-union} gives rise to the following definition.
 \begin{dfn}[Union]
@@ -595,7 +588,6 @@ the predicate to define the set operation.
     \end{equation*}
     In particular, if \( S = \mleft\{ A, B \mright\} \), then \( \Union S \) can be denoted as \( A \union B \).
 \end{dfn}
-
 
 \begin{thm}
     \label{thm:union-in-terms-of-logical-or}
@@ -817,12 +809,10 @@ the predicate to define the set operation.
     \end{equation*}
 \end{proof}
 
-
 \begin{dfn}[Disjoint]
     \label{dfn:disjoint-two-sets}
     Two sets \( A \) and \( B \) are \keyword{disjoint} if and only if \( A \intersect B = \emptyset \).
 \end{dfn}
-
 
 \begin{dfn}[Pairwise Disjoint]
     \label{dfn:pairwise-disjoint-sets}
@@ -865,7 +855,6 @@ the predicate to define the set operation.
     Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
 \end{proof}
 
-
 \begin{dfn}[Relative Complement]
     \label{dfn:difference}
     For any two sets \( A \) and \( B \), the \keyword{complement\,\footnote{Also known as 
@@ -878,7 +867,6 @@ the predicate to define the set operation.
         \forall A,B \, \mleft( x \in \mleft( A - B \mright) \iff x \in A \land x \notin B \mright)
     \end{equation*}
 \end{dfn}
-
 
 \begin{thm}
     \label{thm:existence-and-uniqueness-of-symmetric-difference}
@@ -923,7 +911,6 @@ the predicate to define the set operation.
     Thus, by \cref{thm:sufficient-condition-for-unrestricted-comprehension},
     the set \setbuilder{x}{\varphi(x)} exists and is unique.
 \end{proof}
-
 
 \begin{dfn}[Symmetric Difference]
     \label{dfn:symmetric-difference}
