@@ -356,6 +356,39 @@ serve as the rigorous foundation for the familiar set-builder notation.
 \end{dfn}
 
 \begin{thm}
+    \label{thm:no-set-is-an-element-of-itself}
+    For any set \( A \), \( A \notin A \).
+    \begin{equation*}
+        \forall A \, \big( A \notin A \big)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. By the \nameref{axm:axiom-of-pairing}, the singleton \( \mleft\{ A,A \mright\} = \mleft\{ A \mright\} \)
+    exists. Clearly, \( A \in \mleft\{ A \mright\} \), so \( \exists x \, \mleft( x \in \mleft\{ A \mright\} \mright) \). 
+    Thus, by the \nameref{axm:axiom-of-regularity},
+    \begin{equation}
+        \label{eq:consequence-of-regularity}
+        \exists x \, \Big[ x \in \mleft\{ A \mright\} \land \forall y \, \big( y \in x \implies y \notin \mleft\{ A \mright\} \big) \Big]
+    \end{equation}
+    But by \cref{dfn:unordered-pair}, \( \forall x \, \big( x \in \mleft\{ A \mright\} \iff x = A \big) \), so \eqref{eq:consequence-of-regularity}
+    becomes,
+    \begin{equation*}
+        \exists x \, \Big[ x = A \land \forall y \, \big( y \in x \implies y \neq A \big) \Big]
+    \end{equation*}
+    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}, this is equivalent to,
+    \begin{equation*}
+        \forall y \, \big( y \in A \implies y \neq A \big) \iff \forall y \, \big( y = A \implies y \notin A \big)
+    \end{equation*}
+    By Universal Instantiation, we thus have,
+    \begin{equation*}
+        A = A \implies A \notin A
+    \end{equation*}
+    Since \( A = A \) is trivially true, we conclude \( A \notin A \) by Modus Ponens. Since \( A \) is arbitrary, the theorem follows immediately
+    from Universal Generalization.
+\end{proof}
+
+\begin{thm}
     \label{thm:uniqueness-power-set}
     For any set \( A \), there is only one set \( P \) such that,
     \begin{equation*}
