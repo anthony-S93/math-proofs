@@ -22,7 +22,7 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-pairing}
     For any objects \( a \) and \( b \), there exists a set \( S \) such that \( S \) contains exactly \( a \) and \( b \). 
     \begin{equation*}
-        \forall a, b \, \exists S \, \forall x \Big( x \in S \iff (x = a \lor x = y) \Big)
+        \forall a, b \, \exists S \, \forall x \Big[ x \in S \iff (x = a \lor x = y) \Big]
     \end{equation*}
 \end{axm}
 
@@ -47,7 +47,7 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-power-set}
     For any set \( A \), there exists a set \( P \) such that for any \( x \), \( x \in P \) if and only if \,\( \forall y \bigl( y \in x \implies y \in A \bigr) \)
     \begin{equation*}
-        \forall A \, \exists P \, \forall x \Big( x \in P \iff \forall y \big( y \in x \implies y \in A \big)\Big)
+        \forall A \, \exists P \, \forall x \Big[ x \in P \iff \forall y \big( y \in x \implies y \in A \big)\Big]
     \end{equation*}
 \end{axm}
 
@@ -55,6 +55,6 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-infinity}
     An inductive set exists.
     \begin{equation*}
-        \exists I \Big( \emptyset \in I \land \forall x \, \big( x \in I \implies x \cup \{x\} \in I\big)\Big)
+        \exists I \Big[ \emptyset \in I \land \forall x \, \big( x \in I \implies x \cup \{x\} \in I\big)\Big]
     \end{equation*}
 \end{axm}
