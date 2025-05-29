@@ -2359,7 +2359,7 @@ obeys certain laws.
 
 \vspace{0.1cm}
 \noindent
-Now we will prove some theorems involving indexed systems of sets.
+We will now prove some theorems involving indexed systems of sets.
 \begin{thm}
     \label{thm:any-system-of-sets-can-be-indexed}
     If \( A \) is a system of sets, then there exists a function \( S \) such that 
@@ -2490,15 +2490,16 @@ Now we will prove some theorems involving indexed systems of sets.
 
 \begin{thm}
     \label{thm:product-of-an-indexed-singleton}
-    If \( A \) and \( I \) are sets and \surjection{S}{I}{\mleft\{ A \mright\}}, then 
+    If \( A \) is a set and \surjection{S}{I}{\mleft\{ A \mright\}} for some non-empty index set \( I \), then 
     \begin{equation*}
         \prod_{i \,\in\, I} S_{i} = A^{I}
     \end{equation*}
 \end{thm}
 
 \begin{proof}
-    Let \( A \) and \( I \) be sets. Let \( S \) be a function that indexes the singleton \( \mleft\{ A \mright\} \). That is,
-    \surjection{S}{I}{\mleft\{ A \mright\}}. By \cref{dfn:product-of-indexed-system-of-sets,thm:existence-of-the-product-of-an-indexed-system-of-sets},
+    Let \( A \) be a set. Let \( S \) be a function that indexes the singleton \( \mleft\{ A \mright\} \). That is,
+    \surjection{S}{I}{\mleft\{ A \mright\}} for some non-empty index set \( I \). 
+    By \cref{dfn:product-of-indexed-system-of-sets,thm:existence-of-the-product-of-an-indexed-system-of-sets},
     the product of \( S \) exists and is given by:
     \begin{equation}
         \label{eq:express-the-product-of-S-using-set-builder-notation}
