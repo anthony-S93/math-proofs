@@ -6,7 +6,7 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-existence}
     There exists a set without any elements.
     \begin{equation*}
-        \exists A \, \forall x \, \mleft( x \notin A \mright) 
+        \exists A \, \forall x \, \mleft( x \notin A \mright)
     \end{equation*}
 \end{axm}
 
@@ -15,8 +15,8 @@ The following is a list of axioms from which every other statement in set theory
     If a set \( A \) has at least one element, then there exists an element \( x \) in \( A \) such that
     \( A \) and \( x \) have no element in common.
     \begin{equation*}
-        \forall A \, \Big[ \exists x \, \mleft( x \in A \mright) 
-        \implies 
+        \forall A \, \Big[ \exists x \, \mleft( x \in A \mright)
+        \implies
         \exists x \, \big( x \in A \land \forall y \, \mleft( y \in x \implies y \notin A \mright) \big)
         \Big]
     \end{equation*}
@@ -32,7 +32,7 @@ The following is a list of axioms from which every other statement in set theory
 
 \begin{axm}[Axiom of Pairing]
     \label{axm:axiom-of-pairing}
-    For any objects \( a \) and \( b \), there exists a set \( S \) such that \( S \) contains exactly \( a \) and \( b \). 
+    For any objects \( a \) and \( b \), there exists a set \( S \) such that \( S \) contains exactly \( a \) and \( b \).
     \begin{equation*}
         \forall a, b \, \exists S \, \forall x \Big[ x \in S \iff (x = a \lor x = y) \Big]
     \end{equation*}
@@ -49,9 +49,9 @@ The following is a list of axioms from which every other statement in set theory
 
 \begin{axm}[Axiom of Union]
     \label{axm:axiom-of-union}
-    For any set \( A \), there exists a set \( U \) such that \( x \in U \) if and only if \( x \in S \) for some \( S \in A \). 
+    For any set \( A \), there exists a set \( U \) such that \( x \in U \) if and only if \( x \in S \) for some \( S \in A \).
     \begin{equation*}
-        \forall A \, \exists U \, \forall x \Big[\, x \in U \iff  \exists S \,{\in}\, A \, \big(x \in S\big) \,\Big] 
+        \forall A \, \exists U \, \forall x \Big[\, x \in U \iff  \exists S \,{\in}\, A \, \big(x \in S\big) \,\Big]
     \end{equation*}
 \end{axm}
 
