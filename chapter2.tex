@@ -1381,16 +1381,16 @@ obeys certain laws.
 
 \begin{dfn}[Arrow Notation]
     \label{dfn:arrow-notation}
-    Let \( A \) and \( B \) be sets and \( f \) be a function. We use the notation
-    \function{f}{A}{B} when \( \dom f = A \) and \( \ran f \subseteq B \).
-    Informally, \function{f}{A}{B} can be read as ``\( f \) is a function on \( A \) into \( B \).''
+    Let \( A \), \( B \), and \( f \) be  sets. We use the notation
+    \function{f}{A}{B} if and only if \( f \) is a function with \( \dom f = A \) and \( \ran f \subseteq B \).
+    Informally, the notation can be read as ``\( f \) is a function on \( A \) into \( B \).''
 \end{dfn}
 
 \begin{dfn}[Functional Notation]
     \label{dfn:functional-notation}
     For any function \( f \), if \( \orderedpair{x}{y} \in f \) for some \( x \in \dom f \), then 
-    \( y \) is the \keyword{value} of \( f \) at \( x \) and is denoted by \( f(x) \). 
-    In first-order logic,
+    \( y \) is called the \keyword{value} of \( f \) at \( x \) and is denoted by \( f(x) \).
+    This can be stated in first-order logic as,
     \begin{equation*}
         \forall x \, \forall y \, \Big(
         \orderedpair{x}{y} \in f 
