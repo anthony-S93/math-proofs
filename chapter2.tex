@@ -2520,7 +2520,12 @@ We will now prove some theorems involving indexed systems of sets.
     \begin{equation*}
         \function{f}{I}{A} \land \forall i \, \big( i \in I \implies f(i) \in A \big)
     \end{equation*}
-    Since \function{f}{I}{A}, clearly \( f \in A^{I} \) by \cref{dfn:set-exponentiation}.
+    Since \function{f}{I}{A}, clearly \( f \in A^{I} \) by \cref{dfn:set-exponentiation}. 
+    By the Deduction Theorem,
+    \begin{equation}
+        \label{eq:f-in-product-implies-f-in-AI}
+        f \in \prod_{i \,\in\, I} S_{i} \implies f \in A^{I}
+    \end{equation}
     Conversely, if \( f \in A^{I} \), then \function{f}{I}{A} by \cref{dfn:set-exponentiation}.
     Thus, by \cref{thm:full-definition-of-the-arrow-notation},
     \begin{equation}
@@ -2538,8 +2543,14 @@ We will now prove some theorems involving indexed systems of sets.
         \forall i \, \Big[ i \in I \implies f(i) \in A \Big]
     \end{equation*}
     Since \function{f}{I}{A} and \( \forall i \, \mleft( i \in I \implies f(i) \in A \mright) \) are both true, 
-    \( f \in \prod_{i \,\in\, S_{i}} \) by \eqref{eq:the-product-of-S-in-set-builder-notation-final-form}. Thus,
-    for any \( f \),
+    \( f \in \prod_{i \,\in\, S_{i}} \) follows by \eqref{eq:the-product-of-S-in-set-builder-notation-final-form}. 
+    Again, by the Deduction Theorem,
+    \begin{equation}
+        \label{eq:f-in-AI-implies-f-in-product}
+        f \in A^{I} \implies f \in \prod_{i \,\in\, I} S_{i}
+    \end{equation}
+    Combining \eqref{eq:f-in-product-implies-f-in-AI} and \eqref{eq:f-in-AI-implies-f-in-product}, 
+    we have for any arbitrary \( f \),
     \begin{equation*}
             f \in A^{I} \iff f \in \prod_{i \,\in\, I} S_{i}
     \end{equation*}
