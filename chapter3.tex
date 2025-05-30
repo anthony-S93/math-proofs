@@ -1,0 +1,752 @@
+\chapter{Mathematical Structures}
+\section{Preliminary Remarks}
+In English, the term ``structure'' refers to the systematic organization of the components that constitute a complex entity.
+Whenever one thinks of structures, what comes to mind is an ``order'' of some kind, or entities that have recognizable forms.
+This intuitive notion is somewhat ubiquitous and can be found in almost every field of rational study:
+\begin{itemize}
+    \item In chemistry, the chemical structure of a water molecule is characterized by two hydrogen atoms attached to a single
+          oxygen atom at a \( 104.45\degree \) angle.
+    \item In computer science, a linked list is a data structure consisting of a collection of sequential nodes with each node
+          containing data and a reference (link) to the next node in the sequence.
+    \item In business and management, one speaks of an institute's leadership structure, which typically consists of a roster of
+          executives along with a command chain that designates the level of authority each executive holds.
+\end{itemize}
+These examples all offer a glimpse of what a ``structure'' generally entails:
+\begin{enumerate*}[label=(\alph*)]
+    \item a collection of objects that are related to each other in a systematic and identifiable way;
+    \item a set of rules/information describing the interrelationship between the objects in the collection.
+\end{enumerate*}
+Thus, at a conceptual level, a ``structure'' can be summarized by the following equation:
+\begin{equation*}
+    \text{structure} = \text{set} + \text{descriptive information}
+\end{equation*}
+Simply put, a ``structure'' is a set endowed with additional features and properties that reveal
+the nature of the objects it contains. A collection of chess pieces is just a set; throw
+a chessboard and a rulebook into the mix though, and we have a structure. Instead of just knowing
+what the pieces are, we also know how the pieces move and how they relate to each other.
+
+\vspace{0.3cm}
+\noindent
+In mathematics, we seek to formalize the notion of a structure. That is, to define in abstract mathematical terms
+what a structure is. With set theory serving as a foundation of mathematics, we can narrow the goal
+even further: to define mathematical structures in terms of sets. But before that can be done, some groundwork
+has to be laid.
+
+\section{The Set of Natural Numbers}
+Intuitively, we all know what the natural numbers are: a system of symbols representing the number of
+objects in a finite collection of discrete elements. These symbols are abstract in nature, stripped of
+any reference to the concrete qualities of the objects being counted. Be it two dogs, two oranges or two books, the
+same symbol `2' is always used to represent their quantity.
+The power of these symbols lies not only in their expressiveness but also in the fact that they facilitate higher
+computation, especially with the advent of arithmetic, which transformed the act of counting from a physical process to that of pure
+symbolic manipulation.
+Nevertheless, despite the highly intuitive and self-evident nature of the natural numbers,
+for them to be truly rooted in the foundation of mathematics, they have to be rigorously defined in terms of
+simpler and more fundamental mathematical objects---namely, sets. Thus, the goal of this section is twofold:
+\begin{enumerate*} [label=(\roman*)]
+    \item to present a systematic method that assigns a unique set to each symbol \( 0,1,2,3,\dots \) of the natural numbers
+    \item to prove that there exists a set containing exactly those sets.
+\end{enumerate*}
+
+\subsection{Von Neumann Ordinals} \label{ssec:von-neumann-ordinals}
+Assigning a unique set to each symbol \( 0,1,2,3,\dots \) is a fairly straightforward task. Since each natural number represents
+a finite, discrete quantity, we simply have to assign to each natural number \( n \) a single representative of all sets containing
+exactly \( n \) elements. Thus, the symbol 0 can be defined as a set with no elements, the symbol 1 a set with
+exactly one element, the symbol 2 a set with exactly two elements, etc.
+
+\vspace{0.3cm}
+\noindent
+For the symbol 0, the process of finding a representative set is trivial because by
+\cref{thm:uniqueness-empty-set}, there exists only one set with no elements.
+\begin{equation*}
+    0 \coloneq \emptyset
+\end{equation*}
+But what about the rest of the natural numbers? Surely there are more than one way to form sets containing a certain number of elements?
+For example, the sets \( \mleft\{ 0 \mright\} \), \( \mleft\{ \mleft\{ 0 \mright\} \mright\} \), \( \mleft\{ \mleft\{ \mleft\{ 0 \mright\} \mright\} \mright\} \),
+and \( \mleft\{ \orderedpair{0}{0} \mright\} \) all have exactly one element.
+So which one of them should we pick to represent the symbol 1? There is no right answer, of course.
+In fact, the exact definition doesn't even matter as long as it yields all the familiar properties of natural numbers.
+Here, we will use the most straightforward and intuitively obvious approach:
+\begin{align*}
+    0 &\coloneq \emptyset = \mleft\{ \mright\} \\
+    1 &\coloneq 0 \union \mleft\{ 0 \mright\} = \{0\} \\
+    2 &\coloneq 1 \union \mleft\{ 1 \mright\} = \{0\} \union \{1\} = \{0,1\}\\
+    3 &\coloneq 2 \union \mleft\{ 2 \mright\} = \{0,1\} \union \{2\} = \{0,1,2\}\\
+    \vdots
+\end{align*}
+The idea is to define any natural number \( n \) as a set containing all the natural numbers that are smaller
+than it.
+This ensures that the set assigned to \( n \) always contains exactly \( n \) elements.
+To construct the representative set for the ``next'' natural number,
+we simply adjoin one more element (\( n \) itself) to \( n \).
+Any set constructed by means of this recursive process is called a \keyword{von Neumann ordinal}.
+
+\subsection{Set-Theoretic Definition of \naturalset}
+In the previous section, we presented a scheme for assigning a unique set to the familiar symbols \( 0,1,2,3,\dots \) denoting
+the natural numbers. The next task is to prove (on the basis of the axioms of set theory) that there exists a set containing
+exactly the von Neumann ordinals.
+
+\begin{dfn}[Successor]
+    \label{dfn:successor}
+    For any set \( x \), the \keyword{successor} of \( x \) is the set \( x \union \mleft\{ x \mright\} \).
+\end{dfn}
+
+\begin{dfn}[Inductive Set]
+    \label{dfn:inductive-set}
+    A set \( I \) is \keyword{inductive} if and only if the following conditions hold:
+    \begin{enumerate}[noitemsep,label=(\alph*)]
+        \item \( \emptyset \in I \)
+        \item \( \forall x \, \big[ x \in I \implies x \union \mleft\{ x \mright\} \in I \big] \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    Essentially, an inductive set is any set that contains all the von Neumann ordinals.
+\end{rem}
+
+\begin{cor}
+    \label{thm:any-von-neumann-ordinal-belongs-to-an-inductive-set}
+    If \( I \) is inductive and \( x \) is a von Neumann ordinal, then \( x \in I \).
+\end{cor}
+
+\begin{dfn}
+    \label{dfn:the-set-of-natural-numbers}
+    \( \naturalset \) is the set given by,
+    \begin{equation*}
+        \naturalset = \setbuilderbigg{x}{\forall I \, \Big[ \emptyset \in I \land \forall z \, \big( z \in I \implies z \union \mleft\{ z \mright\} \in I \big) \implies x \in I \Big]}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \label{thm:existence-of-the-set-of-all-natural-numbers}
+    \( \naturalset \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation}
+        \label{eq:phi-is-the-predicate-for-the-set-of-N}
+        \varphi(x) \coloneq \forall I \, \bigg[ \emptyset \in I \land
+        \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big)
+        \implies x \in I \bigg]
+    \end{equation}
+    Let \( I_{0} \) be an inductive set (note that \( I_{0} \) exists by the \nameref{axm:axiom-of-infinity}).
+    By \cref{dfn:inductive-set}, we have,
+    \begin{equation}
+        \label{eq:I-is-inductive}
+        \big( \emptyset \in I_{0} \big) \land \forall z \, \Big( z \in I_{0} \implies z \union \mleft\{ z \mright\} \Big)
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) is satisfied. By \eqref{eq:phi-is-the-predicate-for-the-set-of-N},
+    it follows that,
+    \begin{equation}
+        \label{eq:x0-satisfies-the-predicate-for-N}
+        \forall I \, \bigg[ \emptyset \in I \land \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big) \implies x_{0} \in I \bigg]
+    \end{equation}
+    Applying Universal Instantiaion on \eqref{eq:x0-satisfies-the-predicate-for-N} yields,
+    \begin{equation*}
+        \emptyset \in I_{0} \land \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big) \implies  x_{0} \in I_{0}
+    \end{equation*}
+    Using \eqref{eq:I-is-inductive}, we conclude by Modus Ponens that,
+    \begin{equation}
+        \label{eq:x0-in-I0}
+        x_{0} \in  I_{0}
+    \end{equation}
+    Since \eqref{eq:x0-in-I0} was derived on the assumption that \( \varphi(x_{0}) \) is satisfied, we conclude by the Deduction Theorem that,
+    \begin{equation*}
+        \varphi(x_{0}) \implies x_{0} \in I_{0}
+    \end{equation*}
+    Since \( x_{0} \) is arbitrary, we have by Universal Generalization,
+    \begin{equation*}
+        \forall x \, \big( \varphi(x) \implies x \in I_{0} \big)
+    \end{equation*}
+    In other words,
+    \begin{equation*}
+        \exists A \, \forall x \, \Big[ \varphi(x) \implies x \in A \Big]
+    \end{equation*}
+    Thus, the unique set \( \naturalset = \setbuilderbig{x}{\varphi(x)} \) exists by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-set-of-all-natural-numbers-is-inductive}
+    \( \naturalset \) is inductive.
+\end{thm}
+
+\begin{proof}
+    Let \( I_{0} \) be an arbitrary set. It is obvious from the laws of propositional logic that the statement,
+    \begin{equation*}
+        \emptyset \in I_{0} \land \forall z \, \Big( z \in I_{0} \implies z \union \mleft\{ z \mright\} \in I_{0} \Big) \implies \emptyset \in I_{0}
+    \end{equation*}
+    is trivially true. Since \( I_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall I \, \bigg[ \emptyset \in I \land \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big)
+        \implies \emptyset \in I \bigg]
+    \end{equation*}
+    Thus, \( \emptyset \in \naturalset \) by \cref{dfn:the-set-of-natural-numbers}.
+
+    \vspace{0.3cm}
+    \noindent
+    Now let \( x_{0} \in \naturalset \) be arbitrary. Thus, by \cref{dfn:the-set-of-natural-numbers},
+    \begin{equation}
+        \label{eq:x0-belongs-to-the-set-of-N}
+        \forall I \, \bigg[ \emptyset \in I \land \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big) \implies x_{0} \in I \bigg]
+    \end{equation}
+    Let \( I_{0} \) be any inductive set. By \eqref{eq:x0-belongs-to-the-set-of-N}, it follows that \( x_{0} \in I_{0} \). Since \( I_{0} \) is inductive and
+    \( x_{0} \in I_{0} \), necessarily \( x_{0} \union \mleft\{ x_{0} \mright\} \in I_{0} \) by \cref{dfn:inductive-set}. Since \( I_{0} \) is an arbitrary inductive
+    set, we conclude by Universal Generalization that,
+    \begin{equation*}
+        \forall I \, \bigg[ \emptyset \in I \land
+        \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big) \implies
+        x_{0} \union \mleft\{ x_{0} \mright\} \in  I \bigg]\\
+    \end{equation*}
+    And thus, by \cref{dfn:the-set-of-natural-numbers},
+    \begin{equation*}
+        x_{0} \union \mleft\{ x_{0} \mright\} \in \naturalset
+    \end{equation*}
+    In other words,
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in \naturalset \implies x_{0} \union \mleft\{ x_{0} \mright\} \in \naturalset&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( x_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    Thus,
+    \begin{equation*}
+        \emptyset \in \naturalset \land \forall x \, \Big[ x \in \naturalset \implies x \union \mleft\{ x \mright\} \in \naturalset \Big]
+    \end{equation*}
+    By \cref{dfn:inductive-set}, \( \naturalset \) is necessarily inductive.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}
+    If \( I \) is inductive, then \( \naturalset \subseteq I \).
+\end{thm}
+
+\begin{proof}
+    Let \( x_{0} \) be an arbitrary element of \naturalset.
+    By \cref{dfn:the-set-of-natural-numbers}, it follows that,
+    \begin{equation}
+        \label{eq:x0-belongs-to-N}
+        \forall I \, \bigg[ \emptyset \in I \land \forall z \, \Big( z \in I \implies z \union \mleft\{ z \mright\} \in I \Big) \implies x_{0} \in I \bigg]
+    \end{equation}
+    Let \( I_{0} \) be any inductive set. Thus, by \cref{dfn:inductive-set},
+    \begin{equation}
+        \label{eq:I0-is-inductive}
+        \emptyset \in I_{0} \land \forall z \, \Big( z \in I_{0} \implies z \union \mleft\{ z \mright\} \in I_{0} \Big)
+    \end{equation}
+    Applying Universal Instantiation to \eqref{eq:x0-belongs-to-N}, we have,
+    \begin{equation}
+        \label{eq:instantiated-statement-for-I0-is-inductive}
+        \emptyset \in I_{0} \land \forall z \, \Big( z \in I_{0} \in z \union \mleft\{ z \mright\} \in I_{0} \Big) \implies x_{0} \in I_{0}
+    \end{equation}
+    By \eqref{eq:I0-is-inductive} and \eqref{eq:instantiated-statement-for-I0-is-inductive}, we conclude by Modus Ponens that \( x_{0} \in \naturalset \).
+    Since \( x_{0} \) is arbitrary, we can generalize,
+    \begin{equation*}
+        \forall x \, \Big( x \in \naturalset \implies x \in I_{0} \Big)
+    \end{equation*}
+    By \cref{dfn:subset}, it follows that \( \naturalset \subseteq I_{0} \) for any inductive set \( I_{0} \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-set-of-all-natural-numbers-contains-exactly-the-von-Neumann-ordinals}
+    For any set \( x \), \( x \) is a von Neumann ordinal if and only if \( x \in \naturalset \).
+\end{thm}
+
+\begin{proof}
+    Let \( x_{0} \) be a von Neumann ordinal. Since \( \naturalset \) is inductive by \cref{thm:the-set-of-all-natural-numbers-is-inductive},
+    it follows from \cref{thm:any-von-neumann-ordinal-belongs-to-an-inductive-set} that \( x_{0} \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, let \( I_{0} \) be any inductive set. From \cref{thm:any-von-neumann-ordinal-belongs-to-an-inductive-set},
+    we know that \( I_{0} \) contains all von Neumann ordinals. Therefore, by the \nameref{axm:axiom-schema-of-specification}, there must exist a non-empty set
+    \( S \subseteq I_{0} \) such that every element of \( S \) is a von Neumann ordinal.
+    \begin{equation}
+        \label{eq:S-is-a-subset-of-I0-that-contains-all-von-Neumann-ordinals}
+        S = \setbuilder{x \in I_{0}}{\text{\( x \) is a von Neumann ordinal}}
+    \end{equation}
+    The next task is to prove that \( S \) is inductive.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( I_{0} \) is an inductive set, necessarily \( \emptyset \in I_{0} \) by \cref{dfn:inductive-set}. Since \( \emptyset  \)
+    is a von Neumann ordinal and \( \emptyset \in I_{0} \), necessarily \( \emptyset \in S \)
+    by \eqref{eq:S-is-a-subset-of-I0-that-contains-all-von-Neumann-ordinals}.
+    Now let \( x_{0} \in S \) be arbitrary. By \eqref{eq:S-is-a-subset-of-I0-that-contains-all-von-Neumann-ordinals},
+    \( x_{0} \) must be a von Neumann ordinal. Since \( S \subseteq I_{0} \) and
+    \( x_{0} \in S \), necessarily \( x_{0} \in I_{0} \). But \( I_{0} \) is inductive, which means that \( x_{0} \union \mleft\{ x_{0} \mright\} \) must
+    also be an element of \( I_{0} \). And since \( x_{0} \) is a von Neumann ordinal, \( x_{0} \union \mleft\{ x_{0} \mright\} \) must
+    be a von Neumann ordinal as well (see \cref{ssec:von-neumann-ordinals}). Thus, \( x_{0} \union \mleft\{ x_{0} \mright\} \in I_{0} \) and
+    \( x_{0} \union \mleft\{ x_{0} \mright\} \) is a von Neuman ordinal. By \eqref{eq:S-is-a-subset-of-I0-that-contains-all-von-Neumann-ordinals},
+    it follows that \( x_{0} \union \mleft\{ x_{0} \mright\} \in S \). Thus,
+    \begin{equation*}
+        \begin{aligned}
+            x_{0} \in S \implies x_{0} \union \mleft\{ x_{0} \mright\} \in S&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( x_{0} \)}
+        \end{aligned}
+    \end{equation*}
+    By Universal Generalization, we have,
+    \begin{equation*}
+        \emptyset \in S \land \forall x \, \Big[ x \in S \implies x \union \mleft\{ x \mright\} \in S \Big]
+    \end{equation*}
+    Thus, \( S \) must be an inductive set by \cref{dfn:inductive-set}.
+    And by \cref{thm:the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}, \( \naturalset \subseteq S \). Therefore,
+    every element of \( \naturalset \) is necessarily a von Neumann ordinal.
+\end{proof}
+
+\begin{rem}
+    It should be evident from \cref{thm:the-set-of-all-natural-numbers-contains-exactly-the-von-Neumann-ordinals} and
+    the \nameref{axm:axiom-of-extensionality} that \( \naturalset \) contains all the von Neumann ordinals and
+    nothing else. Since each symbol for the natural numbers is assigned a unique von Neumann ordinal,
+    it is justified to think of \( \naturalset \) as the set of all natural numbers.
+\end{rem}
+
+\section{Ordered N-Tuples}
+Having rigorously defined the natural numbers as sets and the set \( \naturalset \) which contains all the natural numbers,
+we now turn to an immediate application of the natural numbers.
+
+\begin{dfn}
+    \label{dfn:n-tuples-basic-form}
+    For any \( n \in \naturalset \), an \keyword{n-tuple} is any function with \( n \) as its domain.
+    An n-tuple is also called a \keyword{finite sequence} of length \( n \).
+\end{dfn}
+
+\begin{dfn}[Sequence Notation]
+    \label{dfn:n-tuples-sequence-notation}
+    For any \( n \in \naturalset \) where \( n \neq 0 \),
+    \( t = \tuple{x_{0}, \dots, x_{n-1}} \) if and only if the following conditions hold:
+    \begin{enumerate}[noitemsep,label=(\alph*)]
+        \item \( \surjection{t}{n}{\mleft\{ x_{0},\dots,x_{n-1} \mright\}} \)
+        \item \( \forall i\,{\in}\,n \, \big( t(i) = x_{i} \big) \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    An \( n \)-tuple is really just an indexed system of sets with a natural number \( n \) acting as
+    the index set \( I \).
+\end{rem}
+
+\begin{cor}[0-Tuple]
+    \label{cor:zero-tuple}
+    The \keyword{0-tuple} (also known as the \keyword{empty sequence}) is simply the empty set \( \emptyset \)
+    since it is an indexed system of sets \( t \)
+    with \( \dom t = \ran t = 0 = \emptyset \).
+    \begin{equation*}
+        \tuple{} = \emptyset
+    \end{equation*}
+\end{cor}
+
+\begin{cor}
+    \label{thm:every-non-zero-tuple-is-expressible-in-sequence-notation}
+    If \( t \) is a tuple with length \( n \neq 0 \), then,
+    \begin{equation*}
+        \exists x_{0} \, \dots \exists x_{n-1} \, \Big[ t = \tuple{x_{0}, \dots, x_{n-1}} \Big]
+    \end{equation*}
+\end{cor}
+
+\begin{proof}
+    Since \( t \) is a function with \( \dom t = n \) where \( n \in \naturalset \) and \( n \neq \emptyset \),
+    it follows from \cref{dfn:domain-of-a-set-of-ordered-pairs} that there exists some \( x_{i} = t(i) \) for
+    every \( i \in n \). Let the set \( R \) be defined as,
+    \begin{equation}
+        \label{eq:list-out-all-elements-of-ran-t}
+        R = \mleft\{ x_{0},\dots,x_{n-1} \mright\} = \setbuilderbigg{x}{\Lor_{i \,\in\, n} x = x_{i}}
+    \end{equation}
+    We can easily prove that \( R = \ran t \).
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( \alpha \in R \) be arbitrary. Clearly, \( \alpha = x_{i} = t(i) \) for some \( i \in n \); in other words,
+    \( \orderedpair{i}{\alpha} \in t \) for some \( i \in n \). By \cref{dfn:range-of-a-set-of-ordered-pairs}, it
+    follows that \( \alpha \in \ran t \). Conversely, let \( \alpha \in \ran t \) be arbitrary.
+    Again, by \cref{dfn:range-of-a-set-of-ordered-pairs}, there must exist some \( i \in n \) such that
+    \( \orderedpair{i}{\alpha} \in t \). Thus, \( \alpha = t(i) \) by \cref{dfn:functional-notation}.
+    Since \( t(i) = x_{i} \) for all \( i \in n \), it follows that \( \alpha = x_{i} \).
+    By \eqref{eq:list-out-all-elements-of-ran-t}, clearly \( \alpha \in R \).
+    Thus, \( \ran t = R = \mleft\{ x_{0},\dots,x_{n-1} \mright\} \) so that,
+    \begin{equation*}
+        \surjection{t}{n}{\ran t} \iff \surjection{t}{n}{\mleft\{ x_{0},\dots,x_{n-1} \mright\}}
+    \end{equation*}
+    where \( t(i) = x_{i} \) for all \( i \in n \). Thus, \( t = \tuple{x_{0}, \dots, x_{n-1}} \) by \cref{dfn:n-tuples-sequence-notation}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:if-every-coordinate-of-an-n-tuple-belongs-to-A-then-the-n-tuple-belongs-to-the-power-set-of-the-cartesian-product-between-n-and-A}
+    For any \( n \in \naturalset \) where \( n \neq 0 \),
+    if \( x_{0},\dots,x_{n-1} \in A \) for some set \( A \), then \( \tuple{x_{0},\dots,x_{n-1}} \in \powerset{n \times A} \).
+    \begin{equation*}
+        \forall n\,{\in}\,\naturalset \,
+        \bigg[ n \neq 0 \implies
+        \forall A \, \forall x_{0} \, \dots \forall x_{n-1} \, \Big( \Land_{i \,\in\, n} x_{i} \in A \implies \tuple{x_{0}, \dots, x_{n-1}} \in \powerset{n \times A} \Big)
+        \bigg]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( n \) be any non-zero natural number and \( A \) be any set.
+    Let the objects \( x_{0},\dots,x_{n-1}\) be \( n \) arbitrary elements of \( A \).
+    Then by \cref{dfn:n-tuples-sequence-notation},
+    \begin{equation*}
+        \surjection{ \tuple{x_{0},\dots,x_{n-1}} }{n}{\mleft\{ x_{0},\dots,x_{n-1} \mright\}}
+    \end{equation*}
+    Clearly, \( \ran(\tuple{x_{0},\dots,x_{n-1}}) = \mleft\{ x_{0},\dots,x_{n-1} \mright\} \subseteq A  \)
+    and \( \dom \mleft( \tuple{x_{0}, \dots, x_{n-1}} \mright) = n \). Thus, by \cref{dfn:arrow-notation},
+    \begin{equation*}
+        \function{\tuple{x_{0},\dots,x_{n-1}}}{n}{A}
+    \end{equation*}
+    Since \( \tuple{x_{0},\dots,x_{n-1}} \) is a function on \( n \) into \( A \),
+    it follows from \cref{thm:a-function-on-A-into-B-is-a-subset-of-the-cartesian-product-between-A-and-B}
+    that,
+    \begin{equation*}
+        \tuple{x_{0},\dots,x_{n-1}} \subseteq n \times A
+    \end{equation*}
+    By \cref{dfn:power-set}, it follows that \( \tuple{x_{0},\dots,x_{n-1}} \in \powerset{n \times A} \).
+    By the Deduction Theorem, we have,
+    \begin{equation*}
+        \Land_{i \,\in\, n} x_{i} \in A \implies \tuple{x_{0}, \dots, x_{n-1}} \in \powerset{n \times A}
+    \end{equation*}
+    Since \( x_{0},\dots,x_{n-1} \) are arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x_{0} \, \dots \forall x_{n-1} \, \bigg( \Land_{i \,\in\, n} x_{i} \in A \implies \tuple{x_{0}, \dots, x_{n-1}} \in \powerset{n \times A} \bigg)
+    \end{equation*}
+    Since \( A \) is also arbitrary, we can generalize once again,
+    \begin{equation*}
+        \forall A \, \forall x_{0} \, \dots \forall x_{n-1} \, \bigg( \Land_{i \,\in\, n} x_{i} \in A \implies \tuple{x_{0}, \dots, x_{n-1}} \in \powerset{n \times A} \bigg)
+        \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}[Equality]
+    \label{thm:tuple-equality}
+    For any \( n \in \naturalset \) where \( n \neq 0 \),
+    \begin{equation*}
+        \tuple{x_{0},\dots,x_{n-1}} = \tuple{y_{0},\dots,y_{n-1}} \iff \Land_{i \,\in\, n} x_{i} = y_{i}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( t_{x} \) and \( t_{y} \) be two arbitrary n-tuples with \( n \neq 0 \).
+    In other words,
+    \begin{gather*}
+        t_{x} = \tuple{x_{0},\dots,x_{n-1}}\\
+        t_{y} = \tuple{y_{0},\dots,y_{n-1}}
+    \end{gather*}
+    for arbitrary objects \( x_{0},\dots,x_{n-1} \) and \( y_{0},\dots,y_{n-1} \).
+    Thus, by \cref{dfn:n-tuples-sequence-notation},
+    \begin{gather*}
+        \surjection{t_{x}}{n}{\mleft\{ x_{0},\dots,x_{n-1} \mright\}} \\
+        \surjection{t_{y}}{n}{\mleft\{ y_{0},\dots,y_{n-1}\mright\}}
+    \end{gather*}
+    The problem is thus reduced to that of the equality of functions. And by \cref{thm:equality-of-functions},
+    \begin{equation*}
+        t_{x} = t_{y} \iff \dom t_{x} = \dom t_{y} \land \forall i\,{\in}\,n \, \big[ t_{x}(i) = t_{y}(i) \big]
+    \end{equation*}
+    Since \( \dom t_{x} = \dom t_{y} = n \), the formula reduces to,
+    \begin{equation}
+        \label{eq:condition-for-tuple-equality-from-first-principle}
+        t_{x} = t_{y} \iff \forall i\,{\in}\,n \, \big[ t_{x}(i) = t_{y}(i) \big]
+    \end{equation}
+    But by \cref{dfn:n-tuples-basic-form},
+    \begin{equation*}
+        \forall i\,{\in}\,n \, \big[ x_{i} = t_{x}(i) \big] \land
+        \forall i\,{\in}\,n \, \big[ y_{i} = t_{y}(i) \big]
+    \end{equation*}
+    Thus, \eqref{eq:condition-for-tuple-equality-from-first-principle} is equivalent to,
+    \begin{equation*}
+        t_{x} = t_{y} \iff \forall i\,{\in}\,n \, \big[ x_{i} = y_{i} \big]
+        \iff \Land_{i \,{\in}\, n} x_{i} = y_{i} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{rem}
+    Obviously, two tuples can only be equal if they are of the same length.
+    After all, two functions cannot possibly be equal unless they have
+    equal domains.
+\end{rem}
+
+\begin{thm}
+    \label{thm:sufficient-condition-for-unrestricted-specification-for-tuples}
+    If \( \varphi \) is an n-ary predicate with \( n \in \naturalset \) and \( n \neq 0 \), then,
+    \begin{multline*}
+        \exists A_{0} \,\dots \exists A_{n-1} \, \forall x_{0} \,\dots \forall x_{n-1} \, \bigg[ \varphi(x_{0},\dots,x_{n-1})
+        \implies \Land_{i \,{\in}\, n} x_{i} \in A_{i} \bigg] \implies \\
+        \exists! S \, \forall x \, \bigg[ x \in S \iff \exists a_{0} \, \dots \exists a_{n-1} \, \Big( x = \tuple{a_{0},\dots,a_{n-1}} \land \varphi(a_{0},\dots,a_{n-1}) \Big) \bigg]
+    \end{multline*}
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi \) be an n-ary predicate with \( n \neq 0 \) such that,
+    \begin{equation}
+        \label{eq:n-ary-phi-implies-each-coordinate-belongs-to-an-existing-set}
+        \forall x_{0} \, \dots \forall x_{n-1} \, \bigg[ \varphi(x_{0},\dots,x_{n-1}) \implies \Land_{i \,\in\, n} x_{i} \in A_{i} \bigg]
+    \end{equation}
+    for existing sets \( A_{0},\dots,A_{n-1} \).
+    Let the unary predicate \( \Gamma \) be defined as follows:
+    \begin{equation}
+        \label{eq:express-n-ary-phi-as-unary-gamma}
+        \Gamma(x) \coloneq \exists a_{0} \, \dots \exists a_{n-1} \, \Big[ x = \tuple{a_{0},\dots,a_{n-1}} \land \varphi(a_{0},\dots,a_{n-1}) \Big]
+    \end{equation}
+    Let \( \alpha \) be an arbitrary object such that \( \Gamma(\alpha) \) is satisfied.
+    Therefore, it follows from \eqref{eq:express-n-ary-phi-as-unary-gamma} that,
+    \begin{equation*}
+        \begin{aligned}
+            \alpha = \tuple{a_{0}, \dots, a_{n-1}} \land \varphi(a_{0}, \dots, a_{n-1})&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( a_{0}, \dots, a_{n-1} \)}
+        \end{aligned}
+    \end{equation*}
+    Since \( \varphi(a_{0}, \dots, a_{n-1}) \) is satisfied, we infer from
+    \eqref{eq:n-ary-phi-implies-each-coordinate-belongs-to-an-existing-set} that,
+    \begin{equation}
+        \label{eq:ai-belongs-to-Ai}
+        \Land_{i \,\in\, n} a_{i} \in A_{i}
+    \end{equation}
+    An immediate consequence of \eqref{eq:ai-belongs-to-Ai} is that,
+    \begin{equation*}
+        \Land_{i \,\in\, n} \bigg[a_{i} \in \Union_{i \,\in\, n} A_{i}\bigg]
+    \end{equation*}
+    Thus, by \cref{thm:if-every-coordinate-of-an-n-tuple-belongs-to-A-then-the-n-tuple-belongs-to-the-power-set-of-the-cartesian-product-between-n-and-A},
+    \begin{equation*}
+        \alpha = \tuple{a_{0}, \dots, a_{n-1}} \in \powerset{n \times \Union_{i \,\in\, n} A_{i}}
+    \end{equation*}
+    By the Deduction Theorem, \( \Gamma(\alpha) \implies \alpha \in \powerset{n \times \Union_{i \,\in\, n} A_{i}} \). Since \( \alpha \) is arbitrary,
+    we can generalize the formula to obtain,
+    \begin{equation*}
+        \forall x \, \Bigg[ \Gamma(x) \implies x \in \powerset{n \times \Union_{i \,\in\, n} A_{i}} \Bigg]
+    \end{equation*}
+    Thus, the unique set \( \setbuilder{x}{\Gamma(x)} \) exists by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+\end{proof}
+
+\begin{dfn}[Set-Builder Notation]
+    \label{dfn:set-builder-notation-for-tuples}
+    If \( \varphi \) is an n-ary predicate where \( n \in \naturalset \) and \( n \neq 0 \),
+    then the set of all n-tuples whose coordinates satisfy \( \varphi \) is denoted by
+    \( \setbuilder{\tuple{x_{0}, \dots, x_{n-1}}}{\varphi(x_{0},\dots,x_{n-1})} \).
+    \begin{multline*}
+        \forall x \, \bigg[ x \in \setbuilderbig{\tuple{x_{0}, \dots, x_{n-1}}}{\varphi(x_{0},\dots,x_{n-1})} \iff \\
+        \exists a_{0} \, \dots \exists a_{n-1} \, \Big( x = \tuple{a_{0}, \dots, a_{n-1}} \land \varphi(a_{0},\dots,a_{n-1}) \Big)
+        \bigg]
+    \end{multline*}
+\end{dfn}
+
+\begin{rem}
+    The existence of \( \setbuilderbig{\tuple{x_{0}, \dots, x_{n-1}}}{\varphi(x_{0},\dots,x_{n-1})} \)
+    can be established with \cref{thm:sufficient-condition-for-unrestricted-specification-for-tuples}.
+\end{rem}
+
+\begin{thm}
+    \label{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation}
+    If \( A \) is a set and \( n \in \naturalset \), then,
+    \begin{equation*}
+        A^{n} =
+        \begin{cases}
+            \mleft\{ \emptyset \mright\} & \text{\normalfont if} \ n = 0 \\
+            \setbuilderbig{\tuple{x_{0}, \dots, x_{n-1}}}{\Land_{i \,\in\, n} x_{i} \in A} & \text{\normalfont if} \ n \neq 0
+        \end{cases}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    By \cref{dfn:set-exponentiation},
+    \begin{equation}
+        \label{eq:An-in-basic-setbuilder-form}
+        A^{n} = \setbuilder{f}{\function{f}{n}{A}}
+    \end{equation}
+    If \( n = 0 \), then clearly,
+    \begin{equation*}
+        A^{0} = A^{\emptyset} = \setbuilder{f}{\function{f}{\emptyset}{A}} = \mleft\{ \tuple{} \mright\} = \mleft\{ \emptyset \mright\}
+    \end{equation*}
+    If \( n \neq 0 \), we can apply \cref{dfn:n-tuples-sequence-notation} to \eqref{eq:An-in-basic-setbuilder-form}.
+    First, define the predicate \( \varphi \) as follows:
+    \begin{equation}
+        \label{eq:predicate-for-tuples-with-coordinates-belonging-to-A}
+        \varphi(f) \coloneq \exists x_{0} \, \dots \exists x_{n-1} \, \bigg[ f = \tuple{x_{0}, \dots, x_{n-1}} \land \Land_{i \,\in\, n} x_{i} \in A \bigg]
+    \end{equation}
+    Let \( f  \) be an arbitrary object. Suppose that \( f \in A^{n} \). Thus, \( \function{f}{n}{A} \) by \eqref{eq:An-in-basic-setbuilder-form}.
+    Since \( n \neq \emptyset \) and \( \dom f = n \), it follows from \cref{dfn:domain-of-a-set-of-ordered-pairs} that
+    \( \ran f \neq \emptyset \). In other words, there exist objects \( x_{0},\dots,x_{n-1} \) such that \( \ran f = \mleft\{ x_{0},\dots,x_{n-1} \mright\} \).
+    Since \( n \in \naturalset \), it follows from \cref{dfn:n-tuples-basic-form} that
+    \( f = \tuple{x_{0}, \dots, x_{n-1}} \). Also, since \( x_{0},\dots,x_{n-1} \in \ran f \) and
+    \( \ran f \subseteq A \), necessarily, \( \Land_{i \,\in\, n} x_{i} \in A \). In other words, \( \varphi(f) \) is satisfied.
+    By the Deduction Theorem,
+    \begin{equation}
+        \label{eq:f-in-An-implies-phi-f}
+        \begin{aligned}
+            f \in A^{n} \implies \varphi(f)&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( f \)}
+        \end{aligned}
+    \end{equation}
+    Conversely, suppose that \( \varphi(f) \) is satisfied. By \eqref{eq:predicate-for-tuples-with-coordinates-belonging-to-A},
+    \( f \) is an n-tuple \( \tuple{x_{0}, \dots, x_{n-1}} \) where \( \Land_{i \,\in\, n} x_{i} \in A \).
+    By \cref{dfn:n-tuples-basic-form}, it follows that \( \forall i\,{\in}\,n \, \big( x_{i} = f(i) \big) \).
+    Given that \( \Land_{i \,\in\, n} x_{i} \in A \), necessarily \( \forall i\,{\in}\,n \, \big( f(i) \in A \big) \).
+    In other words, \( f \) is a function with \( \dom f = n \) and \( \ran f \subseteq A \).
+    By \cref{dfn:arrow-notation}, it follows that \( \function{f}{n}{A} \). And finally by \eqref{eq:An-in-basic-setbuilder-form},
+    we have \( f \in A^{n} \).
+    \begin{equation}
+        \label{eq:phi-f-implies-f-in-An}
+        \begin{aligned}
+            \varphi(f) \implies f \in A^{n}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for any \( f \)}
+        \end{aligned}
+    \end{equation}
+    Having derived \eqref{eq:f-in-An-implies-phi-f} and \eqref{eq:phi-f-implies-f-in-An}, we further derive,
+    \begin{equation*}
+        \varphi(f) \iff f \in A^{n}
+    \end{equation*}
+    Since \( f \) is arbitrary, we conclude by Universal Generalization and the \nameref{axm:axiom-of-extensionality} that,
+    \begin{equation*}
+        A^{n}
+        = \setbuilderbigg{f}{\varphi(f)}
+        = \setbuilderbigg{f}{\exists x_{0} \, \dots \exists x_{n-1} \, \Big[ f = \tuple{x_{0}, \dots, x_{n-1}} \land \Land_{i \,\in\, n} x_{i} \in A \Big]}
+    \end{equation*}
+    And finally, \cref{dfn:set-builder-notation-for-tuples} allows us to express the result using set-builder notation:
+    \begin{equation*}
+        A^{n} = \setbuilderbigg{\tuple{x_{0}, \dots, x_{n-1}}}{\Land_{i \,\in\, n} x_{i} \in A} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{dfn}[N-ary Product]
+    \label{dfn:n-ary-product}
+    Let \( A_{0},\dots,A_{n-1} \) be \( n \) sets where \( n \) is a non-zero natural number.
+    The \keyword{n-ary product} (or simply the \keyword{product}) of \( A_{0},\dots,A_{n-1} \)
+    is the set \( \prod \tuple{A_{0}, \dots, A_{n-1}} \).
+\end{dfn}
+
+\begin{rem}
+    Since \( \tuple{A_{0}, \dots, A_{n-1}} \) is an indexed system of sets with \( I = n \),
+    then by \cref{dfn:product-of-indexed-system-of-sets}, the n-ary product of \( A_{0},\dots,A_{n-1} \)
+    is given by,
+    \begin{equation*}
+        \prod \tuple{A_{0}, \dots, A_{n-1}} =
+        \setbuilderbigg{\function{f}{n}{\Union_{i \,\in\, n} A_{i}}}{\forall i \, \big( i \in n \implies f(i) \in A_{i} \big)}
+    \end{equation*}
+    Let \( f \in \prod \tuple{A_{0}, \dots, A_{n-1}} \) be arbitrary. Thus, \( \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \)
+    and \( \forall i \, \big( i \in n \implies f(i) \in A_{i} \big) \) by definition. Since \( f \) is a function on \( n \)
+    where \( n \in \naturalset \), \( f \) must be an n-tuple by \cref{dfn:n-tuples-basic-form}. Since \( n \neq 0 \), \( f \)
+    can be expressed in sequence notation by \cref{thm:every-non-zero-tuple-is-expressible-in-sequence-notation}.
+    Also, \( f(i) = x_{i} \in A_{i} \) for any \( i \in n \).
+    Thus,
+    \begin{equation*}
+        \exists x_{0} \, \dots \exists x_{n-1} \, \bigg[ f = \tuple{x_{0}, \dots, x_{n-1}} \land \Land_{i \,\in\, n} x_{i} \in A_{i} \bigg]
+    \end{equation*}
+    By \cref{dfn:set-builder-notation-for-tuples},
+    \begin{equation*}
+        f \in \prod \tuple{A_{0}, \dots, A_{n-1}} \implies f \in \setbuilderbigg{\tuple{x_{0}, \dots, x_{n-1}}}{\Land_{i \,\in\, n} x_{i} \in A_{i}}
+    \end{equation*}
+    Since the converse is also true (obvious), we can conclude that,
+    \begin{equation*}
+        \prod \tuple{A_{0}, \dots, A_{n-1}} = \setbuilderbigg{\tuple{x_{0}, \dots, x_{n-1}}}{\Land_{i \,\in\, n} x_{i} \in A_{i}}
+    \end{equation*}
+    In other words, the n-ary product of \( A_{0},\dots,A_{n-1} \) is the set of all n-tuples \( \tuple{x_{0}, \dots, x_{n-1}} \)
+    such that \( \Land_{i \,\in\, n} x_{i} \in A_{i} \).
+    Also, for the special case where \( \Land_{i \,\in\, n} A_{i} = A \) for some set \( A \), then,
+    \( \surjection{\tuple{A_{0}, \dots, A_{n-1}}}{n}{\mleft\{ A \mright\}} \),
+    in which case \( \prod \tuple{A_{0}, \dots, A_{n-1}} = A^{n} \) by \cref{thm:product-of-an-indexed-singleton}.
+\end{rem}
+
+\begin{thm}
+    \label{thm:n-ary-product-is-empty-if-and-only-if-one-of-the-sets-is-empty}
+    If \( A_{0},\dots,A_{n-1} \) are \( n \) sets where \( n \neq 0 \), then \( \prod \tuple{A_{0}, \dots, A_{n-1}} = \emptyset \)
+    if and only if \( \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \).
+    \begin{equation*}
+        \forall n\,{\in}\,\naturalset \,
+        \Big[ n \neq 0 \implies \forall A_{0} \, \dots \forall A_{n-1} \, \Big( \prod \tuple{A_{0}, \dots, A_{n-1}} = \emptyset \iff
+        \exists i\,{\in}\,n \, \mleft( A_{i} = \emptyset \mright)\Big) \Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A_{0},\dots,A_{n-1} \) be \( n \) sets for some \( n \neq 0 \). If \( \prod \tuple{A_{0}, \dots, A_{n-1}} = \emptyset \),
+    then we can derive the following biconditionals using \cref{dfn:n-ary-product},
+    \begin{align}
+        &\forall f \, \bigg[ f \notin \prod \tuple{A_{0}, \dots, A_{n-1}} \bigg] \notag \\
+        &\iff
+        \forall f \, \bigg[ \lnot \, \Big( \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \land \forall i \, \big( i \in n \implies f(i) \in A_{i} \big) \Big) \bigg]
+        \notag \\
+        &\iff
+        \forall f \, \bigg[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \lnot \, \forall i \, \big( i \in n \implies f(i) \in A_{i} \big) \bigg] \notag \\
+        &\iff
+        \forall f \, \bigg[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \bigg]
+        \label{eq:main-biconditional-for-empty-product}
+    \end{align}
+    Suppose that \( \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \).
+    Thus, \( A_{k} = \emptyset \) for some \( k \in n \).
+    Next, let \( f \) be an any set such that \( \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \).
+    Since \( k \in n \) and \( f \) is a function on \( n \), there must exist a \( y \in \Union_{i \,\in\, n} A_{i}\) such that \( y = f(k) \).
+    Since \( A_{k} = \emptyset \), it follows that \( f(k) \notin A_{k} \). In other words, \( \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \).
+    By the Deduction Theorem,
+    \begin{equation*}
+        \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big)
+    \end{equation*}
+    Since \( f \) is arbitrary, this can be generalized,
+    \begin{equation}
+        \label{eq:quantified-consequent-1}
+        \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{equation}
+    Since \eqref{eq:quantified-consequent-1} is derived from the assumption that \( \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \),
+    we conclude by the Deduction Theorem that,
+    \begin{equation}
+        \label{eq:at-least-one-empty-Ai-implies-empty-product}
+        \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \implies 
+        \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{equation}
+    To prove the converse, we suppose \( \lnot \, \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \), which is logically equivalent to,
+    \begin{equation*}
+        \forall i\,{\in}\,n \, \big( A_{i} \neq \emptyset \big)
+    \end{equation*}
+    Since each set \( A_{0},\dots,A_{n-1} \) contains at least one element,
+    it is possible to construct an n-tuple \( f = \tuple{a_{0}, \dots, a_{n-1}} \) where \( \Land_{i \,\in\, n} a_{i} \in A_{i} \).
+    From the definition of tuples, it is clear that,
+    \begin{equation*}
+        \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \land \forall i \, \big( i \in n \implies f(i) \in A_{i} \big)
+    \end{equation*}
+    which is logically equivalent to,
+    \begin{align*}
+        &\function{f}{n}{\Union_{i \,\in\, n} A_{i}} \land \lnot \, \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \\
+        &\iff 
+        \lnot \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{align*}
+    By Existential Generalization, this becomes,
+    \begin{align}
+        &\exists f \, \lnot \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big] \notag \\
+        &\iff 
+        \lnot \, \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+        \label{eq:quantified-consequent-2}
+    \end{align}
+    Since \eqref{eq:quantified-consequent-2} is derived from the assumption that \( \lnot \, \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \), we conclude
+    by the Deduction Theorem that,
+    \begin{equation*}
+        \lnot \, \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big)
+        \implies \lnot \, \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{equation*}
+    By contraposition, this is logically equivalent to,
+    \begin{equation}
+        \label{eq:empty-product-implies-at-least-one-empty-Ai}
+        \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+        \implies \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big)
+    \end{equation}
+    Having established both \eqref{eq:at-least-one-empty-Ai-implies-empty-product} and \eqref{eq:empty-product-implies-at-least-one-empty-Ai},
+    we can conclude the biconditional,
+    \begin{equation}
+        \label{eq:at-least-one-empty-Ai-and-empty-product-biconditional}
+        \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big)
+        \iff 
+        \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{equation}
+    Combining \eqref{eq:main-biconditional-for-empty-product} and \eqref{eq:at-least-one-empty-Ai-and-empty-product-biconditional}, we have,
+    \begin{equation*}
+        \Big( \prod \tuple{A_{0}, \dots, A_{n-1}} = \emptyset \Big)
+        \iff 
+        \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
+    \end{equation*}
+    Since \( n \) and \( A_{0},\dots,A_{n-1} \) are arbitrary, the theorem follows immediately from Universal Generalization.
+\end{proof}
