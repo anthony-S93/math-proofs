@@ -696,7 +696,7 @@ we now turn to an immediate application of the natural numbers.
     we conclude by the Deduction Theorem that,
     \begin{equation}
         \label{eq:at-least-one-empty-Ai-implies-empty-product}
-        \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \implies 
+        \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \implies
         \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
     \end{equation}
     To prove the converse, we suppose \( \lnot \, \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big) \), which is logically equivalent to,
@@ -712,13 +712,13 @@ we now turn to an immediate application of the natural numbers.
     which is logically equivalent to,
     \begin{align*}
         &\function{f}{n}{\Union_{i \,\in\, n} A_{i}} \land \lnot \, \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \\
-        &\iff 
+        &\iff
         \lnot \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
     \end{align*}
     By Existential Generalization, this becomes,
     \begin{align}
         &\exists f \, \lnot \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big] \notag \\
-        &\iff 
+        &\iff
         \lnot \, \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
         \label{eq:quantified-consequent-2}
     \end{align}
@@ -739,13 +739,13 @@ we now turn to an immediate application of the natural numbers.
     \begin{equation}
         \label{eq:at-least-one-empty-Ai-and-empty-product-biconditional}
         \exists i\,{\in}\,n \, \big( A_{i} = \emptyset \big)
-        \iff 
+        \iff
         \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
     \end{equation}
     Combining \eqref{eq:main-biconditional-for-empty-product} and \eqref{eq:at-least-one-empty-Ai-and-empty-product-biconditional}, we have,
     \begin{equation*}
         \Big( \prod \tuple{A_{0}, \dots, A_{n-1}} = \emptyset \Big)
-        \iff 
+        \iff
         \forall f \, \Big[ \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \implies \exists i \, \big( i \in n \land f(i) \notin A_{i} \big) \Big]
     \end{equation*}
     Since \( n \) and \( A_{0},\dots,A_{n-1} \) are arbitrary, the theorem follows immediately from Universal Generalization.
