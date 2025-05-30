@@ -2551,6 +2551,32 @@ We will now prove some theorems involving indexed systems of sets.
 \end{proof}
 
 \begin{thm}
+    \label{thm:the-exponentiation-of-the-empty-set}
+    For any set \( A \),
+    \begin{equation*}
+        \emptyset^{A} =
+        \begin{cases}
+            \mleft\{ \emptyset \mright\}  & A = \emptyset \\
+            \,\,\,\emptyset               & A \neq \emptyset
+        \end{cases}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    If \( A = \emptyset \), then by \cref{dfn:set-exponentiation},
+    \begin{equation*}
+        \emptyset^\emptyset = \setbuilder{f}{\function{f}{\emptyset}{\emptyset}}
+    \end{equation*}
+    And by \cref{thm:f-is-a-function-with-empty-domain-and-empty-range-if-and-only-if-it-is-the-empty-set},
+    \( \function{f}{\emptyset}{\emptyset} \iff f = \emptyset \). Thus,
+    \begin{equation*}
+        \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\}
+    \end{equation*}
+    On the other hand, if \( A \neq \emptyset \), then \( \function{f}{A}{\emptyset} \) can never be satisfied
+    because \( A \neq \emptyset \) implies that \( \ran f \neq \emptyset \). Thus, \( \emptyset^{A} = \emptyset \).
+\end{proof}
+
+\begin{thm}
     \label{thm:existence-of-the-union-of-an-indexed-system-of-sets}
     If \surjection{S}{I}{R} is an indexed system of sets, then the union of \( S \) exists.
 \end{thm}
