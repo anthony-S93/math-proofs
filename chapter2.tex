@@ -1799,6 +1799,42 @@ Partial functions can also be surjections, injections, or bijections, which lead
     establish the required biconditional.
 \end{proof}
 
+\begin{thm}
+    \label{thm:f-is-a-function-with-empty-domain-and-empty-range-if-and-only-if-it-is-the-empty-set}
+    For any set \( f \), \( \function{f}{\emptyset}{\emptyset} \) if and only if \( f = \emptyset \).
+    \begin{equation*}
+        \forall f \, \Big[ \function{f}{\emptyset}{\emptyset} \iff f = \emptyset \Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be a set such that \( \function{f}{\emptyset}{\emptyset} \). By \cref{thm:full-definition-of-the-arrow-notation},
+    \begin{equation}
+        \label{eq:any-element-of-f-must-be-an-ordered-pair-from-empty-and-empty}
+        \forall x \, \Big[ x \in f \implies \exists a,b \, \big( x = \orderedpair{a}{b} \land a \in \emptyset \land b \in \emptyset \big) \Big]
+    \end{equation}
+    Let \( f \) be an arbitrary object.
+    First, suppose that \( f \neq \emptyset \). This means that there exists an \( x_{0} \) such that \( x_{0} \in f \).
+    But by \eqref{eq:any-element-of-f-must-be-an-ordered-pair-from-empty-and-empty}, this would mean that \( x_{0} = \orderedpair{\alpha}{\beta} \)
+    for some \( \alpha \in \emptyset \) and \( \beta \in \emptyset \), which is an obvious contradiction because \( \emptyset \) cannot contain
+    any elements by definition. Thus, the supposition that \( f \neq \emptyset \) must be false by Reductio ad Absurdum.
+    \begin{equation}
+        \label{eq:f-is-a-function-with-empty-domain-and-empty-range-implies-f-equals-empty}
+        \therefore \, \function{f}{\emptyset}{\emptyset} \implies f = \emptyset
+    \end{equation}
+    Conversely, suppose that \( f = \emptyset \). But if \( f = \emptyset \), then both conjuncts in \cref{thm:full-definition-of-the-arrow-notation}
+    are vacuously true so that \( \function{f}{\emptyset}{\emptyset} \) is also true.
+    \begin{equation}
+        \label{eq:f-equals-empty-implies-f-is-a-function-with-empty-domain-and-empty-range}
+        f = \emptyset \implies \function{f}{\emptyset}{\emptyset}
+    \end{equation}
+    Having derived both \eqref{eq:f-is-a-function-with-empty-domain-and-empty-range-implies-f-equals-empty} and
+    \eqref{eq:f-equals-empty-implies-f-is-a-function-with-empty-domain-and-empty-range}, we can conclude,
+    \begin{equation*}
+        \function{f}{\emptyset}{\emptyset} \iff f = \emptyset \qedhere
+    \end{equation*}
+\end{proof}
+
 \begin{thm}[Equality]
     \label{thm:equality-of-functions}
     If \( f \) and \( g \) are functions, then \( f = g \) if and only if,
@@ -2413,6 +2449,58 @@ Partial functions can also be surjections, injections, or bijections, which lead
 \vspace{0.1cm}
 \noindent
 We will now prove some theorems involving indexed systems of sets.
+
+\begin{thm}
+    \label{thm:product-of-an-empty-set}
+    \( \prod \emptyset = \mleft\{ \emptyset \mright\} \).
+\end{thm}
+
+\begin{proof}
+    Since the product is only defined in the context of an indexed system of sets, we must treat \( \emptyset \)
+    as an indexed system of sets. But there is only one possible indexed system of sets that is equal to \( \emptyset \):
+    \begin{equation*}
+        \surjection{S}{\emptyset}{\emptyset}
+    \end{equation*}
+    Thus, \( \prod \emptyset = \prod S \), which is the set,
+    \begin{equation*}
+        \setbuilderbigg{\function{f}{\emptyset}{\emptyset}}{\forall i \, \Big[ i \in \emptyset \implies
+        \forall y \, \Big( \orderedpair{i}{y} \in f \implies \forall z \, \big[ \orderedpair{i}{z} \in S \implies y \in z \big] \Big)\Big]}
+    \end{equation*}
+    By \cref{thm:f-is-a-function-with-empty-domain-and-empty-range-if-and-only-if-it-is-the-empty-set}, the only set that can belong to
+    \( \prod S \) is \( \emptyset \).
+    \begin{equation*}
+        \therefore \, \prod \emptyset = \mleft\{ \emptyset \mright\} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:any-indexed-system-of-sets-with-empty-domain-must-have-empty-range-and-vice-versa}
+    If \surjection{S}{I}{R} is an indexed system of sets, then \( I = \emptyset \iff R = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \surjection{S}{I}{R} be an indexed system of sets. Suppose that \( I = \emptyset \). By
+    \cref{dfn:surjection},
+    \begin{equation}
+        \label{eq:R-equals-ran-S}
+        \forall y \, \Big[ y \in R \iff \exists x \, \big( x \in I \land \orderedpair{x}{y} \in S \big) \Big]
+    \end{equation}
+    If \( R \neq \emptyset \), then there must exist some \( y_{0} \in R \). But by \eqref{eq:R-equals-ran-S},
+    this would mean that \( \orderedpair{x_{0}}{y_{0}} \) for some \( x_{0} \in I \), which contradicts the fact that
+    \( I = \emptyset \). Thus, \( R = \emptyset \) by Reductio ad Absurdum.
+    \begin{equation*}
+        \therefore \, I = \emptyset \implies R = \emptyset
+    \end{equation*}
+    To prove the converse, suppose that \( R = \emptyset \). If \( I \neq \emptyset \), then
+    there must exists some \( x_{0} \in I \). But \( I = \dom S \), so necessarily \( x_{0} \in \dom S \).
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs}, this means that there exists some \( y_{0} \in \ran S = R \)
+    such that \( \orderedpair{x_{0}}{y_{0}} \in S \). This contradicts the initial supposition that \( R = \emptyset \).
+    Again, by Reductio ad Absurdum, \( I \) must be empty.
+    \begin{equation*}
+        \therefore \, R = \emptyset \implies I = \emptyset \qedhere
+    \end{equation*}
+\end{proof}
+
 \begin{thm}
     \label{thm:any-system-of-sets-can-be-indexed}
     If \( A \) is a system of sets, then there exists a function \( S \) such that
