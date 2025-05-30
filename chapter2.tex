@@ -1491,6 +1491,57 @@ obeys certain laws.
     We also say that \( f \) is an \keyword{extension} of \restrictedfunction{f}{A}.
 \end{dfn}
 
+\begin{dfn}[Partial Function]
+    \label{dfn:partial-function}
+    A function \( f \) is a \keyword{partial function} from \( A \) to \( B \) if and only if
+    there exists some \( D \subseteq A \) such that \( f \) is a function on \( D \) into \( B \).
+    The notation \( \partialfunction{f}{A}{B} \) reads, ``\( f \) is a partial function from \( A \) to \( B \).''
+    \begin{equation*}
+        \forall f \, \forall A \, \forall B \,
+        \Big[ \partialfunction{f}{A}{B} \iff \exists D \, \big( D \subseteq A \land \function{f}{D}{B} \big) \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Obviously, \( \function{f}{A}{B} \implies \partialfunction{f}{A}{B} \), though the converse isn't true.
+\end{rem}
+
+\vspace{0.2cm}
+\noindent
+Partial functions can also be surjections, injections, or bijections, which leads us to the following definitions.
+
+\begin{dfn}[Partial Injection]
+    \label{dfn:partial-injection}
+    A function \( f \) is a \keyword{partial injection} from \( A \) to \( B \) if and only if there exists some \( D \subseteq A \)
+    such that \( f \) is an injection from \( D \) to \( B \). The notation \( \partialinjection{f}{A}{B} \) reads,
+    ``\( f \) is a partial injection from \( A \) to \( B \).''
+    \begin{equation*}
+        \forall f \, \forall A \, \forall B \, \Big[ \partialinjection{f}{A}{B} \iff \exists D \, \big( D \subseteq A \land \injection{f}{D}{B} \big) \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Partial Surjection]
+    \label{dfn:partial-surjection}
+    A function \( f \) is a \keyword{partial surjection} from \( A \) to \( B \) if and only if there exists some \( D \subseteq A \)
+    such that \( f \) is a surjection from \( D \) to \( B \). The notation \( \partialsurjection{f}{A}{B} \) reads,
+    ``\( f \) is a partial surjection from \( A \) to \( B \).''
+    \begin{equation*}
+        \forall f \, \forall A \, \forall B \, \Big[ \partialsurjection{f}{A}{B} \iff \exists D \, \big( D \subseteq A \land \surjection{f}{D}{B} \big) \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Partial Bijection]
+    \label{dfn:partial-bijection}
+    A function \( f \) is a \keyword{partial bijection} from \( A \) to \( B \)
+    if and only if there exists some \( D \subseteq A \)
+    such that \( f \) is a bijection between \( D \) and \( B \).
+    The notation \( \partialbijection{f}{A}{B} \) reads,
+    ``\( f \) is a partial bijection from \( A \) to \( B \)''
+    \begin{equation*}
+        \forall f \, \forall A \, \forall B \, \Big[ \partialbijection{f}{A}{B} \iff \exists D \, \big( D \subseteq A \land \bijection{f}{D}{B} \big) \Big]
+    \end{equation*}
+\end{dfn}
+
 \begin{dfn}[System of Functions]
     \label{dfn:system-of-functions}
     A non-empty set \( F \) is called a \keyword{system} or \keyword{family} of functions
