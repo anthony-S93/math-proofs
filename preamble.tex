@@ -8,6 +8,7 @@
 \usepackage[a4paper,left=2.5cm,right=2.5cm,top=2cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
 \usepackage[inline]{enumitem}
 \usepackage{gensymb}
+\usepackage{fancybox}
 
 % Document-wide configurations
 \setcounter{chapter}{-1}
@@ -28,3 +29,13 @@
 \crefname{lem}{Lemma}{Lemmas}
 \crefname{dfn}{Definition}{Definitions}
 \crefname{cor}{Corollary}{Corollaries}
+
+\newcommand{\keyconcept}[1]{
+    \begin{center}
+        \setlength{\fboxsep}{0.3cm}
+        \shadowbox{
+            \begin{minipage}{0.9\textwidth}
+                #1
+            \end{minipage}}
+    \end{center}
+}
