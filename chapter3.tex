@@ -750,3 +750,1004 @@ we now turn to an immediate application of the natural numbers.
     \end{equation*}
     Since \( n \) and \( A_{0},\dots,A_{n-1} \) are arbitrary, the theorem follows immediately from Universal Generalization.
 \end{proof}
+
+\begin{thm}
+    \label{thm:a-bijection-exists-between-A-and-A1}
+    For any set \( A \), a bijection exists between \( A \) and \( A^{1} \).
+    \begin{equation*}
+        \forall A \, \exists h \, \Big[ \bijection{h}{A}{A^{1}} \Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be any set. Let the set \( h \) be defined as,
+    \begin{equation}
+        \label{eq:define-a-function-from-A-to-A1}
+        h = \setbuilderBig{\orderedpair{a}{f}}{a \in A \land f = \mleft\{ \orderedpair{\emptyset}{a} \mright\}}
+    \end{equation}
+    We can prove that \( \bijection{h}{A}{A^{1}} \).
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( \alpha \), \( f_{1} \), and \( f_{2} \) be objects such that \( \orderedpair{\alpha}{f_{1}} \in h \)
+    and \( \orderedpair{\alpha}{f_{2}} \in h \). By \eqref{eq:define-a-function-from-A-to-A1}, we have,
+    \begin{gather*}
+        \alpha \in A \land f_{1} = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\}\\
+        \alpha \in A \land f_{2} = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\}
+    \end{gather*}
+    Obviously, \( f_{1} = f_{2} \), so by \cref{dfn:function-basic}, \( h \) is indeed a function. Next, we
+    prove that \( \dom h = A \).
+    Let \( \alpha \in A \) be arbitrary. Let \( f = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\} \).
+    Then, by \eqref{eq:define-a-function-from-A-to-A1}, clearly \( \orderedpair{\alpha}{f} \in h \). So by
+    \cref{dfn:domain-of-a-set-of-ordered-pairs}, it follows that \( \alpha \in \dom h \). Conversely,
+    suppose that \( \alpha \in \dom h \) for some \( \alpha \). Again, \( a \in A \) by \eqref{eq:define-a-function-from-A-to-A1}.
+    By Universal Generalization and the \nameref{axm:axiom-of-extensionality}, we conclude that \( \dom h = A \).
+
+    \vspace{0.2cm}
+    \noindent
+    Next, we prove that \( \ran h = A^{1} \). Let \( f \in \ran h \) be arbitrary. By \cref{dfn:range-of-a-set-of-ordered-pairs},
+    there must exists an \( \alpha \) such that \( \orderedpair{\alpha}{f} \in h \). And by \eqref{eq:define-a-function-from-A-to-A1},
+    this can only be true if and only if \( \alpha \in A \land f = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\} \).
+    Since \( 1 = \mleft\{ \emptyset \mright\} \) and \( \alpha \in A \), it is clear that \( \function{f}{1}{A} \).
+    By \cref{dfn:set-exponentiation}, this implies \( f \in A^{1} \).
+    Conversely, let \( f \in A^{1} \) be arbitrary. Thus, \( \function{f}{1}{A} \) by \cref{dfn:set-exponentiation}.
+    This means that \( f \) is a function with \( \dom f = 1 \) and \( \ran f \subseteq A \).
+    Since \( \dom f = 1 = \mleft\{ \emptyset \mright\} \neq \emptyset \), it follows that \( \ran f \neq \emptyset \).
+    Thus, there exists an \( \alpha \in A \) such that \( \orderedpair{\emptyset}{\alpha} \in f \).
+    Since \( \emptyset \) is the only element of \( \dom f \), \( \orderedpair{\emptyset}{\alpha} \) must also be
+    the only element of \( f \). In other words, \( f = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\} \) for some
+    \( \alpha \in A \). And by \eqref{eq:define-a-function-from-A-to-A1}, clearly \( \orderedpair{\alpha}{f} \in h \),
+    which means that \( f \in \ran h \). By Universal Generalization and the \nameref{axm:axiom-of-extensionality},
+    it follows that \( \ran h = A^{1} \).
+
+    \vspace{0.2cm}
+    \noindent
+    So far, it has been proven that \( h \) is a function with \( \dom h = A \) and \( \ran h = A^{1} \). In other words,
+    \begin{equation*}
+        \surjection{h}{A}{A^{1}}
+    \end{equation*}
+    To prove that \( h \) is a bijection, it remains to show that \( h \) is injective. Let \( \alpha \), \( \beta \) and \( f \)
+    be arbitrary objects such that \( \orderedpair{\alpha}{f} \in h \) and \( \orderedpair{\beta}{f} \in h \).
+    By \eqref{eq:define-a-function-from-A-to-A1}, this means that,
+    \begin{equation*}
+        f = \mleft\{ \orderedpair{\emptyset}{\alpha} \mright\} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\}
+    \end{equation*}
+    Thus, \( \orderedpair{\emptyset}{\alpha} = \orderedpair{\emptyset}{\beta} \). By \cref{thm:equality-of-ordered-pairs},
+    it follows that \( \alpha = \beta \), so \( h \) is necessarily injective.
+    \begin{equation*}
+        \therefore \, \surjection{h}{A}{A^{1}} \land \injection{h}{A}{A^{1}} \iff \bijection{h}{A}{A^{1}} \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{thm:a-bijection-exists-between-A-times-A-and-A2}
+    For any set \( A \), a bijection exists between \( A \times A \) and \( A^{2} \).
+    \begin{equation*}
+        \forall A \, \exists h \, \Big[ \bijection{h}{A \times A}{A^{2}} \Big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. Let the set \( h \) be defined as,
+    \begin{equation}
+        \label{eq:define-a-function-from-A-times-A-to-A2}
+        h = \setbuilderBig{\orderedpair{x}{f}}{\exists a \, \exists b \,
+        \big[ a \in A \land b \in A \land x = \orderedpair{a}{b}
+        \land
+        f = \mleft\{ \orderedpair{0}{a}, \orderedpair{1}{b} \mright\} \big]}
+    \end{equation}
+    We can prove that \( \bijection{h}{A \times A}{A^{2}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x \), \( f_{1} \), and \( f_{2} \) be arbitrary objects such that \( \orderedpair{x}{f_{1}} \in h \)
+    and \( \orderedpair{x}{f_{2}} \in h \). By \eqref{eq:define-a-function-from-A-times-A-to-A2}, we have for some
+    \( \alpha,\beta \in A \):
+    \begin{align*}
+        x &= \orderedpair{\alpha}{\beta} \\
+        f_{1} &= \big\{ \orderedpair{0}{\alpha}, \orderedpair{1}{\beta} \big\} \\
+        f_{2} &= \big\{ \orderedpair{0}{\alpha}, \orderedpair{1}{\beta} \big\}
+    \end{align*}
+    Clearly, \( f_{1} = f_{2}\). So \( h \) must be a function by \cref{dfn:function-basic}.
+
+    \vspace{0.3cm}
+    \noindent
+    We proceed to prove that \( \dom h = A \times A \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x_{0} \in A \times A \) be arbitrary. Thus, \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha,\beta \in A \).
+    Let \( f \) be the set \( \big\{ \orderedpair{0}{\alpha}, \orderedpair{1}{\beta} \big\} \).
+    By \eqref{eq:define-a-function-from-A-times-A-to-A2}, it follows that \( \orderedpair{x_{0}}{f} \in h \) so that \( x_{0} \in \dom h \).
+    Thus, \( A \times A \subseteq \dom h \).
+    Conversely, let \( x_{0} \in \dom h \). By \eqref{eq:define-a-function-from-A-times-A-to-A2}, this means that \( \orderedpair{x_{0}}{f} \in h \)
+    for some \( f \) where \( x_{0} = \orderedpair{\alpha}{\beta} \) and \( f = \big\{ \orderedpair{0}{\alpha}, \orderedpair{1}{\beta} \big\} \) for
+    some \( \alpha,\beta \in A \).
+    Since \( x_{0} = \orderedpair{\alpha}{\beta} \) and \( \alpha,\beta \in A \), it follows that \( x_{0} \in A \times A \).
+    Therefore, \( \dom h \subseteq A \times A \). Since \( \dom h \subseteq A \times A \) and \( A \times A \subseteq \dom h \) are both true,
+    it follows from \cref{thm:set-equality-in-terms-of-subsets} that \( \dom h = A \times A \).
+
+    \vspace{0.3cm}
+    \noindent
+    To prove that \( \ran h = A^{2} \), we let \( f \in \ran h \) be arbitrary.
+    By \cref{dfn:range-of-a-set-of-ordered-pairs}, it it follows that \( \orderedpair{x_{0}}{f} \in h \)
+    for some \( x_{0} \) where \( x_{0} = \orderedpair{\alpha}{\beta} \) and \( f = \big\{ \orderedpair{0}{\alpha},\orderedpair{1}{\beta} \big\} \)
+    for some \( \alpha,\beta \in A \).
+    \( f \) is clearly a function with \( \dom f = \mleft\{ 0,1 \mright\} \) and \( \ran f = \mleft\{ \alpha, \beta \mright\} \).
+    And since \( 2 = \mleft\{ 0,1 \mright\} \) and \( \alpha,\beta \in A \), necessarily \( \dom f = 2 \) and \( \ran f \subseteq A \).
+    Thus, \( \function{f}{2}{A} \) by \cref{dfn:arrow-notation} and \( f \in A^{2} \) by \cref{dfn:set-exponentiation}. This means that for any
+    arbitrary \( f \),
+    \begin{equation*}
+        f \in \ran h \implies f \in A^{2}
+    \end{equation*}
+    Conversely, if \( f \) is any arbitrary element of \( A^{2} \), then \( \function{f}{2}{A} \) by \cref{dfn:set-exponentiation}.
+    Since \( \dom f = 2 \) and \( 2 = \mleft\{ 0,1 \mright\} \), it follows that \( f = \big\{ \orderedpair{0}{\alpha},\orderedpair{1}{\beta} \big\} \)
+    for some \( \alpha,\beta \in A \) because \( \ran f \subseteq A \). If we now let \( x_{0} = \orderedpair{\alpha}{\beta} \), then
+    \( \orderedpair{x_{0}}{f} \) must belong to \( h \) by \eqref{eq:define-a-function-from-A-times-A-to-A2}.
+    This means that there exists an \( x_{0} \) such that \( \orderedpair{x_{0}}{f} \in h \). By \cref{dfn:range-of-a-set-of-ordered-pairs},
+    \( f \) must them belong to \( \ran h \). In other words, for any arbitrary \( f \),
+    \begin{equation*}
+        f \in A^{2} \implies f \in \ran h
+    \end{equation*}
+    Having established the inclusion in both directions, we can now conclude that \( \ran h = A^{2} \). Thus, \( h \) is a function with
+    \( \dom h = A \times A \) and \( \ran h = A^{2} \). In other words,
+    \begin{equation*}
+        \surjection{h}{A \times A}{A^{2}}
+    \end{equation*}
+    To prove that \( h \) is a bijection, it remains to show that \( h \) is injective. Let \( x_{1} \), \( x_{2} \) and \( f \) be
+    arbitrary objects such that \( \orderedpair{x_{1}}{f} \in h \) and \( \orderedpair{x_{2}}{f} \in h \).
+    From \eqref{eq:define-a-function-from-A-times-A-to-A2}, we infer that,
+    \begin{equation*}
+        \begin{aligned}
+            x_{1} = \orderedpair{a_{1}}{b_{1}} \land f = \big\{ \orderedpair{0}{a_{1}},\orderedpair{1}{b_{1}} \big\}&\\
+            x_{2} = \orderedpair{a_{2}}{b_{2}} \land f = \big\{ \orderedpair{0}{a_{2}},\orderedpair{1}{b_{2}} \big\}&
+        \end{aligned}
+        \text{}
+        \begin{aligned}
+            &\quad\text{for some \( a_{1},b_{1} \in A \)}\\
+            &\quad\text{for some \( a_{2},b_{2} \in A \)}
+        \end{aligned}
+    \end{equation*}
+    Clearly, \( f = \big\{ \orderedpair{0}{a_{1}},\orderedpair{1}{b_{1}} \big\} = \big\{ \orderedpair{0}{a_{2}},\orderedpair{1}{b_{2}} \big\}\).
+    The \nameref{axm:axiom-of-extensionality} guarantees that the follows statement is true:
+    \begin{equation*}
+        \orderedpair{0}{a_{1}} = \orderedpair{0}{a_{2}} \lor
+        \orderedpair{0}{a_{1}} = \orderedpair{1}{b_{2}}
+    \end{equation*}
+    Since \( 0 \neq 1 \), the second disjunct must be false.
+    Thus, by Disjunctive Syllogism, we conclude that \( \orderedpair{0}{a_{1}} = \orderedpair{0}{a_{2}}\).
+    By \cref{thm:equality-of-ordered-pairs}, this implies that \( a_{1} = a_{2} \). Similarly, we have
+    \( \orderedpair{1}{b_{1}} = \orderedpair{1}{b_{2}} \), which in turns implies \( b_{1} = b_{2} \).
+    And with \( a_{1} = a_{2} \) and \( b_{1} = b_{2} \) both being true,
+    it follows that \( x_{1} = \orderedpair{a_{1}}{b_{1}} = \orderedpair{a_{2}}{b_{2}} = x_{2} \).
+    Thus, \( h \) is indeed injective by \cref{dfn:injection}.
+\end{proof}
+
+\begin{rem}
+    The significance of \cref{thm:a-bijection-exists-between-A-and-A1,thm:a-bijection-exists-between-A-times-A-and-A2}
+    will only become clear in the context of isomorphisms.
+\end{rem}
+
+\section{Relations}
+Select any two pieces from a chess set. Now try to describe each piece \emph{in relation} to the other.
+What immediately comes to mind?
+We might note, for instance, that one of the selected pieces is physically taller than the other.
+Their colors may also be different, with one having a brighter hue than the other. Physical characteristics aside,
+the pieces may also differ in material worth as it pertains to the game of chess---e.g., a Queen is worth more than a Pawn, a Rook
+more than a Bishop, etc. In all of these examples, the properties of the selected pieces were compared to determine whether
+they satisfy a given condition. If the condition is met, then we make an assertion along the lines of ``chess piece \( A \) has an
+\( X \) relationship with chess piece \( B \)'', \( X \) being a placeholder for ``is taller than,'' ``has a brighter
+color than,'' and ``is more valuable than'' respectively.
+The symbol `\( X \)' denotes a \emph{relation} between two objects,
+and the proposition ``\( A \) has an \( X \) relationship with \( B \)'' is usually abbreviated as \( X(A,B) \) or \( AXB \).
+
+\keyconcept{
+    A \emph{relation} is a symbolic representation of a condition that an object(s) can satisfy. It is a \emph{predicate}.
+}
+
+\noindent
+A relation can involve any number of objects, of course.
+In general, the arity of the predicate corresponds to the number of objects involved in that relation.
+For example, the ``is taller than'' relationship involves exactly two objects,
+so a binary predicate can be used to represent it.
+
+\vspace{0.3cm}
+\noindent
+The order in which the objects are specified to the predicate also matters.
+As in, if \( \alpha \) and \( \beta \) are two distinct
+objects in the universe of discourse and \( \varphi \) is a binary predicate,
+then \( \varphi(\alpha, \beta) \) does not necessarily imply \( \varphi(\beta,\alpha) \).
+For example, if \( \varphi \) represents the ``is taller than'' relationship and \( \varphi(\alpha,\beta) \)
+is true, then \( \varphi(\beta,\alpha) \) must be false by virtue of the semantics of the ``is taller than''
+relationship.
+
+\vspace{0.3cm}
+\noindent
+So far, so good.
+Conceptually, we know that a relation is synonymous to a predicate.
+But how can we express this in terms of sets? To answer
+this question, let us work through another example.
+Consider a set \( S \) of all students in a classroom.
+Suppose we want a set \( R \) that describes the
+relationship ``\( x \) is taller than \( y \).''\,What information should
+\( R \) contain so that it can serve as an adequate representation of the relation
+``\( x \) is taller than \( y \)?'' The answer should be obvious. The set
+\( R \) must be a list of all the student pairs \( \tuple{x,y} \)
+in which student \( x \) is physically taller than student \( y \)!
+
+\vspace{0.3cm}
+\noindent
+In general, for a set \( R \) to represent a relation between \( n \) objects from a set,
+each element of \( R \) must be an ordered list of \( n \) objects that satisfy the given relation.
+In other words, each element of \( R \) must be a mathematical construct that implements
+the notion of an ordered list of \( n \) objects. But such a mathematical construct has already been defined---the ordered n-tuples.
+Therefore, if \( R \) represents a relation between \( n \) objects from a set \( A \), then \( R \) is
+a set of n-tuples \( \tuple{a_{0}, \dots, a_{n-1}} \) formed from the elements of \( A \), which
+leads us to the following definition.
+
+\begin{dfn}[N-Ary Relation]
+    \label{dfn:n-ary-relation-on-a-set}
+    For any set \( A \), \( R \) is an \keyword{n-ary relation} on \( A \) if and only if \( R \subseteq A^{n} \).
+\end{dfn}
+
+\begin{rem}
+    An n-ary relation is always a subset of \( A^{n} \) because by
+    \cref{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation},
+    \( A^{n} \) is the set of all possible n-tuples that can be formed using the elements of \( A \).
+\end{rem}
+
+\subsection{Binary Relations}
+Having precisely defined n-ary relations, we now turn to the most common type of relation in mathematics---binary relations.
+\begin{dfn}
+    \label{dfn:binary-relation-on-a-set}
+    For any set \( A \), \( R \) is a \keyword{binary relation} on \( A \) if and only if
+    \( R \subseteq A^{2} \).
+\end{dfn}
+
+\begin{dfn}[Identity Relation]
+    \label{dfn:identity-relation}
+    For any set \( A \), the \keyword{identity relation} on \( A \) is a binary relation defined as,
+    \begin{equation*}
+        \identityrel{A} = \setbuilderbig{\tuple{x,y}}{x \in A \land y \in A \land x = y}
+    \end{equation*}
+\end{dfn}
+\noindent
+Here are some important properties that are often used to classify binary relations.
+
+\begin{dfn}[Reflexivity]
+    \label{dfn:reflexivity-of-binary-relations}
+    If \( R \) is a binary relation on \( A \), then \( R \) is \keyword{reflexive}
+    if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \Big[ \tuple{x,x} \in R \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Symmetry]
+    \label{dfn:symmetry-of-binary-relations}
+    If \( R \) is a binary relation on \( A \), then \( R \) is \keyword{symmetric}
+    if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \tuple{x,y} \in R \implies \tuple{y,x} \in R \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Anti-Symmetry]
+    \label{dfn:anti-symmetry-of-binary-relations}
+    If \( R \) is a binary relation on \( A \), then \( R \) is \keyword{anti-symmetric} if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \tuple{x,y} \in R \land \tuple{y,x} \in R \implies x = y \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Asymmetry]
+    \label{dfn:asymmetry-of-binary-relations}
+    If \( R \) is a binary relation on \( A \), then \( R \) is \keyword{asymmetric} if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \tuple{x,y} \in R \implies \tuple{y,x} \notin R \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    The difference between \keyword{anti-symmetry} and \keyword{asymmetry} lies in the fact that \( \tuple{x,x} \in R \)
+    is possible in the former but impossible in the latter.
+\end{rem}
+
+\begin{dfn}[Transitivity]
+    \label{dfn:transitivity-of-binary-relations}
+    If \( R \) is a binary relation on \( A \), then \( R \) is \keyword{transitive} if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \forall z\,{\in}\,A \,
+        \Big[ \orderedpair{x}{y} \in R \land \orderedpair{y}{z} \in R \implies \orderedpair{x}{z} \in R \Big]
+    \end{equation*}
+\end{dfn}
+
+\subsubsection{Equivalence Relations}
+There are numerous situations in which it is convenient and even advantageous to
+ignore the differences between two objects and treat them as though they are one
+and the same even though they are, in fact, distinct objects.
+For example, imagine trying to explain to a novice how the Knights move in the game of chess.
+Is there a point in providing a different explanation for how the white Knight moves
+versus how the black Knight moves?
+Obviously not.
+After all, the color of a chess piece has no bearing whatsoever on its designated movement.
+Therefore, for the purpose of explaining the rules of chess to a novice player, the differences
+between a white Knight and a black Knight can be disregarded because them are irrelevant.
+There are many other examples to this effect:
+\begin{itemize}[noitemsep]
+    \item \( \frac{1}{2} \) and \( \frac{3}{6} \) can be treated as the same fraction even though they are denoted by different symbols.
+    \item In a card game, the same rules apply regardless of the pack of cards being used; the King of Spades from one pack is no different
+          from the King of Spades from another pack.
+\end{itemize}
+In general, when we say that ``\( A \) is equivalent to \( B \),'' what we're really saying is that
+\( A \) and \( B \) are \emph{effectively equal} to one another. More precisely, it means that \( A \)
+and \( B \) can be treated as though they are the same object even though they may, in fact, be different objects.
+We also note the following:
+\vspace{0cm}
+\begin{enumerate}[label=(\arabic*)]
+    \item \( A \) is equivalent to \( A \)
+    \item If \( A \) is equivalent to \( B \), then \( B \) must also be equivalent to \( A \)
+    \item If \( A \) is equivalent to \( B \) and \( B \) to \( C \), then \( A \) must be equivalent to \( C \)
+\end{enumerate}
+These properties arise from the meaning ascribed to the
+``is equivalent to'' relationship.
+Recall that ``\( A \) is equivalent to \( B \)'' means we are treating \( A \)
+and \( B \) as the same object while ignoring all potential differences between them.
+Another notable feature of the ``is equivalent to'' relationship is that it partitions
+a set into non-empty, pairwise disjoint sets.
+
+\vspace{0.3cm}
+\noindent
+The following definitions formalize the above discussion.
+
+\begin{dfn}[Equivalence Relation]
+    \label{dfn:equivalence-relation}
+    For any set \( A \), the set \( E \subseteq A^{2} \) is an \keyword{equivalence relation} on \( A \)
+    if and only if it is reflexive, symmetric, and transitive. Moreover, we say that \( x \) is equivalent to
+    \( y \) modulo \( E \) if and only if \( \tuple{x,y} \in E \).
+\end{dfn}
+
+\begin{dfn}[Equivalence Class]
+    \label{dfn:equivalence-class}
+    If \( E \subseteq A^{2} \) is an equivalence relation on \( A \) and \( \alpha \) is an element of \( A \),
+    then the \keyword{equivalence class} of \( \alpha \) modulo \( E \) is the set:
+    \begin{equation*}
+        \equivclass{\alpha}_{E} = \setbuilderbig{x \in A}{\tuple{x,\alpha} \in E}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    When the context makes it clear, we can use the notation \( a \equivrel b \) for \( \tuple{a,b} \in E \) and
+    \( \equivclass{\alpha} \) for \( \equivclass{\alpha}_{E} \).
+\end{rem}
+
+\begin{cor}
+    \label{thm:existence-of-equivalence-classes}
+    The equivalence class of \( \alpha \) exists for any \( \alpha \in A \) because \( E \subseteq A^{2} \) by definition.
+    As in,
+    \begin{equation*}
+        \forall x \, \Big[ \tuple{x,\alpha} \in E \implies x \in A \Big]
+    \end{equation*}
+\end{cor}
+
+\begin{cor}
+    \label{thm:equivalence-class-belongs-to-the-power-set}
+    For any \( \alpha \in A \), \( \equivclass{\alpha}_{E} \in \powerset{A} \).
+\end{cor}
+
+\vspace{0.2cm}
+\noindent
+Now that we have given a precise definition for equivalence relations, we can define other mathematical constructs
+in terms of it.
+
+\begin{dfn}[Quotient Set]
+    \label{dfn:quotient-set}
+    For any set \( A \) and any equivalence relation \( E \) on \( A \), the \keyword{quotient set} of \( A \) with respect to
+    \( E \) is defined as,
+    \begin{equation*}
+        A / E = \setbuilderbig{\equivclass{x}_{E}}{x \in A}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Since \( A / E \) is a division of \( A \) into partitions, the term \keyword{quotient} is appropriate.
+\end{rem}
+
+\begin{dfn}[Partition]
+    \label{dfn:partition-of-a-set}
+    A system of sets \( P \) is a \keyword{partition} of another set \( A \) if and only if the following
+    conditions hold:
+    \begin{enumerate}[label=(\alph*)]
+        \item \( \forall x\,{\in}\,P \, \big( x \neq \emptyset \big) \)
+        \item \( \forall x\,{\in}\,P \, \forall y\,{\in}\,P \, \big( x \neq y \implies x \intersect y = \emptyset \big) \)
+        \item \( \Union P = A \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+    \label{dfn:set-of-all-partitions-of-a-set-and-the-set-of-all-equivalence-relations-on-a-set}
+    For any set \( A \), we denote the set of all partitions of \( A \) as \partitions{A} and
+    the set of all equivalent relations on \( A \) as \( \equivrels{A} \).
+\end{dfn}
+
+\begin{dfn}[Class Invariance]
+    \label{dfn:class-invariance}
+    Let \( A \) be a set and \( E \) be an equivalence relation on \( A \).
+    If \( f \) is a function on \( A \), then \( f \) is \keyword{class invariant}
+    under \( E \) if and only if,
+    \begin{equation*}
+        \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \tuple{x,y} \in E \implies f(x) = f(y) \Big]
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    The term \keyword{class invariant} is apt because \( f \) is invariant for elements within the same
+    equivalence class; i.e., picking a different element from the same equivalence class will not alter the
+    function's value.
+\end{rem}
+
+\begin{dfn}[Equivalence Kernel]
+    \label{dfn:equivalence-kernel-of-a-function}
+    If \( f \) is a function, then the \keyword{equivalence kernel} of \( f \) is the equivalence relation
+    \( K \subseteq \mleft( \dom f \mright)^{2} \) such that,
+    \begin{equation*}
+        \forall x\,{\in}\,\dom f \, \forall y\,{\in}\,\dom f \, \Big[ \tuple{x,y} \in K \iff f(x) = f(y) \Big]
+    \end{equation*}
+\end{dfn}
+\noindent
+Here are some important theorems involving equivalence relations.
+
+\begin{thm}
+    \label{thm:existence-of-the-quotient-set}
+    For any set \( A \) and any equivalence relation \( E \) on \( A \), the quotient set \( A/E \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x) \coloneq \exists a\,{\in}\,A \, \big( x = \equivclass{a}_{E} \big)
+    \end{equation*}
+    Let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) is satisfied. That is,
+    \( x_{0} = \equivclass{a}_{E} \) for some \( a \in A \).
+    By \cref{thm:equivalence-class-belongs-to-the-power-set}, it follows that \( x_{0} \in \powerset{A} \).
+    \begin{equation*}
+        \therefore \, \forall x \, \big( \varphi(x) \implies x \in \powerset{A} \big)
+    \end{equation*}
+    By \cref{thm:sufficient-condition-for-unrestricted-comprehension}, the set
+    \( A / E = \setbuilderbig{\equivclass{x}_{E}}{x \in A} \) exists.
+\end{proof}
+
+\begin{thm}
+    \label{thm:existence-of-the-set-of-all-partitions}
+    For any set \( A \), \( \partitions{A} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as,
+    \begin{equation*}
+        \varphi(x) \coloneq \text{\( x \) is a partition of \( A \)}
+    \end{equation*}
+    Let \( X \) be an arbitrary object such that \( \varphi(X) \) is satisfied.
+    By \cref{dfn:partition-of-a-set}, it follows that \( \Union X = A \). Thus,
+    by \cref{dfn:union-of-sets}, we have,
+    \begin{equation}
+        \label{eq:Union-X-equals-A}
+        \forall x \, \Big[ \exists z \, \big( z \in X \land x \in z \big) \iff x \in A  \Big]
+    \end{equation}
+    Let \( z_{0} \in X \) be arbitrary. If \( x_{0} \in z_{0} \), then necessarily \( x_{0} \in A \)
+    by \eqref{eq:Union-X-equals-A}. In other words, for any \( z_{0} \in X \),
+    \( \forall x \, \big[ x \in z_{0} \implies x \in A \big] \) and thus \( z_{0} \subseteq A\).
+    \begin{equation*}
+        \therefore \, \forall z \, \Big[ z \in X \implies z \in \powerset{A} \Big]
+    \end{equation*}
+    In other words, \( X \subseteq \powerset{A} \) and thus \( X \in \powerset{\powerset{A}} \).
+    By the Deduction Theorem, we conclude,
+    \begin{equation*}
+        \varphi(X) \implies X \in \powerset{\powerset{A}}
+    \end{equation*}
+    Since \( X \) is arbitrary, Universal Generalization yields,
+    \begin{equation*}
+        \forall x \, \Big[ \varphi(x) \implies x \in \powerset{\powerset{A}} \Big]
+    \end{equation*}
+    Thus, the set \( \partitions{A} = \setbuilderbig{x}{\varphi(x)} \) exists
+    by \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-only-partition-for-the-empty-set-is-the-empty-set}
+    \( \partitions{\emptyset} = \mleft\{ \emptyset \mright\} \)
+\end{thm}
+
+\begin{proof}
+    Let \( P \) be any element of \( \partitions{\emptyset} \).
+    By \cref{dfn:partition-of-a-set}, it follows that \( \Union P = \emptyset \).
+    Thus, we have by \cref{dfn:empty-set,dfn:union-of-sets},
+    \begin{equation*}
+        \forall x \, \big[ \lnot \, \exists z\,{\in}\,P \, \big( x \in z \big) \big]
+    \end{equation*}
+    Which is equivalent to,
+    \begin{equation}
+        \label{eq:the-union-of-P-is-empty}
+        \forall x \, \forall z \, \big[ z \in P \implies x \notin z \big]
+    \end{equation}
+    Suppose that \( P \neq \emptyset \). Thus, there exists a \( z_{0} \) such that \( z_{0} \in P \).
+    Applying Universal Instantiation on \eqref{eq:the-union-of-P-is-empty} yields,
+    \begin{equation}
+        \label{eq:the-union-of-P-is-empty-instantiated}
+        \forall x \, \big[ z_{0} \in P \implies x \notin z_{0} \big]
+    \end{equation}
+    Let \( x_{0} \) be an arbitrary object. By Universal Instantiation on \eqref{eq:the-union-of-P-is-empty-instantiated},
+    we have,
+    \begin{equation*}
+        z_{0} \in P \implies x_{0} \notin z_{0}
+    \end{equation*}
+    Since \( z_{0} \in P \), we conclude by Modus Ponens that \( x_{0} \notin z_{0} \). Since \( x_{0} \) is arbitrary,
+    it follows that \( \forall x \, \big( x \notin z_{0} \big) \) so that \( z_{0} = \emptyset \), which is a contradiction
+    since \( P \) is a partition and no element of a partition can be empty by \cref{dfn:partition-of-a-set}. Clearly, the
+    supposition \( P \neq \emptyset \) leads to a contradiction, so it must be false by Reductio ad Absurdum.
+    \begin{equation*}
+        P \in \partitions{\emptyset} \implies P = \emptyset
+    \end{equation*}
+    To prove the converse, we must prove that \( \emptyset \in \partitions{\emptyset} \).
+    Obviously, if \( P = \emptyset \), then the statements \( \forall x \, \big( x \in P \implies x \neq \emptyset \big) \)
+    and \( \forall x\,{\in}\,P \, \forall y\,{\in}\,P \, \big( x \neq y \implies x \intersect y = \emptyset \big) \)
+    are both vacuously true. Also, since \( P = \emptyset \), the statement \( \exists z\,{\in}\,P \, \big( x \in z \big) \)
+    is necessarily false, which means that \( \Union P = \emptyset \). In other words, \( \emptyset \) satisfies all the conditions
+    stated in \cref{dfn:partition-of-a-set}. Thus, \( \emptyset \in \partitions{\emptyset} \) as required.
+    \begin{equation*}
+        P = \emptyset \implies P \in \partitions{\emptyset}
+    \end{equation*}
+    This establishes the biconditional \( P \in \partitions{\emptyset} \iff P = \emptyset \). And since \( P \) is arbitrary,
+    we can generalize,
+    \begin{equation*}
+        \forall x \, \big[ x \in \partitions{\emptyset} \iff x = \emptyset \big]
+    \end{equation*}
+    By \cref{dfn:unordered-pair}, it follows that \( \partitions{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{proof}
+
+\begin{rem}
+    From \cref{thm:existence-of-the-set-of-all-partitions}, we know that \( \partitions{A} \subseteq \powerset{\powerset{A}} \).
+    Therefore, \( \partitions{\emptyset} \subseteq \powerset{\powerset{\emptyset}} \). Since \( \powerset{\emptyset} = \mleft\{ \emptyset \mright\} \),
+    it follows that \( \powerset{\powerset{\emptyset}} = \mleft\{ \emptyset, \mleft\{ \emptyset \mright\} \mright\} \). This is in agreeement with
+    the fact that \( \partitions{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{rem}
+
+\begin{thm}
+    \label{thm:existence-of-the-set-of-all-equivalence-relations}
+    For any set \( A \), \( \equivrels{A} \) exists.
+\end{thm}
+
+\begin{proof}
+    By \cref{dfn:set-of-all-partitions-of-a-set-and-the-set-of-all-equivalence-relations-on-a-set},
+    it follows that \( \forall x \, \big[ x \in \equivrels{A} \implies x \subseteq A^{2} \big] \).
+    Therefore, \( \forall x \, \big[ x \in \equivrels{A} \implies x \in \powerset{A^{2}} \big] \).
+    \cref{thm:sufficient-condition-for-unrestricted-comprehension} then guarantees the existence
+    of \( \equivrels{A} \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:the-only-equivalence-relation-on-the-empty-set-is-the-empty-set}
+    \( \equivrels{\emptyset} = \mleft\{ \emptyset \mright\} \)
+\end{thm}
+
+\begin{proof}
+    Let \( E \in \equivrels{\emptyset} \) be arbitrary.
+    By \cref{dfn:set-of-all-partitions-of-a-set-and-the-set-of-all-equivalence-relations-on-a-set,dfn:equivalence-relation},
+    it follows that \( E \subseteq \emptyset^{2} \).
+    Since \( 2 \neq \emptyset \), we have by \cref{thm:the-exponentiation-of-the-empty-set} that \( \emptyset^{2} = \emptyset \).
+    Since \( E \subseteq \emptyset^{2} \) and \( \emptyset^{2} = \emptyset \),
+    it follows that \( E \subseteq \emptyset \) and thus \( E = \emptyset \) by
+    \cref{thm:only-the-empty-set-can-be-a-subset-of-the-empty-set}.
+    \begin{equation*}
+        E \in \equivrels{\emptyset} \implies E = \emptyset
+    \end{equation*}
+    Conversely, suppose that \( E = \emptyset \). Clearly, \( E \subseteq \emptyset^{2} \) because the empty set is a subset
+    of any set by \cref{thm:empty-set-universal-subset}. Moreover, the following statements are all vacuously true:
+    \begin{gather*}
+        \forall x\,{\in}\,\emptyset \, \big[ \tuple{x,x} \in E \big]\\
+        \forall x\,{\in}\,\emptyset \, \forall y\,{\in}\,\emptyset \, \big[ \tuple{x,y} \in E \implies \tuple{y,x} \in E \big]\\
+        \forall x\,{\in}\,\emptyset \, \forall y\,{\in}\,\emptyset \, \forall z\,{\in}\,\emptyset \,
+        \big[ \tuple{x,y} \in E \land \tuple{y,z} \in E \implies \tuple{x,z} \in E \big]
+    \end{gather*}
+    Thus, \( E \) must be an equivalence relation on \( \emptyset \) by \cref{dfn:equivalence-relation}, so \( E \in \equivrels{\emptyset} \).
+    \begin{equation*}
+        E = \emptyset \implies E \in \equivrels{\emptyset}
+    \end{equation*}
+    This establishes the biconditional \( E \in \equivrels{\emptyset} \iff E = \emptyset \) for any \( E \).
+    Thus, \( \equivrels{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{proof}
+
+\begin{cor}
+    \label{thm:the-quotient-set-of-empty-set-with-respect-to-empty-set-is-the-empty-set}
+    \( \emptyset / \emptyset = \emptyset \).
+\end{cor}
+
+\begin{proof}
+    \( \emptyset \) is the only equivalence relation on \( \emptyset \)
+    by \cref{thm:the-only-equivalence-relation-on-the-empty-set-is-the-empty-set}.
+    By \cref{dfn:quotient-set},
+    \( \emptyset / \emptyset =
+    \setbuilderbig{x}{\exists a \, ( a \in \emptyset \land x = \equivclass{a}_{\emptyset} )}
+    = \big\{ \, \big\} = \emptyset \).
+\end{proof}
+
+\begin{thm}
+    \label{thm:equivalent-classes-are-pairwise-disjoint}
+    Let \( A \) be a set and \( E \) be an equivalence relation on \( A \).
+    Let \( a \) and \( b \) be arbitrary elements of \( A \). Then the following
+    statements hold:
+    \begin{enumerate}[noitemsep,label=(\roman*)]
+        \item \( \tuple{a,b} \in E \iff \equivclass{a}_{E} = \equivclass{b}_{E} \) \label{enum:condition-for-ab-in-E}
+        \item \( \tuple{a,b} \notin E \iff \equivclass{a}_{E} \intersect \equivclass{b}_{E} = \emptyset \) \label{enum:condition-for-ab-not-in-E}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Since \( a,b \in A\), the equivalence classes \( \equivclass{a}_{E} \) and \( \equivclass{b}_{E} \) exist by
+    \cref{thm:existence-of-equivalence-classes}. Suppose that \( \tuple{a,b} \in E \). By \cref{dfn:equivalence-class},
+    we have,
+    \begin{gather}
+        \forall x \, \big( x \in \equivclass{a}_{E} \iff \tuple{x,a} \in E \big) \label{eq:predicate-for-equivalent-class-of-a} \\
+        \forall x \, \big( x \in \equivclass{b}_{E} \iff \tuple{x,b} \in E \big) \label{eq:predicate-for-equivalent-class-of-b}
+    \end{gather}
+    Let \( x_{0} \in A \) be arbitrary. If \( \tuple{x_{0}, a} \in E \), then \( \tuple{x_{0}, b} \in E \) follows from the fact that
+    \( \tuple{a,b} \in E \) and the fact that \( E \) is transitive.
+    \begin{equation*}
+        \tuple{x_{0}, a} \in E \implies \tuple{x_{0}, b} \in E
+    \end{equation*}
+    Conversely, if \( \tuple{x_{0},b} \in E \), then \( \tuple{x_{0}, a} \in E \) must also be true because \( \tuple{b,a} \in E \) and
+    \( E \) is transitive.
+    \begin{equation*}
+        \tuple{x_{0},b} \in E \implies \tuple{x_{0},a} \in E
+    \end{equation*}
+    By Universal Generalization,
+    \begin{equation}
+        \label{eq:xa-in-E-iff-xb-in-E}
+        \forall x \, \big[ \tuple{x,a} \in E \iff \tuple{x,b} \in E \big]
+    \end{equation}
+    Applying \eqref{eq:predicate-for-equivalent-class-of-a} and \eqref{eq:predicate-for-equivalent-class-of-b}
+    to \eqref{eq:xa-in-E-iff-xb-in-E} yields,
+    \begin{equation*}
+        \forall x \, \big( x \in \equivclass{a}_{E} \iff x \in \equivclass{b}_{E} \big)
+    \end{equation*}
+    By the \nameref{axm:axiom-of-extensionality}, it follows that \( \equivclass{a}_{E} = \equivclass{b}_{E} \).
+    And by the Deduction Theorem,
+    \begin{equation}
+        \label{eq:ab-in-E-implies-equal-equivalent-classes}
+        \tuple{a,b} \in E \implies \equivclass{a}_{E} = \equivclass{b}_{E}
+    \end{equation}
+    To prove the converse, suppose that \( \equivclass{a}_{E} = \equivclass{b}_{E} \) for some arbitrary \( a,b \in A \).
+    Since \( E \) is reflexive, we know that \( \tuple{a,a} \in E \) so that \( a \in \equivclass{a}_{E} \).
+    But \( \equivclass{a}_{E} = \equivclass{b}_{E} \), which means that \( a \in \equivclass{b}_{E} \) must also be true.
+    Since \( a \in \equivclass{b}_{E} \), it follows from \cref{dfn:equivalence-class} that \( \tuple{a,b} \in E \). Thus,
+    \begin{equation}
+        \label{eq:equal-equivalent-classes-implies-ab-in-E}
+        \equivclass{a}_{E} = \equivclass{b}_{E} \implies \tuple{a,b} \in E
+    \end{equation}
+    Together, \eqref{eq:ab-in-E-implies-equal-equivalent-classes} and \eqref{eq:equal-equivalent-classes-implies-ab-in-E}
+    establish the biconditional \( \tuple{a,b} \in E \iff \equivclass{a}_{E} = \equivclass{b}_{E} \). With both \( a \) and
+    \( b \) being arbitrary, \ref{enum:condition-for-ab-in-E} follows from Universal Generalization.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove \ref{enum:condition-for-ab-not-in-E}, suppose that \( \tuple{a,b} \in E \) for some
+    arbitrary \( a,b \in A \). By \ref{enum:condition-for-ab-in-E}, it follows that \( \equivclass{a}_{E} = \equivclass{b}_{E} \),
+    and thus \( \equivclass{a}_{E} \intersect \equivclass{b}_{E} = \equivclass{a}_{E} \intersect \equivclass{a}_{E} = \equivclass{a}_{E} \)
+    by \cref{set-identities:idempotence-of-intersections}. Since \( E \) is reflexive, we know that \( \tuple{a,a} \in E \) and thus
+    \( a \in \equivclass{a}_{E} \). In other words, \( \equivclass{a}_{E} \neq \emptyset \).
+    Since \( \equivclass{a}_{E} = \equivclass{b}_{E} = \equivclass{a}_{E} \),
+    it follows that \( \equivclass{a}_{E} \intersect \equivclass{b}_{E} \neq \emptyset \).
+    Thus, by the Deduction Theorem, we conclude,
+    \begin{equation*}
+        \tuple{a,b} \in E \implies \equivclass{a}_{E} \intersect \equivclass{b}_{E} \neq \emptyset
+    \end{equation*}
+    By contraposition, this is equivalent to,
+    \begin{equation}
+        \label{eq:disjoint-equivalent-classes-implies-ab-notin-E}
+        \equivclass{a}_{E} \intersect \equivclass{b}_{E} = \emptyset \implies \tuple{a,b} \notin E
+    \end{equation}
+    Conversely, suppose that \( \equivclass{a}_{E} \intersect \equivclass{b}_{E} \neq \emptyset \) for some \( a,b \in A \).
+    Thus, there exists some \( \alpha \in A \) such that \( \alpha \in \equivclass{a}_{E} \) and \( \alpha \in \equivclass{b}_{E} \).
+    In other words, \( \tuple{\alpha,a} \in E \) and \( \tuple{\alpha,b} \in E \). By the reflexivity of \( E \), it follows that
+    \( \tuple{a, \alpha} \in E \). Thus, \( \tuple{a,b} \in E \) must also be true by the transitivity of \( E \).
+    By the Deduction Theorem, we conclude that,
+    \begin{equation*}
+        \equivclass{a}_{E} \intersect \equivclass{b}_{E} \neq \emptyset \implies \tuple{a,b} \in E
+    \end{equation*}
+    Again, by contraposition, this is equivalent to,
+    \begin{equation}
+        \label{eq:ab-not-in-E-implies-disjoint-equivalent-classes}
+        \tuple{a,b} \notin E \implies \equivclass{a}_{E} \intersect \equivclass{b}_{E} = \emptyset
+    \end{equation}
+    Together, \eqref{eq:disjoint-equivalent-classes-implies-ab-notin-E} and \eqref{eq:ab-not-in-E-implies-disjoint-equivalent-classes}
+    establish \ref{enum:condition-for-ab-not-in-E}.
+\end{proof}
+
+\begin{lem}
+    \label{lem:the-quotient-set-of-a-set-is-a-partition-of-the-set}
+    For any set \( A \) and any equivalence relation \( E \) on \( A \),
+    \( A / E \) is a partition of \( A \).
+    \begin{equation*}
+        \forall A \, \forall E \, \Big[ E \in \equivrels{A} \implies A / E \in \partitions{A} \Big]
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Let \( A \) be any set. By the Law of Excluded Middle,
+    \begin{equation*}
+        A = \emptyset \lor A \neq \emptyset
+    \end{equation*}
+
+    \noindent
+    {\scshape Case 1}: \( A = \emptyset \). If \( A = \emptyset \), then \( E \in \equivrels{A} \iff E = \emptyset \)
+    by \cref{thm:the-only-equivalence-relation-on-the-empty-set-is-the-empty-set}. If \( A = \emptyset \) and \( E = \emptyset \),
+    then \( A / E = \emptyset \) by \cref{thm:the-quotient-set-of-empty-set-with-respect-to-empty-set-is-the-empty-set}. Since
+    \( \partitions{\emptyset} = \mleft\{ \emptyset \mright\} \) by \cref{thm:the-only-partition-for-the-empty-set-is-the-empty-set},
+    necessarily \( A / E \in \partitions{A} \).
+    \begin{equation*}
+        \therefore \, \forall E \, \Big[ E \in \equivrels{A} \implies A / E \in \partitions{A} \Big]
+    \end{equation*}
+
+    \noindent
+    {\scshape Case 2}: \( A \neq \emptyset \). Let \( E \in \equivrels{A} \) be arbitrary. Thus, \( E \subseteq A^{2}\) and \( E \)
+    is reflexive, symmetric, and transitive. Since \( E \) is reflexive and \( A \neq \emptyset \), necessarily \( E \neq \emptyset \).
+    Clearly, \( A / E\) exists by \cref{thm:existence-of-the-quotient-set}.
+    And to prove that \( A / E \in \partitions{A} \), it is necessary to show that \( A / E \) satisfies the conditions stated in
+    \cref{dfn:partition-of-a-set}.
+
+    \vspace{0.3cm}
+    \noindent
+    The first condition is easy to prove because it follows immediately from the reflexivity of \( E \); i.e., since \( \tuple{a,a} \in E \)
+    for any \( a \in A \) and \( A \neq \emptyset \), it follows that every equivalence class has at least one element.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the second condition, suppose that \( x \) and \( y \) are two distinct elements of \( A / E \). That is, \( x = \equivclass{a}_{E} \)
+    and \( y = \equivclass{b}_{E} \) for some \( a \in A \) and \( b \in A \). Since \( x \neq y \), \( x \intersect y = \emptyset \) follows from
+    \cref{thm:equivalent-classes-are-pairwise-disjoint}, establishing the second condition.
+
+    \vspace{0.3cm}
+    \noindent
+    For the third condition, we apply the definition for the union of sets. Thus, for any arbitrary \( x_{0} \),
+    \begin{equation*}
+        x_{0} \in \Union A / E
+        \iff
+        \exists z \, \Big[ z \in A / E \land x_{0} \in z \Big]
+    \end{equation*}
+    Using \cref{dfn:quotient-set}, the statement can then be expressed equivalently as,
+    \begin{equation*}
+        x_{0} \in \Union A / E
+        \iff
+        \exists z \, \Big[ \exists a \, \big( a \in A \land z = \equivclass{a}_{E} \big) \land x_{0} \in z \Big]
+    \end{equation*}
+    With \cref{logic:grouping-conjuncts-into-quantified-statement-existential,logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate},
+    we can further simplify the formula like so,
+    \begin{align}
+        x_{0} \in \Union A / E &\iff \exists z \, \exists a \, \Big[ a \in A \land z = \equivclass{a}_{E} \land x_{0} \in z \Big] \notag \\
+        &\iff \exists a \, \Big[ a \in A \land \exists z \, \big( z = \equivclass{a}_{E} \land x_{0} \in z \big) \Big] \notag \\
+        &\iff \exists a \, \Big[ a \in A \land x_{0} \in \equivclass{a}_{E} \Big] \label{eq:x0-belongs-to-some-equivalence-class}
+    \end{align}
+    If \( x_{0} \in A \), then obviously \( x_{0} \in \equivclass{x_{0}}_{E} \land x_{0} \in A \), so necessarily \( x_{0} \in \Union A/E \) by
+    \eqref{eq:x0-belongs-to-some-equivalence-class}. Conversely, if \( x_{0} \in \Union A / E \), then \( x_{0} \in \equivclass{a}_{E} \) for
+    some \( a \in A \) by \eqref{eq:x0-belongs-to-some-equivalence-class}. Since \( E \subseteq A^{2} \) and \( \tuple{x_{0}, a} \in E \),
+    necessarily \( x_{0} \in A \). In other words, \( x_{0} \in \Union A / E \iff x_{0} \in A \) for any \( x_{0} \). Thus, \( \Union A / E = A \)
+    as required for the third condition to hold.
+
+    \vspace{0.3cm}
+    \noindent
+    Having proved that \( A / E \) satisfies all three conditions in \cref{dfn:partition-of-a-set}, we conclude that \( A / E \in \partitions{A} \).
+    \begin{equation*}
+        \therefore \, \forall E \, \Big[ E \in \equivrels{A} \implies A / E \in \partitions{A} \Big]
+    \end{equation*}
+    Since it holds for all possible cases, the statement \( \forall E \, \big[ E \in \equivrels{A} \implies A / E \in \partitions{A} \big] \) follows from Disjuntion Elimination.
+    With \( A \) being arbitrary, the lemma follows from Universal Generalization.
+\end{proof}
+
+\begin{lem}
+    \label{lem:any-partition-of-a-set-defines-an-equivalece-relation-on-the-set}
+    If \( P \) is a partition of \( A \), then the set,
+    \begin{equation*}
+        E = \setbuilderbig{\tuple{x,y}}{\exists z\,{\in}\,P \, \mleft( x \in z \land y \in z \mright)}
+    \end{equation*}
+    is an equivalence relation on \( A \). Moreover, \( P = A / E \).
+\end{lem}
+
+\begin{proof}
+    We start by proving that \( E \subseteq A^{2} \). Let \( x_{0} \in E \) be arbitrary. Thus,
+    \( x_{0} = \tuple{a,b} \) where \( a \in z_{0} \) and \( b \in z_{0} \) for some \( z_{0} \in P \).
+    By \cref{dfn:union-of-sets}, it is clear that \( a \in \Union P \) and \( b \in \Union P \). But
+    \( P \) is a partition of \( A \), so by \cref{dfn:partition-of-a-set}, necessarily \( \Union P = A \).
+    Therefore, \( a \in A \) and \( b \in A \) and \( x_{0} = \tuple{a,b} \in A^{2} \). In other words,
+    \( x_{0} \in E \implies x_{0} \in A^{2} \) for any \( x_{0} \), which implies that \( E \subseteq A^{2} \).
+    The next step is to establish that \( E \) is reflexive, symmetric, and transitive.
+
+    \vspace{0.3cm}
+    \noindent
+    Reflexivity: Let \( a \in A \) be arbitrary. Since \( \Union P = A \), necessarily \( a \in \Union P \).
+    Thus, there must exist a \( z \in P \) such that \( a \in z \). Since \( x \in z \land x \in z \) is
+    trivially true, it follows that \( \exists z\,{\in}\,P \, \big[ x \in z \land x \in z \big] \) so that
+    \( \tuple{a,a} \in E \) by definition. Thus, \( E \) is reflexive.
+
+    \vspace{0.3cm}
+    \noindent
+    Symmetric: Let \( a \) and \( b \) be arbitrary elements of \( A \) such that \( \tuple{a,b} \in E \).
+    By definition, there must exist some \( z \in P \) such that \( a \in z \) and \( b \in z \).
+    But if \( a \in z \land b \in z \) is true, then \( b \in z \land a \in z \) is also necessarily true.
+    In other words, \( \exists z\,{\in}\,P \, \big[ b \in z \land a \in z \big] \), and \( \tuple{b,a} \in E \)
+    follows by definition. Thus, \( E \) is symmetric.
+
+    \vspace{0.3cm}
+    \noindent
+    Transitive: Let \( a \), \( b \), and \( c \) be arbitrary members of \( A \) such that \( \tuple{a,b} \in E
+    \land \tuple{b,c} \in E \). By the definition of \( E \), it follows that \( a \in z_{1} \land b \in z_{1}\)
+    and \( b \in z_{2} \land c \in z_{2} \) for some \( z_{1} \in P \) and \( z_{2} \in P \). Since \( b \in z_{1}\)
+    and \( b \in z_{2} \) are both true, it follows that \( b \in z_{1} \intersect z_{2} \), and thus
+    \( z_{1} \intersect z_{2} \neq \emptyset \). But \( P \) is a partition of \( A \), so
+    \( z_{1} \intersect z_{2} \neq \emptyset \) implies \( z_{1} = z_{2} \) by \cref{dfn:partition-of-a-set}.
+    Since \( z_{1} = z_{2} \), we have \( a \in z_{1} \land c \in z_{1} \) for some \( z_{1} \in P \) so that
+    \( \tuple{a,c} \in E \) by the definition of \( E \). Thus, \( E \) is transitive.
+
+    \vspace{0.3cm}
+    \noindent
+    We have established that \( E \subseteq A^{2} \) and that it is reflexive, symmetric, and transitive.
+    By \cref{dfn:equivalence-relation}, \( E \) is an equivalence relation on \( A \). And since \( E \)
+    is an equivalence relation, it follows from \cref{thm:existence-of-the-quotient-set} that \( A / E \)
+    exists. The final step, then, is to show that \( P = A / E \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x_{0} \) be an arbitrary member of \( A / E \). In other words, \( x_{0} = \equivclass{a}_{E} \)
+    for some \( a \in A \). We know that \( E \) is reflexive, so clearly \( a \in x_{0} \) and \( \tuple{a,a} \in E \).
+    By the definition of \( E \), there must exists some \( z_{0} \in P \) such that \( a \in z_{0} \). We will prove that
+    \( x_{0} \) and \( z_{0} \) are in fact the same set.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( y_{0} \in x_{0} \) be arbitrary. Again by \cref{dfn:equivalence-class}, it follows
+    that \( \tuple{y_{0},a} \in E \) and thus \( y_{0} \in z_{1} \) and \( a \in z_{1} \) for some \( z_{1} \in P \).
+    But \( P \) is a partition, so \( a \in z_{0} \land a \in z_{1} \) implies that \( z_{0} = z_{1} \).
+    Thus, \( y_{0} \) must also belong to \( z_{0} \). In other words, \( \forall y \, \big( y \in x_{0} \implies y \in z_{0} \big) \)
+    and thus \( x_{0} \subseteq z_{0} \). Conversely, if \( y_{0} \) is an arbitrary element of \( z_{0} \),
+    then \( \exists z\,{\in}\,P \, \mleft( y_{0} \in z \land a \in z \mright) \) because \( a \in z_{0} \).
+    This means that \( \tuple{y_{0},a} \in E \), so \( y_{0} \in x_{0} = \equivclass{a}_{E} \) by definition.
+    In other words, \( \forall y \, \big( y \in z_{0} \implies y \in x_{0} \big) \), so \( z_{0} \subseteq x_{0} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Having established both \( x_{0} \subseteq z_{0} \) and \( z_{0} \subseteq x_{0} \), we conclude that \( x_{0} = z_{0} \).
+    Since \( z_{0} \in P \), it follows that \( x_{0} \in P \). By the Deduction Theorem and Universal Generalization, we have,
+    \begin{equation}
+        \label{eq:quotient-set-is-a-subset-of-the-partition}
+        \forall x \, \big[ x \in A / E \implies x \in P \big]
+    \end{equation}
+    To prove the converse, we let \( x_{0} \) be an arbitrary element of \( P \). Since \( P \) is a partition of \( A \)
+    and \( x_{0} \in P \), it follows from \cref{dfn:partition-of-a-set} that \( x_{0} \neq \emptyset \). Thus, there must
+    exists some \( a \) such that \( a \in x_{0} \). Since \( \Union P = A \), it follows \( a \in A \). We now proceed
+    to show that \( x_{0} = \equivclass{a}_{E} \). Suppose that \( y_{0} \) is some arbitrary element of \( x_{0} \). Given
+    that \( a \in x_{0} \) and \( y_{0} \in x_{0} \) with \( x_{0} \in P \),
+    it follows that \( \exists z\,{\in}\,P \, \big( y_{0} \in z \land a \in z \big) \) and thus \( \tuple{y_{0},a} \in E \).
+    By \cref{dfn:equivalence-class}, this means that \( y_{0} \in \equivclass{a}_{E} \).
+    Therefore, \( \forall y \, \big( y \in x_{0} {\implies} y \in \equivclass{a}_{E} \big) \) and \( x_{0} \subseteq \equivclass{a}_{E} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, if \( y_{0} \in \equivclass{a}_{E} \), then necessarily \( \tuple{y_{0},a} \in E \). By the definition of \( E \), there must exist
+    some \( z_{0} \in P \) such that \( y_{0} \in z_{0} \), \( a \in z_{0} \). But \( P \) is a partition on \( A \), so \( a \in x_{0} \land a \in z_{0} \)
+    implies \( x_{0} = z_{0} \). Given that \( y_{0} \in z_{0} \), \( y_{0} \in x_{0} \) must also be true.
+    Therefore, \( \forall y \, \big[ y \in \equivclass{a}_{E} {\implies} y \in x_{0} \big] \) and \( \equivclass{a}_{E} \subseteq x_{0} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Having established both \( x_{0} \subseteq \equivclass{a}_{E} \) and \( \equivclass{a}_{E} \subseteq x_{0} \), we can then conclude that
+    \( x_{0} = \equivclass{a}_{E} \). Clearly, \( \equivclass{a}_{E} \in A / E \), so \( x_{0} \) must also be an element of \( A / E \). By the
+    Deduction Theorem and Universal Generalization, we have,
+    \begin{equation}
+        \label{eq:partition-is-a-subset-of-the-quotient-set}
+        \forall x \, \Big[ x \in P \implies x \in A / E \Big]
+    \end{equation}
+    \( P = A / E \) follows from \eqref{eq:quotient-set-is-a-subset-of-the-partition}, \eqref{eq:partition-is-a-subset-of-the-quotient-set},
+    and \nameref{axm:axiom-of-extensionality}.
+\end{proof}
+
+\begin{thm}[Fundamental Theorem of Equivalence Relations]
+    \label{thm:fundamental-theorem-of-equivalence-relations}
+    For any set \( A \), a bijection exists between \( \equivrels{A} \) and \( \partitions{A} \).
+    \begin{equation*}
+        \forall A \, \exists f \, \big[ \bijection{f}{\equivrels{A}}{\partitions{A}} \big]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be any set. Define the set \( f \) as follows:
+    \begin{equation}
+        \label{eq:define-bijection-f-between-eqv-A-and-par-A}
+        f = \setbuilderBig{\tuple{E,P}}{E \in \equivrels{A} \land P = A / E }
+    \end{equation}
+    Next, we have to prove three claims:
+    \begin{enumerate*}[label=(\alph*)]
+        \item \( f \) is a function on \( \equivrels{A} \),
+        \item \( \ran f = \partitions{A} \),
+        \item \( f \) is injective.
+    \end{enumerate*}
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Claim} (a): \( f \) is a function and \( \dom f = \equivrels{A} \).
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( E \), \( P_{1} \), and \( P_{2} \) be arbitrary objects such that
+    \( \tuple{E, P_{1}} \in f \) and \( \tuple{E, P_{2}} \in f \). By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A},
+    it follows that \( E \in \equivrels{A} \), \( P_{1} = A / E \), and \( P_{2} = A / E \). Clearly, \( P_{1} = P_{2} \),
+    so \( f \) is necessarily a function. The fact that \( \dom f \subseteq \equivrels{A} \) is already implied by
+    \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}. Thus, it remains to prove the inclusion in the opposite direction.
+    Let \( E \in \equivrels{A} \) be arbitrary. Clearly, \( A / E \) exists by \cref{thm:existence-of-the-quotient-set}, and
+    it follows from \eqref{eq:define-bijection-f-between-eqv-A-and-par-A} that \( \tuple{E, A / E} \in f \).
+    By \cref{dfn:domain-of-a-set-of-ordered-pairs}, we have \( E \in \dom f \). In other words, \( \equivrels{A} \subseteq \dom f \).
+    Having proven the inclusion in the opposite direction, we conclude by \cref{thm:set-equality-in-terms-of-subsets} that \( \dom f = \equivrels{A} \).
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Claim} (b): \( \ran f = \partitions{A} \).
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( P \in \partitions{A} \) be arbitrary. Since \( P \) is a partition of \( A \),
+    it follows from \cref{lem:any-partition-of-a-set-defines-an-equivalece-relation-on-the-set}
+    that the set,
+    \begin{equation*}
+        E = \setbuilderBig{\tuple{x,y}}{\exists z\,{\in}\,P \, \big( x \in z \land y \in z \big)}
+    \end{equation*}
+    is an equivalence relation on \( A \) and that \( A / E = P \). Applying these facts to \eqref{eq:define-bijection-f-between-eqv-A-and-par-A},
+    we deduce that \( \tuple{E,P} \in f \). Therefore, \( P \in \ran f \). In other words, \( \partitions{A} \subseteq \ran f \).
+    To prove the opposite inclusion, we let \( P \in \ran f \) be arbitrary. By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}, it follows
+    that \( P = A / E \) for some \( E \in \equivrels{A} \). Since \( E \) is an equivalence relation on \( A \), it follows from
+    \cref{lem:the-quotient-set-of-a-set-is-a-partition-of-the-set} that \( P = A / E \) is a partition on \( A \) and thus \( P \in \partitions{A} \).
+    In other words, \( \ran f \subseteq \partitions{A} \). With both \( \ran f \subseteq \partitions{A} \) and \( \partitions{A} \subseteq \ran f \)
+    established, we can finally conclude that \( \ran f = \partitions{A} \).
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Claim} (c): \( f \) is injective.
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( E_{1} \), \( E_{2} \), and \( P \) be arbitrary objects such that \( \tuple{E_{1},P} \in f \)
+    and \( \tuple{E_{2},P} \in f \). By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}, it follows
+    that \( E_{1} \in \equivrels{A} \), \( E_{2} \in \equivrels{A} \), and \( A / E_{1} = A / E_{2} = P \).
+    Given that \( E_{1} \) and \( E_{2} \) are both equivalence relations,
+    \( P \) must be a partition on \( A \) by \cref{lem:the-quotient-set-of-a-set-is-a-partition-of-the-set}.
+    By \cref{dfn:partition-of-a-set}, it follows that,
+    \begin{equation}
+        \label{eq:A-equals-to-the-union-of-P}
+        \Union P = A
+    \end{equation}
+    Now let \( b \in A \) be arbitrary. By \eqref{eq:A-equals-to-the-union-of-P}, it follows that \( b \in \Union P \).
+    \begin{equation*}
+        \begin{aligned}
+            b \in z_{0}&
+        \end{aligned}
+        \begin{aligned}
+            &\text{for some \( z_{0} \in P \)}
+        \end{aligned}
+    \end{equation*}
+    But \( P = A / E_{1} = A / E_{2} \), so necessarily \( z_{0} = \equivclass{b}_{E_{1}} = \equivclass{b}_{E_{2}} \). Thus,
+    \begin{equation*}
+        \forall a\,{\in}\,A \, \Big[ \tuple{a,b} \in E_{1} \iff \tuple{a,b} \in E_{2} \Big]
+    \end{equation*}
+    And since \( b \) is arbitrary, we have by Universal Generalization,
+    \begin{equation*}
+        \forall a\,{\in}\,A \, \forall b\,{\in}\,A \, \Big[ \tuple{a,b} \in E_{1} \iff \tuple{a,b} \in E_{2} \Big]
+    \end{equation*}
+    Since \( E_{1} \) and \( E_{2} \) are both sets of 2-tuples, it is obvious that \( E_{1} = E_{2} \). With that,
+    it has been shown that \( \tuple{E_{1},P} \in f \land \tuple{E_{2},P} \in f \implies E_{1} = E_{2} \). Thus, \( f \)
+    must be injective by \cref{dfn:injection}.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( f \) is both injective and surjective with \( \dom f = \equivrels{A} \) and \( \ran f = \partitions{A} \), it
+    follows that,
+    \begin{equation*}
+        \bijection{f}{\equivrels{A}}{\partitions{A}} \qedhere
+    \end{equation*}
+\end{proof}
