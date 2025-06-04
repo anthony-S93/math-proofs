@@ -1027,6 +1027,25 @@ are being studied.
     \( A \subseteq A \) folllows readily from \cref{dfn:subset}.
 \end{proof}
 
+\begin{thm}
+    \label{thm:only-the-empty-set-can-be-a-subset-of-the-empty-set}
+    For any set \( A \), \( A \subseteq \emptyset \) if and only if \( A = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    It is obvious from \cref{thm:empty-set-universal-subset} that \( A = \emptyset \implies A \subseteq \emptyset \),
+    so it remains to prove the converse. Let \( A \) be any subset of \( \emptyset \). Thus, by \cref{dfn:subset}, we
+    have,
+    \begin{equation}
+        \label{eq:x-in-A-implies-x-in-empty}
+        \forall x \, \big[ x \in A \implies x \in \emptyset \big]
+    \end{equation}
+    Suppose that \( A \neq \emptyset \). That is, there exists some \( x_{0} \in A \).
+    But if that were true, then \( x_{0} \in \emptyset \) by \eqref{eq:x-in-A-implies-x-in-empty},
+    an obvious contradiction. By Reductio ad Absurdum, we conclude that \( A = \emptyset \).
+    Thus, \( A \subseteq \emptyset \implies A = \emptyset \).
+\end{proof}
+
 \begin{thm}[Set Equality]
     \label{thm:set-equality-in-terms-of-subsets}
     Two sets are equal if and only if they are subsets of each other.
