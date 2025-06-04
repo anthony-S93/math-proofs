@@ -16,7 +16,7 @@ These examples all offer a glimpse of what a ``structure'' generally entails:
     \item a collection of objects that are related to each other in a systematic and identifiable way;
     \item a set of rules/information describing the interrelationship between the objects in the collection.
 \end{enumerate*}
-Thus, at a conceptual level, a ``structure'' can be summarized by the following equation:
+Thus, at a conceptual level, a ``structure'' can be summarized as follows:
 \begin{equation*}
     \text{structure} = \text{set} + \text{descriptive information}
 \end{equation*}
@@ -29,8 +29,10 @@ what the pieces are, we also know how the pieces move and how they relate to eac
 \noindent
 In mathematics, we seek to formalize the notion of a structure. That is, to define in abstract mathematical terms
 what a structure is. With set theory serving as a foundation of mathematics, we can narrow the goal
-even further: to define mathematical structures in terms of sets. But before that can be done, some groundwork
-has to be laid.
+even further: to define mathematical structures in terms of sets. As we shall soon see,
+there are generally two classes of descriptive information that defines a mathematical structure:
+\keyword{relations} and \keyword{operations}. These, too, have to be precisely defined as sets.
+But before that can be done, some groundwork has to be laid.
 
 \section{The Set of Natural Numbers}
 Intuitively, we all know what the natural numbers are: a system of symbols representing the number of
@@ -75,8 +77,7 @@ Here, we will use the most straightforward and intuitively obvious approach:
     \vdots
 \end{align*}
 The idea is to define any natural number \( n \) as a set containing all the natural numbers that are smaller
-than it.
-This ensures that the set assigned to \( n \) always contains exactly \( n \) elements.
+than it, thereby ensuring that the set assigned to \( n \) always contains exactly \( n \) elements.
 To construct the representative set for the ``next'' natural number,
 we simply adjoin one more element (\( n \) itself) to \( n \).
 Any set constructed by means of this recursive process is called a \keyword{von Neumann ordinal}.
