@@ -1732,7 +1732,12 @@ Here are some important theorems involving equivalence relations.
             &\text{for some \( z_{0} \in P \)}
         \end{aligned}
     \end{equation*}
-    But \( P = A / E_{1} = A / E_{2} \), so necessarily \( z_{0} = \equivclass{b}_{E_{1}} = \equivclass{b}_{E_{2}} \). Thus,
+    But \( P = A / E_{1} = A / E_{2} \), so necessarily \( z_{0} \in A / E_{1} \) and \( z_{0} \in A / E_{2} \). By \cref{dfn:quotient-set},
+    it follows that \( z_{0} = \equivclass{\alpha}_{E_{1}} \) for some \( \alpha \in A \) and \( z_{0} = \equivclass{\beta}_{E_{2}} \) for
+    some \( \beta \in A \).
+    Since \( b \in z_{0} \), it follows that \( b \in \equivclass{\alpha}_{E_{1}} \) and
+    \( b \in \equivclass{\beta}_{E_{2}} \). By \cref{thm:equivalent-classes-are-pairwise-disjoint}, necessarily
+    \( \equivclass{b}_{E_{1}} = \equivclass{\alpha}_{E_{1}} = z_{0} = \equivclass{\beta}_{E_{2}} = \equivclass{b}_{E_{2}} \). Thus,
     \begin{equation*}
         \forall a\,{\in}\,A \, \Big[ \tuple{a,b} \in E_{1} \iff \tuple{a,b} \in E_{2} \Big]
     \end{equation*}
