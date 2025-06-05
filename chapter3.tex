@@ -1665,7 +1665,7 @@ Here are some important theorems involving equivalence relations.
         \label{eq:define-bijection-f-between-eqv-A-and-par-A}
         f = \setbuilderBig{\tuple{E,P}}{E \in \equivrels{A} \land P = A / E }
     \end{equation}
-    Next, we have to prove three claims:
+    We have to prove the following three claims:
     \begin{enumerate*}[label=(\alph*)]
         \item \( f \) is a function on \( \equivrels{A} \),
         \item \( \ran f = \partitions{A} \),
@@ -1702,11 +1702,11 @@ Here are some important theorems involving equivalence relations.
     \end{equation*}
     is an equivalence relation on \( A \) and that \( A / E = P \). Applying these facts to \eqref{eq:define-bijection-f-between-eqv-A-and-par-A},
     we deduce that \( \tuple{E,P} \in f \). Therefore, \( P \in \ran f \). In other words, \( \partitions{A} \subseteq \ran f \).
-    To prove the opposite inclusion, we let \( P \in \ran f \) be arbitrary. By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}, it follows
+    To prove the inclusion in the other direction, we let \( P \in \ran f \) be arbitrary. By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}, it follows
     that \( P = A / E \) for some \( E \in \equivrels{A} \). Since \( E \) is an equivalence relation on \( A \), it follows from
     \cref{lem:the-quotient-set-of-a-set-is-a-partition-of-the-set} that \( P = A / E \) is a partition on \( A \) and thus \( P \in \partitions{A} \).
     In other words, \( \ran f \subseteq \partitions{A} \). With both \( \ran f \subseteq \partitions{A} \) and \( \partitions{A} \subseteq \ran f \)
-    established, we can finally conclude that \( \ran f = \partitions{A} \).
+    established, we can conclude that \( \ran f = \partitions{A} \).
 
     \vspace{0.5cm}
     \noindent
@@ -1717,7 +1717,7 @@ Here are some important theorems involving equivalence relations.
     Let \( E_{1} \), \( E_{2} \), and \( P \) be arbitrary objects such that \( \tuple{E_{1},P} \in f \)
     and \( \tuple{E_{2},P} \in f \). By \eqref{eq:define-bijection-f-between-eqv-A-and-par-A}, it follows
     that \( E_{1} \in \equivrels{A} \), \( E_{2} \in \equivrels{A} \), and \( A / E_{1} = A / E_{2} = P \).
-    Given that \( E_{1} \) and \( E_{2} \) are both equivalence relations,
+    Since \( E_{1} \) and \( E_{2} \) are both equivalence relations on \( A \),
     \( P \) must be a partition on \( A \) by \cref{lem:the-quotient-set-of-a-set-is-a-partition-of-the-set}.
     By \cref{dfn:partition-of-a-set}, it follows that,
     \begin{equation}
@@ -1725,6 +1725,7 @@ Here are some important theorems involving equivalence relations.
         \Union P = A
     \end{equation}
     Now let \( b \in A \) be arbitrary. By \eqref{eq:A-equals-to-the-union-of-P}, it follows that \( b \in \Union P \).
+    Thus,
     \begin{equation*}
         \begin{aligned}
             b \in z_{0}&
@@ -1747,7 +1748,7 @@ Here are some important theorems involving equivalence relations.
         \forall a\,{\in}\,A \, \forall b\,{\in}\,A \, \Big[ \tuple{a,b} \in E_{1} \iff \tuple{a,b} \in E_{2} \Big]
     \end{equation*}
     Since \( E_{1} \) and \( E_{2} \) are both sets of 2-tuples, it is obvious that \( E_{1} = E_{2} \). With that,
-    it has been shown that \( \tuple{E_{1},P} \in f \land \tuple{E_{2},P} \in f \implies E_{1} = E_{2} \). Thus, \( f \)
+    we have shown that \( \tuple{E_{1},P} \in f \land \tuple{E_{2},P} \in f \implies E_{1} = E_{2} \). Thus, \( f \)
     must be injective by \cref{dfn:injection}.
 
     \vspace{0.3cm}
