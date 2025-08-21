@@ -208,7 +208,7 @@ serve as the rigorous foundation for the familiar set-builder notation.
     \vspace{0.3cm}
     \noindent
     Let \( x_{0} \) be any element of \setbuilder{z \in A}{\varphi_{1}(z)}.
-    Thus, we can make the following chain of inferences:
+    Thus, we can invoke the following chain of inferences:
     \begin{equation*}
         \begin{aligned}
             x_{0} \in \setbuilder{z \in A}{\varphi_{1}(z)}& \\
@@ -1010,7 +1010,7 @@ are being studied.
 
 \begin{proof}
     Let \( A \) be an arbitrary set. Let \( x \) be an arbitrary object.
-    Using elementary propositional logic, we can make the following inferences:
+    Using elementary propositional logic, we can invoke the following inferences:
     \begin{equation*}
         \begin{aligned}
             x \notin A \lor x \in A& \\
@@ -1656,7 +1656,7 @@ are being studied.
 \end{thm}
 
 \begin{proof}
-    Let \( x \) be an arbitrary object and \( T \) be any arbitrary set. Thus, we can make the following inferences:
+    Let \( x \) be an arbitrary object and \( T \) be any arbitrary set. Thus, we can invoke the following inferences:
     \begin{equation*}
         \begin{aligned}[c]
             T \notin \emptyset& \\
@@ -3286,4 +3286,101 @@ are being studied.
         &=
         \mleft( A \intersect C \mright) \symdiff \mleft( B \intersect C \mright) \qedhere
     \end{align*}
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:set-difference-in-terms-of-symmetric-difference-and-intersection}
+    For any two sets \( A \) and \( B \),
+    \begin{equation*}
+        A - B = A \symdiff \mleft( A \intersect B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. First, observe that \( A - B = A - \mleft( A \intersect B \mright) \) by De Morgan's Law and also that
+    \( \mleft( A \intersect B \mright) - A = \emptyset \) by \cref{set-identities:right-distributivity-of-difference}.
+    To express the right-hand side in terms of symmetric difference, we apply \cref{set-identities:symmetric-difference-as-the-union-of-differences}:
+    \begin{align*}
+        A - B
+        &= A - \mleft( A \intersect B \mright)\\
+        &= \mleft[ A - \mleft( A \intersect B \mright) \mright] \union \emptyset\\
+        &= \mleft[ A - \mleft( A \intersect B \mright) \mright] \union \mleft[ \mleft( A \intersect B \mright) - A \mright]\\
+        &= A \symdiff \mleft( A \intersect B \mright) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:union-in-terms-of-symmetric-difference-and-intersection}
+    For any two sets \( A \) and \( B \),
+    \begin{equation*}
+        A \union B = \mleft( A \symdiff B \mright) \symdiff \mleft( A \intersect B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( A \), \( B \), and \( C \) be arbitrary sets.
+    By \cref{set-identities:symmetric-difference-in-terms-of-union-and-intersection}, we have,
+    \begin{equation*}
+        A \symdiff B = \mleft( A \union B \mright) - \mleft( A \intersect B \mright)
+    \end{equation*}
+    Now consider the set \( \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright) \).
+    \begin{align*}
+        \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright)
+            &= \mleft[ \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \mright] \union \mleft( A \intersect B \mright)\\
+            &= \mleft( A \intersect B \mright) \union \mleft[ \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \mright]
+    \end{align*}
+    By \cref{set-identities:union-difference}, this becomes,
+    \begin{align*}
+        \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright)
+        &= \mleft[ \mleft( A \intersect B \mright) \union \mleft( A \union B \mright) \mright] - \mleft[ \mleft( A \intersect B \mright) - \mleft( A \intersect B \mright) \mright]\\
+        &= \mleft[ \mleft( A \intersect B \mright) \union \mleft( A \union B \mright) \mright] - \emptyset\\
+        &= \mleft( A \intersect B \mright) \union \mleft( A \union B \mright)
+    \end{align*}
+    We know that \( \union \) distributes over \( \intersect \). Thus,
+    \begin{equation}
+        \label{eq:union-in-terms-of-symdiff-and-intersection}
+        \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright)
+        = \mleft[ A \union \mleft( A \union B \mright) \mright] \intersect \mleft[ B \union \mleft( A \union B \mright) \mright]
+        = \mleft( A \union B \mright)
+    \end{equation}
+    The problem with \eqref{eq:union-in-terms-of-symdiff-and-intersection} is that it still contains the \( \union \) operation. To eliminate
+    the \( \union \) operation, observe that \( \mleft( A \symdiff B \mright) \intersect \mleft( A \intersect B \mright) = \emptyset \). This allows
+    \eqref{eq:union-in-terms-of-symdiff-and-intersection} to be re-expressed as follows:
+    \begin{align*}
+        \mleft( A \union B \mright)
+        &= \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright)\\
+        &= \mleft[ \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright) \mright] - \emptyset\\
+        &= \mleft[ \mleft( A \symdiff B \mright) \union \mleft( A \intersect B \mright) \mright] -
+        \mleft[ \mleft( A \symdiff B \mright) \intersect \mleft( A \intersect B \mright) \mright]\\
+        &= \mleft( A \symdiff B \mright) \symdiff \mleft( A \intersect B \mright) \qedhere
+    \end{align*}
+\end{proof}
+
+\begin{thm}
+    \label{set-identities:intersection-in-terms-of-union-and-symmetric-difference}
+    For any two sets \( A \) and \( B \),
+    \begin{equation*}
+        A \intersect B = \mleft( A \union B \mright) - \mleft( A \symdiff B \mright)
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    We start with the right-hand side of the equation and apply \cref{set-identities:symmetric-difference-in-terms-of-union-and-intersection}.
+    \begin{equation*}
+        A \intersect B
+        = \mleft( A \union B \mright) - \mleft( A \symdiff B \mright)
+        = \mleft( A \union B \mright) - \mleft[ \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \mright]
+    \end{equation*}
+    This can be further simplifed using the result from \cref{set-identities:subtract-B-minus-C-from-A}.
+    \begin{equation*}
+        A \intersect B = \mleft[ \mleft( A \union B \mright) - \mleft( A \union B \mright) \mright] \union
+        \mleft[ \mleft( A \union B \mright) \intersect \mleft( A \intersect B \mright) \mright]
+        = \emptyset \union \mleft[ \mleft( A \union B \mright) \intersect \mleft( A \intersect B \mright) \mright]
+    \end{equation*}
+    Since \( \intersect \) distributes over \( \union \), we have,
+    \begin{equation*}
+        A \intersect B = A \intersect \mleft( A \intersect B \mright) \union B \intersect \mleft( A \intersect B \mright)
+        = \mleft( A \intersect B \mright) \union \mleft( A \intersect B \mright)
+        = A \intersect B \qedhere
+    \end{equation*}
 \end{proof}
