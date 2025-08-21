@@ -95,7 +95,7 @@ exactly the von Neumann ordinals.
 \begin{dfn}[Inductive Set]
     \label{dfn:inductive-set}
     A set \( I \) is \keyword{inductive} if and only if the following conditions hold:
-    \begin{enumerate}[noitemsep,label=(\alph*)]
+    \begin{enumerate}[noitemsep,label=\texttt{\textup{(\alph*)}}]
         \item \( \emptyset \in I \)
         \item \( \forall x \, \big[ x \in I \implies x \union \mleft\{ x \mright\} \in I \big] \)
     \end{enumerate}
@@ -319,7 +319,7 @@ we now turn to an immediate application of the natural numbers.
     \label{dfn:n-tuples-sequence-notation}
     For any \( n \in \naturalset \) where \( n \neq 0 \),
     \( t = \tuple{x_{0}, \dots, x_{n-1}} \) if and only if the following conditions hold:
-    \begin{enumerate}[noitemsep,label=(\alph*)]
+    \begin{enumerate}[noitemsep,label=\texttt{\textup{(\alph*)}}]
         \item \( \surjection{t}{n}{\mleft\{ x_{0},\dots,x_{n-1} \mright\}} \)
         \item \( \forall i\,{\in}\,n \, \big( t(i) = x_{i} \big) \)
     \end{enumerate}
@@ -1086,7 +1086,7 @@ In general, when we say that ``\( A \) is equivalent to \( B \),'' what we're re
 and \( B \) can be treated as though they are the same object even though they may, in fact, be different objects.
 We also note the following:
 \vspace{0cm}
-\begin{enumerate}[label=(\arabic*)]
+\begin{enumerate}[label=\texttt{\textup{(\alph*)}}]
     \item \( A \) is equivalent to \( A \)
     \item If \( A \) is equivalent to \( B \), then \( B \) must also be equivalent to \( A \)
     \item If \( A \) is equivalent to \( B \) and \( B \) to \( C \), then \( A \) must be equivalent to \( C \)
@@ -1159,7 +1159,7 @@ in terms of it.
     \label{dfn:partition-of-a-set}
     A system of sets \( P \) is a \keyword{partition} of another set \( A \) if and only if the following
     conditions hold:
-    \begin{enumerate}[label=(\alph*)]
+    \begin{enumerate}[label=\texttt{\textup{(\alph*)}}]
         \item \( \forall x\,{\in}\,P \, \big( x \neq \emptyset \big) \)
         \item \( \forall x\,{\in}\,P \, \forall y\,{\in}\,P \, \big( x \neq y \implies x \intersect y = \emptyset \big) \)
         \item \( \Union P = A \)
@@ -1378,7 +1378,7 @@ Here are some important theorems involving equivalence relations.
     Let \( A \) be a set and \( E \) be an equivalence relation on \( A \).
     Let \( a \) and \( b \) be arbitrary elements of \( A \). Then the following
     statements hold:
-    \begin{enumerate}[noitemsep,label=(\roman*)]
+    \begin{enumerate}[noitemsep,label=\texttt{\textup{(\alph*)}}]
         \item \( \tuple{a,b} \in E \iff \equivclass{a}_{E} = \equivclass{b}_{E} \) \label{enum:condition-for-ab-in-E}
         \item \( \tuple{a,b} \notin E \iff \equivclass{a}_{E} \intersect \equivclass{b}_{E} = \emptyset \) \label{enum:condition-for-ab-not-in-E}
     \end{enumerate}
