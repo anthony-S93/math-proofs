@@ -1,17 +1,495 @@
 \newpage
 \appendix
-\chapter{Results from Elementary Logic}
 
+
+\chapter{Proof-Theoretic Concepts}
+\begin{dfn}[Proof System]
+    \phantomsection \label{dfn:proof-system}
+    A \keyword{proof system} \( \proofsystem{P} \) for a first-order language \( \mathcal{L} \) consists of the following:
+    \begin{enumerate}[topsep=2pt,noitemsep,label=\textup{\texttt{(\alph*)}}]
+        \item A (possibly infinite) set \( \Lambda^{\proofsystem{P}} \) of logical axioms--- \( \mathcal{L} \)-formulas that are universally true regardless of
+            interpretation.
+        \item A finite set \( \Phi^{\proofsystem{P}} \) of rules that determine how new \( \mathcal{L} \)-formulas can be derived from an existing
+            collection of \( \mathcal{L} \)-formulas. These rules are typically called the \keyword{rules of inference}.
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    The set \( \Lambda^{\proofsystem{P}} \) is typically defined using a finite collection of \emph{axiom schemas}, which are essentially
+    templates representing an entire family of infinitely many axioms.
+    For instance, the axiom schema \phantomsection \label{anchor:axiom-schema}
+    \( A {\implies} \mleft( B {\implies} A \mright) \) is part of many proof systems.
+    For such proof systems, the formulas \( \varphi_{1} {\implies} \mleft( \psi_{1} {\implies} \varphi_{1} \mright) \) and
+    \( \varphi_2 {\implies} \mleft( \psi_1 {\implies} \varphi_{2} \mright) \) are both part of \( \Lambda^{\proofsystem{P}} \) provided
+    that \( \varphi_1 \), \( \varphi_2 \), \( \psi_1 \), and \( \psi_2 \) are all \( \mathcal{L} \)-formulas.
+\end{rem}
+
+\begin{dfn}[Proof]
+    \phantomsection \label{dfn:formal-proof}
+    Let \( \proofsystem{P} \) be a proof system for a first-order language \( \mathcal{L} \) and \( \varphi \)
+    be an \( \mathcal{L} \)-formula. Furthermore, let \( \Gamma \) be a set of \( \mathcal{L} \)-formulas.
+    A \keyword{formal proof} of \( \varphi \) from \( \Gamma \) in \( \proofsystem{P} \) is a finite sequence
+    \( \sequence{\Sigma_i}{i \in n } \) of length \( n \in \naturalset \) such that the following conditions hold:
+    \begin{enumerate}[topsep=2pt,noitemsep,label=\textup{\texttt{(\alph*)}}]
+        \item For all \( i \in n \), at least one of the following is true:
+            \begin{itemize}[topsep=2pt,noitemsep]
+                \item \( \Sigma_i \in \Gamma \)
+                \item \( \Sigma_i \in \Lambda^{\proofsystem{P}} \)
+                \item \( \Sigma_i \) is derived using one of the rules in \( \Phi^{\proofsystem{P}} \)
+            \end{itemize}
+        \item \( \Sigma_{n-1} = \varphi \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:provability}
+    An \( \mathcal{L} \)-formula \( \varphi \) is \keyword{provable} from \( \Gamma \) in \( \proofsystem{P} \) if and only if
+    there exists a formal proof of \( \varphi \) from \( \Gamma \) in \( \proofsystem{P} \).
+\end{dfn}
+
+\begin{notation}
+    \phantomsection \label{notation:provable}
+    We write \( \Gamma \derives_{\proofsystem{P}} \varphi \) to mean
+    that \( \varphi \) is provable from \( \Gamma \) in \( \proofsystem{P} \).
+    The subscript can be omitted if the context makes it clear which proof system is being used.
+    We write \( \Gamma \models \varphi \) to mean that \( \varphi \) is a \emph{semantic consequence}
+    of \( \Gamma \); that is, for every interpretation where all the \( \mathcal{L} \)-formulas in \( \Gamma \)
+    is true, then the \( \mathcal{L} \)-formula \( \varphi \) is also true.
+\end{notation}
+
+\begin{dfn}[Soundness]
+    \phantomsection \label{dfn:soundness-of-proof-system}
+    A proof system \( \proofsystem{P} \) of a first-order language \( \mathcal{L} \) is \keyword{sound}
+    if and only if for any set of \( \mathcal{L} \)-formulas \( \Gamma \) and any \( \mathcal{L} \)-formula
+    \( \varphi \), \( \Gamma \derives_{\proofsystem{P}} \varphi {\implies} \Gamma \models \varphi \).
+\end{dfn}
+
+\begin{dfn}[Completeness]
+    \phantomsection \label{dfn:completeness-of-proof-system}
+    A proof system \( \proofsystem{P} \) of a first-order language \( \mathcal{L} \) is \keyword{complete}
+    if and only if for any set of \( \mathcal{L} \)-formulas \( \Gamma \) and any \( \mathcal{L} \)-formula
+    \( \varphi \), \( \Gamma \models \varphi {\implies} \Gamma \derives_{\proofsystem{P}} \varphi \). In other
+    words, it is possible to construct a proof in \( \proofsystem{P} \) for every possible logical consequence.
+\end{dfn}
+
+\noindent
+Most proof systems in practice fall into either one of the following categories:
+\begin{enumerate*}[label=(\roman*)]
+    \item Hilbert systems,
+    \item natural deduction.
+\end{enumerate*}
+Hilbert systems gravitate towards the use of logical axioms to express the laws of deductive reasoning. The number of rules
+of inference in such systems is typically kept at a bare minimum.
+In fact, most Hilbert systems include only a single rule of inference---Modus Ponens.
+Natural deduction, on the other hand, does the exact opposite by incorporating as many rules of inference as possible in order
+to mimic the ``natural'' way of human reasoning.
+
+\vspace{0.3cm}
+\noindent
+Both Hilbert systems and natural deduction have their merits.
+Natural deduction is more human-friendly compared to Hilbert systems.
+Rather than basing the reasoning process on a set of seemingly abstruse and esoteric axioms,
+natural deduction revolves around a set of rules that model human deductive thought.
+That is why proofs written within the framework of natural deduction are often easier to read and understand,
+which is a huge boon to mathematicians.
+The only downside is that it renders the implementation of proof-checking software far more complicated than it need be,
+which is why most proof-checkers are implemented as Hilbert systems.
+
+\vspace{0.3cm}
+\noindent
+All the proofs in this book are derived via natural deduction.
+Refer to Appendix \ref{appendices:natural-deduction} for the full specification of the proof system used in this book.
+
+\chapter{Natural Deduction} \phantomsection \label{appendices:natural-deduction}
+
+\begin{notation}
+    Let \( \mathcal{L} \) be any first-order language and \( \proofsystem{P} \) be our proof system for \( \mathcal{L} \).
+    The following notational conventions will be used in the specification of \( \proofsystem{P} \):
+    \begin{enumerate}[topsep=2pt,noitemsep,label=\textup{\texttt{(\alph*)}}]
+        \item Lowercase letters (\( x, y, z\)) denote variables.
+        \item Uppercase letters (\( A,B,C,\dots \)) and \( \varphi \) denote \( \mathcal{L} \)-formulas.
+        \item Uppercase Greek letters (\( \Delta, \Gamma \)) denote \emph{sets} of \( \mathcal{L} \)-formulas.
+        \item \aref{dfn:functional-notation}{Functional notation} is used whenever there is a need to emphasize
+            that an \( \mathcal{L} \)-formula has free variables (i.e., \( \varphi(x) \)).
+        \item Ellipses are used to indicate that an \( \mathcal{L} \)-formula may contain any number of free variables other
+            than the one indicated (i.e., \( \varphi(x,\dots) \)).
+        \item We write \( \varphi(x \mapsto t) \) to denote the \( \mathcal{L} \)-formula obtained by replacing every free
+            occurrence of \( x \) in \( \varphi \) with \( t \).
+    \end{enumerate}
+\end{notation}
+
+\subsection*{Logical Axioms}
+\( \proofsystem{P} \) has only one logical axiom, and that is the Law of Identity: \( \forall x \, \mleft[ x = x \mright] \).
+The rest of \( \proofsystem{P} \) consists of rules for deriving new \( \mathcal{L} \)-formulas from a (possibly empty) set of
+existing \( \mathcal{L} \)-formulas.
+
+\subsection*{Rules of Inference}
+\begin{enumerate}[topsep=2pt,itemsep=10pt,label=\textup{\texttt{(\arabic*)}}]
+    \item {Assumption}: \phantomsection \label{rule-of-inference:assumption}
+
+        If \( A \in \Gamma \), then \( \Gamma \derives A \).
+
+    \item Monotonicity: \phantomsection \label{rule-of-inference:monotonicity}
+
+        If \( \Gamma^{\prime} \derives A \) and \( \Gamma^{\prime} \subset \Gamma \), then \( \Gamma \derives A \).
+
+    \item Substitution: \phantomsection \label{rule-of-inference:substitution}
+
+        If \( \Gamma \derives \mleft( x = y \mright) \), then \( \Gamma \derives \mleft( \varphi(x, \dots) {\iff} \varphi(y, \dots) \mright) \)
+        for any formula \( \varphi \).
+
+    \item Double Negation: \phantomsection \label{rule-of-inference:double-negation}
+
+        If \( \Gamma \derives A \), then \( \Gamma \derives \lnot \, \mleft( \lnot \, A \mright) \).
+
+    \item Conjunction Introduction: \phantomsection \label{rule-of-inference:conjunction-introduction}
+
+        If \( \Gamma \derives A \) and \( \Gamma \derives B \), then \( \Gamma \derives \mleft( A \,\,{\land}\,\, B \mright) \).
+
+    \item Conjunction Elimination: \phantomsection \label{rule-of-inference:conjunction-elimination}
+
+        If \( \Gamma \derives \mleft( A \,\,{\land}\,\, B \mright) \), then \( \Gamma \derives A \).
+
+    \item Disjunction Introduction: \phantomsection \label{rule-of-inference:disjunction-introduction}
+
+        If \( \Gamma \derives A \), then \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \).
+
+    \item Disjunction Elimination: \phantomsection \label{rule-of-inference:disjunction-elimination}
+
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \), \( \Gamma \derives \mleft( A {\implies} C \mright) \),
+        and \( \Gamma \derives \mleft( B {\implies} C \mright) \), then \( \Gamma \derives C \).
+
+    \item Commutation: \phantomsection \label{rule-of-inference:commutation}
+
+        If \( \Gamma \derives \mleft( A \,\,{\land}\,\, B \mright) \), then \( \Gamma \derives \mleft( B \,\,{\land}\,\, A \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \), then \( \Gamma \derives \mleft( B \,\,{\lor}\,\, A \mright) \).
+
+    \item Association: \phantomsection \label{rule-of-inference:association}
+
+        If \( \Gamma \derives \mleft( A \,\,{\land}\,\, \mleft( B \,\,{\land}\,\, C \mright) \mright) \), then
+        \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) \,\,{\land}\,\, C \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \mleft( B \,\,{\lor}\,\, C \mright) \mright) \), then
+        \( \Gamma \derives \mleft( \mleft( A \,\,{\lor}\,\, B \mright) \,\,{\lor}\,\, C \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) \,\,{\land}\,\, C \mright) \), then
+        \( \Gamma \derives \mleft( A \,\,{\land}\,\, \mleft( B \,\,{\land}\,\, C \mright) \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \mleft( A \,\,{\lor}\,\, B \mright) \,\,{\lor}\,\, C \mright) \), then
+        \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \mleft( B \,\,{\lor}\,\, C \mright) \mright) \).
+
+    \item Distribution: \phantomsection \label{rule-of-inference:distribution}
+
+        If \( \Gamma \derives \mleft( A \,\,{\land}\,\, \mleft( B \,\,{\lor}\,\, C \mright) \mright) \), then
+        \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) \,\,{\lor}\,\, \mleft( A \,\,{\land}\,\, C \mright) \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \mleft( B \,\,{\land}\,\, C \mright) \mright) \), then
+        \( \Gamma \derives \mleft( \mleft( A \,\,{\lor}\,\, B \mright) \,\,{\land}\,\, \mleft( A \,\,{\lor}\,\, C \mright) \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) \,\,{\lor}\,\, \mleft( A \,\,{\land}\,\, C \mright) \mright) \),
+        then \( \Gamma \derives \mleft( A \,\,{\land}\,\, \mleft( B \,\,{\lor}\,\, C \mright) \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \mleft( A \,\,{\lor}\,\, B \mright) \,\,{\land}\,\, \mleft( A \,\,{\lor}\,\, C \mright) \mright) \),
+        then \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \mleft( B \,\,{\land}\,\, C \mright) \mright) \).
+
+    \item Disjunction Definition: \phantomsection \label{rule-of-inference:disjunction-definition}
+
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \), then
+        \( \Gamma \derives \mleft( \lnot \, \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \mright) \),
+        then \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \).
+
+    \item Conditional Definition: \phantomsection \label{rule-of-inference:conditional-definition}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \), then \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, B \mright) \), then \( \Gamma \derives \mleft( A {\implies} B \mright) \).
+
+    \item Contraposition: \phantomsection \label{rule-of-inference:contraposition}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \), then \( \Gamma \derives \mleft( \lnot \, B {\implies} \lnot \, A \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, B {\implies} \lnot \, A \mright) \), then \( \Gamma \derives \mleft( A {\implies} B \mright) \).
+
+    \item Biconditional Introduction: \phantomsection \label{rule-of-inference:biconditional-introduction}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \) and \( \Gamma \derives \mleft( B {\implies} A \mright) \),
+        then \( \Gamma \derives \mleft( A {\iff} B \mright) \).
+
+    \item Biconditional Elimination: \phantomsection \label{rule-of-inference:biconditional-elimination}
+
+        If \( \Gamma \derives \mleft( A {\iff} B \mright) \), then \( \Gamma \derives \mleft( A {\implies} B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( A {\iff} B \mright) \), then \( \Gamma \derives \mleft( B {\implies} A \mright) \).
+
+    \item Law of Excluded Middle: \phantomsection \label{rule-of-inference:law-of-excluded-middle}
+
+        \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \lnot \, A \mright) \).
+
+    \item De Morgan's Laws: \phantomsection \label{rule-of-inference:de-morgans-laws}
+
+        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \), then
+        \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \), then
+        \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \), then
+        \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \), then
+        \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \).
+
+    \item Absorption: \phantomsection \label{rule-of-inference:absorption}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \), then \( \Gamma \derives \mleft( A {\implies} \mleft( A \,\,{\land}\,\, B \mright) \mright) \).
+
+    \item Exportation: \phantomsection \label{rule-of-inference:exportation}
+
+        If \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) {\implies} C \mright) \),
+        then \( \Gamma \derives \mleft( A {\implies} \mleft( B {\implies} C \mright) \mright) \).
+
+    \item Importation: \phantomsection \label{rule-of-inference:importation}
+
+        If \( \Gamma \derives \mleft( A {\implies} \mleft( B {\implies} C \mright) \mright) \), then
+        \( \Gamma \derives \mleft( \mleft( A \,\,{\land}\,\, B \mright) {\implies} C \mright) \).
+
+    \item Modus Ponens: \phantomsection \label{rule-of-inference:modus-ponens}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \) and \( \Gamma \derives A \), then \( \Gamma \derives B \).
+
+    \item Modus Tollens: \phantomsection \label{rule-of-inference:modus-tollens}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \) and \( \Gamma \derives \lnot \, B \), then \( \Gamma \derives \lnot \, A \).
+
+    \item Disjunctive Syllogism: \phantomsection \label{rule-of-inference:disjunctive-syllogism}
+
+        If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \) and \( \Gamma \derives \lnot \, B \), then \( \Gamma \derives A \).
+
+    \item Hypothetical Syllogism: \phantomsection \label{rule-of-inference:hypothetical-syllogism}
+
+        If \( \Gamma \derives \mleft( A {\implies} B \mright) \) and \( \Gamma \derives \mleft( B {\implies} C \mright) \), then
+        \( \Gamma \derives \mleft( A {\implies} C \mright) \).
+
+    \item Constructive Dilemma: \phantomsection \label{rule-of-inference:constructive-dilemma}
+
+        If \( \Gamma \derives \mleft( A {\implies} C \mright) \), \( \Gamma \derives \mleft( B {\implies} D \mright) \), and
+        \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \), then \( \Gamma \derives \mleft( C \,\,{\lor}\,\, D \mright) \).
+
+    \item Deduction Theorem: \phantomsection \label{rule-of-inference:deduction-theorem}
+
+        If \( \Gamma \union \mleft\{ A \mright\} \derives B \), then \( \Gamma \derives \mleft( A {\implies} B \mright) \).
+
+    \item Reductio ad Absurdum: \phantomsection \label{rule-of-inference:reductio-ad-absurdum}
+
+        If \( \Gamma \union \mleft\{ A \mright\} \derives B \) and \( \Gamma \union \mleft\{ A \mright\} \derives \lnot \, B \), then
+        \( \Gamma \derives \lnot \, A \).
+
+    \item Universal Generalization: \phantomsection \label{rule-of-inference:universal-generalization}
+
+        If \( \Gamma \derives \varphi(t, \dots) \) and \( t \) does not appear in any of the formulas in \( \Gamma \),
+        then \( \Gamma \derives \forall x \, \varphi(t \mapsto x, \dots) \) provided that \( x \) does not appear in
+        \( \varphi(t, \dots) \).
+
+    \item Universal Instantiation: \phantomsection \label{rule-of-inference:universal-instantiation}
+
+        If \( \Gamma \derives \forall x \, \varphi(x,\dots) \) and \( t \) is not a bound variable in \( \varphi(x, \dots) \),
+        then \( \Gamma \derives \varphi(x \mapsto t,\dots) \).
+
+    \item Existential Generalization: \phantomsection \label{rule-of-inference:existential-generalization}
+
+        If \( \Gamma \derives \varphi(t,\dots) \) and \( x \) does not appear in \( \varphi(t, \dots) \),
+        then \( \Gamma \derives \exists x \, \varphi(t \mapsto x, \dots )\).
+
+    \item Existential Instantiation: \phantomsection \label{rule-of-inference:existential-instantiation}
+
+        If \( \Gamma \derives \exists x \, \varphi(x, \dots) \) and \( t \) does not appear in \( \varphi(x, \dots) \),
+        then \( \Gamma \derives \varphi(t \mapsto x, \dots) \).
+
+    \item Existential Definition: \phantomsection \label{rule-of-inference:existential-definition}
+
+        If \( \Gamma \derives \exists x \, \varphi(x, \dots) \), then \( \Gamma \derives \lnot \, \forall x \, \lnot \, \varphi(x, \dots) \).
+
+        \noindent
+        If \( \Gamma \derives \lnot \, \forall x \, \lnot \, \varphi(x, \dots) \), then \( \Gamma \derives \exists x \, \varphi(x, \dots) \).
+\end{enumerate}
+
+\vspace{0.3cm}
+\noindent
+The validity of rules \crefrange{rule-of-inference:assumption}{rule-of-inference:reductio-ad-absurdum} is evident from basic propositional logic
+(i.e., to verify them one only has to look at the truth tables of the relevant logical operators).
+On the other hand, the restrictions imposed on the rules involving quantifiers warrant further discussion.
+
+\vspace{0.3cm}
+\noindent
+First, we have the \aref{rule-of-inference:universal-generalization}{Universal Generalization} rule, upon which the
+following restrictions are imposed:
+\begin{enumerate}[label=\textup{\texttt{(\alph*)}}]
+    \item \( t \) is not a variable in any of the formulas in \( \Gamma \). \phantomsection \label{enum:universal-generalization-restriction1}
+    \item \( x \) is not a variable in \( \varphi \). \phantomsection \label{enum:universal-generalization-restriction2}
+\end{enumerate}
+Both of these restrictions are necessary to ensure the \aref{dfn:soundness-of-proof-system}{soundness} of \( \proofsystem{P} \).
+To illustrate why, suppose that \( \Gamma = \mleft\{ \varphi, \psi, \phi \mright\} \) is a set of \( \mathcal{L} \)-formulas with the formulas
+\( \varphi \), \( \psi \), and \( \phi \) defined as follows:
+\begin{align*}
+    \varphi(t) &\coloneq \text{\( t \) is a cat}\\
+    \psi(t,x) &\coloneq \text{\( t \) is an offspring of \( x \)}\\
+    \phi &\coloneq \text{\( \forall x \, \exists t \, \psi(x,t) \)}
+\end{align*}
+Since \( \varphi(t) \in \Gamma \), we can validly infer by \aref{rule-of-inference:assumption}{Assumption} that \( \Gamma \derives \varphi(t) \).
+However, without restriction \ref{enum:universal-generalization-restriction1}, we are then permitted to fallaciously apply
+\aref{rule-of-inference:universal-generalization}{Universal Generalization} to conclude that
+\( \Gamma \derives \forall x \, \varphi(x) \), which is tantamount to the following argument:
+\begin{equation*}
+    \begin{aligned}
+        \text{\bfseries Premise:}&\\
+        \text{\bfseries Conclusion:}&
+    \end{aligned}
+    \begin{aligned}
+        &\quad\text{\( t \) is a cat.}\\
+        &\quad\text{Therefore, every animal is a cat.}
+    \end{aligned}
+\end{equation*}
+\noindent
+Absurd! Just because some animal named \( t \) is a cat does not necessarily mean that every animal in existence is a cat.
+In order to validly infer \( \forall z \, \varphi(z) \) from \( \Gamma \),
+one must be able to derive \( \varphi \) from \( \Gamma \) using \emph{any}
+variable symbol from the language of \( \mathcal{L} \), not just \( t \).
+It is easy to see how restriction \ref{enum:universal-generalization-restriction1} enforces this rule.
+Since the variable \( t \) is a free variable in at least one formula in \( \Gamma \),
+the \aref{rule-of-inference:universal-generalization}{Universal Generalization} rule is not applicable,
+so one cannot infer \( \forall z \, \varphi(z) \) from \( \varphi(t) \). Instead, one has to
+derive \( \varphi \) from \( \Gamma \) not by mere \aref{rule-of-inference:assumption}{Assumption}, but
+by showing that \( \varphi \) still holds even after replacing \( t \) with an arbitrary variable in the language of \( \mathcal{L} \).
+
+\vspace{0.3cm}
+\noindent
+Restriction \ref{enum:universal-generalization-restriction2} is equally important for the soundness of \( \proofsystem{P} \).
+If restriction \ref{enum:universal-generalization-restriction1}'s role is to prevent erroneous inferences, then restriction
+\ref{enum:universal-generalization-restriction2}'s role is to preserve the \emph{meaning} of the original formula during the
+generalization. To understand this, suppose that \( \Gamma \derives \psi(a,x) \). Since \( a \) is not mentioned in any of the
+formulas in \( \Gamma \), restriction \ref{enum:universal-generalization-restriction1} is not violated, so one concludes (albeit fallaciously)
+by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \forall x \, \psi(a \mapsto x, x) \).
+Informally, this problematic inference translates to:
+\begin{equation*}
+    \begin{aligned}
+        \text{\bfseries Premise:}&\\
+        \text{\bfseries Conclusion:}&
+    \end{aligned}
+    \begin{aligned}
+        &\quad \text{\( a \) is an offspring of \( x \).}\\
+        &\quad\text{Therefore, every \( x \) is an offspring of \( x \).}
+    \end{aligned}
+\end{equation*}
+\noindent
+Again, absurd!
+The fact that an animal \( a \) is an offspring of some other animal \( x \) does not logically imply that every animal is an offspring of itself.
+There is simply no logical connection whatsoever between the conclusion and the premise. So what exactly went wrong?
+
+\vspace{0.3cm}
+\noindent
+The problem here is that the variable \( x \) is already a free variable of \( \psi \) before the universal quantifier is applied,
+and whenever we replace a free variable in a formula with another free variable in the same formula, we alter the meaning of the formula entirely.
+\begin{equation*}
+    \begin{aligned}
+        \psi(a, x):&\\
+        \psi(a \mapsto x, x):&
+    \end{aligned}
+    \begin{aligned}
+        &\quad\text{\( a \) is an offspring of \( x \).}\\
+        &\quad\text{\( x \) is an offspring of \( x \).}
+    \end{aligned}
+\end{equation*}
+\noindent
+Needless to say, \( \psi(a,x) \) and \( \psi(a \mapsto x, x) \) have completely different meanings.
+\( \psi(a, x) \) asserts that the first animal \( a \) is an offspring of
+the second animal \( x \), whereas \( \psi(a \mapsto x, x) \) asserts that an animal is an offspring of itself;
+and when the universal quantifier is applied to \( \psi(a \mapsto x, x) \), we end up with a formula that says
+\emph{every animal is an offspring of itself} instead of the intended
+\emph{every animal is an offspring of \( x \)}.
+
+\vspace{0.3cm}
+\noindent
+Of course, restriction \ref{enum:universal-generalization-restriction2} resolves this by prohibiting the reuse of variable names in the same formula;
+that is, we are no longer allowed to infer \( \forall x \, \psi(a \mapsto x, x) \) from \( \psi(a, x) \)
+because the symbol \( x \) is already a free variable in \( \psi(a, x) \).
+Instead, we must use something other than \( x \) for the bound variable---i.e., \( \forall y \, \psi(a \mapsto y, x) \).
+
+\vspace{0.3cm}
+\noindent
+To understand the restriction on \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}, consider
+the invalid inference from \( \forall x \, \exists t \, \psi(x,t) \) to \( \exists t \, \psi(x \mapsto t, t) \),
+which results in the following nonsensical argument:
+\begin{equation*}
+    \begin{aligned}
+        \text{\bfseries Premise}&:\\
+        \text{\bfseries Conclusion}&:
+    \end{aligned}
+    \begin{aligned}
+        &\quad\text{Every animal has a parent.}\\
+        &\quad\text{There exists an animal that is its own parent.}
+    \end{aligned}
+\end{equation*}
+Since \( t \) is a bound variable in \( \exists t \, \psi(x,t) \)
+and the free variable \( x \) appears within the scope of the existential quantifier to which \( t \) is bound,
+replacing all occurrences of \( x \) with \( t \) will alter the meaning of the formula because the variable that used
+to be \( x \) will no longer be a free variable after the substitution.
+\begin{equation*}
+    \begin{aligned}
+        \exists t \, \psi(x,t)&:\\
+        \exists t \, \psi(x \mapsto t, t)&:
+    \end{aligned}
+    \begin{aligned}
+        &\quad \exists t \, \big[ \text{\( x \) is an offspring of \( t \)} \big]\\
+        &\quad \exists t \, \big[ \text{\( t \) is an offspring of \( t \)} \big]
+    \end{aligned}
+\end{equation*}
+The variable that used to be \( x \) is supposed to still be a free variable after the substitution; but because
+the new variable is called \( t \) and \( t \) is already bound to an existential quantifier, the resulting variable
+becomes a bound variable too. A variable with a different name has to be used to retain the intended meaning of the formula:
+\begin{equation*}
+    \begin{aligned}
+        \text{\bfseries Premise}&:\\
+        \text{\bfseries Conclusion}&:
+    \end{aligned}
+    \begin{aligned}
+        &\quad \forall x \, \exists t \, \psi(x,t)\\
+        &\quad \exists t \, \psi(y, t)
+    \end{aligned}
+\end{equation*}
+Note that the use of the variable \( t \) for \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} is still allowed if \( t \) is a free variable
+in the original formula. For example, if \( \Gamma \derives \forall x \, \psi(x, t) \), then \( \Gamma \derives \psi(t, t) \) is a valid inference because \( t \)
+is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contrast with restriction \ref{enum:universal-generalization-restriction2} for
+\aref{rule-of-inference:universal-generalization}{Universal Generalization} (take note!)
+which prohibits the reuse of any variable, free or bound, from the original formula.
+
+\chapter{Tautologies}
 \begin{thm}
-    \label{logic:grouping-disjuncts-into-quantified-statement-universal}
+    \label{tautology:grouping-disjuncts-into-universally-quantified-formula}
     Given any well-formed formulas \( \Gamma \) and \( \varphi \)
-    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and 
+    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and
     \(\beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         \equiv
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m})  \big)
     \end{equation*}
 \end{thm}
@@ -21,37 +499,37 @@
     Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) represent objects
     in \( D \).
 
-    \vspace{0.5cm}
+    \vspace{0.3cm}
     \noindent Suppose that the formula,
     \begin{equation}
         \label{eq:lhs-statement}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
     holds. From the truth table for the logical-\( \lor \) operator,
-    it is clear that there are only three possible cases in which 
+    it is clear that there are only three possible cases in which
     \eqref{eq:lhs-statement} is true.
-    
+
     % Case 1
     \vspace{0.5cm}
-    \noindent {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
-    \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \). 
+    \noindent {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
+    \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
 
     \vspace{0.1cm}
     \noindent
     Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds, then by Disjunction Introduction,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
     \end{equation*}
-    for any \( x_{0} \in D \). Since \( x_{0} \) is arbitrary, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+    for any \( x_{0} \in D \). Since \( x_{0} \) is arbitrary, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
     \lor \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from Universal Generalization.
 
 
     % Case 2
     \vspace{0.5cm}
-    \noindent {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
-    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\). 
+    \noindent {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
+    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\).
 
     \vspace{0.1cm}
     \noindent
@@ -68,7 +546,7 @@
 
     % Case 3
     \vspace{0.5cm}
-    \noindent {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    \noindent {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\)
 
     \vspace{0.1cm}
@@ -83,27 +561,27 @@
 
     \vspace{0.5cm}
     \noindent
-    In all three cases, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
-    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from the initial assumption that 
+    In all three cases, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
+    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from the initial assumption that
     \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
     \begin{equation*}
         \therefore \,
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \implies
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation*}
     Furthermore, this implication holds regardless of any interpretation.
     Thus,
     \begin{equation}
         \label{eq:disjunct-into-universal-quantifier-forward-entailment}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
+        \models
         \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation}
 
@@ -112,18 +590,18 @@
     the formula,
     \begin{equation}
         \label{eq:rhs-statement}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation}
     holds. Clearly, there are only 2 possible cases in which \eqref{eq:rhs-statement} can be true.
 
     \vspace{0.5cm}
     \noindent
-    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds. 
+    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds.
 
     \vspace{0.1cm}
     \noindent
-    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\).
 
     \vspace{0.5cm}
@@ -131,28 +609,28 @@
     In both cases,
     \begin{equation*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     follows trivially by Disjunction Introduction.
     \begin{equation*}
-        \therefore \, 
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
-        \lor 
+        \therefore \,
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
+        \implies
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     Since the implication is independent of the interpretation, we have,
     \begin{equation}
         \label{eq:disjunct-into-universal-quantifier-backward-entailment}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-        \models 
+        \models
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
 
@@ -163,59 +641,59 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:grouping-conjuncts-into-quantified-statement-universal}
+    \label{tautology:grouping-conjuncts-into-universally-quantified-formula}
     Given any well-formed formulas \( \Gamma \) and \( \varphi \)
-    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and 
+    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and
     \(\beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         \equiv
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation*}
 \end{thm}
 
 \begin{proof}
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context
-    of an arbitrary, non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and 
+    of an arbitrary, non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and
     \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
 
     \vspace{0.5cm}
     \noindent
-    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) holds.
     Now, let \( x_{0} \in D \) be arbitrary.
     Since \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true,
     \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) follows by Universal Instantiation.
     By Conjunction Introduction and Universal Generalization, it follows that,
     \begin{equation*}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation*}
     Using the Deduction Theorem, we derive the implication:
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \implies
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation*}
     Given that the interpretation of all the formulas is arbitrary, it follows that,
     \begin{equation}
         \label{eq:conjunct-into-universal-quantifier-forward-entailment}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land 
+        \land
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
+        \models
         \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land 
+        \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation}
 
     \vspace{0.5cm}
     \noindent
-    Conversely, if \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    Conversely, if \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) holds, then \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
     must be true. Let
     \( x_{0} \) be an arbitrary object in the domain. Again, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
@@ -223,26 +701,26 @@
     us to conclude \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \). By Conjunction Introduction,
     we have,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \forall x \big( \varphi(x, \beta_{1}, \beta_{m}) \big)
     \end{equation*}
     Using the Deduction Theorem, we infer,
     \begin{equation*}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
+        \implies
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land 
+        \land
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     And since the interpretation is arbitrary,
     \begin{equation}
         \label{eq:conjunct-into-universal-quantifier-backward-entailment}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
+        \models
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land 
+        \land
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
     Together, \eqref{eq:conjunct-into-universal-quantifier-forward-entailment} and \eqref{eq:conjunct-into-universal-quantifier-backward-entailment}
@@ -250,15 +728,15 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:grouping-disjuncts-into-quantified-statement-existential}
+    \label{tautology:grouping-disjuncts-into-existentially-quantified-formula}
     For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
     \( \alpha_{1}, \dots \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         \equiv
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
 \end{thm}
@@ -270,7 +748,7 @@
     \vspace{0.5cm}
     \noindent
     Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
-    is true, which is only possible in three scenarios.  
+    is true, which is only possible in three scenarios.
 
     \vspace{0.5cm}
     \noindent
@@ -278,14 +756,14 @@
 
     \vspace{0.1cm}
     \noindent
-    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, it follows that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, it follows that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
     \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true. Since the domain \( D \) is non-empty,
-    \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+    \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
     \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is necessarily true.
 
     \vspace{0.5cm}
     \noindent
-    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
 
     \vspace{0.1cm}
@@ -304,23 +782,23 @@
 
     \vspace{0.5cm}
     \noindent
-    Evidently, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is implied 
+    Evidently, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is implied
     in all three cases. Using the Deduction Theorem, we conclude,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
+        \implies
         \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     Since the implication was derived using an arbitrary interpretation, we can derive the following entailment:
     \begin{equation}
         \label{eq:disjunct-into-existential-quantifier-forward-entailment}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \models
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
 
@@ -332,7 +810,6 @@
     \end{equation*}
     is true, then there are only two possible scenarios to consider\,\footnote{Again, this is the Law of Excluded Middle at play.}.
 
-
     \vspace{0.5cm}
     \noindent
     {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
@@ -343,23 +820,26 @@
 
     \vspace{0.5cm}
     \noindent
-    In the first case, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) follows 
-    readily from Disjunction Introduction. 
-    In the second case, we use Disjunctive Syllogism to conclude that \( \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+    In the first case, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) follows
+    readily from Disjunction Introduction.
+    In the second case, we use Disjunctive Syllogism to conclude that,
+    \begin{equation*}
+        \exists x \big[ \varphi(x, \beta_{1}, \dots, \beta_{m}) \big]
+    \end{equation*}
     Again, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \mleft( \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \) follows from Disjunction
     Introduction. Applying the Deduction Theorem, we infer,
     \begin{equation*}
         \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies 
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \implies
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     And since the implication is independent of implication, we have,
     \begin{equation}
         \label{eq:disjunct-into-existential-quantifier-backward-implication}
         \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor 
+        \models
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
     Together, \eqref{eq:disjunct-into-existential-quantifier-forward-entailment} and \eqref{eq:disjunct-into-existential-quantifier-backward-implication}
@@ -367,21 +847,21 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:grouping-conjuncts-into-quantified-statement-existential}
+    \label{tautology:grouping-conjuncts-into-existentially-quantified-formula}
     For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
     \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         \equiv
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
 \end{thm}
 
 \begin{proof}
     Let \( \Gamma \) and \( \varphi \) be well-formed fomulas interpreted in the context of an
-    arbitrary, non-empty domain, \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and 
+    arbitrary, non-empty domain, \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and
     \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
 
     \vspace{0.5cm}
@@ -397,16 +877,16 @@
     \end{equation*}
     Thus,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models 
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \models
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
     \end{equation*}
-    
+
     \vspace{0.5cm}
     \noindent
-    Proving the converse is trivial. If \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+    Proving the converse is trivial. If \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
     \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) is true, then clearly,
     \begin{equation*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
@@ -414,51 +894,51 @@
     for some \( x_{0} \in D \). By Conjunction Elimination, obviously \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
     is true for some \( x_{0} \in D \). By Existential Generalization, we thus conclude,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
-    And therefore, 
+    And therefore,
     \begin{equation*}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-        \models 
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land 
+        \models
+        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \qedhere
     \end{equation*}
 \end{proof}
 
 \begin{thm}
-    \label{logic:grouping-conditionals-into-quantified-statement-rhs-universal}
+    \label{tautology:combining-unquantified-antecedent-and-universally-quantified-conseqeunt-into-a-single-quantified-formula}
     For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
     \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \implies 
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \equiv 
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies
+        \forall x \big[ \varphi(x, \beta_{1}, \dots, \beta_{m}) \big]
+        \equiv
+        \forall x \big[ \Gamma(\alpha_{1}, \dots, \alpha_{n}) \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big]
     \end{equation*}
 \end{thm}
 
 \begin{proof}
-    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty 
+    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty
     domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) be objects in \( D \).
-    Using the truth table for logical implication and \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, 
+    Using the truth table for logical implication and \cref{tautology:grouping-disjuncts-into-universally-quantified-formula},
     we transform one of the statement into the other like so:
     \begin{align*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        {\implies} 
+        {\implies}
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        &\iff 
+        &\iff
         \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor 
+        \lor
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\\
-        &\iff 
-        \forall x \big( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
-        \lor 
+        &\iff
+        \forall x \big( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n})
+        \lor
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\\
-        &\iff 
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) 
+        &\iff
+        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
         {\implies}
         \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{align*}
@@ -466,14 +946,14 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:grouping-conditionals-into-quantified-statement-lhs-universal}
+    \label{tautology:combining-universally-quantified-antecedent-and-unquantified-consequent-into-a-single-quantified-formula}
     For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
     \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
     \begin{equation*}
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         {\implies}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \equiv 
+        \equiv
         \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m})
         {\implies}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
@@ -484,27 +964,27 @@
 \begin{proof}
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary,
     non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \)
-    be objects in \( D \). Using the truth table of the logical implication and 
-    \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, we can transform one statement into
+    be objects in \( D \). Using the truth table of the logical implication and
+    \cref{tautology:grouping-disjuncts-into-universally-quantified-formula}, we can transform one statement into
     another like so:
     \begin{align*}
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
         {\implies}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        &\iff 
+        &\iff
         \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \lor 
+        \lor
         \Gamma(\alpha_{1}, \dots, \alpha_{n})\\
-        &\iff 
+        &\iff
         \exists x \big( \neg \, \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \lor 
+        \lor
         \Gamma(\alpha_{1}, \dots, \alpha_{n})\\
-        &\iff 
-        \exists x \big( \neg \, \varphi(x, \beta_{1}, \dots, \beta_{m}) 
-        \lor 
+        &\iff
+        \exists x \big( \neg \, \varphi(x, \beta_{1}, \dots, \beta_{m})
+        \lor
         \Gamma(\alpha_{1}, \dots, \alpha_{n}) \big)\\
-        &\iff 
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) 
+        &\iff
+        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m})
         {\implies}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})\big)
     \end{align*}
@@ -513,8 +993,8 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}
-    For any well-formed formula \( \varphi \) and free variables 
+    \label{tautology:using-a-universally-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}
+    For any well-formed formula \( \varphi \) and free variables
     \( \alpha, \beta_{1}, \dots, \beta_{m} \),
     \begin{equation*}
         \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
@@ -525,44 +1005,44 @@
 
 \begin{proof}
     Let \( \varphi \) be a well-formed formula interpreted in the context of a non-empty
-    domain, \( D \). Let \( \alpha, \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \). 
-    Suppose that the well-formed formula 
+    domain, \( D \). Let \( \alpha, \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
+    Suppose that the well-formed formula
     \( \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true.
     Then by Universal Instantiation, we have,
     \begin{equation*}
         \alpha = \alpha \implies \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
     \end{equation*}
-    Since \( \alpha = \alpha \) is trivially true, we conclude by Modus Ponens that 
+    Since \( \alpha = \alpha \) is trivially true, we conclude by Modus Ponens that
     \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is also true.
     \begin{equation*}
-        \therefore \, \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) 
-        \implies 
+        \therefore \, \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \implies
         \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
     \end{equation*}
     Since the domain set \( D \) (the interpretation) is arbitrary selected, it follows that,
     \begin{equation}
         \label{eq:all-x-equals-alpha-implies-phi-x-entails-phi-alpha}
-        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) 
-        \models 
+        \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
+        \models
         \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
     \end{equation}
-    Conversely, suppose that \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true for an arbitrary interpretation. 
+    Conversely, suppose that \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true for an arbitrary interpretation.
     Let \( x_{0} \in D \) such that \( x_{0} = \alpha \).
-    Since \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true and \( x_{0} = \alpha \) , 
+    Since \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true and \( x_{0} = \alpha \) ,
     it follows that \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is also true.
     Thus, \( x_{0} = \alpha \implies \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})\).
     Since \( x_{0} \) is arbitrary, Universal Generalization yields
     \( \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
     \begin{equation*}
-        \therefore \, \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) 
-        \implies 
+        \therefore \, \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+        \implies
         \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     Again, since the interpretation is arbitrary, it follows that,
     \begin{equation}
         \label{eq:phi-alpha-entails-all-x-equals-alpha-implies-phi-x}
-        \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) 
-        \models 
+        \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
+        \models
         \forall x \big( x = \alpha \implies \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation}
     Together, \eqref{eq:all-x-equals-alpha-implies-phi-x-entails-phi-alpha} and \eqref{eq:phi-alpha-entails-all-x-equals-alpha-implies-phi-x}
@@ -570,7 +1050,7 @@
 \end{proof}
 
 \begin{thm}
-    \label{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}
+    \label{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}
     For any well-formed formula \( \varphi \) and free variables \( \alpha, \beta_{1}, \dots, \beta_{m} \),
     \begin{equation*}
         \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
@@ -583,20 +1063,20 @@
     Let \( \varphi \) be a well-formed formula interpreted in the context of a non-empty domain, \( D \).
     Let \( \alpha, \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \). Supposed that the well-formed
     formula \( \exists x \mleft( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \)
-    is true. Then clearly, 
+    is true. Then clearly,
     \begin{equation*}
         x_{0} = \alpha \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
     \end{equation*}
-    for some \( x_{0} \in D \). Since \( x_{0} = \alpha \), it follows that 
+    for some \( x_{0} \in D \). Since \( x_{0} = \alpha \), it follows that
     \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) must also be true.
     In other words,
     \begin{equation*}
         \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models  
+        \models
         \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
     \end{equation*}
-    Conversely, if \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true, then clearly 
-    \( \alpha = \alpha \land \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \). Since 
+    Conversely, if \( \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \) is true, then clearly
+    \( \alpha = \alpha \land \varphi(\alpha, \beta_{1}, \dots, \beta_{m}) \). Since
     \( \alpha \in D \), then we can use Existential Generalization to conclude,
     \begin{equation*}
         \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
@@ -604,7 +1084,7 @@
     Thus,
     \begin{equation*}
         \varphi(\alpha, \beta_{1}, \dots, \beta_{m})
-        \models 
+        \models
         \exists x \big( x = \alpha \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
     \end{equation*}
     Since the entailment has been established in both directions, the two formulas are indeed logically
