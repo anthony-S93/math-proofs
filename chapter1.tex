@@ -29,7 +29,7 @@ Common notations used in set theory will also be introduced along with a rigorou
         \mleft( x_{0} \in B \implies x_{0} \in A \mright) \iff
         \mleft( x_{0} \in A \iff x_{0} \in B \mright)
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \iff x \in B \mright)
     \end{equation*}
@@ -89,24 +89,24 @@ Common notations used in set theory will also be introduced along with a rigorou
         \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright)
     \end{equation}
     Let \( x_{0} \in S \) be arbitrary. Then \( x_{0} \,{\in}\, A \land \varphi(x_{0}) \) follows immediately
-    from \eqref{eq:property-of-S}. By Conjunction Elimination, we can infer \( \varphi(x_{0}) \).
+    from \eqref{eq:property-of-S}. By \aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}, we can infer \( \varphi(x_{0}) \).
     \begin{equation}
         \label{eq:x-in-S-implies-phi-x}
         \therefore \, x_{0} \in S \implies \varphi(x_{0})
     \end{equation}
     To prove the converse, let \( x_{0} \) be an arbitrary object such that \( \varphi(x_{0}) \) holds.
     By \eqref{eq:phi-x-implies-x-in-A}, it follows that \( x_{0} \in A \).
-    And by Conjunction Introduction, we infer \( x_{0} \in A \land \varphi(x_{0}) \),
+    And by \aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}, we infer \( x_{0} \in A \land \varphi(x_{0}) \),
     which in turns implies \( x_{0} \in S \) by \eqref{eq:property-of-S}.
     \begin{equation}
         \label{eq:phi-x-implies-x-in-S}
         \therefore \, \varphi(x_{0}) \implies x_{0} \in S
     \end{equation}
-    By \eqref{eq:phi-x-implies-x-in-S}, \eqref{eq:x-in-S-implies-phi-x}, and Universal Generalization,
+    By \eqref{eq:phi-x-implies-x-in-S}, \eqref{eq:x-in-S-implies-phi-x}, and \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \mleft( x \in S \iff \varphi(x) \mright)
     \end{equation*}
-    Thus, \( \exists  S \, \forall x \, \mleft( x \in S \iff \varphi(x) \mright) \) by Existential Generalization.
+    Thus, \( \exists  S \, \forall x \, \mleft( x \in S \iff \varphi(x) \mright) \) by \aref{rule-of-inference:existential-generalization}{Existential Generalization}.
     The proof for the uniqueness of \( S \) is straightforward.
     Suppose that \( S \) and \( S^{\prime} \) are sets such that,
     \begin{gather*}
@@ -158,7 +158,7 @@ serve as the rigorous foundation for the familiar set-builder notation.
     Let \( S_{1} = \setbuilder{x \in A}{\varphi_{1}(x)} \) and \( S_{2} = \setbuilder{x \in A}{\varphi_{2}(x)} \).
     Let \( x_{0} \in S_{1} \) be arbitrary. By \cref{dfn:set-builder-notation}, it follows that \( x_{0} \in A \land \varphi_{1}(x_{0}) \).
     Thus, \( x_{0} \in A \land \varphi_{2}(x_{0}) \) and \( x_{0} \in S_{2} \) by
-    \eqref{eq:phi1-iff-phi2} and \cref{dfn:set-builder-notation}. Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    \eqref{eq:phi1-iff-phi2} and \cref{dfn:set-builder-notation}. Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation}
         \label{eq:s1-subset-s2}
         \forall x \, \mleft( x \in S_{1} \implies x \in S_{2} \mright)
@@ -222,14 +222,14 @@ serve as the rigorous foundation for the familiar set-builder notation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\cref{dfn:set-builder-notation}}\\
             &\quad\text{Conjuction Elimination}\\
             &\quad\text{by \eqref{eq:A-B-no-common-elements}}\\
             &\quad\text{Conjuction Elimination}\\
             &\quad\text{by \eqref{eq:phi1-definition}}\\
-            &\quad\text{Disjunctive Syllogism}\\
-            &\quad\text{Conjunction Elimination}
+            &\quad\text{\aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}}\\
+            &\quad\text{\aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}}
         \end{aligned}
     \end{equation*}
     Since \( \Gamma(x_{0}) \) holds and \( x_{0} \in A \) by assumption, it follows from
@@ -275,21 +275,21 @@ serve as the rigorous foundation for the familiar set-builder notation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption} \\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}} \\
             &\quad\text{by \eqref{eq:phi1-definition}} \\
-            &\quad\text{by \eqref{eq:A-B-no-common-elements} and Universal Instantiation} \\
-            &\quad\text{Modus Tollens} \\
-            &\quad\text{Disjunction Introduction} \\
-            &\quad\text{De Morgan's Law} \\
-            &\quad\text{Conjunction Introduction} \\
-            &\quad\text{De Morgan's Law} \\
+            &\quad\text{by \eqref{eq:A-B-no-common-elements} and \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}} \\
+            &\quad\text{\aref{rule-of-inference:modus-tollens}{Modus Tollens}} \\
+            &\quad\text{\aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}} \\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}} \\
+            &\quad\text{\aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}} \\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}} \\
             &\quad\text{by \eqref{eq:phi2-definition}} \\
-            &\quad\text{Conjunction Introduction} \\
+            &\quad\text{\aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}} \\
             &\quad\text{Definition of Conditional} \\
-            &\quad\text{Disjunction Introduction} \\
-            &\quad\text{De Morgan's Law} \\
+            &\quad\text{\aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}} \\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}} \\
             &\quad\text{Definition of Biconditionals} \\
-            &\quad\text{Existential Generalization} \\
+            &\quad\text{\aref{rule-of-inference:existential-generalization}{Existential Generalization}} \\
             &\quad\text{Logical Equivalence}
         \end{aligned}
     \end{equation*}
@@ -316,7 +316,7 @@ serve as the rigorous foundation for the familiar set-builder notation.
     \end{equation}
     Let \( x_{0} \) be an arbitrary object. By \cref{dfn:set-builder-notation}, \( x_{0} \notin \emptyset \).
     Thus, \( \lnot \, \mleft(x_{0} \in \emptyset \land \varphi(x_{0})\mright) \) and \( x_{0} \notin S \) by \eqref{eq:definition-of-S}.
-    Since \( x_{0} \) is arbitrary, we conclude from Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude from \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \notin S \mright)
     \end{equation*}
@@ -391,16 +391,16 @@ serve as the rigorous foundation for the familiar set-builder notation.
     \begin{equation*}
         \exists x \, \Big[ x = A \land \forall y \, \big( y \in x \implies y \neq A \big) \Big]
     \end{equation*}
-    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}, this is equivalent to,
+    By \cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}, this is equivalent to,
     \begin{equation*}
         \forall y \, \big( y \in A \implies y \neq A \big) \iff \forall y \, \big( y = A \implies y \notin A \big)
     \end{equation*}
-    By Universal Instantiation, we thus have,
+    By \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}, we thus have,
     \begin{equation*}
         A = A \implies A \notin A
     \end{equation*}
-    Since \( A = A \) is trivially true, we conclude \( A \notin A \) by Modus Ponens. Since \( A \) is arbitrary, the theorem follows immediately
-    from Universal Generalization.
+    Since \( A = A \) is trivially true, we conclude \( A \notin A \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. Since \( A \) is arbitrary, the theorem follows immediately
+    from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -458,12 +458,12 @@ serve as the rigorous foundation for the familiar set-builder notation.
         \text{  }
         \begin{aligned}
             &\quad\text{\cref{dfn:power-set}}\\
-            &\quad\text{Existential Generalization}\\
+            &\quad\text{\aref{rule-of-inference:existential-generalization}{Existential Generalization}}\\
             &\quad\text{Logical Equivalence}\\
             &\quad\text{\cref{dfn:empty-set}}\\
         \end{aligned}
     \end{equation*}
-    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) is arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -484,15 +484,15 @@ serve as the rigorous foundation for the familiar set-builder notation.
     But \( \forall x \, \mleft( x \notin \emptyset \mright) \) by
     \cref{dfn:empty-set}. Thus, \( y_{0} \in \emptyset \implies y_{0} \in A \)
     is vacuously true for any arbitrary \( y_{0} \).
-    By Universal Generalization,
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall y \, \mleft( y \in \emptyset \implies y \in A \mright)
     \end{equation*}
-    By \eqref{eq:apply-definition-of-power-set} and Universal Instantiation,
+    By \eqref{eq:apply-definition-of-power-set} and \aref{rule-of-inference:universal-instantiation}{Universal Instantiation},
     \begin{equation*}
         \emptyset \in \powerset{A}
     \end{equation*}
-    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) is arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -553,7 +553,7 @@ serve as the rigorous foundation for the familiar set-builder notation.
         \label{eq:S-in-predicate-form}
         \forall x \, \mleft( x \in S \iff x \in A \land x \notin x \mright)
     \end{equation}
-    From elementary logic\footnote{The Law of Excluded Middle}, we know that,
+    From elementary logic the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}, we know that,
     \begin{equation}
         \label{eq:tautology-rule-S-in-S-or-S-notin-S}
         S \in S \lor S \notin S
@@ -563,13 +563,13 @@ serve as the rigorous foundation for the familiar set-builder notation.
     it follows that \( S \in A \). Thus, \( S \,{\in}\, A \,\,{\land}\,\, \varphi(S) \), so
     \( S \,{\in}\, S \) by \eqref{eq:S-in-predicate-form}. We thus have \( S \,{\notin}\, S \,{\implies}\,
     S \,{\in}\, S \), a logical impossibility. By Reduction ad Absurdum, we conclude that
-    \( S \notin S \) cannot possibly be true. Thus, by Disjunctive Syllogism, we conclude that,
+    \( S \notin S \) cannot possibly be true. Thus, by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}, we conclude that,
     \begin{equation*}
         S \in S
     \end{equation*}
     But if \( S \in S \), then \( S \notin S \) by \eqref{eq:S-in-predicate-form}, yet another
     contradiction. In other words, if the set of all sets exists, then \eqref{eq:tautology-rule-S-in-S-or-S-notin-S}
-    had to be false, which is impossible by the Law of Excluded Middle.
+    had to be false, which is impossible by the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}.
     Thus, the set of all sets does not exist.
 \end{proof}
 
@@ -603,7 +603,7 @@ the predicate to define the set operation.
 \subsection{Union}
 \begin{thm}
     \label{thm:uniqueness-union}
-    Given any set \( A \), the set \( U \)such that \( \forall x \, \big( x \in U \iff \exists S \, {\in} \, A \, \mleft( x \in S \mright) \big) \)
+    Given any set \( A \), the set \( U \)\,such that \( \forall x \, \big( x \in U {\iff} \exists S \, {\in} \, A \, \mleft( x \in S \mright) \big) \)
     is unique.
 \end{thm}
 
@@ -633,8 +633,11 @@ the predicate to define the set operation.
     \begin{equation*}
         \Union S = \setbuilder{x}{\exists \, T \, \mleft( T \in S \land x \in T \,\mright)}
     \end{equation*}
-    In particular, if \( S = \mleft\{ A, B \mright\} \), then \( \Union S \) can be denoted as \( A \union B \).
 \end{dfn}
+
+\begin{notation}
+    If \( S = \mleft\{ A, B \mright\} \), then \( \Union S \) can be denoted as \( A \union B \).
+\end{notation}
 
 \begin{thm}
     \label{thm:union-in-terms-of-logical-or}
@@ -662,7 +665,7 @@ the predicate to define the set operation.
         &\iff
         \big(\, T = A \land x \in T \,\big) \lor \big(\, T = B \land x \in T \,\big)
     \end{align}
-    By Existential Generalization,
+    By \aref{rule-of-inference:existential-generalization}{Existential Generalization},
     \begin{align}
         \label{eq:equivalent-predicate-for-union-of-pair}
         \exists \, T \, \big( T \in \{ A,B \} \land x \in T \big)
@@ -727,35 +730,38 @@ the predicate to define the set operation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption} \\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}} \\
             &\quad\text{by \eqref{eq:intersection-predicate-definition}} \\
-            &\quad\text{Existential Instantiation, \eqref{eq:A-has-at-least-one-elem}} \\
-            &\quad\text{Universal Instantiation} \\
-            &\quad\text{Modus Ponens} \\
-            &\quad\text{Conjunction Introduction} \\
-            &\quad\text{Existential Generalization} \\
+            &\quad\text{\aref{rule-of-inference:existential-instantiation}{Existential Instantiation}, \eqref{eq:A-has-at-least-one-elem}} \\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}} \\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}} \\
+            &\quad\text{\aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}} \\
+            &\quad\text{\aref{rule-of-inference:existential-generalization}{Existential Generalization}} \\
             &\quad\text{\cref{dfn:union-of-sets}} \\
-            &\quad\text{Deduction Theorem} \\
-            &\quad\text{Universal Generalization} \\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}} \\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}} \\
         \end{aligned}
     \end{equation*}
     \cref{thm:sufficient-condition-for-unrestricted-comprehension} guarantees the existence
     of the unique set \( S = \setbuilder{x}{\forall z \, \mleft( z \in A \implies x \in z \mright)} \).
-    By the Deduction Theorem,
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
         A \neq \emptyset \implies \exists! S \, \forall x \, \mleft( x \in S \iff
         \forall z \, \mleft( z \in A \implies x \in z \mright)\mright)
     \end{equation*}
-    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) is arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{dfn}[Intersection]
     \label{dfn:intersection-of-sets}
     For any non-empty system of sets \( S \), the unique set \( \Intersect S =
     \setbuilder{x}{\forall z \, \mleft( z \in S \implies x \in z \mright)}\) is called
-    the \keyword{intersection} of \( S \). If \( S = \mleft\{A, B\mright\} \), we can denote
-    \( \Intersect S \) as \( A \intersect B \).
+    the \keyword{intersection} of \( S \).
 \end{dfn}
+
+\begin{notation}
+     If \( S = \mleft\{A, B\mright\} \), we can denote \( \Intersect S \) as \( A \intersect B \).
+\end{notation}
 
 \begin{thm}
     \label{thm:intersection-in-terms-of-logical-and}
@@ -797,13 +803,13 @@ the predicate to define the set operation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{by \eqref{eq:introduce-the-predicate-symbol}}\\
-            &\quad\text{Universal Instantiation}\\
-            &\quad\text{Universal Instantiation}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
             &\quad\text{by \eqref{eq:use-the-definition-of-unordered-pair}}\\
-            &\quad\text{Modus Ponens}\\
-            &\quad\text{Deduction Theorem}\\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
         \end{aligned}
     \end{equation*}
     Similarly, we can prove the converse via the following chain of reasoning:
@@ -826,27 +832,27 @@ the predicate to define the set operation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{by \eqref{eq:use-the-definition-of-unordered-pair}}\\
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\nameref{axm:axiom-of-extensionality}}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\nameref{axm:axiom-of-extensionality}}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Disjunction Elimination}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{by \eqref{eq:introduce-the-predicate-symbol}}\\
-            &\quad\text{Deduction Theorem}
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}
         \end{aligned}
     \end{equation*}
     Combining the results from both analyses via Biconditional Introduction yields,
     \begin{equation*}
         \varphi(x_{0}) \iff x_{0} \in A \land x_{0} \in B
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( \varphi(x) \iff x \in A \land x \in B \mright)
     \end{equation*}
@@ -899,7 +905,7 @@ the predicate to define the set operation.
         \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) \\
         \therefore \, \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright)
     \end{gather*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{dfn}[Relative Complement]
@@ -947,12 +953,12 @@ the predicate to define the set operation.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\eqref{eq:introduce-predicate-for-symmetric-difference},
-            Conjunction Elimination}\\
+            \aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}}\\
             &\quad\text{\cref{thm:union-in-terms-of-logical-or}}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}
         \end{aligned}
     \end{equation*}
     Thus, by \cref{thm:sufficient-condition-for-unrestricted-comprehension},
@@ -989,7 +995,7 @@ are being studied.
 \begin{proof}
     Let \( A \) be an arbitrary set. Let \( x \in A \) be arbitrary. By \cref{dfn:empty-set},
     it follows that \( x \notin \emptyset \). Thus, the \( x \in \emptyset \implies x \in A \)
-    is vacuously true. By Universal Generalization,
+    is vacuously true. By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \mleft( x \in \emptyset \implies x \in A \mright)
     \end{equation*}
@@ -1019,9 +1025,9 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Law of Excluded Middle}\\
+            &\quad\text{\aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}}\\
             &\quad\text{Logical Equivalence}\\
-            &\quad\text{Universal Generalization}
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}
         \end{aligned}
     \end{equation*}
     \( A \subseteq A \) folllows readily from \cref{dfn:subset}.
@@ -1042,7 +1048,7 @@ are being studied.
     \end{equation}
     Suppose that \( A \neq \emptyset \). That is, there exists some \( x_{0} \in A \).
     But if that were true, then \( x_{0} \in \emptyset \) by \eqref{eq:x-in-A-implies-x-in-empty},
-    an obvious contradiction. By Reductio ad Absurdum, we conclude that \( A = \emptyset \).
+    an obvious contradiction. By \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}, we conclude that \( A = \emptyset \).
     Thus, \( A \subseteq \emptyset \implies A = \emptyset \).
 \end{proof}
 
@@ -1084,7 +1090,7 @@ are being studied.
     \begin{equation*}
         A = B \iff A \subseteq B \land B \subseteq A
     \end{equation*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1119,16 +1125,16 @@ are being studied.
         \begin{aligned}
             &\quad\text{by \eqref{eq:define-S-using-russell-predicate}} \\
             &\quad\text{\cref{dfn:power-set}} \\
-            &\quad\text{Assumption} \\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}} \\
             &\quad\text{by \eqref{eq:define-S-using-russell-predicate}}\\
             &\quad\text{Reduction ad Absurdum}\\
             &\quad\text{by \eqref{eq:define-S-using-russell-predicate} and
             \cref{dfn:set-builder-notation}}\\
-            &\quad\text{De Morgan's Law}\\
-            &\quad\text{Disjunctive Syllogism}\\
-            &\quad\text{Conjunction Introduction}\\
-            &\quad\text{De Morgan's Law}\\
-            &\quad\text{Existential Generalization}\\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}}\\
+            &\quad\text{\aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}}\\
+            &\quad\text{\aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}}\\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}}\\
+            &\quad\text{\aref{rule-of-inference:existential-generalization}{Existential Generalization}}\\
             &\quad\text{Logical Equivalence}\\
         \end{aligned}
     \end{equation*}
@@ -1173,7 +1179,7 @@ are being studied.
     \begin{equation*}
         \therefore \, \alpha \in z_{0} \implies \alpha \in B
     \end{equation*}
-    Since \( \alpha \) is arbitrary, we have \( \forall x \, \mleft( x \in z_{0} \implies x \in B \mright) \) by Universal Generalization.
+    Since \( \alpha \) is arbitrary, we have \( \forall x \, \mleft( x \in z_{0} \implies x \in B \mright) \) by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
     In other words, \( z_{0} \subseteq B \) and \( z_{0} \in \powerset{B} \).
     \begin{equation*}
         \therefore \, z_{0} \in \powerset{A} \implies z_{0} \in \powerset{B}
@@ -1196,7 +1202,7 @@ are being studied.
     \end{equation}
     It follows from \eqref{eq:A-subset-B-implies-powerset-A-subset-powerset-B} and \eqref{eq:powerset-A-subset-powerset-B-implies-A-subset-B}
     that \( A \subseteq B \iff \powerset{A} \subseteq \powerset{B} \). Since \( A \) and \( B \) are arbitrary, the theorem follows from
-    Universal Generalization.
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Transitivity]
@@ -1231,21 +1237,21 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption} \\
-            &\quad\text{Conjunction Elimination} \\
-            &\quad\text{Conjunction Elimination} \\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}} \\
+            &\quad\text{\aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}} \\
+            &\quad\text{\aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}} \\
             &\quad\text{\cref{dfn:subset}} \\
             &\quad\text{\cref{dfn:subset}} \\
-            &\quad\text{Universal Instantiation} \\
-            &\quad\text{Universal Instantiation} \\
-            &\quad\text{Hypothetical Syllogism} \\
-            &\quad\text{Universal Generalization} \\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}} \\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}} \\
+            &\quad\text{\aref{rule-of-inference:hypothetical-syllogism}{Hypothetical Syllogism}} \\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}} \\
             &\quad\text{\cref{dfn:subset}} \\
-            &\quad\text{Deduction Theorem} \\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}} \\
         \end{aligned}
     \end{equation*}
     Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows
-    by Universal Generalization.
+    by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1272,14 +1278,14 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
-            &\quad\text{Assumption} \\
-            &\quad\text{Existential Generalization}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}} \\
+            &\quad\text{\aref{rule-of-inference:existential-generalization}{Existential Generalization}}\\
             &\quad\text{\cref{dfn:union-of-sets}}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{\cref{dfn:subset}}\\
-            &\quad\text{Deduction Theorem}
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}
         \end{aligned}
     \end{equation*}
     Since \( A \) and \( S \) are arbitrary, the theorem follows from Universal
@@ -1304,7 +1310,7 @@ are being studied.
         A \subseteq \Union \mleft\{ A,B \mright\} = A \union B \\
         B \subseteq \Union \mleft\{ A,B \mright\} = A \union B
     \end{gather*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1330,16 +1336,16 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
-            &\quad\text{Assumption, \cref{dfn:intersection-of-sets}}\\
-            &\quad\text{Universal Instantiation}\\
-            &\quad\text{Modus Ponens}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization, \cref{dfn:intersection-of-sets}}\\
-            &\quad\text{Deduction Theorem}
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}, \cref{dfn:intersection-of-sets}}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}, \cref{dfn:intersection-of-sets}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}
         \end{aligned}
     \end{equation*}
-    Since \( A \) and \( S \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( S \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1356,7 +1362,7 @@ are being studied.
     with \( S = \mleft\{ A,B \mright\} \). By \cref{dfn:unordered-pair}, it follows that \( A \in \mleft\{ A,B \mright\}
     \land B \in \mleft\{ A,B \mright\} \). Thus, \( A \intersect B = \Intersect \mleft\{ A,B \mright\} \subseteq A \) and
     \( A \intersect B = \Intersect \mleft\{ A,B \mright\} \subseteq B \) by \cref{thm:the-intersection-of-any-system-of-sets-is-a-subset-of-each-member-of-the-system}
-    as required. Universal Generalization completes the proof.
+    as required. \aref{rule-of-inference:universal-generalization}{Universal Generalization} completes the proof.
 \end{proof}
 
 \begin{thm}
@@ -1386,17 +1392,17 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\cref{dfn:subset}}\\
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\cref{thm:union-in-terms-of-logical-or}}\\
-            &\quad\text{Universal Instantiation}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
             &\quad\text{Tautology}\\
-            &\quad\text{Disjunction Elimination}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{\cref{dfn:subset}}\\
-            &\quad\text{Deduction Theorem}
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}
         \end{aligned}
     \end{equation*}
     By \cref{thm:a-set-is-a-subset-of-its-union-with-another-set}, we know that
@@ -1425,25 +1431,25 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\nameref{axm:axiom-of-extensionality}, \cref{thm:union-in-terms-of-logical-or}}\\
-            &\quad\text{Assumption}\\
-            &\quad\text{Universal Instantiation}\\
-            &\quad\text{Disjunction Introduction}\\
-            &\quad\text{Modus Ponens}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
+            &\quad\text{\aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}}\\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{\cref{dfn:subset}}\\
         \end{aligned}
     \end{equation*}
-    By the Deduction Theorem,
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation}
         \label{eq:A-union-B-equals-B-implies-A-subset-B}
         A \union B = B \implies A \subseteq B
     \end{equation}
     Together, \eqref{eq:A-subset-B-implies-A-union-B-equals-B} and \eqref{eq:A-union-B-equals-B-implies-A-subset-B}
     establishes the biconditional \( A \subseteq B \iff A \union B = A \). Since \( A \) and \( B \) are arbitrary,
-    the theorem follows from Universal Generalization.
+    the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1477,15 +1483,15 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\cref{dfn:subset}}\\
-            &\quad\text{Assumption}\\
-            &\quad\text{Universal Instantiation}\\
-            &\quad\text{Modus Ponens}\\
-            &\quad\text{Conjunction Introduction}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}}\\
+            &\quad\text{\aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}}\\
             &\quad\text{\cref{thm:intersection-in-terms-of-logical-and}}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{\cref{dfn:subset}}\\
         \end{aligned}
     \end{equation*}
@@ -1512,23 +1518,23 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad\text{Assumption}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
             &\quad\text{\nameref{axm:axiom-of-extensionality}, \cref{thm:intersection-in-terms-of-logical-and}}\\
-            &\quad\text{Assumption}\\
-            &\quad\text{Universal Instantiation}\\
-            &\quad\text{Modus Ponens}\\
-            &\quad\text{Conjunction Elimination}\\
-            &\quad\text{Deduction Theorem}\\
-            &\quad\text{Universal Generalization}\\
+            &\quad\text{\aref{rule-of-inference:assumption}{Assumption}}\\
+            &\quad\text{\aref{rule-of-inference:universal-instantiation}{Universal Instantiation}}\\
+            &\quad\text{\aref{rule-of-inference:modus-ponens}{Modus Ponens}}\\
+            &\quad\text{\aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}}\\
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}\\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad\text{\cref{dfn:subset}}\\
-            &\quad\text{Deduction Theorem}
+            &\quad\text{\aref{rule-of-inference:deduction-theorem}{Deduction Theorem}}
         \end{aligned}
     \end{equation*}
     This along with \eqref{eq:A-subset-B-implies-A-intersect-B-equals-A} establish the biconditional,
     \begin{equation*}
         A \subseteq B \iff A \intersect B = A
     \end{equation*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1583,7 +1589,7 @@ are being studied.
         &\iff
         A \subseteq B \land A \subseteq C
     \end{align*}
-    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1618,7 +1624,7 @@ are being studied.
         &\iff
         A \subseteq C \land B \subseteq C
     \end{align*}
-    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1642,11 +1648,11 @@ are being studied.
     \begin{equation*}
         x_{0} \in A \lor x_{0} \in B
     \end{equation*}
-    By Constructive Dilemma, it follows that \( x_{0} \in C \lor x_{0} \in D \).
+    By \aref{rule-of-inference:constructive-dilemma}{Constructive Dilemma}, it follows that \( x_{0} \in C \lor x_{0} \in D \).
     \begin{equation*}
         \therefore \, x_{0} \in \mleft( A \union B \mright) \implies x_{0} \in \mleft( C \union D \mright)
     \end{equation*}
-    The theorem follows by Universal Generalization
+    The theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}
 \end{proof}
 
 \subsection{Union}
@@ -1668,14 +1674,14 @@ are being studied.
         \text{  }
         \begin{aligned}[c]
             &\quad\text{\cref{dfn:empty-set}} \\
-            &\quad\text{Disjunction Introduction} \\
-            &\quad\text{De Morgan's Law} \\
-            &\quad\text{Universal Generalization} \\
+            &\quad\text{\aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}} \\
+            &\quad\text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}} \\
+            &\quad\text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}} \\
             &\quad\text{Logical Equivalence}
         \end{aligned}
     \end{equation*}
     By \cref{dfn:union-of-sets}, the last statement implies \( x \notin \Union \emptyset \).
-    Since \( x \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \notin \Union \emptyset \mright)
     \end{equation*}
@@ -1703,7 +1709,7 @@ are being studied.
         \exists S \, \big( S = A \land x \in S \big)
         \Big]
     \end{equation*}
-    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate},
+    By \cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula},
     this becomes,
     \begin{equation*}
         \forall x \, \Big[ x \in \Union \mleft\{ A \mright\}
@@ -1730,7 +1736,7 @@ are being studied.
         x_{0} \in A \union A &\iff x_{0} \in A \lor x_{0} \in A\\
         &\iff x_{0} \in A
     \end{align*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \union A \iff x \in A \mright)
     \end{equation*}
@@ -1751,7 +1757,7 @@ are being studied.
     \begin{equation*}
         x_{0} \in A \lor x_{0} \in B \iff x_{0} \in B \lor x_{0} \in A
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, Universal Generalization permits us to infer,
+    Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} permits us to infer,
     \begin{equation}
         \label{eq:quantified-biconditional-for-commutativity-of-logical-or}
         \forall x \, \mleft( x \in A \lor x \in B \iff x \in B \lor x \in A \mright)
@@ -1773,12 +1779,12 @@ are being studied.
     Let \( A \) be an arbitrary set. \cref{set-identities:commutativity-of-union} already implies \( A \union \emptyset = \emptyset \union A \).
     Thus, it suffices to prove that \( A \union \emptyset = A \). Suppose that \( x_{0} \in A \union \emptyset \) for some arbitrary \( x_{0} \). By
     \cref{thm:union-in-terms-of-logical-or}, we have \( x_{0} \in A \lor x_{0} \in \emptyset\). Since \( \forall x \, \mleft( x \notin \emptyset \mright) \),
-    we conclude \( x_{0} \in A \) by Disjunction Elimination. Thus, \( x_{0} \in A \union \emptyset \implies x_{0} \in A \). To prove the converse, suppose that
+    we conclude \( x_{0} \in A \) by \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination}. Thus, \( x_{0} \in A \union \emptyset \implies x_{0} \in A \). To prove the converse, suppose that
     \( x_{0} \in A \); then \( x_{0} \in A \lor x_{0} \in \emptyset \) is obviously true. Thus, \( x_{0} \in A \implies x_{0} \in A \union \emptyset \).
     \begin{equation*}
         \therefore \, x_{0} \in A \union \emptyset \iff x_{0} \in A
     \end{equation*}
-    The theorem follows from Universal Generalization and \nameref{axm:axiom-of-extensionality}.
+    The theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
 \begin{thm}[Associativity]
@@ -1829,13 +1835,13 @@ are being studied.
         &\iff
         x_{0} \in \mleft( A \union B \mright) \union C
     \end{align*}
-    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \Big( x \in A \union \mleft( B \union C \mright) \iff
         x \in \mleft( A \union B \mright) \union C  \Big)
     \end{equation*}
     Thus, \( A \union \mleft( B \union C \mright) = A \union \mleft( B \union C \mright) \) by the \nameref{axm:axiom-of-extensionality}.
-    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 \subsection{Intersection}
 \begin{thm}[Idempotence]
@@ -1856,7 +1862,7 @@ are being studied.
         &\iff
         x_{0} \in A \intersect A
     \end{align*}
-    By Universal Generalization and \nameref{axm:axiom-of-extensionality}, \( A = A \intersect A \).
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \nameref{axm:axiom-of-extensionality}, \( A = A \intersect A \).
 \end{proof}
 
 \begin{thm}[Commutativity]
@@ -1879,12 +1885,12 @@ are being studied.
         &\iff
         x_{0} \in B \intersect A
     \end{align*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \intersect B \iff x \in B \intersect A \mright)
     \end{equation*}
     Finally, the \nameref{axm:axiom-of-extensionality} implies \( A \intersect B = B \intersect A \).
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Absorption]
@@ -1911,7 +1917,7 @@ are being studied.
     \begin{equation*}
         \therefore \, x_{0} \notin A \intersect \emptyset
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \notin A \intersect \emptyset \mright)
     \end{equation*}
@@ -1937,13 +1943,13 @@ are being studied.
     \begin{equation*}
         x_{0} \in A \intersect \mleft( B \intersect C \mright) \iff x_{0} \in \mleft( A \intersect B \mright) \intersect C
     \end{equation*}
-    By Universal Generalization,
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \Big( x \in A \intersect \mleft( B \intersect C \mright)
         \iff x \in \mleft( A \intersect B \mright) \intersect C \Big)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, \( A \intersect \mleft( B \intersect C \mright) = \mleft( A \intersect B \mright) \intersect C \).
-    Since the sets \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by Universal Generalization.
+    Since the sets \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 \subsection{Difference}
 \begin{thm}
@@ -1967,7 +1973,7 @@ are being studied.
     \begin{equation*}
         x_{0} \in A - \emptyset \iff x_{0} \in A
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A - \emptyset \iff x \in A \mright)
     \end{equation*}
@@ -1996,14 +2002,14 @@ are being studied.
         \text{  }
         \begin{aligned}
             &\quad \text{\cref{dfn:empty-set}}\\
-            &\quad \text{Disjunction Introduction}\\
-            &\quad \text{De Morgan's Law}\\
+            &\quad \text{\aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}}\\
+            &\quad \text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}}\\
             &\quad \text{\cref{dfn:difference}}\\
-            &\quad \text{Universal Generalization}\\
+            &\quad \text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad \text{\cref{dfn:empty-set}}
         \end{aligned}
     \end{equation*}
-    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) is arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Nilpotence]
@@ -2027,15 +2033,15 @@ are being studied.
         \end{aligned}
         \text{  }
         \begin{aligned}
-            &\quad \text{Law of Excluded Middle}\\
-            &\quad \text{De Morgan's Law}\\
+            &\quad \text{\aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}}\\
+            &\quad \text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}}\\
             &\quad \text{\( \land \)-Commutativity}\\
             &\quad \text{\cref{dfn:difference}}\\
-            &\quad \text{Universal Generalization}\\
+            &\quad \text{\aref{rule-of-inference:universal-generalization}{Universal Generalization}}\\
             &\quad \text{\cref{dfn:empty-set}}
         \end{aligned}
     \end{equation*}
-    Since \( A \) is arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) is arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -2067,14 +2073,14 @@ are being studied.
         &\iff
         x_{0} \in \mleft( A - B \mright) \union \mleft( A \intersect C \mright)
     \end{align*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \Big( x \in A - \mleft( B - C \mright) \iff
         x \in \mleft( A - B \mright) \union \mleft( A \intersect C \mright) \Big)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, \( A - \mleft( B - C \mright) =
     \mleft( A - B \mright) \union \mleft( A \intersect C \mright) \). Since \( A \), \( B \),
-    and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+    and \( C \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -2106,13 +2112,13 @@ are being studied.
         &\iff
         x_{0} \in A - \mleft( B \union C \mright)
     \end{align*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \Big( x \in \mleft( A - B \mright) - C \iff
         x \in A - \mleft( B \union C \mright) \Big)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, \( \mleft( A - B \mright) - C = A - \mleft( B \union  C \mright)\).
-    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Nilpotence]
@@ -2163,13 +2169,13 @@ are being studied.
         &\iff
         x_{0} \in \big( \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \big)
     \end{align*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \Big( x \in A \symdiff B \iff
         x \in \big( \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \big)\Big)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, \( A \symdiff B = \mleft( A \union B \mright) - \mleft( A \intersect B \mright) \).
-    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by Universal Generalization.
+    Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -2212,7 +2218,7 @@ are being studied.
         \forall x \, \Big( x \in A \symdiff B \iff x \in \big( \mleft( A - B \mright) \union \mleft( B - A \mright) \big) \Big)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, \( A \symdiff B = \mleft( A - B \mright) \union \mleft( B - A \mright) \).
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Commutativity]
@@ -2234,7 +2240,7 @@ are being studied.
         &=
         B \symdiff A
     \end{align*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Associativity]
@@ -2300,7 +2306,7 @@ are being studied.
         \implies
         x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
     \end{equation}
-    Applying Disjunction Elimination to \eqref{eq:lhs-predicate-form}, \eqref{eq:left-disjunct-forward-implication},
+    Applying \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination} to \eqref{eq:lhs-predicate-form}, \eqref{eq:left-disjunct-forward-implication},
     and \eqref{eq:right-disjunct-forward-implication}, we infer,
     \begin{equation}
         \label{eq:symmetric-difference-associativity-forward-implication}
@@ -2331,7 +2337,7 @@ are being studied.
     Similarly, if \( \mleft( x_{0} \notin A \land x_{0} \in B \land x_{0} \notin C \mright) \),
     then \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) is also true because
     \( x_{0} \notin A \) and \( x_{0} \in \mleft( B \symdiff C \mright) \). Since both disjuncts imply
-    \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \), we conclude by Disjunction Elimination that,
+    \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \), we conclude by \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination} that,
     \begin{equation}
         \label{eq:left-disjunct-backward-implication}
         x_{0} \in \mleft( A \symdiff B \mright) \land  x_{0} \notin C
@@ -2351,14 +2357,14 @@ are being studied.
     If \( \mleft( x_{0} \in A \land x_{0} \in B \land x_{0} \in C \mright) \), then
     \( x_{0} \in A \symdiff \mleft( B \symdiff C \mright) \) is also true because \( x_{0} \in A \)
     and \( x_{0} \notin \mleft( B \symdiff C \mright) \). Since both disjuncts imply \( x_{0} \in
-    A \symdiff \mleft( B \symdiff C \mright)\), we conclude by Disjunction Elimination that,
+    A \symdiff \mleft( B \symdiff C \mright)\), we conclude by \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination} that,
     \begin{equation}
         \label{eq:right-disjunct-backward-implication}
         x_{0} \notin \mleft( A \symdiff B \mright) \land \,\, x_{0} \in C
         \implies
         x_{0} \in A \mleft( B \symdiff C \mright)
     \end{equation}
-    Applying Disjunction Elimination to \eqref{eq:rhs-predicate-form}, \eqref{eq:left-disjunct-backward-implication},
+    Applying \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination} to \eqref{eq:rhs-predicate-form}, \eqref{eq:left-disjunct-backward-implication},
     and \eqref{eq:right-disjunct-backward-implication} yields,
     \begin{equation}
         \label{eq:symmetric-difference-associativity-backward-implication}
@@ -2373,7 +2379,7 @@ are being studied.
         \iff
         x_{0} \in \mleft( A \symdiff B \mright) \symdiff C
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \Big( x \in A \symdiff \mleft( B \symdiff C \mright)
         \iff
@@ -2381,7 +2387,7 @@ are being studied.
         \Big)
     \end{equation*}
     Since \( A \), \( B \), and \( C \) are arbitrary, the theorem follows from
-    Universal Generalization.
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 \subsection{Mixed Operations}
 \begin{thm}[Generalized De Morgan Laws]
@@ -2434,7 +2440,7 @@ are being studied.
         \iff
         \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A - z \mright) \implies x \in y \mright)\mright)
     \end{equation}
-    Let \( x_{0} \) be an arbitrary object. Applying Universal Instantiation to
+    Let \( x_{0} \) be an arbitrary object. Applying \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} to
     \eqref{eq:statement-for-intersection-of-T-substituted} yields,
     \begin{equation}
         \label{eq:instantiated-statement-for-intersection-of-T-substituted}
@@ -2468,15 +2474,15 @@ are being studied.
         \begin{aligned}
             &\quad \text{by \eqref{eq:statement-for-intersection-of-T-substituted}} \\
             &\quad \text{Definition of Conditional}\\
-            &\quad \text{De Morgan's Law}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
-            &\quad \text{\cref{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{tautology:using-a-universally-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
             &\quad \text{\cref{dfn:difference}}\\
             &\quad \text{\( \lor \)-Distributivity}\\
             &\quad \text{Logical Equivalence}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
         \end{aligned}
     \end{equation*}
@@ -2511,7 +2517,7 @@ are being studied.
     \begin{equation*}
         x_{0} \in A - \Union S \iff x_{0} \in \Intersect T
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \mleft( x \in A - \Union S \iff x \in \Intersect T \mright)
     \end{equation*}
@@ -2537,7 +2543,7 @@ are being studied.
         x \in y \mright)\mright)
     \end{equation}
     Let \( x_{0} \) be an arbitrary object.
-    From \eqref{eq:statement-for-union-of-T-substituted}, we infer by Universal Instantiation that,
+    From \eqref{eq:statement-for-union-of-T-substituted}, we infer by \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} that,
     \begin{equation}
         \label{eq:instantiated-statement-for-union-of-T-substituted}
         x_{0} \in \Union T
@@ -2561,12 +2567,12 @@ are being studied.
         \text{  }
         \begin{aligned}
             &\quad \text{from \eqref{eq:instantiated-statement-for-union-of-T-substituted}}\\
-            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
-            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
-            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}}\\
+            &\quad \text{\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}}\\
+            &\quad \text{\cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
             &\quad \text{\cref{dfn:difference}}\\
             &\quad \text{\( \land \)-Associativity}\\
-            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}}\\
         \end{aligned}
     \end{equation*}
     Thus, we have,
@@ -2593,7 +2599,7 @@ are being studied.
     \begin{equation*}
         x_{0} \in A - \Intersect S \iff x_{0} \in \Union T
     \end{equation*}
-    And since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    And since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \mleft( x \in A - \Intersect S \iff x \in \Union T \mright)
     \end{equation*}
@@ -2693,7 +2699,7 @@ are being studied.
     If \( \alpha \in A \), then \( \alpha \in A \union \Union S \) by \eqref{eq:define-A-union-the-union-of-S}. If
     \( \alpha \in z_{0} \), then \( \exists y \, \mleft( y \in S \land \alpha \in y \mright) \) must be true
     because \( z_{0} \in S \). Thus, \( \alpha \in A \union \Union S \) also follows by \eqref{eq:define-A-union-the-union-of-S}.
-    By Disjunction Elimination, we conclude that,
+    By \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination}, we conclude that,
     \begin{equation*}
         \alpha \in x_{0} \implies \alpha \in A \union \Union S
     \end{equation*}
@@ -2717,7 +2723,7 @@ are being studied.
     Let \( x_{0} \) be an arbitrary object such that \( \exists z \, \mleft( z \in S \land x_{0} = A \intersect z \mright) \) holds.
     In other words, \( x_{0} = A \intersect z_{0} \) for some \( z_{0} \in S \).
     Clearly, \( x_{0} \subseteq A \), so \( x_{0} \in \mathcal{P}(A) \).
-    By the Deduction Theorem, we conclude that,
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we conclude that,
     \begin{equation*}
         \exists z \, \mleft( z \in S \land x_{0} = A \intersect z \mright)
         \implies
@@ -2756,7 +2762,7 @@ are being studied.
         \forall y \, \mleft( \exists z \, \mleft( z \in S \land y = A \union z \mright) \implies x \in y \mright)\mright)
     \end{equation}
     Let \( x_{0} \) be an arbitrary object.
-    Applying Universal Instantiation to \eqref{eq:statement-for-the-intersection-of-T1-substituted} yields,
+    Applying \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} to \eqref{eq:statement-for-the-intersection-of-T1-substituted} yields,
     \begin{equation}
         \label{eq:instantiated-statement-for-the-intersection-of-T1-substituted}
         x_{0} \in \Intersect T_{1}
@@ -2787,16 +2793,16 @@ are being studied.
             &\quad \text{from \eqref{eq:instantiated-statement-for-the-intersection-of-T1-substituted}}\\
             &\quad \text{Definition of Conditional}\\
             &\quad \text{De Morgan Laws}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
             &\quad \text{Logical Equivalence}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
-            &\quad \text{\cref{logic:using-universal-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{tautology:using-a-universally-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
             &\quad \text{\cref{thm:union-in-terms-of-logical-or}}\\
             &\quad \text{\( \lor \)-Associativity}\\
             &\quad \text{\( \lor \)-Commutativity}\\
             &\quad \text{\( \lor \)-Associativity}\\
-            &\quad \text{\cref{logic:grouping-disjuncts-into-quantified-statement-universal}}\\
+            &\quad \text{\cref{tautology:grouping-disjuncts-into-universally-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
         \end{aligned}
     \end{equation*}
@@ -2821,7 +2827,7 @@ are being studied.
     \begin{equation*}
         x_{0} \in A \union \Intersect S \iff x_{0} \in \Intersect T_{1}
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude from Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude from \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \union \Intersect S \iff x \in \Intersect T_{1} \mright)
     \end{equation*}
@@ -2866,15 +2872,15 @@ are being studied.
         \text{  }
         \begin{aligned}
             &\quad \text{from \eqref{eq:instantiated-statement-for-the-union-of-T2-substituted}}\\
-            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
+            &\quad \text{\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}}\\
             &\quad \text{Logical Equivalence}\\
-            &\quad \text{\cref{logic:grouping-conjuncts-into-quantified-statement-existential}}\\
-            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}}\\
+            &\quad \text{\cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
             &\quad \text{\cref{thm:intersection-in-terms-of-logical-and}}\\
             &\quad \text{\( \land \)-Associativity}\\
             &\quad \text{\( \land \)-Commutativitiy}\\
             &\quad \text{\( \land \)-Associativity}\\
-            &\quad \text{\cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}}\\
+            &\quad \text{\cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
         \end{aligned}
     \end{equation*}
     Thus, we have
@@ -3271,7 +3277,7 @@ are being studied.
     \end{equation*}
     Since \( x_{0} \) is arbitrary,
     \( A \intersect \mleft( B \symdiff C \mright) = \mleft( A \intersect B \mright) \symdiff \mleft( A \intersect C \mright)\)
-    follows from Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+    follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
 
     \vspace{0.5cm}
     \noindent
@@ -3297,7 +3303,8 @@ are being studied.
 \end{thm}
 
 \begin{proof}
-    Let \( A \) and \( B \) be arbitrary sets. First, observe that \( A - B = A - \mleft( A \intersect B \mright) \) by De Morgan's Law and also that
+    Let \( A \) and \( B \) be arbitrary sets. First, observe that \( A - B = A - \mleft( A \intersect B \mright) \)
+    by \aref{rule-of-inference:de-morgans-laws}{De Morgan's Laws} and also that
     \( \mleft( A \intersect B \mright) - A = \emptyset \) by \cref{set-identities:right-distributivity-of-difference}.
     To express the right-hand side in terms of symmetric difference, we apply \cref{set-identities:symmetric-difference-as-the-union-of-differences}:
     \begin{align*}

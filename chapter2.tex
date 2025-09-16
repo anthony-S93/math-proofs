@@ -69,7 +69,7 @@ a more fundamental concept has to be introduced:
         \label{eq:alpha-beta-biconditional}
         \forall x \, \mleft( x \in \alpha \iff x \in \beta \mright)\\
     \end{equation}
-    By the Law of Excluded Middle, obviously,
+    By the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}, obviously,
     \begin{equation*}
         a = b \lor a \neq b
     \end{equation*}
@@ -93,7 +93,7 @@ a more fundamental concept has to be introduced:
     must hold by \eqref{eq:for-curly-ab}. Now suppose that \( \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \). But this would imply \( a = c = d \). But
     \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \). This means that \( \mleft\{ c, b \mright\} = \mleft\{ c \mright\} \), so that \( a = c = b \),
     a contradiction. Thus, \( \mleft\{ a \mright\} \neq \mleft\{ c, d \mright\} \). By applying
-    Disjunctive Syllogism to \eqref{eq:for-curly-a}, we conclude that \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \).
+    \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism} to \eqref{eq:for-curly-a}, we conclude that \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \).
     \begin{equation*}
         \therefore \, a = c
     \end{equation*}
@@ -134,8 +134,9 @@ a more fundamental concept has to be introduced:
         x_{0} = \mleft\{ a \mright\} \lor x_{0} = \mleft\{ a, b \mright\}
     \end{equation*}
     Since \( \mleft\{ a \mright\} \in \powerset{A} \) and \( \mleft\{ a, b \mright\} \in \powerset{A} \) are both true, it follows
-    by Disjunction Elimination that \( x_{0} \in \powerset{A} \). In other words, \( x_{0} \in \orderedpair{a}{b} \implies x_{0} \in \powerset{A} \)
-    for any arbitrary \( x_{0} \). Thus, by Universal Generalization,
+    by \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination} that \( x_{0} \in \powerset{A} \).
+    In other words, \( x_{0} \in \orderedpair{a}{b} \implies x_{0} \in \powerset{A} \)
+    for any arbitrary \( x_{0} \). Thus, by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \mleft( x \in \orderedpair{a}{b} \implies x \in \powerset{A} \mright)
     \end{equation*}
@@ -146,7 +147,7 @@ a more fundamental concept has to be introduced:
         \implies
         \orderedpair{a}{b} \in \powerset{\powerset{A}}
     \end{equation*}
-    Since \( a \), \( b \), \( A \) are all arbitrary, the theorem follows by Universal Generalization.
+    Since \( a \), \( b \), \( A \) are all arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -250,7 +251,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         \therefore \, \varphi(x_{0}, y_{0}) \implies \orderedpair{x_{0}}{y_{0}} \in \powerset{\powerset{A \union B}}
     \end{equation*}
-    Since \( x_{0} \) and \( y_{0} \) are arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) and \( y_{0} \) are arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x,y \, \Big( \varphi(x,y) \implies \orderedpair{x}{y} \in \powerset{\powerset{A \union B}} \Big)
     \end{equation*}
@@ -320,7 +321,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         \varphi(y_{0}) \implies y_{0} \in \Union{\Union{R}}
     \end{equation*}
-    Since \( y_{0} \) is arbitrary, Universal Generalization yields,
+    Since \( y_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall y \, \mleft( \varphi(y) \implies y \in \Union{\Union{R}} \mright)
     \end{equation*}
@@ -377,7 +378,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         \land
         x_{0} \in \mleft( \dom R \union \ran R \mright)
     \end{equation*}
-    Since \( y_{0} \) and \( x_{0} \) are arbitrary, Universal Generalization yields,
+    Since \( y_{0} \) and \( x_{0} \) are arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall y \, \forall x \, \big( \varphi(y, x) \implies y \in \mleft( \dom R \union \ran R \mright)
         \land x \in \mleft( \dom R \union \ran R \mright) \big)
@@ -418,7 +419,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         \varphi(x_{0}, y_{0}) \implies x_{0} \in \dom S \land y_{0} \in \ran R
     \end{equation*}
-    By Universal Generalization, we have,
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we have,
     \begin{equation*}
         \forall x,y \, \Big( \varphi(x,y) \implies x \in \dom S \land y \in \ran R \Big)
     \end{equation*}
@@ -474,12 +475,12 @@ next two theorems, which describe the sufficient conditions for the existence of
     \end{align}
     Let \( y_{0} \in \ran R \) be arbitrary. Let \( x_{0} \) be an arbitrary object. By \cref{dfn:empty-set},
     clearly \( x_{0} \notin \emptyset \). Thus, the formula \( x_{0} \in \emptyset \implies \orderedpair{x_{0}}{y_{0}} \notin R \)
-    is vacuously true. Since \( x_{0} \) is arbitrary, we infer by Universal Generalization,
+    is vacuously true. Since \( x_{0} \) is arbitrary, we infer by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \big( x \in \emptyset \implies \orderedpair{x}{y_{0}} \notin R \big)
     \end{equation*}
     Thus, \( \lnot \, \varphi(y_{0}) \) by \eqref{eq:phi-reformulated-equivalently}. Furthermore, \( y_{0} \notin \imageSet{R}{\emptyset} \)
-    by \eqref{eq:restating-the-image-of-R-under-empty-in-terms-of-phi}. Since \( y_{0} \) is arbitrary, we conclude by Universal Generalization
+    by \eqref{eq:restating-the-image-of-R-under-empty-in-terms-of-phi}. Since \( y_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization}
     that,
     \begin{equation*}
         \forall y \, \big( y \notin \imageSet{R}{\emptyset} \big)
@@ -546,7 +547,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         &\iff
         y_{0} \in \ran R
     \end{align*}
-    By Universal Generalization and the \nameref{axm:axiom-of-extensionality}, we conclude,
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}, we conclude,
     \begin{equation*}
         \dom R^{-1} = \ran R \qedhere
     \end{equation*}
@@ -585,14 +586,14 @@ next two theorems, which describe the sufficient conditions for the existence of
         \imageSet{R}{\Union S} = \Union T
     \end{equation*}
     To do so, we first let \( y_{0} \) represent an arbitrary object and then apply
-    Universal Instantiation on \cref{dfn:image-of-a-set-of-ordered-pairs} to obtain,
+    \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} on \cref{dfn:image-of-a-set-of-ordered-pairs} to obtain,
     \begin{equation}
         \label{eq:initial-statement-for-the-image-of-union-S-under-R}
         y_{0} \in \imageSet{R}{\Union S}
         \iff
         \exists x \, \mleft( x \in \Union S \land \orderedpair{x}{y_{0}} \in R \mright)
     \end{equation}
-    The laws of elementary logic (\cref{logic:grouping-conjuncts-into-quantified-statement-existential})
+    The laws of elementary logic (\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula})
     can then be applied to transform \eqref{eq:initial-statement-for-the-image-of-union-S-under-R}
     into a series of equivalent formulas:
     \begin{align}
@@ -620,13 +621,13 @@ next two theorems, which describe the sufficient conditions for the existence of
         \iff
         \exists t \, \Big( \exists z \, \big( z \in S \land t = \imageSet{R}{z} \big) \land y_{0} \in t \Big)
     \end{equation*}
-    Using \cref{logic:grouping-conjuncts-into-quantified-statement-existential}, the formula becomes,
+    Using \cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}, the formula becomes,
     \begin{equation*}
         y_{0} \in \Union T
         \iff
         \exists z \, \Big( z \in S \land \exists t \, \mleft( t = \imageSet{R}{z} \land y_{0} \in t \mright) \Big)
     \end{equation*}
-    By \cref{logic:using-existential-quantifier-to-express-the-fact-that-an-object-satisfies-a-predicate}, we have,
+    By \cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}, we have,
     \begin{equation*}
         \exists t \, \big( t = \imageSet{R}{z} \land y_{0} \in t \big)
         \iff
@@ -713,7 +714,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         \therefore \, y_{0} \in \imageSet{R}{\Intersect S} \implies y_{0} \in \Intersect T
     \end{equation*}
-    Given that \( y_{0} \) is arbitrary, the theorem follows by Universal Generalization.
+    Given that \( y_{0} \) is arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{cor}
@@ -752,15 +753,15 @@ next two theorems, which describe the sufficient conditions for the existence of
             &\text{for some \( x_{0} \in A \)}
         \end{aligned}
     \end{equation*}
-    Universal Instantiation on the second conjunct of \eqref{eq:y0-belongs-to-RA-minus-RB} yields,
+    \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} on the second conjunct of \eqref{eq:y0-belongs-to-RA-minus-RB} yields,
     \begin{equation*}
         x_{0} \in B \implies \orderedpair{x_{0}}{y_{0}} \notin R
     \end{equation*}
-    Since \( \orderedpair{x_{0}}{y_{0}} \in R\), we conclude by Modus Tollens that \( x_{0} \notin B \).
+    Since \( \orderedpair{x_{0}}{y_{0}} \in R\), we conclude by \aref{rule-of-inference:modus-tollens}{Modus Tollens} that \( x_{0} \notin B \).
     \begin{equation*}
         \therefore \, \exists x \, \big[ x \in A \land x \notin B \land \orderedpair{x}{y_{0}} \in R \big]
     \end{equation*}
-    By \eqref{eq:y0-belongs-to-R-A-minus-B}, it follows that \( y_{0} \in \imageSet{R}{A-B} \). By Universal Generalization
+    By \eqref{eq:y0-belongs-to-R-A-minus-B}, it follows that \( y_{0} \in \imageSet{R}{A-B} \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization}
     and the Deduction Theorem,
     \begin{equation*}
         \forall y \, \Big[ y \in \imageSet{R}{A} - \imageSet{R}{B} \implies y \in \imageSet{R}{A-B} \Big]
@@ -810,7 +811,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         y_{0} \in \imageSet{R}{A} \implies y_{0} \in \imageSet{R}{B}
     \end{equation*}
-    Since \( y_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( y_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \big( x \in \imageSet{R}{A} \implies x \in \imageSet{R}{B} \big)
     \end{equation*}
@@ -868,7 +869,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         x_{0} \in \composition{ \mleft( \composition{R}{S} \mright) }{T} \iff x_{0} \in \composition{R}{\mleft( \composition{S}{T} \mright)}
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we have by Universal Generalization,
+    Since \( x_{0} \) is arbitrary, we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \Big( x \in \composition{\mleft( \composition{R}{S} \mright)}{T} \iff x \in \composition{R}{\mleft( \composition{S}{T} \mright)} \Big)
     \end{equation*}
@@ -898,7 +899,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         &\iff
         x_{0} \in \composition{S^{-1}}{R^{-1}}
     \end{align*}
-    Since \( x_{0} \) is arbitrary, the theorem follows by Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+    Since \( x_{0} \) is arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
 \section{Cartesian Products}
@@ -935,7 +936,7 @@ next two theorems, which describe the sufficient conditions for the existence of
     \begin{equation*}
         \therefore \, \varphi(a,b) \implies a \in A \union B \land b \in A \union B
     \end{equation*}
-    Since \( a \) and \( b \) are arbitrary, Universal Generalization yields,
+    Since \( a \) and \( b \) are arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x,y \, \Big( \varphi(x,y) \implies x \in A \union B \land y \in A \union B \Big)
     \end{equation*}
@@ -1000,7 +1001,7 @@ obeys certain laws.
         \iff
         \mleft( A \times B = \emptyset \mright)
     \end{equation*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows by Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{proof}[Proof 2.]
@@ -1028,17 +1029,17 @@ obeys certain laws.
         \forall x \, \Gamma(x) \iff \forall a \, \forall b \, \varphi(a,b)
     \end{equation*}
     Suppose that \( \forall x \, \Gamma(x) \). Let \( \alpha \) and \( \beta \) be arbitrary objects. Since \( \forall x \, \Gamma(x) \),
-    then \( \Gamma(\orderedpair{\alpha}{\beta}) \) must hold by Universal Instantiation. By \eqref{eq:define-outer-predicate},
+    then \( \Gamma(\orderedpair{\alpha}{\beta}) \) must hold by \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}. By \eqref{eq:define-outer-predicate},
     this implies,
     \begin{equation*}
         \forall a,b \, \mleft( \orderedpair{\alpha}{\beta} = \orderedpair{a}{b} \implies \varphi(a,b) \mright)
     \end{equation*}
-    By Universal Instantiation, we have,
+    By \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}, we have,
     \begin{equation*}
         \orderedpair{\alpha}{\beta} = \orderedpair{\alpha}{\beta} \implies \varphi(\alpha, \beta)
     \end{equation*}
     Since \( \orderedpair{\alpha}{\beta} = \orderedpair{\alpha}{\beta} \) is trivially true, then
-    \( \varphi(\alpha, \beta) \) must also be true by Modus Ponens. Since \( \alpha \) and \( \beta \)
+    \( \varphi(\alpha, \beta) \) must also be true by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. Since \( \alpha \) and \( \beta \)
     are arbitrary, we have,
     \begin{equation*}
         \forall a,b \, \varphi(a,b)
@@ -1057,13 +1058,13 @@ obeys certain laws.
     If \( x_{0} = \orderedpair{\alpha}{\beta} = \orderedpair{a_{0}}{b_{0}} \), then \( \alpha = a_{0} \) and \( \beta = b_{0} \) by
     \cref{thm:equality-of-ordered-pairs}. Since \( \varphi(\alpha, \beta) \) is true, it follows that \( \varphi(a_{0}, b_{0}) \) is also true.
     Given that \( a_{0} \) and \( b_{0} \) are arbitrary,
-    we have by Universal Generalization \( \forall a,b \, \mleft( x_{0} = \orderedpair{a}{b} \implies \varphi(a,b) \mright) \).
+    we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization} \( \forall a,b \, \mleft( x_{0} = \orderedpair{a}{b} \implies \varphi(a,b) \mright) \).
     In other words, \( \Gamma(x_{0}) \) holds.
 
     \vspace{0.5cm}
     \noindent
     We have shown that \( \Gamma(x_{0}) \) follows from \( \forall a,b \, \varphi(a,b) \) regardless
-    of whether \( x_{0} \) is an ordered pair. Since \( x_{0} \) is arbitrary, we can conclude by Universal Generalization that
+    of whether \( x_{0} \) is an ordered pair. Since \( x_{0} \) is arbitrary, we can conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
     \( \forall x \, \Gamma(x) \). Therefore,
     \begin{equation*}
         \forall a,b \, \varphi(a,b) \implies \forall x \, \Gamma(x)
@@ -1077,7 +1078,7 @@ obeys certain laws.
         \label{eq:A-cross-B-equals-empty-final-statement}
         \mleft( A \times B = \emptyset \mright) \iff \forall x,y \, \varphi(a,b) \iff \forall x,y \, \mleft( x \notin A \lor y \notin B \mright)
     \end{equation}
-    Using \cref{logic:grouping-disjuncts-into-quantified-statement-universal}, we can simplify \eqref{eq:A-cross-B-equals-empty-final-statement}
+    Using \cref{tautology:grouping-disjuncts-into-universally-quantified-formula}, we can simplify \eqref{eq:A-cross-B-equals-empty-final-statement}
     even further.
     \begin{align*}
         \mleft( A \times B = \emptyset \mright)
@@ -1092,7 +1093,7 @@ obeys certain laws.
         &\iff
         A = \emptyset \lor B = \emptyset
     \end{align*}
-    Since \( A \) and \( B \) are arbitrary, the theorem follows by Universal Generalization.
+    Since \( A \) and \( B \) are arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}
@@ -1134,11 +1135,11 @@ obeys certain laws.
     And since \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \),
     \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \) must also be true. By \cref{dfn:cartesian-product},
     \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \iff x_{0} \in B \land z \in S \).
-    Thus, we infer \( x_{0} \in B \) by Modus Ponens. By the Deduction Theorem,
+    Thus, we infer \( x_{0} \in B \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. By the Deduction Theorem,
     \begin{equation*}
         x_{0} \in A \implies x_{0} \in B
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \implies x \in B \mright)
     \end{equation*}
@@ -1156,7 +1157,7 @@ obeys certain laws.
     \begin{equation*}
         S \neq \emptyset \implies \Big( A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \Big)
     \end{equation*}
-    Since \( A \), \( B \), and \( S \) are arbitrary, the theorem follows from Universal Generalization.
+    Since \( A \), \( B \), and \( S \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
 
 \begin{thm}[Right Distributivity of \( \times \) over \( \union, \intersect, -, \symdiff \)]
@@ -1245,7 +1246,7 @@ obeys certain laws.
 
     \vspace{0.2cm}
     \noindent
-    Having established the biconditional \( \Gamma(x_{0}) {\iff} \varphi(x_{0}) \), we conclude by Universal Generalization that,
+    Having established the biconditional \( \Gamma(x_{0}) {\iff} \varphi(x_{0}) \), we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright)
     \end{equation*}
@@ -1298,13 +1299,14 @@ obeys certain laws.
     \end{equation*}
     Let \( a_{0} \) and \( b_{0} \) be arbitrary objects such that \( x_{0} = \orderedpair{a_{0}}{b_{0}} \). Since \( x_{0} = \orderedpair{\alpha}{\beta} \),
     it follows from \cref{thm:equality-of-ordered-pairs} that \( a_{0} = \alpha \) and \( b_{0} = \beta \). Since \( a_{0} = \alpha \) and
-    \( \alpha \notin B \), it follows that \( a_{0} \notin B \). By Disjunction Introduction, we conclude \( a_{0} \notin B \lor b_{0} \notin C \).
+    \( \alpha \notin B \), it follows that \( a_{0} \notin B \).
+    By \aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}, we conclude \( a_{0} \notin B \lor b_{0} \notin C \).
     In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \implies \mleft( a_{0} \notin B \lor b_{0} \notin C \mright) \) for any arbitrary
-    \( a_{0} \) and \( b_{0} \). By Universal Generalization, we have,
+    \( a_{0} \) and \( b_{0} \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we have,
     \begin{equation*}
         \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies \mleft( a \notin B \lor b \notin C \mright) \big]
     \end{equation*}
-    By Conjunction Introduction, it follows that,
+    By \aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}, it follows that,
     \begin{equation*}
         \exists a \, \exists b \, \big[ x_{0} = \orderedpair{a}{b} \land a \in A \land b \in C \big]
         \land
@@ -1328,14 +1330,14 @@ obeys certain laws.
     \begin{equation*}
         \alpha \notin B \lor \beta \notin C
     \end{equation*}
-    But it has already been established that \( \beta \in C \), so by Disjunctive Syllogism, \( \alpha \notin B \) must be
+    But it has already been established that \( \beta \in C \), so by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}, \( \alpha \notin B \) must be
     true. Therefore, \( x_{0} = \orderedpair{\alpha}{\beta} \land \alpha \in A \land \alpha \notin B \land \beta \in C \),
     so \( \Gamma(x_{0}) \) is indeed satisfied.
     \begin{equation*}
         \therefore \, \varphi(x_{0}) \implies \Gamma(x_{0})
     \end{equation*}
     Thus the biconditional \( \Gamma(x_{0}) \iff \varphi(x_{0}) \) holds. Since \( x_{0} \) is arbitrary, we conclude
-    \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \) by Universal Generalization. The third equality is a direct
+    \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \) by \aref{rule-of-inference:universal-generalization}{Universal Generalization}. The third equality is a direct
     consequence of \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
 
     \vspace{0.5cm}
@@ -1387,7 +1389,7 @@ obeys certain laws.
 \end{dfn}
 
 \begin{dfn}[Functional Notation]
-    \label{dfn:functional-notation}
+    \phantomsection \label{dfn:functional-notation}
     For any function \( f \), if \( \orderedpair{x}{y} \in f \) for some \( x \in \dom f \), then
     \( y \) is called the \keyword{value} of \( f \) at \( x \) and is denoted by \( f(x) \).
     This can be stated in first-order logic as,
@@ -1592,7 +1594,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     By \cref{dfn:domain-of-a-set-of-ordered-pairs,dfn:range-of-a-set-of-ordered-pairs}, clearly
     \( x_{0} \in \dom f\) and \( y_{0} \in \ran f \). By \eqref{eq:cartesian-product-of-domain-and-range},
     it follows that \( \alpha = \orderedpair{x_{0}}{y_{0}} \in \mleft( \dom f \times \ran f \mright) \).
-    Since \( \alpha \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( \alpha \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \big( x \in f \implies x \in \mleft( \dom f \times \ran f \mright) \big)
     \end{equation*}
@@ -1651,7 +1653,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
     \end{equation*}
-    by \cref{dfn:function-basic}. Thus, \( y_{0} \) is unique. By the Deduction Theorem and Universal Generalization, we infer,
+    by \cref{dfn:function-basic}. Thus, \( y_{0} \) is unique. By the Deduction Theorem and \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we infer,
     \begin{equation}
         \label{eq:second-conjunct}
         \therefore \,
@@ -1705,32 +1707,32 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \end{equation*}
     By \cref{thm:equality-of-ordered-pairs}, it follows that \( x_{0} = \alpha = \gamma \),
     \( y_{0} = \beta \), \( z_{0} = \delta \).
-    By Universal Instantiation of \eqref{eq:assumed-second-conjunct}, we have,
+    By \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} of \eqref{eq:assumed-second-conjunct}, we have,
     \begin{equation*}
         \alpha \in A \implies \exists! y \, \big( y \in B \land \orderedpair{\alpha}{y} \in f \big)
     \end{equation*}
     Since \( \alpha \in A \), we infer \( \exists! y \, \mleft( y \in B \land \orderedpair{\alpha}{y} \in f \mright) \) by
-    Modus Ponens. Equivalently,
+    \aref{rule-of-inference:modus-ponens}{Modus Ponens}. Equivalently,
     \begin{equation}
         \label{eq:re-express-uniqueness-equivalently}
         \exists y \, \Big[ \mleft( y \in B \land \orderedpair{\alpha}{y} \in f \mright) \land
         \forall z \, \big( \mleft( z \in B \land \orderedpair{\alpha}{z} \in f \mright) \implies y = z \big)\Big]
     \end{equation}
-    Thus, by applying Existential Instantiation on \eqref{eq:re-express-uniqueness-equivalently}, we know that
+    Thus, by applying \aref{rule-of-inference:existential-instantiation}{Existential Instantiation} on \eqref{eq:re-express-uniqueness-equivalently}, we know that
     there exists some \( \mu \) such that \( \mu \in B \land \orderedpair{\alpha}{\mu} \in f \) and,
     \begin{equation}
         \label{eq:mu-is-unique}
         \forall z \, \Big[ \mleft( z \in B \land \orderedpair{\alpha}{z} \in f \mright) \implies \mu = z \Big]
     \end{equation}
     Since \( \orderedpair{\alpha}{y_{0}} \in f \) and \( \orderedpair{\alpha}{z_{0}} \in f \) where \( y_{0} \in B \)
-    and \( z_{0} \in B \), we conclude by Modus Ponens and \eqref{eq:mu-is-unique} that \( \mu = y_{0} = z_{0} \).
+    and \( z_{0} \in B \), we conclude by \aref{rule-of-inference:modus-ponens}{Modus Ponens} and \eqref{eq:mu-is-unique} that \( \mu = y_{0} = z_{0} \).
     We have just derived \( y_{0} = z_{0} \) from the supposition that
     \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \). Thus, by the Deduction Theorem, we
     conclude,
     \begin{equation*}
         \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
     \end{equation*}
-    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, Universal Generalization yields,
+    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation}
         \label{eq:second-conjunct-of-function-definition}
         \forall x \, \forall y \, \forall z \, \Big[ \orderedpair{x}{y} \in f \land \orderedpair{x}{z} \in f \implies y = z \Big]
@@ -1760,7 +1762,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
             &\text{for any \( x_{0} \)}
         \end{aligned}
     \end{equation*}
-    By Universal Generalization and \nameref{axm:axiom-of-extensionality}, it follows that,
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \nameref{axm:axiom-of-extensionality}, it follows that,
     \begin{equation*}
         \dom f = A
     \end{equation*}
@@ -1778,7 +1780,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
             &\text{for any \( y_{0} \)}
         \end{aligned}
     \end{equation*}
-    By Universal Generalization and \cref{dfn:subset}, necessarily \( \ran f \subseteq B \). Since \( f \) is a
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \cref{dfn:subset}, necessarily \( \ran f \subseteq B \). Since \( f \) is a
     function with \( \dom f = A \) and \( \ran f \subseteq B \), it follows that,
     \begin{equation*}
         \function{f}{A}{B}
@@ -1817,7 +1819,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     First, suppose that \( f \neq \emptyset \). This means that there exists an \( x_{0} \) such that \( x_{0} \in f \).
     But by \eqref{eq:any-element-of-f-must-be-an-ordered-pair-from-empty-and-empty}, this would mean that \( x_{0} = \orderedpair{\alpha}{\beta} \)
     for some \( \alpha \in \emptyset \) and \( \beta \in \emptyset \), which is an obvious contradiction because \( \emptyset \) cannot contain
-    any elements by definition. Thus, the supposition that \( f \neq \emptyset \) must be false by Reductio ad Absurdum.
+    any elements by definition. Thus, the supposition that \( f \neq \emptyset \) must be false by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
     \begin{equation}
         \label{eq:f-is-a-function-with-empty-domain-and-empty-range-implies-f-equals-empty}
         \therefore \, \function{f}{\emptyset}{\emptyset} \implies f = \emptyset
@@ -1884,11 +1886,11 @@ Partial functions can also be surjections, injections, or bijections, which lead
     Let \( x_{0} \in f\) be arbitrary.
     Since \( f \) is a function, it follows from \cref{dfn:function-basic} that
     \( x_{0} = \orderedpair{a_{0}}{b_{0}} \) for some \( a_{0} \) and \( b_{0} \).
-    Applying Universal Instantiation on \eqref{eq:suppose-equal-values} yields,
+    Applying \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} on \eqref{eq:suppose-equal-values} yields,
     \begin{equation*}
         a_{0} \in \dom f \implies f(a_{0}) = g(a_{0})
     \end{equation*}
-    Clearly \( a_{0} \in \dom f\), so \( f(a_{0}) = g(a_{0}) \) by Modus Ponens.
+    Clearly \( a_{0} \in \dom f\), so \( f(a_{0}) = g(a_{0}) \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}.
     Since \( \orderedpair{a_{0}}{b_{0}} \in f \), it follows from
     \cref{dfn:functional-notation} that \( b_{0} = f(a_{0}) \). Thus, \( g(a_{0}) = f(a_{0}) = b_{0} \).
     Since \( b_{0} = g(a_{0}) \), it follows from \cref{dfn:functional-notation} that \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in g \).
@@ -1899,7 +1901,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     On the other hand, suppose that \( x_{0} \in g \). Again, \( g \) is a function, so \( x_{0} = \orderedpair{a_{0}}{b_{0}}\) for some
     \( a_{0} \) and \( b_{0} \) with \( a_{0} \in \dom g \) and \( b_{0} = g(a_{0}) \). But \( \dom f = \dom g \) by \eqref{eq:suppose-equal-domain},
     so \( a_{0} \in \dom g \) implies \( a_{0} \in \dom f \) by the \nameref{axm:axiom-of-extensionality}. Since \( a_{0} \in \dom f \), we have
-    \( f(a_{0}) = g(a_{0}) = b_{0} \) by Modus Ponens and \eqref{eq:suppose-equal-values}. In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in f \).
+    \( f(a_{0}) = g(a_{0}) = b_{0} \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens} and \eqref{eq:suppose-equal-values}. In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \in f \).
     \begin{equation}
         \label{eq:g-is-subset-of-f}
         \therefore \, x_{0} \in f \implies x_{0} \in f
@@ -1926,7 +1928,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
 \begin{thm}[Composite Functions]
     \label{thm:the-composition-of-any-two-functions-is-also-a-function}
     If \( f \) and \( g \) are functions, then \composition{g}{f} is also a function. Furthermore:
-    \begin{enumerate}[noitemsep,label=(\roman*)]
+    \begin{enumerate}[topsep=2pt,noitemsep,label=(\roman*)]
         \item \( \dom \mleft( \composition{g}{f} \mright) = \imageSet{f^{-1}}{\dom g} \) \label{enum:composite-function-claim-1}
         \item \( \forall x \, \big( x \in \dom \mleft( \composition{g}{f} \mright) \implies \mleft( \composition{g}{f} \mright)(x) = g(f(x)) \big) \)
         \label{enum:composite-function-claim-2}
@@ -1951,7 +1953,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \implies
         y_{1} = y_{2}
     \end{equation*}
-    Since \( x_{0} \), \( y_{1} \), and \( y_{2} \) are arbitrary, we have by Universal Generalization,
+    Since \( x_{0} \), \( y_{1} \), and \( y_{2} \) are arbitrary, we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \forall y \, \forall z \,
         \Big( \orderedpair{x}{y} \in \composition{g}{f} \land \orderedpair{x}{z} \in \composition{g}{f}
@@ -1983,7 +1985,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         &\iff
         x_{0} \in \imageSet{f^{-1}}{\dom g}
     \end{align*}
-    By Universal Generalization and the \nameref{axm:axiom-of-extensionality},
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality},
     we conclude,
     \begin{equation*}
         \dom \mleft( \composition{g}{f} \mright) = \imageSet{f^{-1}}{\dom g}
@@ -2016,7 +2018,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         f(y_{0}) = f(z_{0}) \implies y_{0} = z_{0}
     \end{equation*}
-    But \( f(y_{0}) = x_{0} = f(z_{0}) \), so by Modus Ponens, we infer \( y_{0} = z_{0} \).
+    But \( f(y_{0}) = x_{0} = f(z_{0}) \), so by \aref{rule-of-inference:modus-ponens}{Modus Ponens}, we infer \( y_{0} = z_{0} \).
     \begin{equation*}
         \therefore \, \forall x \, \forall y \, \forall z \, \big[ \orderedpair{x}{y} \in f^{-1} \land
         \orderedpair{x}{y} \in f^{-1} \implies y = z \big]
@@ -2043,7 +2045,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         f(x_{1}) = f(x_{2}) \implies x_{1} = x_{2}
     \end{equation*}
-    for any \( x_{1} \in \dom f \) and \( x_{2} \in \dom f \). By Universal Generalization,
+    for any \( x_{1} \in \dom f \) and \( x_{2} \in \dom f \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \forall y \, \Big[ x \in \dom f \land y \in \dom f \implies \Big( f(x) = f(y) \implies x = y \Big) \Big]
     \end{equation*}
@@ -2090,7 +2092,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \implies
         \Big( \mleft( \composition{g}{f} \mright)(x_{1}) = \mleft( \composition{g}{f} \mright)(x_{2}) \implies x_{1} = x_{2} \Big)
     \end{equation*}
-    Since \( x_{1} \) and \( x_{2} \) are arbitrary, we conclude by Universal Generalization,
+    Since \( x_{1} \) and \( x_{2} \) are arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \forall y \, \Big[ x \in \mleft( \composition{g}{f} \mright) \land y \in \mleft( \composition{g}{f} \mright)
         \implies
@@ -2163,7 +2165,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         f(x_{0}) = f(x_{r}) \implies x_{0} = x_{r}
     \end{equation*}
-    Since \( f(x_{0}) = y_{0} = f(x_{r}) \), \( x_{0} = x_{r} \) follows by Modus Ponens. Since \( x_{r} = x_{0} \) and \( x_{0} \in z_{0} \),
+    Since \( f(x_{0}) = y_{0} = f(x_{r}) \), \( x_{0} = x_{r} \) follows by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. Since \( x_{r} = x_{0} \) and \( x_{0} \in z_{0} \),
     it follows that \( x_{r} \in z_{0} \) as well. In other words,
     \begin{equation*}
         \begin{aligned}
@@ -2173,7 +2175,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
             &\text{for any \( z_{0} \)}
         \end{aligned}
     \end{equation*}
-    Since \( z_{0} \) is arbitrary, we conclude by Universal Generalization that,
+    Since \( z_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall z \, \big( z \in S \implies x_{r} \in z \big)
     \end{equation*}
@@ -2198,7 +2200,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
             &\text{for any \( y_{0} \)}
         \end{aligned}
     \end{equation*}
-    By Universal Generalization and \cref{dfn:subset}, it follows that \( \Intersect T \subseteq \imageSet{f}{\Intersect S} \)
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \cref{dfn:subset}, it follows that \( \Intersect T \subseteq \imageSet{f}{\Intersect S} \)
     for any injective function \( f \). Naturally, the equality follows from the fact that \( \imageSet{f}{\Intersect S} \subseteq \Intersect T\)
     is also true.
 \end{proof}
@@ -2251,14 +2253,14 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         f(\beta) = f(x_{0}) \implies \beta = x_{0}
     \end{equation*}
-    Thus, \( \beta = x_{0} \) by Modus Ponens. But if \( \beta = x_{0} \), then \( \beta \notin B \),
+    Thus, \( \beta = x_{0} \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. But if \( \beta = x_{0} \), then \( \beta \notin B \),
     an obvious contradiction.
     Thus, we conclude by Reductio Ad Absurdum that the supposition \( \orderedpair{\beta}{y_{0}} \in f \)
     must be false. And by the Deduction Theorem, we infer,
     \begin{equation*}
         \beta \in B \implies \orderedpair{\beta}{y_{0}} \notin f
     \end{equation*}
-    Since \( \beta \) is arbitrary, it follows from Universal Generalization that,
+    Since \( \beta \) is arbitrary, it follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \big( x \in B \implies \orderedpair{x}{y_{0}} \notin f \big)
     \end{equation*}
@@ -2272,7 +2274,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
             &\text{for any \( y_{0} \)}
         \end{aligned}
     \end{equation*}
-    By Universal Generalization and \cref{dfn:subset}, it follows that \( \imageSet{f}{A-B} \subseteq \imageSet{f}{A} - \imageSet{f}{B} \).
+    By \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \cref{dfn:subset}, it follows that \( \imageSet{f}{A-B} \subseteq \imageSet{f}{A} - \imageSet{f}{B} \).
     \( \imageSet{f}{A-B} = \imageSet{f}{A} - \imageSet{f}{B} \) follows from the fact that \( \imageSet{f}{A} - \imageSet{f}{B} \subseteq \imageSet{f}{A-B} \)
     is also true.
 \end{proof}
@@ -2363,7 +2365,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \Big( \orderedpair{x_{0}}{y_{0}} \in \Union F \land \orderedpair{x_{0}}{z_{0}} \in \Union F \Big) \implies y_{0} = z_{0}
     \end{equation*}
     Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, \eqref{eq:Union-F-has-unique-first-coordinate} follows from
-    Universal Generalization.
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 
     \vspace{0.5cm}
     \noindent
@@ -2388,7 +2390,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         &\iff
         x_{0} \in \Union \setbuilderBig{\dom f}{f \in F}
     \end{align*}
-    The equality follows immediately by Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+    The equality follows immediately by \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
 \section{Indexed System of Sets}
@@ -2487,7 +2489,7 @@ We will now prove some theorems involving indexed systems of sets.
     \end{equation}
     If \( R \neq \emptyset \), then there must exist some \( y_{0} \in R \). But by \eqref{eq:R-equals-ran-S},
     this would mean that \( \orderedpair{x_{0}}{y_{0}} \) for some \( x_{0} \in I \), which contradicts the fact that
-    \( I = \emptyset \). Thus, \( R = \emptyset \) by Reductio ad Absurdum.
+    \( I = \emptyset \). Thus, \( R = \emptyset \) by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
     \begin{equation*}
         \therefore \, I = \emptyset \implies R = \emptyset
     \end{equation*}
@@ -2495,7 +2497,7 @@ We will now prove some theorems involving indexed systems of sets.
     there must exist some \( x_{0} \in I \). But \( I = \dom S \), so necessarily \( x_{0} \in \dom S \).
     By \cref{dfn:domain-of-a-set-of-ordered-pairs}, this means that there exists some \( y_{0} \in \ran S = R \)
     such that \( \orderedpair{x_{0}}{y_{0}} \in S \). This contradicts the initial supposition that \( R = \emptyset \).
-    Again, by Reductio ad Absurdum, \( I \) must be empty.
+    Again, by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}, \( I \) must be empty.
     \begin{equation*}
         \therefore \, R = \emptyset \implies I = \emptyset \qedhere
     \end{equation*}
@@ -2514,7 +2516,7 @@ We will now prove some theorems involving indexed systems of sets.
     \end{equation*}
     We now prove that \( S \) is indeed a function. Let \( x_{0} \), \( y_{0} \), and \( z_{0} \)
     be arbitrary objects such that \( \orderedpair{x_{0}}{y_{0}} \in S \) and \( \orderedpair{x_{0}}{z_{0}} \in S \).
-    By the definition of \( S \), it follows that \( y_{0} = x_{0} = z_{0} \). By Universal Generalization,
+    By the definition of \( S \), it follows that \( y_{0} = x_{0} = z_{0} \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \forall y \, \forall z \, \Big[ \orderedpair{x}{y} \in S \land \orderedpair{x}{z} \in S \implies y = z \Big]
     \end{equation*}
@@ -2542,7 +2544,7 @@ We will now prove some theorems involving indexed systems of sets.
     \end{equation*}
     By \cref{thm:a-function-on-A-into-B-is-a-subset-of-the-cartesian-product-between-A-and-B},
     it follows that \( f \subseteq B \times A \), and thus \( f \in \powerset{B \times A} \).
-    Since \( f \) is arbitrary, we infer by Universal Generalization,
+    Since \( f \) is arbitrary, we infer by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall f \, \Big[ \varphi(f) \implies f \in \powerset{B \times A} \Big]
     \end{equation*}
@@ -2614,7 +2616,7 @@ We will now prove some theorems involving indexed systems of sets.
     \begin{equation*}
         \varphi(x_{0}) \implies x_{0} \in \Union R
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, Universal Generalization yields,
+    Since \( x_{0} \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \Big[ \varphi(x) \implies x \in \Union R \Big]
     \end{equation*}
@@ -2705,7 +2707,7 @@ We will now prove some theorems involving indexed systems of sets.
     \begin{equation*}
         i \in I \implies f(i) \in A
     \end{equation*}
-    Since \( i \) is arbitrary, Universal Generalization yields,
+    Since \( i \) is arbitrary, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall i \, \Big[ i \in I \implies f(i) \in A \Big]
     \end{equation*}
@@ -2721,5 +2723,5 @@ We will now prove some theorems involving indexed systems of sets.
     \begin{equation*}
             f \in A^{I} \iff f \in \prod_{i \,\in\, I} S_{i}
     \end{equation*}
-    The equality follows immediately from Universal Generalization and the \nameref{axm:axiom-of-extensionality}.
+    The equality follows immediately from \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
