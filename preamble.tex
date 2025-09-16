@@ -5,10 +5,11 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[capitalize,nameinlink]{cleveref}
 \usepackage{bookmark}
-\usepackage[a4paper,left=2.5cm,right=2.5cm,top=2cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
+\usepackage[a4paper,left=2cm,right=2cm,top=2.5cm,bottom=3cm,bindingoffset=0.5cm]{geometry}
 \usepackage[inline]{enumitem}
 \usepackage{gensymb}
 \usepackage{fancybox}
+\usepackage{graphicx}
 
 % Document-wide configurations
 \setcounter{chapter}{-1}
@@ -16,6 +17,17 @@
 \setcounter{secnumdepth}{4}
 \setcounter{tocdepth}{4}
 \crefrangeformat{enumi}{#3#1#4-#5#2#6}
+
+% Theorem Styles
+\newtheoremstyle{notation}
+  {\topsep}
+  {\topsep}
+  {\normalfont}
+  {0pt}
+  {\bfseries}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
 
 % Theorem-Like Environments
 \newtheorem{axm}{Axiom}
@@ -25,7 +37,8 @@
 \newtheorem{cor}{Corollary}[chapter]
 \theoremstyle{remark}
 \newtheorem*{rem}{Remark}
-
+\theoremstyle{notation}
+\newtheorem*{notation}{Notation}
 % Define plural form
 \crefname{thm}{Theorem}{Theorems}
 \crefname{axm}{Axiom}{Axioms}
@@ -42,3 +55,9 @@
             \end{minipage}}
     \end{center}
 }
+\newcommand{\proofsystem}[1]{
+    \ensuremath{\mathfrak{#1}}
+}
+\newcommand{\aref}[2]{\hyperref[#1]{#2}}
+\newcommand{\smallsubscript}[2]{{#1}_{\scalebox{0.5}{#2}}}
+\newcommand{\largetau}{\scalebox{1.44}{\( \tau \)}}
