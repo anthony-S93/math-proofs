@@ -11,7 +11,7 @@ Common notations used in set theory will also be introduced along with a rigorou
     \label{thm:uniqueness-empty-set}
     The empty set is unique.
     \begin{equation*}
-        \forall A,B \Big[\, \forall x \, \mleft( x \notin A \mright) \land \forall x \, \mleft( x \notin B \mright) \implies A = B \,\Big]
+        \forall A,B \Big[\, \forall x \, \mleft( x \notin A \mright) \,\,{\land}\,\, \forall x \, \mleft( x \notin B \mright) \implies A = B \,\Big]
     \end{equation*}
 \end{thm}
 
@@ -19,46 +19,48 @@ Common notations used in set theory will also be introduced along with a rigorou
     Let \( A \) and \( B \) be arbitrary sets that do not contain any elements. That is,
     \begin{equation}
         \label{eq:A-B-empty}
-        \forall x \left(x \notin A \right) \land \forall x \left(x \notin B \right)
+        \forall x \mleft(x \notin A \mright) \,\,{\land}\,\, \forall x \mleft(x \notin B \mright)
     \end{equation}
-    Let \( x_{0} \) be any arbitrary object. Then by \eqref{eq:A-B-empty}, it follows that \( x_{0} \notin A \land x_{0} \notin B \).
-    Thus, the statements \( x_{0} \in A \implies x_{0} \in B \) and \( x_{0} \in B \implies x_{0} \in A \) are both vacuously true. By elementary
-    logic,
-    \begin{equation*}
-        \mleft( x_{0} \in A \implies x_{0} \in B \mright) \land
-        \mleft( x_{0} \in B \implies x_{0} \in A \mright) \iff
-        \mleft( x_{0} \in A \iff x_{0} \in B \mright)
-    \end{equation*}
+    Let \( x_{0} \) be an arbitrary object. Then by \eqref{eq:A-B-empty}, \( x_{0} \notin A \,\,{\land}\,\, x_{0} \notin B \).
+    Thus, \( x_{0} \in A {\implies} x_{0} \in B \) and \( x_{0} \in B {\implies} x_{0} \in A \) are both vacuously true.
+    By \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction}, we derive \( \mleft( x_{0} \in A {\iff} x_{0} \in B \mright) \).
     Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
         \forall x \, \mleft( x \in A \iff x \in B \mright)
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, it follows that \( A = B \). Thus, the empty set is unique.
 \end{proof}
-
-\vspace{0.3cm}
-\noindent Since the empty set is unique, we can denote it with a single universal symbol.
+\noindent
+Since the empty set is unique, we can denote it with a single universal symbol.
 \begin{dfn}
     \label{dfn:empty-set}
-    \( \emptyset \) is the empty set.
-    \begin{equation*}
-        \forall S \, \mleft( S = \emptyset \iff \forall x \, \mleft( x \notin S \mright) \mright)
-    \end{equation*}
+    \( \emptyset \) denotes the empty set; in other words, \(  \forall x \, ( x \notin \emptyset ) \).
+\end{dfn}
+
+\begin{dfn}
+    The term \emph{formula} refers to a well-formed formula of a \aref{dfn:first-order-language-symbols}{first-order language}.
+    Unless otherwise specified, the reader should always assume that a formula has exactly one free variable.
 \end{dfn}
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    Given any predicate \( \varphi \) and any set \( A \), the set \( S \) such that
-    \( \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright) \) is unique.
+    Given any formula \( \varphi \) and any set \( A \), the set \( S \) such that
+    \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
 \end{thm}
 
 \begin{proof}
     Let \( S \) and \( S^{\prime} \) be sets such that,
     \begin{gather}
-        \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright) \label{eq:S-satisfies-phi} \\
-        \forall x \, \mleft( x \in S^{\prime} \iff x \in A \land \varphi(x) \mright) \label{eq:S-prime-satisfies-phi}
+        \forall x \, \big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-satisfies-phi} \\
+        \forall x \, \big[ x \in S^{\prime} \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-prime-satisfies-phi}
     \end{gather}
-    By elementary logic, \eqref{eq:S-satisfies-phi} and \eqref{eq:S-prime-satisfies-phi} clearly imply,
+    Let \( x_{0} \) be arbitrary.
+    Suppose that \( x_{0} \in S \).
+    Then \aref{rule-of-inference:universal-instantiation}{Instantiating} \eqref{eq:S-satisfies-phi}
+    yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi(x_{0}) \). By \eqref{eq:S-prime-satisfies-phi}, it follows that \( x_{0} \in S^{\prime} \).
+    Thus, \( x_{0} \in S {\implies} x_{0} \in S^{\prime} \) by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}. The converse
+    can be proven in a similar way, and we thus have \( x_{0} \in S {\iff} x_{0} \in S^{\prime} \). Since \( x_{0} \) is arbitrary,
+    we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \mleft( x \in S \iff x \in S^{\prime} \mright)
     \end{equation*}
@@ -67,11 +69,11 @@ Common notations used in set theory will also be introduced along with a rigorou
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
-    For any predicate \( \varphi \),
+    For any formula \( \varphi \),
     \begin{equation*}
-        \exists A \, \forall x \, \big( \varphi(x) \implies x \in A \big)
+        \exists A \, \forall x \, \big[ \varphi(x) \implies x \in A \big]
         \implies
-        \exists! S \, \forall x \, \mleft( x \in S \iff \varphi(x) \mright)
+        \exists! S \, \forall x \, \big[ x \in S \iff \varphi(x) \big]
     \end{equation*}
 \end{thm}
 
@@ -117,8 +119,8 @@ Common notations used in set theory will also be introduced along with a rigorou
     by the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
-\vspace{0.3cm}
-\noindent\cref{thm:uniqueness-predicate-set,thm:sufficient-condition-for-unrestricted-comprehension}
+\noindent
+\cref{thm:uniqueness-predicate-set,thm:sufficient-condition-for-unrestricted-comprehension}
 serve as the rigorous foundation for the familiar set-builder notation.
 \begin{dfn}[Set-Builder Notation]
     \label{dfn:set-builder-notation}
@@ -573,6 +575,7 @@ serve as the rigorous foundation for the familiar set-builder notation.
     Thus, the set of all sets does not exist.
 \end{proof}
 
+\newpage
 \section{Elementary Set Relations and Operations}
 The basic properties established in \cref{sec:basic-properties-of-sets} can be used
 to rigorously define the familiar set relations and operations.
@@ -584,21 +587,51 @@ the predicate to define the set operation.
 \subsection{Subset Relation}
 \begin{dfn}[Subset]
     \label{dfn:subset}
-    For any given set \( A \), a set \( B \) is a \keyword{subset} of \( A \) \annotation{(denoted as \( B \subseteq A \))}
-    if and only if every element of \( B \) is also an element of \( A \).
-    \begin{equation*}
-        \forall A,B \, \big( B \subseteq A \iff \forall x \, \mleft( x \in B \implies x \in A \mright) \big)
-    \end{equation*}
+    Given any set \( B \), a set \( A \) is a \keyword{subset} of \( B \) (denoted as \( A \subseteq B \))
+    if and only if \( \forall x \, \big[ x \in A {\implies} x \in B \big] \).
 \end{dfn}
 
-\begin{dfn}
+\begin{cor}
+    \phantomsection \label{cor:A-equals-B-implies-A-subset-B}
+    \( \forall A \, \forall B \, \big[ A = B {\implies} A \subseteq B \big] \).
+\end{cor}
+
+\begin{dfn}[Proper Subset]
     \label{dfn:proper-subset}
     Given any set \( A \), a set \( B \) is a \keyword{proper subset} of A
-    \annotation{(denoted as \( B \subset A \))} if and only if \( B \subseteq A \land B \neq A \).
-    \begin{equation*}
-        \forall A,B \, \mleft( B \subset A \iff B \subseteq A \land B \neq A \mright)
-    \end{equation*}
+    (denoted as \( B \subset A \)) if and only if \( B \subseteq A \,\,{\land}\,\, B \neq A \).
 \end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:subset-in-terms-of-proper-subset}
+    For any two sets \( A \) and \( B \), \( A \subseteq B {\iff} (A \subset B) \,\,{\lor}\,\, (A = B) \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets. By \cref{dfn:proper-subset},
+    \begin{align*}
+        A \subset B &\iff A \subseteq B \,\,{\land}\,\, A \neq B\\
+        \therefore \, (A \subset B) \,\,{\lor}\,\, (A = B) &\iff \mleft( A \subseteq B \,\,{\land}\,\, A \neq B \mright) \,\,{\lor}\,\, (A = B)
+    \end{align*}
+    By \aref{rule-of-inference:distribution}{Distribution}, the second formula becomes,
+    \begin{align}
+        \mleft( A \subset B \mright) \,\,{\lor}\,\, \mleft( A = B \mright) &\iff \mleft( A \subseteq B \,\,{\lor}\,\, A = B \mright)
+        \,\,{\land}\,\,
+        \mleft( A \neq B \,\,{\lor}\,\, A = B \mright) \notag \\
+        &\iff \mleft( A \subseteq B \mright) \,\,{\lor}\,\, \mleft( A = B \mright) \label{eq:A-equals-B-distributed}
+    \end{align}
+    By \cref{cor:A-equals-B-implies-A-subset-B}, it follows that \( (A = B) {\implies} (A \subseteq B) \).
+    Clearly, \( A \subseteq B {\implies} (A \subseteq B) \,\,{\lor}\,\, (A = B) \) by \aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}.
+    The truth of the converse is also quite straightforward. Since \( \mleft( A = B \mright) {\implies} \mleft( A \subseteq B \mright) \), naturally
+    \( \mleft( A \subseteq B \mright) \,\,{\lor}\,\, \mleft( A = B \mright) {\implies} A \subseteq B \)
+    by \aref{rule-of-inference:disjunction-elimination}{Disjunction Elimination}.
+    Finally, by \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction}, we derive,
+    \begin{equation*}
+        A \subseteq B {\iff} \mleft( A \subseteq B \mright) \,\,{\lor}\,\, \mleft( A = B \mright)
+    \end{equation*}
+    Thus, \eqref{eq:A-equals-B-distributed} becomes \( \mleft( A \subset B \mright) \,\,{\lor}\,\, \mleft( A = B \mright) \iff A \subseteq B \). Since
+    \( A \) and \( B \) are arbitrary, the theorem follows immediately from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
+\end{proof}
 
 \subsection{Union}
 \begin{thm}
@@ -631,7 +664,7 @@ the predicate to define the set operation.
     \label{dfn:union-of-sets}
     For any system of sets \( S \), the union of \( S \) is the unique set given by,
     \begin{equation*}
-        \Union S = \setbuilder{x}{\exists \, T \, \mleft( T \in S \land x \in T \,\mright)}
+        \Union S = \setbuilderBig{x}{\exists \, T \, \mleft( T \in S \,\,{\land}\,\, x \in T \,\mright)}
     \end{equation*}
 \end{dfn}
 
@@ -641,52 +674,42 @@ the predicate to define the set operation.
 
 \begin{thm}
     \label{thm:union-in-terms-of-logical-or}
-    Let \( A \) and \( B \) be arbitrary sets. Then \( A \union B = \setbuilder{x}{x \in A \lor x \in B} \). In other words,
-    \begin{equation*}
-        \forall A,B \, \forall x \, \mleft( x \in A \union B \iff x \in A \lor x \in B \mright)
-    \end{equation*}
+    Let \( A \) and \( B \) be arbitrary sets. Then \( A \union B = \setbuilderbig{x}{x \in A \lor x \in B} \). In other words,
+    \(  \forall A \, \forall B \, \forall x \, \mleft( x \in A \union B {\iff} x \in A \,\,{\lor}\,\, x \in B \mright) \)
 \end{thm}
 
 \begin{proof}
     Let \( A \) and \( B \) be arbitrary sets. From \cref{dfn:union-of-sets},
     \begin{equation*}
-        A \union B = \Union \mleft\{ A, B \mright\} = \setbuilderbig{x}{\exists \, T \, \mleft(\, T \in \mleft\{ A, B \mright\} \land x \in T \,\mright) }
+        A \union B = \Union \mleft\{ A, B \mright\} = \setbuilderbig{x}{\exists \, T \, \mleft(\, T \in \mleft\{ A, B \mright\} \,\,{\land}\,\, x \in T \,\mright) }
     \end{equation*}
-    By \cref{dfn:unordered-pair},
-    \begin{equation*}
-        T \in \mleft\{ A, B \mright\} \iff \mleft( T = A \mright) \lor \mleft( T = B \mright)
-    \end{equation*}
-    By elementary logic,
+    By \cref{dfn:unordered-pair}, we know that \( T \in \mleft\{ A, B \mright\} {\iff} \mleft( T = A \mright) \,\,{\lor}\,\, \mleft( T = B \mright) \).
+    Thus, for any \( x \),
     \begin{align}
         \label{eq:distributive-law-of-logical-and-over-or}
-        T \in \mleft\{ A,B \mright\} \land x \in T
+        T \in \mleft\{ A,B \mright\} \,\,{\land}\,\, x \in T
         &\iff
-        \big( T = A \lor T = B \big) \land x \in T \notag \\
+        \big( T = A \,\,{\lor}\,\, T = B \big) \,\,{\land}\,\, x \in T \notag \\
         &\iff
-        \big(\, T = A \land x \in T \,\big) \lor \big(\, T = B \land x \in T \,\big)
+        \big(\, T = A \,\,{\land}\,\, x \in T \,\big) \,\,{\lor}\,\, \big(\, T = B \,\,{\land}\,\, x \in T \,\big)
     \end{align}
-    By \aref{rule-of-inference:existential-generalization}{Existential Generalization},
+    By \aref{rule-of-inference:existential-generalization}{Existential Generalization} and
+    \cref{tautology:using-an-existentially-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula},
+    it follows that,
     \begin{align}
         \label{eq:equivalent-predicate-for-union-of-pair}
-        \exists \, T \, \big( T \in \{ A,B \} \land x \in T \big)
+        \exists \, T \, \big( T \in \{ A,B \} \,\,{\land}\,\, x \in T \big)
         &\iff
-        \exists \, T \, \big( T = A \land x \in T \big) \lor
-        \exists \, T \, \big( T = B \land x \in T \big) \notag \\
-        &\iff x \in A \lor x \in B
+        \exists \, T \, \big( T = A \,\,{\land}\,\, x \in T \big) \lor
+        \exists \, T \, \big( T = B \,\,{\land}\,\, x \in T \big) \notag \\
+        &\iff x \in A \,\,{\lor}\,\, x \in B
     \end{align}
-    \eqref{eq:equivalent-predicate-for-union-of-pair} follows readily from the obvious fact that
-    \( \exists \, T \, \mleft( T = A \land x \in T \mright) \iff x \in A \) and
-    \( \exists \, T \, \mleft( T = B \land x \in T \mright) \iff x \in B \).
+    Since \( x \) is arbitrary, we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
-        \therefore \, \forall x \, \Big[\, \exists \, T \, \big( T \in \{ A,B \} \land x \in T \big)
-        \iff x \in A \lor x \in B \,\Big]
+        \forall x \, \Big[\, \exists \, T \, \big( T \in \{ A,B \} \,\,{\land}\,\, x \in T \big)
+        \iff x \in A \,\,{\lor}\,\, x \in B \,\Big]
     \end{equation*}
-    Treating each side of the biconditional as a predicate, \cref{thm:equal-predicate-specification}
-    yields,
-    \begin{equation*}
-        A \union B = \setbuilder{x}{\exists \, T \, \big( T \in \left\{ A, B \right\} \land x \in T \big)}
-                 = \setbuilder{x}{x \in A \lor x \in B} \qedhere
-    \end{equation*}
+    The theorem follows immediately from \cref{thm:equal-predicate-specification}.
 \end{proof}
 
 \subsection{Intersection}
@@ -875,35 +898,28 @@ the predicate to define the set operation.
     the term \keyword{disjoint} for two sets.}} if and only if the intersection of any pair of distinct
     sets from \( S \) is empty. In other words, \( S \) is pairwise disjoint if and only if,
     \begin{equation*}
-        \forall A \,{\in}\, S, B \,{\in}\, S \, \mleft( A \neq B \implies A \intersect B = \emptyset \mright)
+        \forall A \,{\in}\, S \, \forall B\,{\in}\,S \, \mleft( A \neq B \implies A \intersect B = \emptyset \mright)
     \end{equation*}
 \end{dfn}
 
 \subsection{Complementation}
 \begin{thm}
     \label{thm:existence-and-uniqueness-of-difference}
-    For any two sets \( A \) and \( B \), there exists a unique set \( S \) such that
-    \( \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) \).
-    \begin{equation*}
-        \forall A,B \, \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright)
-    \end{equation*}
+    \( \forall A,B \, \exists! S \, \forall x \, \mleft( x \in S {\iff} x \in A \,\,{\land}\,\, x \notin B \mright) \)
 \end{thm}
 
 \begin{proof}
     Let \( A \) and \( B \) be two arbitrary sets. Consider the predicate,
     \begin{equation}
         \label{eq:introduce-the-predicate-for-diff}
-        \varphi(x) \coloneq x \in A \land x \notin B
+        \varphi(x) \coloneq x \in A \,\,{\land}\,\, x \notin B
     \end{equation}
-    Clearly, \eqref{eq:introduce-the-predicate-for-diff} implies,
-    \begin{equation*}
-        \forall x \, \mleft( \varphi(x) \implies x \in A \mright)
-    \end{equation*}
+    Clearly, \eqref{eq:introduce-the-predicate-for-diff} implies \( \forall x \, \mleft( \varphi(x) {\implies} x \in A \mright) \).
     Thus, \cref{thm:sufficient-condition-for-unrestricted-comprehension} guarantess the existence of a unique set
-    \( S \) such that,
+    \( S \) such that \( \forall x \, \mleft( x \in S {\iff} x \in A \,\,{\land}\,\, x \notin B \mright) \).
+    By \aref{rule-of-inference:existential-generalization}{Existential Generalization},
     \begin{gather*}
-        \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright) \\
-        \therefore \, \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright)
+        \exists! S \, \forall x \, \mleft( x \in S \iff x \in A \land x \notin B \mright)
     \end{gather*}
     Since \( A \) and \( B \) are arbitrary, the theorem follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 \end{proof}
@@ -923,14 +939,9 @@ the predicate to define the set operation.
 
 \begin{thm}
     \label{thm:existence-and-uniqueness-of-symmetric-difference}
-    For any two sets \( A \) and \( B \), there exists a unique set \( S \) such that
-    \( \forall x \, \mleft( x \in S \iff \mleft( x \in A \lor x \in B
-    \mright) \land \lnot \, \mleft( x \in A \land x \in B \mright) \mright) \).
-    \begin{equation*}
-        \forall A,B \, \exists! S \, \forall x \, \big( x \in S \iff
-        \mleft( x \in A \lor  x \in B \mright) \land
-        \lnot \, \mleft( x \in A \land x \in B \mright) \big)
-    \end{equation*}
+    \( \forall A,B \, \exists! S \, \forall x \, \big( x \in S {\iff}
+        \mleft( x \in A \,\,{\lor}\,\, x \in B \mright) \,\,{\land}\,\,
+        \lnot \, \mleft( x \in A \,\,{\land}\,\, x \in B \mright) \big) \)
 \end{thm}
 
 \begin{proof}
@@ -948,8 +959,8 @@ the predicate to define the set operation.
             x_{0} \in A \lor x_{0} \in B& \\
             x_{0} \in A \union B& \\
             \varphi(x_{0}) \implies x_{0} \in A \union B& \\
-            \therefore \, \forall x \, \mleft( \varphi(x_{0}) \implies
-            x_{0} \in A \union B \mright)&
+            \therefore \, \forall x \, \mleft( \varphi(x) \implies
+            x \in A \union B \mright)&
         \end{aligned}
         \text{  }
         \begin{aligned}
@@ -977,6 +988,7 @@ the predicate to define the set operation.
     \end{align*}
 \end{dfn}
 
+\newpage
 \section{Set Identities and Laws}
 In this section, we present the laws and identities that the basic set-theoretic operations
 obey. These identities serves as a means to simplifying and evaluating set-theoretic expressions
@@ -987,14 +999,11 @@ are being studied.
 \begin{thm}
     \label{thm:empty-set-universal-subset}
     For any set \( A \), \( \emptyset \subseteq A \).
-    \begin{equation*}
-        \forall A \, ( \emptyset \subseteq A )
-    \end{equation*}
 \end{thm}
 
 \begin{proof}
     Let \( A \) be an arbitrary set. Let \( x \in A \) be arbitrary. By \cref{dfn:empty-set},
-    it follows that \( x \notin \emptyset \). Thus, the \( x \in \emptyset \implies x \in A \)
+    it follows that \( x \notin \emptyset \). Thus, the \( x \in \emptyset {\implies} x \in A \)
     is vacuously true. By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \mleft( x \in \emptyset \implies x \in A \mright)
@@ -2395,9 +2404,9 @@ are being studied.
     For any set \( A \) and any non-empty system of sets \( S \),
     \begin{gather*}
         A - \Union S =
-        \Intersect \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A - z \mright)}\\
+        \Intersect \setbuilderbig{x}{\exists z \, \mleft( z \in S \,\,{\land}\,\, x = A - z \mright)}\\
         A - \Intersect S =
-        \Union \setbuilderbig{x}{\exists z \, \mleft( z \in S \land x = A - z \mright)}
+        \Union \setbuilderbig{x}{\exists z \, \mleft( z \in S \,\,{\land}\,\, x = A - z \mright)}
     \end{gather*}
 \end{thm}
 

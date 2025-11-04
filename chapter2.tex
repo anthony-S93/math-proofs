@@ -177,6 +177,7 @@ a more fundamental concept has to be introduced:
     \( b \in \Union{\Union{A}} \).
 \end{proof}
 
+\newpage
 \section{Sets of Ordered Pairs}
 Having rigorously defined ordered pairs as sets, the obvious next step would be to
 collect them together into sets---that is, to form sets of ordered pairs.
@@ -337,12 +338,38 @@ next two theorems, which describe the sufficient conditions for the existence of
     \end{equation*}
 \end{dfn}
 
+\begin{thm}
+    \phantomsection \label{thm:existence-of-the-image-of-a-set-of-ordered-pairs-under-another-set}
+    If \( R \) is a set of ordered pairs and \( A \) is an arbitrary set,
+    then the set \( \setbuilder{y}{\exists x \, \mleft( x \in A \,\,{\land}\,\, \orderedpair{x}{y} \in R \mright)} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi \) be defined as follows:
+    \begin{equation*}
+        \varphi(y) \coloneq \exists x \, \big[ x \in A \,\,{\land}\,\, \orderedpair{x}{y} \in R \big]
+    \end{equation*}
+    Let \( y_{0} \) be an arbitrary object such that \( \varphi(y_{0}) \) holds. Thus, \( \orderedpair{x_{0}}{y_{0}} \in R \) for some \( x_{0} \in A \).
+    But this implies that \( \exists x \, \mleft[ \orderedpair{x}{y_{0}} \in R \mright] \).
+    In other words, \( y_{0} \in \ran R \) by \cref{dfn:range-of-a-set-of-ordered-pairs}.
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we have \( \varphi(y_{0}) {\implies} y_{0} \in \ran R \) for any arbitrary \( y_{0} \).
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization} then yields,
+    \begin{equation*}
+        \forall y \, \big[ \varphi(y) \implies y \in \ran R \big]
+    \end{equation*}
+    Since \( \ran R \) exists by \cref{thm:existence-of-the-range-of-a-set-of-ordered-pairs}, we thus have,
+    \begin{equation*}
+        \exists A \, \forall y \, \big[ \varphi(y) \implies y \in A \big]
+    \end{equation*}
+    The existence of \( \setbuilder{y}{\varphi(y)} \) follows immediately from \cref{thm:sufficient-condition-for-unrestricted-comprehension}.
+\end{proof}
+
 \begin{dfn}[Image]
     \label{dfn:image-of-a-set-of-ordered-pairs}
     For any set \( A \) and any set of ordered pairs \( R \), the \keyword{image} of \( A \) under \( R \)
     is the set given by,
     \begin{equation*}
-        \imageSet{R}{A} \coloneq \setbuilder{y \in \ran R}{\exists x \, \big( x \in A \land \orderedpair{x}{y} \in R \big)}
+        \imageSet{R}{A} \coloneq \setbuilder{y \in \ran R}{\exists x \, \big( x \in A \,\,{\land}\,\, \orderedpair{x}{y} \in R \big)}
     \end{equation*}
 \end{dfn}
 
@@ -489,7 +516,7 @@ next two theorems, which describe the sufficient conditions for the existence of
 \end{proof}
 
 \begin{thm}
-    \label{thm:inverse-of-the-inverse-is-the-set-itself}
+    \label{thm:inverse-of-the-inverse-of-a-set-of-ordered-pairs-is-the-set-itself}
     For any set of ordered pairs \( R \), \( R = \mleft( R^{-1} \mright)^{-1} \)
 \end{thm}
 
@@ -762,7 +789,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         \therefore \, \exists x \, \big[ x \in A \land x \notin B \land \orderedpair{x}{y_{0}} \in R \big]
     \end{equation*}
     By \eqref{eq:y0-belongs-to-R-A-minus-B}, it follows that \( y_{0} \in \imageSet{R}{A-B} \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization}
-    and the Deduction Theorem,
+    and the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
         \forall y \, \Big[ y \in \imageSet{R}{A} - \imageSet{R}{B} \implies y \in \imageSet{R}{A-B} \Big]
     \end{equation*}
@@ -808,17 +835,14 @@ next two theorems, which describe the sufficient conditions for the existence of
         \therefore \, \exists x \, \big( x \in B \land \orderedpair{x}{y_{0}} \in R \big)
     \end{equation*}
     By \cref{dfn:image-of-a-set-of-ordered-pairs}, \( y_{0} \in \imageSet{R}{B} \). In other words,
-    \begin{equation*}
-        y_{0} \in \imageSet{R}{A} \implies y_{0} \in \imageSet{R}{B}
-    \end{equation*}
-    Since \( y_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
+    \( y_{0} \in \imageSet{R}{A} {\implies} y_{0} \in \imageSet{R}{B} \) for any arbitrary \( y_{0} \).
+    Thus, we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
     \begin{equation*}
         \forall x \, \big( x \in \imageSet{R}{A} \implies x \in \imageSet{R}{B} \big)
     \end{equation*}
     By \cref{dfn:subset}, it follows that \( \imageSet{R}{A} \subseteq \imageSet{R}{B} \).
-    \begin{equation*}
-        \therefore \, A \subseteq B \implies \imageSet{R}{A} \subseteq \imageSet{R}{B} \qedhere
-    \end{equation*}
+    And finally, we conclude by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} that
+    \( A \subseteq B \implies \imageSet{R}{A} \subseteq \imageSet{R}{B} \).
 \end{proof}
 
 \begin{thm}[Associativity]
@@ -899,9 +923,11 @@ next two theorems, which describe the sufficient conditions for the existence of
         &\iff
         x_{0} \in \composition{S^{-1}}{R^{-1}}
     \end{align*}
-    Since \( x_{0} \) is arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
+    Since \( x_{0} \) is arbitrary, the theorem follows by \aref{rule-of-inference:universal-generalization}{Universal Generalization}
+    and the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
+\newpage
 \section{Cartesian Products}
 \begin{dfn}[Cartesian Product]
     \label{dfn:cartesian-product}
@@ -975,7 +1001,7 @@ obeys certain laws.
     \begin{equation*}
         \therefore \, A = \emptyset \lor B = \emptyset
     \end{equation*}
-    Thus, by the Deduction Theorem, we derive,
+    Thus, by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we derive,
     \begin{equation}
         \label{eq:empty-cartesian-product-implies-at-least-one-empty-set}
         \mleft( A \times B = \emptyset \mright) \implies \mleft( A = \emptyset \lor B = \emptyset \mright)
@@ -1044,7 +1070,7 @@ obeys certain laws.
     \begin{equation*}
         \forall a,b \, \varphi(a,b)
     \end{equation*}
-    And by the Deduction Theorem,
+    And by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
         \forall x \, \Gamma(x) \implies \forall a,b \, \varphi(a,b)
     \end{equation*}
@@ -1135,7 +1161,7 @@ obeys certain laws.
     And since \( \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \),
     \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \) must also be true. By \cref{dfn:cartesian-product},
     \( \orderedpair{x_{0}}{z} \in \mleft( B \times S \mright) \iff x_{0} \in B \land z \in S \).
-    Thus, we infer \( x_{0} \in B \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. By the Deduction Theorem,
+    Thus, we infer \( x_{0} \in B \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
         x_{0} \in A \implies x_{0} \in B
     \end{equation*}
@@ -1153,7 +1179,7 @@ obeys certain laws.
     \begin{equation*}
         A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright)
     \end{equation*}
-    Thus, by the Deduction Theorem,
+    Thus, by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
         S \neq \emptyset \implies \Big( A \subseteq B \iff \mleft( A \times S \mright) \subseteq \mleft( B \times S \mright) \Big)
     \end{equation*}
@@ -1176,9 +1202,13 @@ obeys certain laws.
     we shall write down the predicates for the set on each side of the equality, and then
     prove that they are equivalent.
 
-    \vspace{0.5cm}
+    \vspace{0.3cm}
     \noindent
-    For the first equality, define the predicates \( \Gamma \) and \( \varphi \) as follows.
+    {\scshape Claim}: \( \mleft( A \union B \mright) \times C = \mleft( A \times C \mright) \union \mleft( B \times C \mright) \)
+
+    \vspace{0.1cm}
+    \noindent
+    Start by defining the predicates \( \Gamma \) and \( \varphi \) as follows:
     \begin{align*}
         \Gamma(x)
         &\coloneq
@@ -1189,35 +1219,34 @@ obeys certain laws.
         \lor
         \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in B \land b \in C \big]
     \end{align*}
-    By \cref{thm:union-in-terms-of-logical-or,dfn:cartesian-product}, clearly,
-    \begin{gather*}
-        \forall x \, \Big( x \in \mleft( A \union B \mright) \times C \iff \Gamma(x)\Big)\\
-        \forall x \, \Big( x \in \mleft( A \times C \mright) \union \mleft( B \times C \mright) \iff \varphi(x) \Big)
-    \end{gather*}
-    Let \( x_{0} \) be arbitrary. By definition,
+    Thus, for any arbitrary \( x \),
     \begin{equation*}
         \begin{split}
-            \Gamma(x_{0})
+            \Gamma(x)
             &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in A \lor a \in B \mright) \land b \in C \big] \\
             &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land
             \big( \mleft( a \in A \land b \in C \mright) \lor \mleft( a \in B \land b \in C \mright) \big) \big] \\
             &\iff \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in A \land b \in C \big]
             \lor
             \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land a \in B \land b \in C \big]\\
-            &\iff \varphi(x_{0})
+            &\iff \varphi(x)
         \end{split}
     \end{equation*}
-    Since \( x_{0} \) is arbitrary, we conclude by Univesal Generalization that \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
-    Thus,
-    \begin{equation*}
-        \forall x \, \Big( x \in \mleft( A \union B \mright) \times C \iff
-        \Gamma(x) \iff \varphi(x) \iff x \in \mleft( A \times C \mright) \union \mleft( B \times C \mright)\Big)
-    \end{equation*}
+    \aref{rule-of-inference:universal-generalization}{Univesal Generalization} then yields \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
+    However, the following also holds by \cref{thm:union-in-terms-of-logical-or,dfn:set-builder-notation-ordered-pair,dfn:cartesian-product}:
+    \begin{gather*}
+        \forall x \, \big[ x \in \mleft( A \union B \mright) \times C \iff x \in \Gamma(x) \big]\\
+        \forall x \, \big[ x \in \mleft( A \times C \mright) \union \mleft( B \times C \mright) \iff x \in \varphi(x) \big]
+    \end{gather*}
     The first identity follows immediately from the \nameref{axm:axiom-of-extensionality}.
 
     \vspace{0.5cm}
     \noindent
-    For the second equality, we define \( \Gamma \) and \( \varphi \) as follows:
+    {\scshape Claim}: \( \mleft( A \intersect B \mright) \times C = \mleft( A \times C \mright) \intersect \mleft( B \times C \mright) \)
+
+    \vspace{0.1cm}
+    \noindent
+    Define \( \Gamma \) and \( \varphi \) as follows:
     \begin{align*}
         \Gamma(x)
         &\coloneq
@@ -1228,37 +1257,37 @@ obeys certain laws.
         \land
         \exists a \, \exists b \, \big[ x = \orderedpair{a}{b} \land \mleft( a \in B \land b \in C \mright) \big]
     \end{align*}
-    By \cref{thm:intersection-in-terms-of-logical-and,dfn:cartesian-product}, clearly,
-    \begin{gather*}
-        \forall x \, \Big( x \in \mleft( A \intersect B \mright) \times C \iff \Gamma(x) \Big) \\
-        \forall x \, \Big( x \in \mleft( A \times C \mright) \intersect \mleft( B \times C \mright) \iff \varphi(x) \Big)
-    \end{gather*}
+   
+    \noindent
     Let \( x_{0} \) be an arbitrary object such that \( \Gamma(x_{0}) \) holds true. It follows from the definition of \( \Gamma \)
     that \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \) and \( \beta \) where \( \alpha \in A \land \alpha \in B \)
-    and \( \beta \in C \). Clearly, \( \varphi(x_{0}) \) also holds. Therefore, \( \Gamma(x_{0}) \implies \varphi(x_{0}) \). To prove
+    and \( \beta \in C \). Clearly, \( \varphi(x_{0}) \) also holds. Therefore, \( \Gamma(x_{0}) {\implies} \varphi(x_{0}) \). To prove
     the converse, suppose that \( \varphi(x_{0}) \) is true. By the definition of \( \varphi \),
     it follows that \( x_{0} = \orderedpair{\alpha}{\beta} = \orderedpair{\gamma}{\delta}\) where \( \alpha \in A \), \( \beta \in C \),
     \( \gamma \in B \), and \( \delta \in C \). Since \( \orderedpair{\alpha}{\beta} = \orderedpair{\gamma}{\delta} \), necessarily
     \( \alpha = \gamma \) and \( \beta = \delta \) by \cref{thm:equality-of-ordered-pairs}. Since \( \alpha = \gamma \) and
     \( \alpha \in A \land \gamma \in B \), it follows that \( \alpha \in A \land \alpha \in B \) must be true. Therefore,
     \( x_{0} = \orderedpair{\alpha}{\beta} \land (\alpha \in A \land \alpha \in B) \land \beta \in C \) is true. In other words,
-    \( \Gamma(x_{0}) \) holds. Thus, \( \varphi(x_{0}) \implies \Gamma(x_{0}) \).
-
+    \( \Gamma(x_{0}) \) holds. Thus, \( \varphi(x_{0}) {\implies} \Gamma(x_{0}) \).
+    
     \vspace{0.2cm}
     \noindent
     Having established the biconditional \( \Gamma(x_{0}) {\iff} \varphi(x_{0}) \), we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
-    \begin{equation*}
-        \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright)
-    \end{equation*}
-    Therefore,
-    \begin{equation*}
-        \forall x \, \Big( x \in \mleft( A \intersect B \mright) \times C \iff \Gamma(x) \iff \varphi(x) \iff x \in \mleft( A \times C \mright) \intersect \mleft( B \times C \mright)\Big)
-    \end{equation*}
+    \( \forall x \, \mleft( \Gamma(x) {\iff} \varphi(x) \mright) \).
+    Furthermore, we have by \cref{thm:intersection-in-terms-of-logical-and,dfn:cartesian-product},
+    \begin{gather*}
+        \forall x \, \big[ x \in \mleft( A \intersect B \mright) \times C \iff \Gamma(x) \big] \\
+        \forall x \, \big[ x \in \mleft( A \times C \mright) \intersect \mleft( B \times C \mright) \iff \varphi(x) \big]
+    \end{gather*}
     The second equality follows readily from the \nameref{axm:axiom-of-extensionality}.
 
-    \vspace{0.2cm}
+    \vspace{0.5cm}
     \noindent
-    For the third equality, we define \( \Gamma \) and \( \varphi \) as follows:
+    {\scshape Claim}: \( \mleft( A - B \mright) \times C = \mleft( A \times C \mright) - \mleft( B \times C \mright) \)
+
+    \vspace{0.1cm}
+    \noindent
+    Define \( \Gamma \) and \( \varphi \) as follows:
     \begin{align*}
         \Gamma(x)
         &\coloneq
@@ -1269,7 +1298,7 @@ obeys certain laws.
         \land
         \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies a \notin B \lor b \notin C \big]
     \end{align*}
-    It is not difficult to see that \( \forall x \, \big( x \in \mleft( A - B \mright) \times C \iff \Gamma(x) \big) \). The relationship between
+    It is not difficult to see that \( \forall x \, \big( x \in \mleft( A - B \mright) \times C {\iff} \Gamma(x) \big) \). The relationship between
     \( \varphi(x) \) and \( \mleft( A \times C \mright) - \mleft( B \times C \mright) \) is more subtle but should be perfectly intelligible after
     an application of the laws of logic. As in, for any arbitrary \( x \),
     \begin{equation*}
@@ -1290,7 +1319,7 @@ obeys certain laws.
             \varphi(x)
         \end{split}
     \end{equation*}
-    It remains to prove that \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \). Let \( x_{0} \) be an arbitrary object
+    Thus, it remains to prove that \( \forall x \, \mleft( \Gamma(x) {\iff} \varphi(x) \mright) \). Let \( x_{0} \) be an arbitrary object
     such that \( \Gamma(x_{0}) \) is satisfied. Thus, \( x_{0} = \orderedpair{\alpha}{\beta} \) for some \( \alpha \) and \( \beta \)
     such that \( \alpha \in A \land \alpha \notin B \) and \( \beta \in C \). Since \( \alpha \in A \) and \( \beta \in C \) and
     \( x_{0} = \orderedpair{\alpha}{\beta}\), it follows that,
@@ -1301,7 +1330,7 @@ obeys certain laws.
     it follows from \cref{thm:equality-of-ordered-pairs} that \( a_{0} = \alpha \) and \( b_{0} = \beta \). Since \( a_{0} = \alpha \) and
     \( \alpha \notin B \), it follows that \( a_{0} \notin B \).
     By \aref{rule-of-inference:disjunction-introduction}{Disjunction Introduction}, we conclude \( a_{0} \notin B \lor b_{0} \notin C \).
-    In other words, \( x_{0} = \orderedpair{a_{0}}{b_{0}} \implies \mleft( a_{0} \notin B \lor b_{0} \notin C \mright) \) for any arbitrary
+    In other words, \( (x_{0} = \orderedpair{a_{0}}{b_{0}}) {\implies} \mleft( a_{0} \notin B \lor b_{0} \notin C \mright) \) for any arbitrary
     \( a_{0} \) and \( b_{0} \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we have,
     \begin{equation*}
         \forall a \, \forall b \, \big[ x = \orderedpair{a}{b} \implies \mleft( a \notin B \lor b \notin C \mright) \big]
@@ -1336,13 +1365,18 @@ obeys certain laws.
     \begin{equation*}
         \therefore \, \varphi(x_{0}) \implies \Gamma(x_{0})
     \end{equation*}
-    Thus the biconditional \( \Gamma(x_{0}) \iff \varphi(x_{0}) \) holds. Since \( x_{0} \) is arbitrary, we conclude
-    \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \) by \aref{rule-of-inference:universal-generalization}{Universal Generalization}. The third equality is a direct
-    consequence of \( \forall x \, \mleft( \Gamma(x) \iff \varphi(x) \mright) \).
+    Since the implication holds in both directions, we derive via \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction}
+    \( \Gamma(x_{0}) {\iff} \varphi(x_{0}) \) and subsequently
+    \( \forall x \, \mleft( \Gamma(x) {\iff} \varphi(x) \mright) \) by \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
+    The third equality follows readily from the \nameref{axm:axiom-of-extensionality}.
 
     \vspace{0.5cm}
     \noindent
-    The fourth equality can be proven using the first and third equalities.
+    {\scshape Claim}: \( \mleft( A \symdiff B \mright) \times C = \mleft( A \times C \mright) \symdiff \mleft( B \times C \mright) \)
+
+    \vspace{0.1cm}
+    \noindent
+    This equality can be easily proven using the first and third equalities above.
     \begin{align*}
         \mleft( A \symdiff B \mright) \times C
         &=
@@ -1359,9 +1393,10 @@ obeys certain laws.
 \end{proof}
 
 \begin{rem}
-    The cartesian product is also \keyword{left-distributive}. This can be proven in the exact same way as above.
+    The \keyword{left-distributivity} of cartesian products can be proven in the exact same way as above.
 \end{rem}
 
+\newpage
 \section{Set-theoretic Definition of Functions}
 \begin{dfn}
     \label{dfn:function-basic}
@@ -1533,16 +1568,34 @@ Partial functions can also be surjections, injections, or bijections, which lead
 \end{dfn}
 
 \begin{dfn}[Partial Bijection]
-    \label{dfn:partial-bijection}
+    \phantomsection \label{dfn:partial-bijection}
     A function \( f \) is a \keyword{partial bijection} from \( A \) to \( B \)
     if and only if there exists some \( D \subseteq A \)
     such that \( f \) is a bijection between \( D \) and \( B \).
     The notation \( \partialbijection{f}{A}{B} \) reads,
-    ``\( f \) is a partial bijection from \( A \) to \( B \)''
+    ``\( f \) is a partial bijection from \( A \) to \( B \).''
     \begin{equation*}
         \forall f \, \forall A \, \forall B \, \Big[ \partialbijection{f}{A}{B} \iff \exists D \, \big( D \subseteq A \land \bijection{f}{D}{B} \big) \Big]
     \end{equation*}
 \end{dfn}
+
+\begin{dfn}[Identity Function]
+    \phantomsection \label{dfn:identity-function}
+    For any set \( A \), the identity function on \( A \) is defined as follows:
+    \begin{equation*}
+        \identityfunc{A} = \setbuilderBig{\orderedpair{x}{y}}{ x \in A \,\,{\land}\,\, y \in A \,\,{\land}\,\, x = y}
+    \end{equation*}
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:identity-function-of-empty-set-is-the-empty-set}
+    \( \identityfunc{\emptyset} = \emptyset \).
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:identity-function-is-a-bijection}
+    For any set \( A \), \( \bijection{\identityfunc{A}}{A}{A} \).
+\end{cor}
 
 \begin{dfn}[System of Functions]
     \label{dfn:system-of-functions}
@@ -1552,7 +1605,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
 
 \begin{dfn}[Compatibility]
     \label{dfn:compatibility-of-a-system-of-functions}
-    If \( F \) is a system of functions, then \( F \) is a \keyword{compatible} if and only if,
+    A system of functions \( F \) is a \keyword{compatible} if and only if,
     \begin{equation*}
         \forall x \,
         \Big( x \in \Intersect\setbuilderBig{\dom f}{f \in F}
@@ -1653,14 +1706,15 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
     \end{equation*}
-    by \cref{dfn:function-basic}. Thus, \( y_{0} \) is unique. By the Deduction Theorem and \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we infer,
+    by \cref{dfn:function-basic}. Thus, \( y_{0} \) is unique.
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} and \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we infer,
     \begin{equation}
         \label{eq:second-conjunct}
         \therefore \,
         \forall x \, \Big[ x \in A \implies \exists! y \, \big( y \in B \land \orderedpair{x}{y} \in f \big) \Big]
     \end{equation}
     Since \eqref{eq:first-conjunct} and \eqref{eq:second-conjunct} are provable from the assumption that \function{f}{A}{B},
-    we conclude by the Deduction Theorem that,
+    we conclude by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} that,
     \begin{multline}
         \label{eq:f-A-B-implies-element-of-pairs-and-uniqueness-of-y}
         \function{f}{A}{B}
@@ -1727,7 +1781,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     Since \( \orderedpair{\alpha}{y_{0}} \in f \) and \( \orderedpair{\alpha}{z_{0}} \in f \) where \( y_{0} \in B \)
     and \( z_{0} \in B \), we conclude by \aref{rule-of-inference:modus-ponens}{Modus Ponens} and \eqref{eq:mu-is-unique} that \( \mu = y_{0} = z_{0} \).
     We have just derived \( y_{0} = z_{0} \) from the supposition that
-    \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \). Thus, by the Deduction Theorem, we
+    \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \). Thus, by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we
     conclude,
     \begin{equation*}
         \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in f \implies y_{0} = z_{0}
@@ -1786,7 +1840,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \function{f}{A}{B}
     \end{equation*}
     Thus, having derived \function{f}{A}{B} from \eqref{eq:assumed-first-conjunct} and \eqref{eq:assumed-second-conjunct},
-    we conclude by the Deduction Theorem,
+    we conclude by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{multline}
         \label{eq:element-of-pairs-and-uniqueness-of-y-implies-f-A-B}
         \bigg(
@@ -1873,7 +1927,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         \Big( \dom f = \dom g \Big) \land \forall x \, \Big( x \in \dom f \implies f(x) = g(x) \Big)
     \end{equation*}
-    Since the statement was derived on the assumption that \( f = g \), we conclude by the Deduction Theorem that,
+    Since the statement was derived on the assumption that \( f = g \), we conclude by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} that,
     \begin{equation}
         \label{eq:f-equals-g-implies-equal-domains-and-equal-ranges}
         \Big( f = g \Big) \implies \Big( \big( \dom f = \dom g \big) \land \forall x \, \big( x \in \dom f \implies f(x) = g(x) \big) \Big)
@@ -2041,11 +2095,9 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \orderedpair{f(x_{2})}{x_{2}} \in f^{-1}
     \end{gather*}
     Since \( f^{-1} \) is a function and \( f(x_{1}) = f(x_{2}) \), necessarily \( x_{1} = x_{2} \).
-    Thus,
-    \begin{equation*}
-        f(x_{1}) = f(x_{2}) \implies x_{1} = x_{2}
-    \end{equation*}
-    for any \( x_{1} \in \dom f \) and \( x_{2} \in \dom f \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization},
+    Thus, we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} \( (f(x_{1}) = f(x_{2})) {\implies} (x_{1} = x_{2}) \)
+    for any \( x_{1}, x_{2} \in \dom f \).
+    Finally, \aref{rule-of-inference:universal-generalization}{Universal Generalization} yields,
     \begin{equation*}
         \forall x \, \forall y \, \Big[ x \in \dom f \land y \in \dom f \implies \Big( f(x) = f(y) \implies x = y \Big) \Big]
     \end{equation*}
@@ -2054,8 +2106,100 @@ Partial functions can also be surjections, injections, or bijections, which lead
 
 \begin{cor}
     If a function \( f \) is invertible, then \( f^{-1} \) is also invertible because \( \mleft( f^{-1} \mright)^{-1} = f \) by
-    \cref{thm:inverse-of-the-inverse-is-the-set-itself}.
+    \cref{thm:inverse-of-the-inverse-of-a-set-of-ordered-pairs-is-the-set-itself}.
 \end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:the-inverse-of-a-bijection-is-also-a-bijection}
+    For any two sets \( A \) and \( B \), if \( \bijection{f}{A}{B} \), then \( \bijection{f^{-1}}{B}{A} \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets and \( f \) be a bijection between them.
+    By \cref{dfn:inverse-of-a-set-of-ordered-pairs}, it follows that,
+    \begin{equation}
+        \phantomsection \label{eq:f-inverse-in-setbuilder-form}
+        f^{-1} = \setbuilder{\orderedpair{x}{y}}{\orderedpair{y}{x} \in f}
+    \end{equation}
+    Since \( \dom f = A \) and \( \ran f = B \), we have by \cref{thm:domain-is-the-range-of-inverse-and-vice-versa}
+    \( \dom f^{-1} = B \) and \( \ran f^{-1} = A \). Furthermore, \( f \) is a \aref{dfn:bijection}{bijection}, so it must also be \aref{dfn:injection}{injective}.
+    Thus, \cref{thm:a-function-is-invertible-if-and-only-if-it-is-injective} guarantees that \( f^{-1} \) is a function.
+    In other words, \( \surjection{f^{-1}}{B}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    To show that \( f^{-1} \) is also injective, we let \( x_{1}, x_{2} \in B \) and \( y \in A \) be arbitrary objects such that
+    \( \orderedpair{x_{1}}{y} \in f^{-1} \) and \( \orderedpair{x_{2}}{y} \in f^{-1} \). By \eqref{eq:f-inverse-in-setbuilder-form},
+    it follows that \( \orderedpair{y}{x_{1}} \in f \) and \( \orderedpair{y}{x_{2}} \in f \). But \( f \) is a function,
+    so \cref{dfn:function-basic} guarantees that \( x_{1} = x_{2} \).
+    Thus, \( \orderedpair{x_{1}}{y} \in f^{-1} \,\,{\land}\,\, \orderedpair{x_{2}}{y} \in f^{-1} {\implies} x_{1} = x_{2} \) for any
+    arbitrary \( x_{1},x_{2} \in B \) and \( y \in A \).
+    By \cref{dfn:injection}, it follows that \( f^{-1} \) is injective.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:for-any-function-f-the-image-of-A-under-f-inverse-is-a-subset-of-A}
+    For any function \( f \) and any arbitrary set \( A \), \( \imageSet{f}{\imageSet{f^{-1}}{A}} \subseteq A \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be a function and \( A \) be an arbitrary set. Let \( S \) denote the set \( \imageSet{f^{-1}}{A} \).
+    Thus, we have by \cref{dfn:image-of-a-set-of-ordered-pairs,dfn:inverse-of-a-set-of-ordered-pairs},
+    \begin{equation}
+        \label{eq:S-is-the-image-of-A-under-f-inverse}
+        S = \imageSet{f^{-1}}{A} = \setbuilderbig{y}{\exists x \, \mleft( x \in A \,\,{\land}\,\, \orderedpair{y}{x} \in f \mright)}
+    \end{equation}
+    We now proceed to demonstrate that \( \imageSet{f}{S} \subseteq A \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( z_{0} \in \imageSet{f}{S} \) be arbitrary. By \cref{dfn:image-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{x_{0}}{z_{0}} \in f \)
+    for some \( x_{0} \in S \).
+    Since \( x_{0} \in S \), we can then infer from \eqref{eq:S-is-the-image-of-A-under-f-inverse} that \( \orderedpair{x_{0}}{y_{0}} \in f \) for some
+    \( y_{0} \in A \). In other words,
+    \begin{equation*}
+        \orderedpair{x_{0}}{z_{0}} \in f \,\,{\land}\,\, \orderedpair{x_{0}}{y_{0}} \in f
+    \end{equation*}
+    But \( f \) is a function, so it follows from \cref{dfn:function-basic} that \( z_{0} = y_{0} \). Since \( y_{0} \in A \) and \( y_{0} = z_{0} \),
+    we have by \aref{rule-of-inference:substitution}{Substitution} that \( z_{0} \in A \). By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
+    we conclude that \( z_{0} \in \imageSet{f}{S} {\implies} z_{0} \in A \) for any arbitrary \( z_{0} \).
+    Finally, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \imageSet{f}{S} \subseteq A \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:image-of-f-inverse-A-under-f-is-A-if-f-is-a-bijection-and-A-subset-of-range-f}
+    If \( f \) is a bijection and \( A \subseteq \ran f \), then \( \imageSet{f}{\imageSet{f^{-1}}{A}} = A \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be a \aref{dfn:bijection}{bijective function} and \( A \) be any set such that \( A \subseteq \ran f \).
+    Since \( f \) is a function, it follows from \cref{thm:for-any-function-f-the-image-of-A-under-f-inverse-is-a-subset-of-A} that
+    \( \imageSet{f}{\imageSet{f^{-1}}{A}} \subseteq A \). Thus, it remains to show that \( A \subseteq \imageSet{f}{\imageSet{f^{-1}}{A}} \).
+    We start by writing down the definition of \( \imageSet{f}{\imageSet{f^{-1}}{A}} \)
+    according to \cref{dfn:image-of-a-set-of-ordered-pairs,dfn:inverse-of-a-set-of-ordered-pairs}:
+    \begin{equation}
+        \label{eq:image-of-f-under-f-inverse-A-in-setbuilder-notation}
+        \imageSet{f}{\imageSet{f^{-1}}{A}} = \setbuilderBig{y}{\exists x \, \exists z \, \big[ z \in A \,\,{\land}\,\, \orderedpair{x}{z} \in f
+        \,\,{\land}\,\, \orderedpair{x}{y} \in f \big]}
+    \end{equation}
+    Now let \( y \in A \) be arbitrary. Since \( A \subseteq \ran f \) by \aref{rule-of-inference:assumption}{Assumption}, it follows that
+    \( y \in \ran f \) and thus \( \orderedpair{x}{y} \in f \) for some \( x \in \dom f \) by \cref{dfn:range-of-a-set-of-ordered-pairs}.
+    But \( \orderedpair{x}{y} \in f {\iff} \orderedpair{x}{y} \in f \,\,{\land}\,\, \orderedpair{x}{y} \in f \) is a tautology, and since
+    \( y \in A \), we have by \aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction}:
+    \begin{equation*}
+        y \in A \,\,{\land}\,\, \orderedpair{x}{y} \in f \,\,{\land}\,\, \orderedpair{x}{y} \in f
+    \end{equation*}
+    In other words, the formula \( \exists x \, \exists z \, \mleft[ z \in A \,\,{\land}\,\, \orderedpair{x}{z} \in f \,\,{\land}\,\, \orderedpair{x}{y} \in f \mright] \)
+    is satisfied and thus \( y \in \imageSet{f}{\imageSet{f^{-1}}{A}} \) by \eqref{eq:image-of-f-under-f-inverse-A-in-setbuilder-notation}.
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we have for any arbitrary \( y \),
+    \begin{equation*}
+        y \in A \implies y \in \imageSet{f}{\imageSet{f^{-1}}{A}}
+    \end{equation*}
+    Thus, \( A \subseteq \imageSet{f}{\imageSet{f^{-1}}{A}} \) follows readily from
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization} and \cref{dfn:subset}.
+    Since \( \imageSet{f}{\imageSet{f^{-1}}{A}} \subseteq A \) and \( A \subseteq \imageSet{f}{\imageSet{f^{-1}}{A}} \) are both true,
+    necessarily \( \imageSet{f}{\imageSet{f^{-1}}{A}} = A \).
+\end{proof}
 
 \begin{thm}
     \label{thm:the-composition-of-injective-functions-is-injective}
@@ -2165,8 +2309,8 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         f(x_{0}) = f(x_{r}) \implies x_{0} = x_{r}
     \end{equation*}
-    Since \( f(x_{0}) = y_{0} = f(x_{r}) \), \( x_{0} = x_{r} \) follows by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. Since \( x_{r} = x_{0} \) and \( x_{0} \in z_{0} \),
-    it follows that \( x_{r} \in z_{0} \) as well. In other words,
+    Since \( f(x_{0}) = y_{0} = f(x_{r}) \), \( x_{0} = x_{r} \) follows by \aref{rule-of-inference:modus-ponens}{Modus Ponens}.
+    Since \( x_{r} = x_{0} \) and \( x_{0} \in z_{0} \), it follows that \( x_{r} \in z_{0} \) as well. In other words,
     \begin{equation*}
         \begin{aligned}
             z_{0} \in S \implies x_{r} \in z_{0}&
@@ -2191,7 +2335,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \end{equation*}
     By \cref{dfn:image-of-a-set-of-ordered-pairs}, necessarily \( y_{0} \in \imageSet{f}{\Intersect S} \).
     This entire chain of inferences shows that one can derive \( y_{0} \in \imageSet{f}{\Intersect S} \) from
-    the initial assumption \( y_{0} \in \Intersect T \). Therefore, we can conclude by the Deduction Theorem that,
+    the initial assumption \( y_{0} \in \Intersect T \). Therefore, we can conclude by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} that,
     \begin{equation*}
         \begin{aligned}
             y_{0} \in \Intersect T \implies y_{0} \in \imageSet{f}{\Intersect S}&
@@ -2256,7 +2400,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     Thus, \( \beta = x_{0} \) by \aref{rule-of-inference:modus-ponens}{Modus Ponens}. But if \( \beta = x_{0} \), then \( \beta \notin B \),
     an obvious contradiction.
     Thus, we conclude by Reductio Ad Absurdum that the supposition \( \orderedpair{\beta}{y_{0}} \in f \)
-    must be false. And by the Deduction Theorem, we infer,
+    must be false. And by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we infer,
     \begin{equation*}
         \beta \in B \implies \orderedpair{\beta}{y_{0}} \notin f
     \end{equation*}
@@ -2306,10 +2450,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \begin{equation*}
         \imageSet{f}{A \symdiff B} = \mleft( \imageSet{f}{A} - \imageSet{f}{B} \mright) \union \mleft( \imageSet{f}{B} - \imageSet{f}{A} \mright)
     \end{equation*}
-    And by \cref{dfn:symmetric-difference}, we have,
-    \begin{equation*}
-        \imageSet{f}{A \symdiff B} = \imageSet{f}{A} \symdiff \imageSet{f}{B} \qedhere
-    \end{equation*}
+    And by \cref{dfn:symmetric-difference}, we have \( \imageSet{f}{A \symdiff B} = \imageSet{f}{A} \symdiff \imageSet{f}{B} \)
 \end{proof}
 
 \begin{thm}
@@ -2334,7 +2475,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     it follows that \( \alpha \in f \) for some \( f \in F \). Since \( F \) is a system of functions, it follows that \( f \) must
     be a function. And since functions are sets of ordered pairs, \( \alpha \) must therefore be an ordered pair.
 
-    \vspace{0.5cm}
+    \vspace{0.3cm}
     \noindent
     To prove \eqref{eq:Union-F-has-unique-first-coordinate}, we let \orderedpair{x_{0}}{y_{0}} and \orderedpair{x_{0}}{z_{0}} be
     ordered pairs that belong to \( \Union F \). Again, by \cref{dfn:union-of-sets}, it follows that,
@@ -2356,18 +2497,15 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \end{equation}
     Since \( \orderedpair{x_{0}}{y_{0}} \in f \land \orderedpair{x_{0}}{z_{0}} \in g \), clearly \( x_{0} \in \dom f \land x_{0} \in \dom g \).
     By \cref{thm:intersection-in-terms-of-logical-and}, necessarily \( x_{0} \in \mleft( \dom f \intersect \dom g \mright) \).
-    And by \eqref{eq:f-and-g-have-the-same-values-where-their-domains-intersect}, we infer,
+    And by \eqref{eq:f-and-g-have-the-same-values-where-their-domains-intersect}, we infer \( f(x_{0}) = y_{0} = g(x_{0}) = z_{0} \).
+    Thus, we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation*}
-        f(x_{0}) = y_{0} = g(x_{0}) = z_{0}
+        \Big( \orderedpair{x_{0}}{y_{0}} \in \Union F \land \orderedpair{x_{0}}{z_{0}} \in \Union F \Big) \implies \Big( y_{0} = z_{0} \Big)
     \end{equation*}
-    By the Deduction Theorem,
-    \begin{equation*}
-        \Big( \orderedpair{x_{0}}{y_{0}} \in \Union F \land \orderedpair{x_{0}}{z_{0}} \in \Union F \Big) \implies y_{0} = z_{0}
-    \end{equation*}
-    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, \eqref{eq:Union-F-has-unique-first-coordinate} follows from
+    Since \( x_{0} \), \( y_{0} \), and \( z_{0} \) are arbitrary, \eqref{eq:Union-F-has-unique-first-coordinate} follows readily from
     \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
 
-    \vspace{0.5cm}
+    \vspace{0.3cm}
     \noindent
     To prove that \( \dom \Union F = \Union \setbuilderbig{\dom f}{f \in F} \), we let \( x_{0} \) is an arbitrary object.
     Thus the following series of biconditional statements must hold:
@@ -2393,6 +2531,114 @@ Partial functions can also be surjections, injections, or bijections, which lead
     The equality follows immediately by \aref{rule-of-inference:universal-generalization}{Universal Generalization} and the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:bijection-between-sets-implies-bijection-between-powersets}
+    If a bijection exists between two sets \( A \) and \( B \), then a bijection also exists
+    between \( \powerset{A} \) and \( \powerset{B} \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be arbitrary sets and \( \bijection{h}{A}{B} \) be a bijection between them.
+    Let the set \( g \) be defined as follows:
+    \begin{equation}
+        \label{eq:define-the-mapping-g-between-powersets}
+        g = \setbuilderBig{\orderedpair{x}{y}}{x \subseteq A \,\,{\land}\,\, y = \imageSet{h}{x} }
+    \end{equation}
+    Then we must prove that \( g \) is a bijection between \( \powerset{A} \) and \( \powerset{B} \), which entails
+    proving the following claims:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( g \) is a \aref{dfn:function-basic}{function} with \( \dom g = \powerset{A} \) and \( \ran g \subseteq \powerset{B} \), \phantomsection \label{enum:g-is-a-function}
+        \item \( g \) is \aref{dfn:injection}{injective}, \phantomsection \label{enum:g-is-injective}
+        \item \( g \) is \aref{dfn:surjection}{surjective}. \phantomsection \label{enum:g-is-surjective}
+    \end{enumerate*}
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Claim} \ref{enum:g-is-a-function}: \( g \) is a function with domain \( \powerset{A} \) and range \( \powerset{B} \)
+
+    \vspace{0.1cm}
+    \noindent
+    To prove that \( g \) is a function, we must show that \( g \) satisfies \cref{dfn:function-basic}.
+    From \eqref{eq:define-the-mapping-g-between-powersets}, it is obvious that \( g \) is a set of ordered pairs. That is,
+    \begin{equation}
+        \label{eq:g-is-a-set-of-ordered-pairs}
+        \forall x \, \big[ x \in g \implies \exists a \, \exists b \, \mleft( x = \orderedpair{a}{b} \mright) \big]
+    \end{equation}
+    Now suppose that \( x \), \( y \), and \( z \) be arbitrary objects such that \( \orderedpair{x}{y} \in g \) and \( \orderedpair{x}{z} \in g \).
+    By \eqref{eq:define-the-mapping-g-between-powersets}, it follows that \( y = \imageSet{h}{x} \) and \( z = \imageSet{h}{x} \).
+    Clearly, \( y = z \).
+    Thus, we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} and \aref{rule-of-inference:universal-generalization}{Universal Generalization},
+    \begin{equation}
+        \label{eq:the-same-object-in-the-domain-of-g-is-associated-with-the-same-object-in-the-range-of-g}
+        \forall x \, \forall y \, \forall z \, \Big[ \big( \orderedpair{x}{y} \in g \,\,{\land}\,\, \orderedpair{x}{z} \in g \big) \implies \mleft( y = z \mright) \Big]
+    \end{equation}
+    Applying \aref{rule-of-inference:conjunction-introduction}{Conjunction Introduction} to \eqref{eq:g-is-a-set-of-ordered-pairs}
+    and \eqref{eq:the-same-object-in-the-domain-of-g-is-associated-with-the-same-object-in-the-range-of-g} then yields \cref{dfn:function-basic}. In other words,
+    \( g \) is indeed a function. Furthermore, if \( \exists y \, \mleft[ \orderedpair{x}{y} \in g \mright] \), then \eqref{eq:define-the-mapping-g-between-powersets}
+    requires that \( x \subseteq A \) and thus \( x \in \powerset{A} \). This means that \( \dom g \subseteq \powerset{A} \).
+    Conversely, if \( x \) is an arbitrary subset of \( A \), then the image \( \imageSet{h}{x} \) must exist
+    by \cref{thm:existence-of-the-image-of-a-set-of-ordered-pairs-under-another-set}. In other words, \( x \in \powerset{A} {\implies} x \in \dom g \), or
+    \( \powerset{A} \subseteq \dom g \). Since \( \dom g \subseteq \powerset{A} \) and \( \powerset{A} \subseteq \dom g \) are both true, it follows that
+    \( \dom g = \powerset{A}\). Next, let \( y_{0} \) be an arbitrary element of \( \ran g \). By \cref{dfn:range-of-a-set-of-ordered-pairs}, it follows
+    that \( \orderedpair{x_{0}}{y_{0}} \in g \) for some \( x_{0} \). But according to \eqref{eq:define-the-mapping-g-between-powersets},
+    \( \orderedpair{x_{0}}{y_{0}} \in g \) if and only if \( x_{0} \subseteq A \) and \( y_{0} = \imageSet{h}{x_{0}} \). Since \( \ran h = B \), it follows
+    that \( y_{0} = \imageSet{h}{x_{0}} \subseteq B \). In other words, \( y_{0} \in \powerset{B} \).
+    Thus, we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} \( y_{0} \in \ran g {\implies} y_{0} \in \powerset{B} \) for any
+    arbitrary \( y_{0} \). Finally, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \ran g \subseteq \powerset{B}\).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim} \ref{enum:g-is-injective}: \( g \) is injective
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x, y \in \powerset{A}\) and \( z \in \powerset{B} \) be arbitrary sets such that,
+    \begin{equation}
+        \label{eq:gx-and-gy-equals-z}
+        \orderedpair{x}{z} \in g \,\,{\land}\,\, \orderedpair{y}{z} \in g
+    \end{equation}
+    By \eqref{eq:define-the-mapping-g-between-powersets}, it follows that \( z = \imageSet{h}{x} \) and \( z = \imageSet{h}{y} \).
+    Clearly, \( \imageSet{h}{x} = \imageSet{h}{y} \). Thus,
+    \begin{equation}
+        \label{eq:hx-equals-hy}
+        \forall a \, \big( a \in \imageSet{h}{x} \iff a \in \imageSet{h}{y} \big)
+    \end{equation}
+    Let \( \alpha \in x \) be arbitrary. Since \( x \subseteq A \) and \( \dom h = A \), it follows that \( h(\alpha) \) is defined and that
+    \( h(\alpha) \in \imageSet{h}{x} \). By \eqref{eq:hx-equals-hy}, it follows that \( h(\alpha) \in \imageSet{h}{y} \), and since \( h(\alpha) \in \imageSet{h}{y} \),
+    \cref{dfn:image-of-a-set-of-ordered-pairs} guarantees that there exists some \( \beta \in y \) such that \( h(\alpha) = h(\beta) \).
+    But \( h \) is a bijection between \( A \) and \( B \), so \cref{dfn:bijection} implies that \( \alpha = \beta \).
+    Since \( \beta \in y \) and \( \alpha = \beta \), it follows that \( \alpha \in y \) must also be true. In other words,
+    \( \alpha \in x {\implies} \alpha \in y \) for any arbitrary \( \alpha \). By \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we have,
+    \begin{equation*}
+        \forall a \, \big( a \in x \implies a \in y \big)
+    \end{equation*}
+    The converse \( \forall a \, \mleft( a \in y {\implies} a \in x \mright) \) can be proven in the exact same way with the roles of \( x \) and \( y \) swapped.
+    This shows that \( x = y \) and thus \( \orderedpair{x}{z} \in g \,\,{\land}\,\, \orderedpair{y}{z} \in g {\implies} x = y \) for any arbitrary \( x \) and \( y \).
+    By \cref{dfn:injection}, it follows that \( g \) is an injective function.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim} \ref{enum:g-is-surjective}: \( g \) is surjective
+
+    \vspace{0.1cm}
+    \noindent
+    It has already been proven that \( \ran g \subseteq \powerset{B} \). Thus, it remains to show that \( \powerset{B} \subseteq \ran g \)
+    to prove that \( g \) is surjective. Let \( y \in \powerset{B} \) be arbitrary.
+    Since \( h \) is a bijection with \( \ran h = B \) and \( y \subseteq B \),
+    it follows from \cref{thm:image-of-f-inverse-A-under-f-is-A-if-f-is-a-bijection-and-A-subset-of-range-f} that
+    \( \imageSet{h}{\imageSet{h^{-1}}{y}} = y \).
+    Furthermore, \( \imageSet{h^{-1}}{y} \subseteq \imageSet{h^{-1}}{B} \) by
+    \cref{thm:A-subset-B-implies-image-of-A-under-R-subset-image-of-B-under-R}.
+    Since \( h \) is a bijection, \cref{thm:the-inverse-of-a-bijection-is-also-a-bijection} guarantees that \( h^{-1} \) is also
+    bijection where \( \dom h^{-1} = B \) and \( \ran h^{-1} = A \). Since \( \dom h^{-1} = B \), it follows that \( \imageSet{h^{-1}}{B} = A \)
+    and thus \( \imageSet{h^{-1}}{y} \subseteq A \) and \( \imageSet{h^{-1}}{y} \in \powerset{A} \).
+    By \eqref{eq:define-the-mapping-g-between-powersets},
+    it follows that \( \orderedpair{\imageSet{h^{-1}}{y}}{y} \in g \) for any \( y \in \powerset{B} \).
+    In other words, \( y \in \powerset{B} {\implies} y \in \ran g \), and by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
+    \( \powerset{B} \subseteq \ran g \) as needed.
+\end{proof}
+
+\newpage
 \section{Indexed System of Sets}
 
 \begin{dfn}[Indexed Sets]
@@ -2450,7 +2696,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
 
 \vspace{0.1cm}
 \noindent
-We will now prove some theorems involving indexed systems of sets.
+We now prove some theorems involving indexed systems of sets.
 
 \begin{thm}
     \label{thm:product-of-an-empty-set}
@@ -2579,6 +2825,39 @@ We will now prove some theorems involving indexed systems of sets.
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:set-exponentiation-with-empty-exponent}
+    For any set \( A \), \( A^{0} = A^{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) be an arbitrary set. It follows from \cref{thm:empty-set-universal-subset} that \( \emptyset \subseteq A \).
+    Moreover, we have by \cref{thm:f-is-a-function-with-empty-domain-and-empty-range-if-and-only-if-it-is-the-empty-set},
+    \( \function{\emptyset}{\emptyset}{\emptyset} \). In other words, \( \ran \emptyset \subseteq A \) and thus
+    \( \function{\emptyset}{\emptyset}{A} \) by \cref{dfn:arrow-notation}, which in turn implies \( \emptyset \in A^{\emptyset} \) by \cref{dfn:set-exponentiation}.
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem} and \aref{rule-of-inference:universal-generalization}{Universal Generalization},
+    we conclude that \( \forall x \, \mleft[ x = \emptyset {\implies} x \in A^{\emptyset} \mright] \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, if \( f \in A^{\emptyset} \), then \( \function{f}{\emptyset}{A} \) by \cref{dfn:set-exponentiation}.
+    Since \( \dom f = \emptyset \), necessarilly \( \ran f = \emptyset \). In other words, \( \function{f}{\emptyset}{\emptyset} \),
+    and by \cref{thm:f-is-a-function-with-empty-domain-and-empty-range-if-and-only-if-it-is-the-empty-set}, necessarily \( f = \emptyset \).
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, we infer that \( f \in A^{\emptyset} {\implies} f = \emptyset \).
+    Since \( f \) is arbitrary, it follows from \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
+    \( \forall x \, \mleft[ x \in A^{\emptyset} {\implies} x = \emptyset \mright] \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \forall x \, \mleft[ x = \emptyset {\implies} x \in A^{\emptyset} \mright]  \) and
+    \( \forall x \, \mleft[ x \in A^{\emptyset} {\implies} x = \emptyset \mright] \) are both true, we conclude by
+    \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction} that,
+    \begin{equation*}
+        \forall x \, \big[ x \in A^{\emptyset} \iff x = \emptyset \big]
+    \end{equation*}
+    In other words, \( A^{\emptyset} \) is the singleton \( \mleft\{ \emptyset \mright\} \).
+\end{proof}
+
+\begin{thm}
     \label{thm:existence-of-the-union-of-an-indexed-system-of-sets}
     If \surjection{S}{I}{R} is an indexed system of sets, then the union of \( S \) exists.
 \end{thm}
@@ -2611,7 +2890,7 @@ We will now prove some theorems involving indexed systems of sets.
     By the \nameref{axm:axiom-of-union}, \( \Union R \) exists. Since \( I \neq \emptyset \),
     it follows that there exists an \( i \) such that \( i \in I \). Since \( \ran S = R \),
     it follows that \( S_{i} \in R \). Since \( x_{0} \in S_{i} \) by \eqref{eq:x0-belongs-to-all-Si},
-    and since \( S_{i} \in R \), it follows that \( x_{0} \in \Union R \). By the Deduction Theorem,
+    and since \( S_{i} \in R \), it follows that \( x_{0} \in \Union R \). By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     we conclude,
     \begin{equation*}
         \varphi(x_{0}) \implies x_{0} \in \Union R
@@ -2690,7 +2969,7 @@ We will now prove some theorems involving indexed systems of sets.
         \function{f}{I}{A} \land \forall i \, \big( i \in I \implies f(i) \in A \big)
     \end{equation*}
     Since \function{f}{I}{A}, clearly \( f \in A^{I} \) by \cref{dfn:set-exponentiation}.
-    By the Deduction Theorem,
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation}
         \label{eq:f-in-product-implies-f-in-AI}
         f \in \prod_{i \,\in\, I} S_{i} \implies f \in A^{I}
@@ -2713,7 +2992,7 @@ We will now prove some theorems involving indexed systems of sets.
     \end{equation*}
     Since \function{f}{I}{A} and \( \forall i \, \mleft( i \in I \implies f(i) \in A \mright) \) are both true,
     \( f \in \prod_{i \,\in\, S_{i}} \) follows by \eqref{eq:the-product-of-S-in-set-builder-notation-final-form}.
-    Again, by the Deduction Theorem,
+    Again, by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
     \begin{equation}
         \label{eq:f-in-AI-implies-f-in-product}
         f \in A^{I} \implies f \in \prod_{i \,\in\, I} S_{i}
