@@ -28,14 +28,33 @@
   {.}
   {5pt plus 1pt minus 1pt}
   {}
+\newtheoremstyle{thm}
+  {\topsep}
+  {\topsep}
+  {\normalfont}
+  {0pt}
+  {\bfseries}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
+\newtheoremstyle{rem}
+  {\topsep}
+  {\topsep}
+  {\normalfont}
+  {0pt}
+  {\bfseries}
+  {.}
+  {5pt plus 1pt minus 1pt}
+  {}
 
 % Theorem-Like Environments
+\theoremstyle{thm}
 \newtheorem{axm}{Axiom}
 \newtheorem{thm}{Theorem}[chapter]
 \newtheorem{dfn}{Definition}[chapter]
 \newtheorem{lem}{Lemma}[chapter]
 \newtheorem{cor}{Corollary}[chapter]
-\theoremstyle{remark}
+\theoremstyle{rem}
 \newtheorem*{rem}{Remark}
 \theoremstyle{notation}
 \newtheorem*{notation}{Notation}
@@ -46,6 +65,8 @@
 \crefname{dfn}{Definition}{Definitions}
 \crefname{cor}{Corollary}{Corollaries}
 
+% Custom commands
+\newcommand{\writtendate}{May 1, 2025}
 \newcommand{\keyconcept}[1]{
     \begin{center}
         \setlength{\fboxsep}{0.3cm}
