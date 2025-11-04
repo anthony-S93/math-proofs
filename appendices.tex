@@ -1,6 +1,431 @@
 \newpage
 \appendix
 
+\chapter{First-Order Languages}
+In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
+to \aref{dfn:general-mathematical-structures}{mathematical structures}. Conceptually, a first-order language
+is simply a collection of symbols  together with a finite set of rules  that determine which
+strings of symbols from said collection are valid expressions of that language.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-symbols}
+    A \keyword{first-order language} \( \mathcal{L} \) is associated with the following symbols:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item Logical Symbols:
+            \begin{enumerate}[topsep=2pt,label=\arabic*.]
+                \item Parentheses: \( () \, , \,[ \, ] \)
+                \item Sentential Connectives\footnote{All the other familiar connectives can be defined in terms of \( \lnot \), \( \land \), and \( \lor \).}:
+                    \( \lnot \), \( \land \), \( \lor \)
+                \item Quantifiers: \( \forall \), \( \exists \)
+                \item Equality(optional): \( = \)
+                \item Variables: \( v_{0}, v_{1}, \dots \)
+            \end{enumerate}
+        \item Non-Logical Symbols:
+            \begin{enumerate}[topsep=2pt,label=\arabic*.]
+                \item Predicates: A tuple \( P^{\mathcal{L}} \) of predicate symbols with an arity function
+                    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset - \mleft\{ 0 \mright\}} \) associated with it.
+                \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with an arity function
+                    \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) associated with it.
+            \end{enumerate}
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    The traditional ``constant'' symbols are treated as \aref{cor:0-ary-operations}{\( 0 \)-ary operations} in this approach.
+    That is why \( \ran \Phi^{\mathcal{L}} \) can be the entirety of \( \naturalset \) (which includes 0) whereas \( 0 \) must
+    be excluded from the range of \( \Pi^{\mathcal{L}} \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-L-symbol}
+    A symbol associated with \( \mathcal{L} \) is called an \( \mathcal{L} \)-symbol.
+    An \( \mathcal{L} \)-symbol that is also a variable symbol is called an \( \mathcal{L} \)-variable.
+\end{dfn}
+
+\noindent
+The symbols defined in \cref{dfn:first-order-language-symbols} form the vocabulary of \( \mathcal{L} \), so to speak;
+each symbol in \( \mathcal{L} \) is analogous to a word in a natural language. Just as the words of a natural language can be
+stringed together to form expressions, the symbols of \( \mathcal{L} \) can also be stringed together to form \( \mathcal{L} \)-expressions.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-expression}
+    An \( \mathcal{L} \)-expression is any finite sequence of \( \mathcal{L} \)-symbols.
+\end{dfn}
+
+\noindent
+Of course, just having an infinite supply of expressions is not enough to fully define a language. We also need a set of rules to tell us
+which expressions are valid and which are not.
+For instance, the words `cats', `or', and `to' are all valid words of the English language; however, no native English speaker would deem the sequence
+of words `to or cats' a valid English expression for the simple reason that `to or cats' does not conform to the grammar of the English language.
+In other words, the grammar \emph{is} part of the language and should therefore be included in the language's specification.
+\begin{equation*}
+    \text{language} = \text{vocabulary} + \text{grammar}
+\end{equation*}
+\noindent
+Fortunately, the syntax (grammar) of first-order languages is relatively straightforward.
+In first-order languages, the most basic unit of grammar is formulas---analogous to
+clauses in natural languages. But just as clauses are composed of existing words (verbs, nouns, etc.) in a natural language,
+formulas are also composed of smaller units called \emph{terms}.
+As such, any comprehensive definition of the grammar of a first-order language must begin with a precise definition of what a `term' means in that language.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-terms}
+    An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} \( t \) is an \( \mathcal{L} \)-term if and only if
+    one of the following conditions holds:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( t \) is an \( \mathcal{L} \)-variable.
+        \item \( t \) is \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
+            \begin{itemize}[topsep=2pt,leftmargin=10pt]
+                \item \( s \) is a tuple of \aref{dfn:n-tuples-basic-form}{length} \( \Phi^{\mathcal{L}}(i) \)
+                \item \( s_{j} \) is an \( \mathcal{L} \)-term for all \( j \in \Phi^{\mathcal{L}}(i) \)
+            \end{itemize}
+        \item \( t \) is \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
+        \item \( t \) is \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    Note the recursive nature of \cref{dfn:first-order-language-terms}.
+    This means that an \( \mathcal{L} \)-term can have any number (but still finite) of \( \mathcal{L} \)-terms nested within it.
+    Note also that if \( \Phi^{\mathcal{L}}(i) = 0 \),
+    then \( F^{\mathcal{L}}_{i} \) is a \( 0 \)-ary operation symbol, in which case \( s = \tuple{} \).
+    An \( 0 \)-ary operation symbol represents a ``constant'' symbol in \( \mathcal{L} \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-terms-simple-and-compound-terms}
+    An \( \mathcal{L} \)-term is \keyword{compound} if and only if it has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \)
+    where \( \tau \) is a non-empty tuple such that \( \tau_{j} \) is an \( \mathcal{L} \)-term containing at least one symbol
+    from \( F^{\mathcal{L}} \) for some \( j \in \abs{\tau} \).
+    An \( \mathcal{L} \)-term is \keyword{simple} if and only if it is not compound.
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-terms-root-and-subterms}
+    If \( s \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
+    \( F^{\mathcal{L}}_{i} \) is called the \keyword{root} of \( s \) and the elements of \( \ran \tau \) are called the \emph{subterms} of \( s \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-atom}
+    An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
+    \( \varphi \) is of either one of the following forms:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( t_{1} = t_{2} \) where \( t_{1} \) and \( t_{2} \) are \( \mathcal{L} \)-terms
+        \item \( P^{\mathcal{L}}_{i}(t_{0}, \dots, t_{n-1}) \) for some \( i \in \dom P^{\mathcal{L}} \) where \( n = \Pi^{\mathcal{L}}(i) \)
+            and \( t_{0},\dots,t_{n-1} \) are \( \mathcal{L} \)-terms
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible from a finite number of steps
+    via the application of the following rules:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft[ \, \varphi \, \mright] \) is an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \lnot \, \varphi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\land}\,\, \psi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\lor}\,\, \psi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
+            then \( \forall v \, \varphi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
+            then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-variable-occurrence}
+    If \( t \) is an \( \mathcal{L} \)-term containing an \( \mathcal{L} \)-variable \( v \), then we say that
+    ``\( v \) occurs in \( t \)'' or ``\( v \) is in \( t \).''
+    If \( \varphi \) is an \( \mathcal{L} \)-formula containing at least one \( \mathcal{L} \)-term in which an \( \mathcal{L} \)-variable \( v \) occurs,
+    then we say that ``\( v \) occurs in \( \varphi \)'' or ``\( v \) is in \( \varphi \).''
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-free-variables}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then any \( \mathcal{L} \)-variable in \( \varphi \)
+    that does not occur within the scope of any quantifier in \( \varphi \) is called a \keyword{free} varible of \( \varphi \).
+    Variables in \( \varphi \) that are not free are called the \keyword{bound} variables of \( \varphi \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-sentences}
+    An \( \mathcal{L} \)-formula that does not contain any free variables is called an \( \mathcal{L} \)-\keyword{sentence}.
+\end{dfn}
+
+\begin{notation}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v_{0}, \dots, v_{k-1} \) are the free variables of \( \varphi \),
+    we will use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
+    to make the free variables of \( \varphi \) explicit.
+\end{notation}
+
+\noindent
+The syntactic rules of \( \mathcal{L} \) are now fully defined;
+that is, given any finite string of symbols in \aref{dfn:first-order-language-symbols}{\( \mathcal{L} \)}, we
+now have the tools at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
+However, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
+and a set of rules to construct formulas using those symbols is not enough; there also needs to be a way to assign
+\emph{meaning} to all valid formulas just as words like ``cats'', ``apples'', and ``oranges'' need to have meaning
+for English to have any value as a language.
+
+\vspace{0.3cm}
+\noindent
+The assignment of meaning to the expressions of a language is called the \keyword{semantics} of a language. This typically involves
+associating the symbols in the language (and the valid expressions constructed using those symbols) with existing concepts or mental imageries.
+These mental imageries can be either concrete or abstract. For instance, when a native English speaker sees the word ``apple,'' their minds
+construct the image of a fruit with red skin. In other words, the semantics of a language allows the language to be \keyword{interpreted};
+it provides a connection between a bunch of seemingly meaningless symbols and the real world.
+
+\vspace{0.3cm}
+\noindent
+In first-order languages, meaning is assigned to formulas via a special class of \aref{dfn:general-mathematical-structures}{mathematical structures}
+known as \keyword{first-order structures}.
+
+\begin{dfn}
+    A \keyword{first-order structure} is any \aref{dfn:general-mathematical-structures}{mathematical structure} \( \mathfrak{A} \) such that
+    \aref{notation:individual-components-of-mathematical-structures}{\( S^{\mathfrak{A}} = \emptyset \)}
+    and \aref{notation:individual-components-of-mathematical-structures}{\( G^{\mathfrak{A}} = \emptyset \)}.
+    In other words, a first-order structure is any mathematical structure that is endowed with no other features
+    aside from n-ary \aref{dfn:n-ary-relation-on-a-set}{relations} and \aref{dfn:n-ary-operation}{operations}.
+\end{dfn}
+
+\noindent
+Of course, not every first-order structure can be used to assign meaning to \( \mathcal{L} \)-formulas.
+In fact, for a first-order structure to be capable of interpreting \( \mathcal{L} \), its \aref{dfn:signature-of-a-structure}{signature} must be
+compatible with the arity functions \aref{dfn:first-order-language-symbols}{\( \Pi^{\mathcal{L}} \) and \( \Phi^{\mathcal{L}} \)},
+which leads us to the following definition.
+
+\begin{dfn}
+    An \( \mathcal{L} \)-structure is a first-order structure with \aref{dfn:signature-of-a-structure}{signature} 
+    \( \tuple{\tuple{}, \Pi^{\mathcal{L}}, \Phi^{\mathcal{L}}, \tuple{}} \).
+\end{dfn}
+
+\begin{rem}
+    \phantomsection \label{one-to-one-correspondences-between-first-order-language-and-first-order-structure}
+    Note that \( F^{\mathcal{L}} \), \( P^{\mathcal{L}} \), \( F^{\mathfrak{A}} \), and \( R^{\mathfrak{A}} \) are all bijective tuples
+    because the symbols associated with \( \mathcal{L} \) and \( \mathfrak{A} \) are bound to be unique.
+    As a result, \( \composition{F^{\mathfrak{A}}}{\mleft( F^{\mathcal{L}} \mright)^{-1}} \) and
+    \( \composition{R^{\mathfrak{A}}}{\mleft( P^{\mathcal{L}} \mright)^{-1}} \) are both bijections.
+    In other words, there exist one-to-one correspondences between the function symbols of \( \mathcal{L} \) and the n-ary operation of \( \mathfrak{A} \)
+    as well as between the predicate symbols of \( \mathcal{L} \) and the n-ary relation of \( \mathfrak{A} \).
+\end{rem}
+
+\noindent
+The stage is now set for the semantics of \( \mathcal{L} \) to be defined. 
+Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we must begin
+by defining precisely how \( \mathcal{L} \)-terms are interpreted in the context
+of an \( \mathcal{L} \)-structure.
+
+\begin{notation}
+    If \( t \) denotes an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
+    then we write \( t^{\mathfrak{A}} \) to denote the entity obtained via an interpretation of \( t \) in the context
+    of \( \mathfrak{A} \).
+\end{notation}
+
+\noindent
+In general, an interpretation of \( t \) in the context of \( \mathfrak{A} \) yields a function
+\( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}} \) where \( k \in \naturalset \)
+is the number of \( \mathcal{L} \)-variables \aref{dfn:first-order-language-variable-occurrence}{occurring in} \( t \).
+Moreover, for each \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( t^{\mathfrak{A}}(\alpha) \) is the element
+of \( \abs{\mathfrak{A}} \) that the string of symbols constituting \( t \) refers to after every function symbol \( F^{\mathcal{L}}_{i} \) in \( t \)
+has been replaced with \( F^{\mathfrak{A}}_{i} \) and every \( \mathcal{L} \)-variable in \( t \) has been substituted with objects from \( \ran (\alpha) \).
+The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \( t^{\mathfrak{A}} \).
+
+\vspace{0.3cm}
+\noindent
+To illustrate the nuances of first-order interpretations,
+we shall go over a few examples using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
+\begin{enumerate*}[label=(\roman*)]
+    \item \( f \), a function symbol with arity \( 1 \);
+    \item \( g \), a function symbol with arity \( 2 \);
+    \item \( h \), a function symbol with arity \( 3 \);
+    \item \( x, y, z \) representing variable symbols.
+\end{enumerate*}
+
+\vspace{0.3cm}
+\noindent
+Now consider the following \aref{dfn:first-order-language-terms-simple-and-compound-terms}{compound} \( \mathcal{L}^{\prime} \)-term:
+\begin{equation*}
+    s \coloneq h(f(x), f(y), g(x, z))
+\end{equation*}
+Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \)
+will result in a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \).
+Furthermore, the value of \( s^{\mathfrak{A}} \) at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) can be obtained by:
+\begin{enumerate*}[label=(\roman*)]
+    \item substituting every occurrence of the variable symbols \( x \), \( y \), \( z \)
+        with objects from \( \tuple{a,b,c} \);
+    \item replacing every occurrence of the function symbols \( f \), \( g \), and \( h \) with corresponding n-ary operations from \( \mathfrak{A} \).
+\end{enumerate*}
+
+\vspace{0.3cm}
+\noindent
+Since \( \mathfrak{A} \) is an \( \mathcal{L}^{\prime} \)-structure,
+there exists a \aref{one-to-one-correspondences-between-first-order-language-and-first-order-structure}{one-to-one correspondence between the function symbols
+of \( \mathcal{L}^{\prime} \) and the n-ary operation symbols of \( \mathfrak{A} \)}.
+As a result, all function symbols occurring in \( s \) can be unambiguously replaced with a unique n-ary operation symbol from \( \mathfrak{A} \).
+The problem, however, lies with the substitution of variable symbols.
+Given an argument tuple \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), one could, for instance,
+interpret \( s \) by replacing every occurrence of \( x \) with \( a \), \( y \) with \( b \), and \( z \) with \( c \);
+but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), and \( z \) with \( b \)!
+In other words, there are combinatorially different ways to carry out the substitution, and unless a substitution scheme is specified,
+the interpretation is ambiguous.
+
+\vspace{0.3cm}
+\noindent
+A simple way to resolve this ambiguity is to define a sequence for the variable symbols in \( s \)
+and then perform the substitution based on the positions of the variable symbols in said sequence.
+For example, suppose that we now prescribe the sequence \( \tuple{x, y, z} \) for the variable symbols in \( s \).
+If \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) is the argument tuple, then we have by \cref{dfn:n-tuples-sequence-notation},
+\begin{align*}
+    \tuple{x, y, z} &= \big\{ \orderedpair{0}{x}, \orderedpair{1}{y}, \orderedpair{2}{z} \big\}\\
+    \tuple{a, b, c} &= \big\{ \orderedpair{0}{a}, \orderedpair{1}{b}, \orderedpair{2}{c} \big\}
+\end{align*}
+Observe that the positions of the variable symbols \( x \), \( y \), and \( z \) in \( \tuple{x,y,z} \) correspond directly to
+the positions of the objects \( a \), \( b \), and \( c \) respectively in the argument tuple \( \tuple{a,b,c} \).
+Thus, we complete the interpretation by substituting every occurrence of \( x \), \( y \), and \( z \) in \( s \)
+with \( a \), \( b \), and \( c \) respectively so that the value of \( s^{\mathfrak{A}} \) at \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
+is given by:
+\begin{equation}
+    \phantomsection \label{eq:interpreted-s-explicit}
+    s^{\mathfrak{A}}(a, b, c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c))
+\end{equation}
+
+\vspace{0.3cm}
+\noindent
+Notice that in the examples we provided, the internal structures of \( s \) and \( t \) are explicitly defined;
+that is, the exact sequences of symbols constituting the subterms are known.
+For example, we know that the zeroth subterm of \( s \) comprises of the sequence of symbols `\( f \)', `\( ( \)', `\( x \)', and `\( ) \)',
+the first subterm `\( f \)', `\( ( \)', `\( y \)', and `\( ) \)', and the second subterm `\( g \)', `\( ( \)', `\( x \)', `,',
+`\( z \)', and `\( ) \)'.
+This is the most common and direct way to specify the internal structure of \aref{dfn:first-order-language-terms-simple-and-compound-terms}{compound terms}.
+
+\vspace{0.3cm}
+\noindent
+Nevertheless, there are some situations\footnote{\,In recursive definitions, etc.} in which explicit definitions of subterms are neither practical nor viable.
+In such situations, the internal structure of a compound term can be specified \emph{implicitly} via the following parameters:
+\begin{enumerate*}[label=(\alph*)]
+    \item \( k \in \naturalset \) denoting the number of variable symbols occurring in the term,
+    \item \( \tau \) denoting a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of the term,
+    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) describing the distribution of variable symbols across the subterms.
+\end{enumerate*}
+
+\vspace{0.3cm}
+\noindent
+The parameters \( k \), \( \tau \), and \( \delta \) must also satisfy the following conditions:
+\begin{enumerate*}[label=(\alph*)]
+    \item \( \abs{\tau} \) must be equal to the arity of the \aref{dfn:first-order-language-terms-root-and-subterms}{root of the term},
+    \item \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \),
+    \item for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} = m_{i} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm \( \tau_{i} \).
+\end{enumerate*}
+
+\vspace{0.3cm}
+\noindent
+In our example, the term \( s \) has an internal structure \( \tuple{f(x), f(y), g(x,z)} \).
+We can equivalently express this fact in terms of the parameters \( k \), \( \tau \), and \( \delta \) like so:
+\begin{align*}
+    k &= 3\\
+    \tau &= \tuple{f(x), f(y), g(x, z)}\\
+    \delta &= \tuple{\tuple{0}, \tuple{1}, \tuple{0,2}}
+\end{align*}
+Since \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \),
+\( s^{\mathfrak{A}} \) can be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
+\begin{equation}
+    \phantomsection \label{eq:interpreted-s-implicit}
+    s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{k}
+    \,\,{\land}\,\,
+    \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
+    }
+\end{equation}
+We can in fact verify that \( s^{\mathfrak{A}} \) as defined in \eqref{eq:interpreted-s-implicit} is the same function one would obtain
+if one were to interpret the term \( h(f(x), f(y), g(x, z)) \) in the context of \( \mathfrak{A} \).
+First of all, note that \( k = 3 = \mleft\{ 0, 1, 2 \mright\} \). Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \alpha = \tuple{a,b,c} \)
+for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
+\begin{align*}
+    \composition{\alpha}{\delta_{0}} &= \tuple{a}\\
+    \composition{\alpha}{\delta_{1}} &= \tuple{b}\\
+    \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
+\end{align*}
+Since \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are simple, non-compound terms containing only one function symbol,
+it follows that \( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \).
+This allows us to delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit}:
+\begin{equation*}
+    \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
+    = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
+\end{equation*}
+It should be clear from \eqref{eq:interpreted-s-implicit} that
+\( s^{\mathfrak{A}}(a,b,c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)) \) for
+any \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), which is in agreement with \eqref{eq:interpreted-s-explicit}.
+Thus, \( s^{\mathfrak{A}} \) is indeed the function that will be obtained via an interpretion of \( h(f(x), f(y), g(x,z)) \) in the context of \( \mathfrak{A} \).
+
+\vspace{0.3cm}
+\noindent
+One component of note in \eqref{eq:interpreted-s-implicit} is the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \),
+which can be thought of as the values of each interpreted subterm collected into a tuple.
+
+\vspace{0.3cm}
+\noindent
+The following definitions formalize the intuitive discussion above.
+\begin{dfn}
+    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms. 
+    Let \( k \in \naturalset \) be the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \).
+    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
+    is a function such that for all \( j \in \abs{\tau} \), \( \abs{\delta_{j}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in
+    \( \tau_{j} \), then we define the interpretion of \( s \) under \( \mathfrak{A} \) as the function
+    \( \function{s^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{n}} \) such that:
+    \begin{equation*}
+        s^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k} \,\,{\land}\,\,
+        y = \tuple{s^{\mathfrak{A}}_{0}(\composition{x}{\delta_{0})}, \dots, s^{\mathfrak{A}}_{n-1}(\composition{x}{\delta_{n-1}) }}}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    If \( k = 0 \), then \( \finiteseq{k} = \mleft\{ \emptyset \mright\} \) and thus \( \delta_{i} = \emptyset \) for all \( i \in n \).
+    If \( s \) is the empty tuple, then necessarily \( k = 0 \) because there aren't any \( \mathcal{L} \)-terms in \( s \) for any
+    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence}{occur in}.
+\end{rem}
+
+\vspace{0.3cm}
+\noindent
+If \( s \) is a \emph{tuple} of \( \mathcal{L} \)-terms with length \( n \in \naturalset \),
+then \( s^{\mathfrak{A}} \) denotes the tuple containing all interpreted \( \mathcal{L} \)-terms in \( s \); i.e.,
+\( \tuple{s^{\mathfrak{A}}_{0}, \dots, s^{\mathfrak{A}}_{n-1}} \).
+Note that \( s \) could be the \( 0 \)-tuple \( \tuple{ } \), in which case \( s^{\mathfrak{A}} = \emptyset \).
+
+\noindent
+As stated in the \aref{dfn:first-order-language-terms}{syntax of \( \mathcal{L} \)}, an \( \mathcal{L} \)-term can contain
+\( \mathcal{L} \)-variables. Thus, if \( s \) is a tuple of \( \mathcal{L} \)-terms, then it is reasonable to expect 
+\( s \) to ``contain'' a certain number of \( \mathcal{L} \)-variables; i.e., an \( \mathcal{L} \)-variable \( v \)
+is contained in \( s \) if and only if there exists some \( j \in \abs{s} \) such that \( v \)
+\aref{dfn:first-order-language-variable-occurrence}{occurs in} \( s_{j} \).
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-terms}
+    If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
+    then \( t^{\mathfrak{A}} \) is defined by the following rules:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( t \) is \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term, then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
+        \item If \( t \) is an \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
+        \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) and \( s \) is a tuple 
+            of \( \mathcal{L} \)-terms with \( \abs{s} = \Phi^{\mathcal{L}}(i) \)
+            and \( k \) is the number of \( \mathcal{L} \)-variables occurring in \( t \), then,
+            \begin{equation*}
+                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k}
+                \,\,{\land}\,\,
+                y = F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}})
+                }
+            \end{equation*}
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    For the third rule, if \( k = 0 \), then clearly \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}})} \mright\} \)
+    because \aref{thm:set-exponentiation-with-empty-exponent}{\( \abs{\mathfrak{A}}^{0} = \mleft\{ \emptyset \mright\} \)}.
+    Note also that if \( k = 0 \), then for all \( j \in \Phi^{\mathcal{L}}(i) \), no variable symbol of \( \mathcal{L} \) can possibly occur in
+    \( s_{j} \) (otherwise, \( k  \) would not be \( 0 \)).
+    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( s = \tuple{} \) and thus \( k = 0 \).
+\end{rem}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
@@ -87,18 +512,18 @@ to mimic the ``natural'' way of human reasoning.
 \vspace{0.3cm}
 \noindent
 Both Hilbert systems and natural deduction have their merits.
-Natural deduction is more human-friendly compared to Hilbert systems.
+In a nutshell, natural deduction is more human-friendly whereas Hilbert systems are more computer-friendly.
 Rather than basing the reasoning process on a set of seemingly abstruse and esoteric axioms,
 natural deduction revolves around a set of rules that model human deductive thought.
-That is why proofs written within the framework of natural deduction are often easier to read and understand,
-which is a huge boon to mathematicians.
-The only downside is that it renders the implementation of proof-checking software far more complicated than it need be,
-which is why most proof-checkers are implemented as Hilbert systems.
+As such, proofs written within the framework of natural deduction are typically easier to read and understand by humans;
+that, per se, is why mathematicians often prefer natural deduction for reading and writing proofs.
+The only downside of natural deduction is that it renders the implementation of proof-checking software far more complicated than need be,
+which is why most proof-checkers are implemented using Hilbert systems.
 
 \vspace{0.3cm}
 \noindent
-All the proofs in this book are derived via natural deduction.
-Refer to Appendix \ref{appendices:natural-deduction} for the full specification of the proof system used in this book.
+This book adopts a natural deduction proof system for all its proofs.
+Refer to \aref{appendices:natural-deduction}{Appendix }\ref{appendices:natural-deduction} for a complete specification of the proof system used in this book.
 
 \chapter{Natural Deduction} \phantomsection \label{appendices:natural-deduction}
 
