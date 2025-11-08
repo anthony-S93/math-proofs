@@ -198,7 +198,7 @@ compatible with the arity functions \aref{dfn:first-order-language-symbols}{\( \
 which leads us to the following definition.
 
 \begin{dfn}
-    An \( \mathcal{L} \)-structure is a first-order structure with \aref{dfn:signature-of-a-structure}{signature} 
+    An \( \mathcal{L} \)-structure is a first-order structure with \aref{dfn:signature-of-a-structure}{signature}
     \( \tuple{\tuple{}, \Pi^{\mathcal{L}}, \Phi^{\mathcal{L}}, \tuple{}} \).
 \end{dfn}
 
@@ -213,7 +213,7 @@ which leads us to the following definition.
 \end{rem}
 
 \noindent
-The stage is now set for the semantics of \( \mathcal{L} \) to be defined. 
+The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we must begin
 by defining precisely how \( \mathcal{L} \)-terms are interpreted in the context
 of an \( \mathcal{L} \)-structure.
@@ -299,38 +299,28 @@ that is, the exact sequences of symbols constituting the subterms are known.
 For example, we know that the zeroth subterm of \( s \) comprises of the sequence of symbols `\( f \)', `\( ( \)', `\( x \)', and `\( ) \)',
 the first subterm `\( f \)', `\( ( \)', `\( y \)', and `\( ) \)', and the second subterm `\( g \)', `\( ( \)', `\( x \)', `,',
 `\( z \)', and `\( ) \)'.
-This is the most common and direct way to specify the internal structure of \aref{dfn:first-order-language-terms-simple-and-compound-terms}{compound terms}.
+This is the most direct way to specify the internal structure of \aref{dfn:first-order-language-terms-simple-and-compound-terms}{compound terms}.
 
 \vspace{0.3cm}
 \noindent
-Nevertheless, there are some situations\footnote{\,In recursive definitions, etc.} in which explicit definitions of subterms are neither practical nor viable.
-In such situations, the internal structure of a compound term can be specified \emph{implicitly} via the following parameters:
-\begin{enumerate*}[label=(\alph*)]
-    \item \( k \in \naturalset \) denoting the number of variable symbols occurring in the term,
-    \item \( \tau \) denoting a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of the term,
-    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) describing the distribution of variable symbols across the subterms.
-\end{enumerate*}
+Nevertheless, there are situations in which explicit definitions of subterms are neither practical nor viable.
+In such cases, the internal structure of a compound term can be specified \emph{implicitly} via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
+where \( k \in \naturalset \) is the number of variable symbols occurring in the term and \( \tau \) is a tuple of all the
+\aref{dfn:first-order-language-terms-root-and-subterms}{subterms} (or symbols denoting them) of the compound term.
+Since \( \tau \) contains all the subterms of the compound term, it is necessary that \( \abs{\tau} \) correspond to the arity of the
+\aref{dfn:first-order-language-terms-root-and-subterms}{root of the compound term}.
+Furthermore, it is required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \) and that
+\( \abs{\delta_{i}} = m_{i} \) for all \( i \in \abs{\tau} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm \( \tau_{i} \).
 
 \vspace{0.3cm}
 \noindent
-The parameters \( k \), \( \tau \), and \( \delta \) must also satisfy the following conditions:
-\begin{enumerate*}[label=(\alph*)]
-    \item \( \abs{\tau} \) must be equal to the arity of the \aref{dfn:first-order-language-terms-root-and-subterms}{root of the term},
-    \item \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \),
-    \item for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} = m_{i} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm \( \tau_{i} \).
-\end{enumerate*}
-
-\vspace{0.3cm}
-\noindent
-In our example, the term \( s \) has an internal structure \( \tuple{f(x), f(y), g(x,z)} \).
-We can equivalently express this fact in terms of the parameters \( k \), \( \tau \), and \( \delta \) like so:
+Even though the term \( s \) in our example has an explicit internal structure \( \tuple{f(x), f(y), g(x,z)} \), it is still possible to express
+the inner structure of \( s \) implicitly in terms of a function \( \function{\delta}{\abs{\tau}}{\finiteseq{3}} \):
 \begin{align*}
-    k &= 3\\
-    \tau &= \tuple{f(x), f(y), g(x, z)}\\
     \delta &= \tuple{\tuple{0}, \tuple{1}, \tuple{0,2}}
 \end{align*}
 Since \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \),
-\( s^{\mathfrak{A}} \) can be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
+the interpreted term \( s^{\mathfrak{A}} \) can be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-implicit}
     s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{k}
@@ -338,18 +328,19 @@ Since \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{roo
     \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
     }
 \end{equation}
-We can in fact verify that \( s^{\mathfrak{A}} \) as defined in \eqref{eq:interpreted-s-implicit} is the same function one would obtain
-if one were to interpret the term \( h(f(x), f(y), g(x, z)) \) in the context of \( \mathfrak{A} \).
-First of all, note that \( k = 3 = \mleft\{ 0, 1, 2 \mright\} \). Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \alpha = \tuple{a,b,c} \)
+We can verify that \( s^{\mathfrak{A}} \) as defined in \eqref{eq:interpreted-s-implicit} is the same function one would obtain
+if one were to interpret the term \( h(f(x), f(y), g(x, z)) \) directly in the context of \( \mathfrak{A} \).
+First of all, note that \( k = 3 = \mleft\{ 0, 1, 2 \mright\} \).
+Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \alpha = \tuple{a,b,c} \)
 for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
 \begin{align*}
     \composition{\alpha}{\delta_{0}} &= \tuple{a}\\
     \composition{\alpha}{\delta_{1}} &= \tuple{b}\\
     \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
 \end{align*}
-Since \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are simple, non-compound terms containing only one function symbol,
-it follows that \( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \).
-This allows us to delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit}:
+Since \( \tau_{0} \coloneq f(x) \), \( \tau_{1} \coloneq f(y) \), and \( \tau_{2} \coloneq g(x, z) \),
+we have \( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \).
+Thus, we can delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit} like so:
 \begin{equation*}
     \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
     = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
@@ -361,55 +352,71 @@ Thus, \( s^{\mathfrak{A}} \) is indeed the function that will be obtained via an
 
 \vspace{0.3cm}
 \noindent
-One component of note in \eqref{eq:interpreted-s-implicit} is the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \),
-which can be thought of as the values of each interpreted subterm collected into a tuple.
+One component of considerable interest in \eqref{eq:interpreted-s-implicit} is the sequence
+\( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \),
+which suggests the possibility of interpreting a \emph{tuple} of terms in the context of a structure;
+i.e., the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
+can be thought of as the result of interpreting the tuple of terms \( \tuple{f(x), f(y), g(x,z)} \) in the context of \( \mathfrak{A} \).
 
 \vspace{0.3cm}
 \noindent
-The following definitions formalize the intuitive discussion above.
+To be added...
+
+\vspace{0.3cm}
+\noindent
+We now formalize the intuitive discussion above with the following two definitions.
+
 \begin{dfn}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms. 
-    Let \( k \in \naturalset \) be the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \).
+    \phantomsection \label{dfn:first-order-language-variable-distribution-function}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( k \in \naturalset \) is the number
+    of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \),
+    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is called a \keyword{variable distribution function} of \( \tau \)
+    if and only if for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in \( \tau_{i} \).
+\end{dfn}
+
+\begin{rem}
+    If \( k = 0 \), then \( \finiteseq{k} = \mleft\{ \emptyset \mright\} \) and thus \( \forall i\,{\in}\,\abs{\tau} \, \big[ \delta_{i} = \emptyset \big] \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-interpretation-of-a-tuple-of-terms}
+    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms and \( k \in \naturalset \) be the number of \( \mathcal{L} \)-variables
+    occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \).
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-    is a function such that for all \( j \in \abs{\tau} \), \( \abs{\delta_{j}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in
-    \( \tau_{j} \), then we define the interpretion of \( s \) under \( \mathfrak{A} \) as the function
-    \( \function{s^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{n}} \) such that:
+    is a \aref{dfn:first-order-language-variable-distribution-function}{variable distribution function} of \( \tau \),
+    then we define the interpretion of \( \tau \) in the context of \( \mathfrak{A} \) and \( \delta \) as the function
+    \( \function{\tau^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \) such that:
     \begin{equation*}
-        s^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k} \,\,{\land}\,\,
-        y = \tuple{s^{\mathfrak{A}}_{0}(\composition{x}{\delta_{0})}, \dots, s^{\mathfrak{A}}_{n-1}(\composition{x}{\delta_{n-1}) }}}
+        \tau^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k} \,\,{\land}\,\,
+        y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
+        }
     \end{equation*}
 \end{dfn}
 
 \begin{rem}
-    If \( k = 0 \), then \( \finiteseq{k} = \mleft\{ \emptyset \mright\} \) and thus \( \delta_{i} = \emptyset \) for all \( i \in n \).
-    If \( s \) is the empty tuple, then necessarily \( k = 0 \) because there aren't any \( \mathcal{L} \)-terms in \( s \) for any
-    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence}{occur in}.
+    If \( k = 0 \), then \( \finiteseq{k} = \mleft\{ \emptyset \mright\} \) and \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \);
+    additionally, \( \abs{\mathfrak{A}}^{k} = \mleft\{ \emptyset \mright\} \) according to
+    \cref{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation},
+    in which case \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta \) is an element of \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
+    If \( \tau \) is the empty tuple, then necessarily \( k = 0 \) because there aren't any \( \mathcal{L} \)-terms in \( \ran \tau \) for any
+    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence}{occur in}; this means that \( \delta = \emptyset \) and therefore
+    \( \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}} = \emptyset = \tuple{} \).
+    In other words, \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\tuple{}} \mright\} = \mleft\{ \orderedpair{\emptyset}{\emptyset} \mright\} \).
 \end{rem}
 
-\vspace{0.3cm}
 \noindent
-If \( s \) is a \emph{tuple} of \( \mathcal{L} \)-terms with length \( n \in \naturalset \),
-then \( s^{\mathfrak{A}} \) denotes the tuple containing all interpreted \( \mathcal{L} \)-terms in \( s \); i.e.,
-\( \tuple{s^{\mathfrak{A}}_{0}, \dots, s^{\mathfrak{A}}_{n-1}} \).
-Note that \( s \) could be the \( 0 \)-tuple \( \tuple{ } \), in which case \( s^{\mathfrak{A}} = \emptyset \).
-
-\noindent
-As stated in the \aref{dfn:first-order-language-terms}{syntax of \( \mathcal{L} \)}, an \( \mathcal{L} \)-term can contain
-\( \mathcal{L} \)-variables. Thus, if \( s \) is a tuple of \( \mathcal{L} \)-terms, then it is reasonable to expect 
-\( s \) to ``contain'' a certain number of \( \mathcal{L} \)-variables; i.e., an \( \mathcal{L} \)-variable \( v \)
-is contained in \( s \) if and only if there exists some \( j \in \abs{s} \) such that \( v \)
-\aref{dfn:first-order-language-variable-occurrence}{occurs in} \( s_{j} \).
+With \cref{dfn:first-order-language-interpretation-of-a-tuple-of-terms} at our disposal, we can now give a general definition of
+the interpretation of \( \mathcal{L} \)-terms.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-terms}
     If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
     then \( t^{\mathfrak{A}} \) is defined by the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) is \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term, then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
+        \item If \( t \) is \( (s) \) or \( [\thinspace s \thinspace] \) and \( s \) is an \( \mathcal{L} \)-term, then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
         \item If \( t \) is an \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
-        \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) and \( s \) is a tuple 
-            of \( \mathcal{L} \)-terms with \( \abs{s} = \Phi^{\mathcal{L}}(i) \)
-            and \( k \) is the number of \( \mathcal{L} \)-variables occurring in \( t \), then,
+        \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( s \) is a tuple of \( \mathcal{L} \)-terms such that
+            \( \abs{s} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{s}}{\finiteseq{k}} \) is the variable distribution function of \( s \),
             \begin{equation*}
                 t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k}
                 \,\,{\land}\,\,
