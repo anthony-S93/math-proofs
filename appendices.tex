@@ -349,25 +349,30 @@ Thus, \( s^{\mathfrak{A}} \) is indeed the function that will be obtained via an
 
 \vspace{0.3cm}
 \noindent
-A component of considerable interest in \eqref{eq:interpreted-s-implicit} is the sequence
-\( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \).
-What makes it interesting is that it hints at the possibility of interpreting, not just a single term,
-but also a \emph{tuple} of terms in the context of a structure;
-i.e., the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
-can be thought of as the result of interpreting the tuple of terms \( \tuple{f(x), f(y), g(x,z)} \) in the context of \( \mathfrak{A} \).
-The key point here is that \( \tau \) is interpreted \emph{as a whole} rather than separately according to its individual components.
+The sequence in \eqref{eq:interpreted-s-implicit} is of considerable interest
+since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure;
+that is, the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
+can be thought of as the result of interpreting the tuple \( \tuple{f(x), f(y), g(x,z)} \) in the context of \( \mathfrak{A} \).
 
 \vspace{0.3cm}
 \noindent
-In general, any non-empty tuple of \( \mathcal{L} \)-terms can be interpreted as a whole in the context a compatible \( \mathcal{L} \)-structure
-as long as two pieces of information are known:
+In general, any non-empty tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
+as long as two pieces of information are provided:
 \begin{enumerate*}[label=(\roman*)]
-    \item \( k \) the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for some \( i \in \abs{\tau} \),
-    \item the distribution of \( \mathcal{L} \)-variables across all \( \tau \), which can be provided in the form of a function
-        \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \).
+    \item a natural number \( k \) denoting the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for some \( i \in \abs{\tau} \),
+    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) that describes the distribution of \( \mathcal{L} \)-variables
+        across the elements of \( \ran \tau \).
 \end{enumerate*}
+The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{k} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
+We further note that the function \( \delta \) is just as much a part of the interpretation as the structure \( \mathfrak{A} \); i.e., a different \( \delta \)
+will yield a completely different interpretation. To emphasize this fact, we shall utilize the following notational convention.
 
-\vspace{0.3cm}
+\begin{notation}
+    If \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms with the function \( \delta \) describing the distribution of \( \mathcal{L} \)-variables across
+    the elements of \( \ran \tau \), then the resulting function from an interpretation of \( \tau \) in the context of \( \mathfrak{A} \) is denoted as
+    \( \tau^{\mathfrak{A}}_{\delta} \).
+\end{notation}
+
 \noindent
 We now formalize the intuitive discussion above with the following two definitions.
 
