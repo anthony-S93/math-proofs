@@ -361,13 +361,15 @@ we now turn to an immediate application of the natural numbers.
     \begin{equation*}
         \finiteseq{\emptyset} = \Union_{n \,\in\, \naturalset} \emptyset^{n} = \setbuilderBig{x}{\exists n\,{\in}\,\naturalset \, \big[ x \in \emptyset^{n} \big]}
     \end{equation*}
-    We know that \( \emptyset \in \finiteseq{\emptyset} \) because \( \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\} \) by \cref{thm:the-exponentiation-of-the-empty-set}
-    and \( \emptyset \in \mleft\{ \emptyset \mright\} \).
+    We know that \( \emptyset \in \finiteseq{\emptyset} \)
+    because \( \emptyset^{0} = \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\} \) by \cref{thm:the-exponentiation-of-the-empty-set}
+    and thus \( \emptyset \in \emptyset^{0} \).
     Now let \( x_{0} \in \finiteseq{\emptyset} \) be arbitrary.
-    By definition, this means that \( x_{0} \in \emptyset^{n} \) for some \( n \in \naturalset \). But by \cref{thm:the-exponentiation-of-the-empty-set},
-    \( \emptyset^{n} \neq \emptyset \) if and only if \( n = 0 = \emptyset \). Thus, \( x_{0} \in \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\} \),
+    By the definition of \( \finiteseq{\emptyset} \),
+    this means that \( x_{0} \in \emptyset^{n} \) for some \( n \in \naturalset \). But by \cref{thm:the-exponentiation-of-the-empty-set},
+    \( \emptyset^{n} \neq \emptyset \) if and only if \( n = 0 \). Thus, \( x_{0} \in \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\} \),
     so necessarily \( x_{0} = \emptyset \). In other words, \( x_{0} \in \finiteseq{\emptyset} {\iff} x_{0} = \emptyset \) for any arbitrary \( x_{0} \).
-    By \nameref{axm:axiom-of-pairing}, it follows that \( \finiteseq{\emptyset} \) is the \aref{dfn:unordered-pair}{singleton} \( \mleft\{ \emptyset \mright\} \).
+    By the \nameref{axm:axiom-of-pairing}, it follows that \( \finiteseq{\emptyset} \) is the \aref{dfn:unordered-pair}{singleton} \( \mleft\{ \emptyset \mright\} \).
 \end{proof}
 
 \begin{thm}
