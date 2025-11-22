@@ -166,6 +166,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{notation}
+    \phantomsection \label{notation:first-order-language-formulas-using-functional-notation}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v_{0}, \dots, v_{k-1} \) are the free variables of \( \varphi \),
     we will use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
     to make the free variables of \( \varphi \) explicit.
@@ -316,8 +317,8 @@ This is the most direct way to specify the internal structure of \aref{dfn:first
 \noindent
 Nevertheless, there are situations in which explicit definitions of subterms are neither practical nor viable.
 In such cases, the internal structure of a compound term can be specified \emph{implicitly} via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-where \( k \in \naturalset \) is the number of variable symbols occurring in the term and \( \tau \) is a tuple of all the
-\aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of the compound term.
+where \( k \in \naturalset \) is the number of variable symbols \aref{dfn:first-order-language-variable-occurrence}{occurring in the term} and \( \tau \)
+is a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of the compound term.
 Naturally, \( \abs{\tau} \) must correspond to the arity of the \aref{dfn:first-order-language-terms-root-and-subterms}{root of the compound term} as required
 by the \aref{dfn:first-order-language-terms}{syntactic rules of first-order languages}.
 Furthermore, it is required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \) and that
@@ -325,11 +326,11 @@ Furthermore, it is required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i
 
 \vspace{0.3cm}
 \noindent
-This approach trades explicitness and succinctness for maximum generality in that it allows the internal structure of \emph{any} compound first-order term
-(even explicit ones) to be specified in virtually any situation.
-For instance, even though the internal structure of \( s \) in our example has been explicitly specified as \( \tuple{f(x), f(y), g(x,z)} \),
-it is still possible to express it implicitly in terms of a function
-\( \function{\delta}{\abs{\tau}}{\finiteseq{3}} \) where \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0,2}} \).
+The most salient advantage of the implicit approach is its expressiveness. To illustrate this, let us suppose that
+\( s \coloneq h(f(x), f(y), g(x, z)) \) and that \( \tuple{x,y,z} \) is the designated sequence (of the variable symbols in \( s \)) for
+any interpretation of \( s \).
+An implicit description of \( s \) therefore entails a function \( \function{\delta}{\abs{\tau}}{\finiteseq{3}} \) such that
+\( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0,2}} \).
 Since \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \),
 the interpreted term \( s^{\mathfrak{A}} \) can then be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
