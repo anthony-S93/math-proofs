@@ -114,8 +114,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \( \varphi \) is of either one of the following forms:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms
-        \item \( P^{\mathcal{L}}_{i}(t_{0}, \dots, t_{n-1}) \) for some \( i \in \dom P^{\mathcal{L}} \) where \( n = \Pi^{\mathcal{L}}(i) \)
-            and \( t_{0},\dots,t_{n-1} \) are \( \mathcal{L} \)-terms
+        \item \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where
+            \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \)
     \end{enumerate}
 \end{dfn}
 
