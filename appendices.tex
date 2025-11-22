@@ -156,6 +156,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
     If \( \varphi \) is an \( \mathcal{L} \)-formula, then any \( \mathcal{L} \)-variable in \( \varphi \)
     that does not occur within the scope of any quantifier in \( \varphi \) is called a \keyword{free} varible of \( \varphi \).
     Variables in \( \varphi \) that are not free are called the \keyword{bound} variables of \( \varphi \).
+    If \( x \) is a free variable of \( \varphi \), then we also say that \( x \) \keyword{occurs freely} in \( \varphi \). On the other
+    hand, if \( x \) does not occur freely in \( \varphi \), then we also say that \( x \) is \keyword{bound}.
 \end{dfn}
 
 \begin{dfn}
@@ -376,8 +378,9 @@ as long as two pieces of information are provided:
         across the \( \mathcal{L} \)-terms in \( \ran \tau \).
 \end{enumerate*}
 The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{k} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
-We further note that the function \( \delta \) is just as much a part of the interpretation as the structure \( \mathfrak{A} \); i.e., a different \( \delta \)
-will yield a completely different interpretation. To emphasize this fact, we shall utilize the following notational convention.
+Note that the function \( \delta \) is just as much a part of the interpretation as the structure \( \mathfrak{A} \) is; i.e., a different \( \delta \)
+will yield a completely different interpretation.
+We shall emphasize this fact by adopting the following notational convention.
 
 \begin{notation}
     If \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms with the function \( \delta \) describing the distribution of \( \mathcal{L} \)-variables across
@@ -389,22 +392,24 @@ will yield a completely different interpretation. To emphasize this fact, we sha
 We now formalize the intuitive discussion above with the following two definitions.
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-distribution-function}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( k \in \naturalset \) is the number
-    of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \),
-    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is called a \keyword{variable distribution function} of \( \tau \)
-    if and only if for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in
+    \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms,
+    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is a \keyword{variable distribution function} of \( \tau \)
+    if and only if:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( k \in \naturalset \) is the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \),
+        \item for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in
     the term \( \tau_{i} \).
+    \end{enumerate*}
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-a-tuple-of-terms}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms and \( k \in \naturalset \) be the number of \( \mathcal{L} \)-variables
-    occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \).
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-    is a \aref{dfn:first-order-language-variable-distribution-function}{variable distribution function} of \( \tau \),
-    then we define the interpretion of \( \tau \) in the context of \( \mathfrak{A} \) and \( \delta \) as the function
-    \( \function{\tau^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \) such that:
+    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms and \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
+    be a \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( \tau \).
+    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then the interpretion of \( \tau \) in the context of \( \mathfrak{A} \)
+    and \( \delta \) is defined as the function \( \function{\tau^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \)
+    such that:
     \begin{equation*}
         \tau^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k} \,\,{\land}\,\,
         y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
