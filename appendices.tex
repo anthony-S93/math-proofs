@@ -253,29 +253,30 @@ The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \(
 
 \vspace{0.3cm}
 \noindent
-Several observations can be made from the outset, the first of which being the fact that
-parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) is of the form
+Several observations can be made from the outset.
+First, parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) is of the form
 \( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is another \( \mathcal{L} \)-term,
 then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
 
 \vspace{0.3cm}
 \noindent
-If the term is \aref{dfn:first-order-language-terms-simple-terms}{simple}, then the result of its interpretation is also fairly straightforward.
-If \( t \) is a (non-parenthesized) simple term of \( \mathcal{L} \), then it must be of either one of the following forms:
+For terms that are \aref{dfn:first-order-language-terms-simple-terms}{simple}, the results of their interpretations are also fairly straightforward.
+If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-terms}{simple term} of \( \mathcal{L} \), then it must be of either one of the following forms:
 \begin{enumerate*}[label=(\roman*)]
     \item \( v \) where \( v \) is an \( \mathcal{L} \)-symbol,
-    \item \( F^{\mathcal{L}}_{i}(()) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \),
+    \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
+        is an empty tuple,
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) \neq 0 \) and
-        \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms such that \( \tau_{i} \) do not contain any symbol from \( \ran F^{\mathcal{L}} \)
+        \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms such that \( \tau_{i} \) does not contain any symbol from \( \ran F^{\mathcal{L}} \)
         for all \( i \in \abs{\tau} \).
 \end{enumerate*}
-For the first form, an interpretation of \( t \) with a structure \( \mathfrak{A} \) will simply result in
-\aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)}.
+For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second and third forms,
+\( t^{\mathfrak{A}} = F^{\mathfrak{A}}_{i} \).
 
 \vspace{0.3cm}
 \noindent
-To illustrate the nuances of the interpretation of first-order terms,
-we shall go over a few examples using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
+For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, their interpretations are a lot more nuanced and involved.
+To illustrate this, we shall go over a few examples using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
 \begin{enumerate*}[label=(\roman*)]
     \item \( f \), a function symbol with arity \( 1 \);
     \item \( g \), a function symbol with arity \( 2 \);
@@ -290,8 +291,8 @@ Now consider the following \aref{dfn:first-order-language-terms-compound-terms}{
     s \coloneq h(f(x), f(y), g(x, z))
 \end{equation*}
 Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \)
-yields a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \).
-Furthermore, the value of \( s^{\mathfrak{A}} \) at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) can be obtained by:
+yields a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
+can be obtained by:
 \begin{enumerate*}[label=(\roman*)]
     \item substituting every occurrence of the variable symbols \( x \), \( y \), \( z \)
         with objects from \( \mleft\{ a, b, c \mright\} \);
