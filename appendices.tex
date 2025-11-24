@@ -78,7 +78,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
         \item \( t \) is a string of \( \mathcal{L} \)-symbols consisting of a single \( \mathcal{L} \)-variable.
         \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
             \begin{itemize}[topsep=2pt,leftmargin=10pt]
-                \item \( s \) is a tuple of \aref{dfn:n-tuples-basic-form}{length} \( \Phi^{\mathcal{L}}(i) \)
+                \item \( s \) is a tuple of \aref{dfn:n-tuples}{length} \( \Phi^{\mathcal{L}}(i) \)
                 \item \( s_{j} \) is an \( \mathcal{L} \)-term for all \( j \in \Phi^{\mathcal{L}}(i) \)
             \end{itemize}
         \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
@@ -337,7 +337,7 @@ is given by:
 It is worth emphasizing again that without the specification (either explicit or implicit) of a sequence for the variable symbols,
 a precise and unambiguous interpretation of first-order terms is \emph{not} possible.
 Indeed, just having a structure that is compatible with \( \mathcal{L} \) is insufficient; proper interpretations of \( \mathcal{L} \)-terms
-also require \emph{positional data} to be associated with each variable symbol in the term so that objects from \aref{dfn:n-tuples-basic-form}{n-tuples}
+also require \emph{positional data} to be associated with each variable symbol in the term so that objects from \aref{dfn:n-tuples}{n-tuples}
 of \( \abs{\mathfrak{A}} \) can meaningfully take the place of each variable symbol. In a sense, both the structure and the positional data form intrinsic
 parts of an interpretation.
 \begin{equation*}

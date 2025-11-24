@@ -310,7 +310,7 @@ Having rigorously defined the natural numbers as sets and the set \( \naturalset
 we now turn to an immediate application of the natural numbers.
 
 \begin{dfn}
-    \label{dfn:n-tuples-basic-form}
+    \label{dfn:n-tuples}
     For any \( n \in \naturalset \), an \keyword{n-tuple} is any function with \( n \) as its domain.
     An n-tuple is also called a \keyword{tuple} or \keyword{finite sequence} of length \( n \).
 \end{dfn}
@@ -482,7 +482,7 @@ we now turn to an immediate application of the natural numbers.
         \label{eq:condition-for-tuple-equality-from-first-principle}
         t_{x} = t_{y} \iff \forall i\,{\in}\,n \, \big[ t_{x}(i) = t_{y}(i) \big]
     \end{equation}
-    But by \cref{dfn:n-tuples-basic-form},
+    But by \cref{dfn:n-tuples},
     \begin{equation*}
         \forall i\,{\in}\,n \, \big[ x_{i} = t_{x}(i) \big] \land
         \forall i\,{\in}\,n \, \big[ y_{i} = t_{y}(i) \big]
@@ -602,7 +602,7 @@ we now turn to an immediate application of the natural numbers.
     Let \( f  \) be an arbitrary object. Suppose that \( f \in A^{n} \). Thus, \( \function{f}{n}{A} \) by \eqref{eq:An-in-basic-setbuilder-form}.
     Since \( n \neq \emptyset \) and \( \dom f = n \), it follows from \cref{dfn:domain-of-a-set-of-ordered-pairs} that
     \( \ran f \neq \emptyset \). In other words, there exist objects \( x_{0},\dots,x_{n-1} \) such that \( \ran f = \mleft\{ x_{0},\dots,x_{n-1} \mright\} \).
-    Since \( n \in \naturalset \), it follows from \cref{dfn:n-tuples-basic-form} that
+    Since \( n \in \naturalset \), it follows from \cref{dfn:n-tuples} that
     \( f = \tuple{x_{0}, \dots, x_{n-1}} \). Also, since \( x_{0},\dots,x_{n-1} \in \ran f \) and
     \( \ran f \subseteq A \), necessarily, \( \Land_{i \,\in\, n} x_{i} \in A \). In other words, \( \varphi(f) \) is satisfied.
     By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
@@ -617,7 +617,7 @@ we now turn to an immediate application of the natural numbers.
     \end{equation}
     Conversely, suppose that \( \varphi(f) \) is satisfied. By \eqref{eq:predicate-for-tuples-with-coordinates-belonging-to-A},
     \( f \) is an n-tuple \( \tuple{x_{0}, \dots, x_{n-1}} \) where \( \Land_{i \,\in\, n} x_{i} \in A \).
-    By \cref{dfn:n-tuples-basic-form}, it follows that \( \forall i\,{\in}\,n \, \big( x_{i} = f(i) \big) \).
+    By \cref{dfn:n-tuples}, it follows that \( \forall i\,{\in}\,n \, \big( x_{i} = f(i) \big) \).
     Given that \( \Land_{i \,\in\, n} x_{i} \in A \), necessarily \( \forall i\,{\in}\,n \, \big( f(i) \in A \big) \).
     In other words, \( f \) is a function with \( \dom f = n \) and \( \ran f \subseteq A \).
     By \cref{dfn:arrow-notation}, it follows that \( \function{f}{n}{A} \). And finally by \eqref{eq:An-in-basic-setbuilder-form},
@@ -662,7 +662,7 @@ we now turn to an immediate application of the natural numbers.
     \end{equation*}
     Let \( f \in \prod \tuple{A_{0}, \dots, A_{n-1}} \) be arbitrary. Thus, \( \function{f}{n}{\Union_{i \,\in\, n} A_{i}} \)
     and \( \forall i \, \big( i \in n \implies f(i) \in A_{i} \big) \) by definition. Since \( f \) is a function on \( n \)
-    where \( n \in \naturalset \), \( f \) must be an n-tuple by \cref{dfn:n-tuples-basic-form}. Since \( n \neq 0 \), \( f \)
+    where \( n \in \naturalset \), \( f \) must be an n-tuple by \cref{dfn:n-tuples}. Since \( n \neq 0 \), \( f \)
     can be expressed in sequence notation by \cref{thm:every-non-zero-tuple-is-expressible-in-sequence-notation}.
     Also, \( f(i) = x_{i} \in A_{i} \) for any \( i \in n \).
     Thus,
