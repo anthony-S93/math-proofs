@@ -108,6 +108,16 @@ As such, any comprehensive definition of the grammar of a first-order language m
     An \( \mathcal{L} \)-term is \keyword{simple} if and only if it is not compound.
 \end{dfn}
 
+\begin{rem}
+    It follows then that a simple \( \mathcal{L} \)-term is either:
+    \begin{enumerate*}[label=(\roman*)]
+        \item a single \( \mathcal{L} \)-variable,
+        \item a term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is empty, or
+        \item a term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a non-empty
+            tuple of \( \mathcal{L} \)-variables such that \( \tau_{j} = \tau_{k} \) if and only if  \( j = k \) for all \( j, k \in \abs{\tau} \).
+    \end{enumerate*}
+\end{rem}
+
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-terms-root-and-subterms}
     If \( s \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
@@ -254,10 +264,11 @@ The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \(
 \vspace{0.3cm}
 \noindent
 Several observations can be made from the outset.
-First, parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) is of the form
+First, we note the fact that parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) is of the form
 \( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is another \( \mathcal{L} \)-term,
 then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
 
+\phantomsection \label{text:interpretation-of-simple-terms-intuitive-explanation}
 \vspace{0.3cm}
 \noindent
 For terms that are \aref{dfn:first-order-language-terms-simple-terms}{simple}, the results of their interpretations are also fairly straightforward.
@@ -267,16 +278,16 @@ If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
         is an empty tuple,
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) \neq 0 \) and
-        \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms such that \( \tau_{i} \) does not contain any symbol from \( \ran F^{\mathcal{L}} \)
-        for all \( i \in \abs{\tau} \).
+        \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-variables such that \( \tau_{j} = \tau_{k} \) if and only if \( j = k \) for all \( j, k \in \abs{\tau}\).
 \end{enumerate*}
 For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second and third forms,
 \( t^{\mathfrak{A}} = F^{\mathfrak{A}}_{i} \).
 
 \vspace{0.3cm}
 \noindent
-For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, their interpretations are a lot more nuanced and involved.
-To illustrate this, we shall go over a few examples using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
+For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, the interpretation process is substantially more involved and complex due to the
+recursive nature of first-order terms.
+To illustrate this, we shall go over an example using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
 \begin{enumerate*}[label=(\roman*)]
     \item \( f \), a function symbol with arity \( 1 \);
     \item \( g \), a function symbol with arity \( 2 \);
@@ -290,8 +301,8 @@ Now consider the following \aref{dfn:first-order-language-terms-compound-terms}{
 \begin{equation*}
     s \coloneq h(f(x), f(y), g(x, z))
 \end{equation*}
-Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \)
-yields a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
+Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \) will
+yield a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
 can be obtained by:
 \begin{enumerate*}[label=(\roman*)]
     \item substituting every occurrence of the variable symbols \( x \), \( y \), \( z \)
@@ -302,20 +313,21 @@ can be obtained by:
 \vspace{0.3cm}
 \noindent
 Since \( \mathfrak{A} \) is an \( \mathcal{L}^{\prime} \)-structure,
-there exists a \aref{one-to-one-correspondences-between-first-order-language-and-first-order-structure}{one-to-one correspondence between the function symbols
+there already exists a \aref{one-to-one-correspondences-between-first-order-language-and-first-order-structure}{one-to-one correspondence between the function symbols
 of \( \mathcal{L}^{\prime} \) and the n-ary operation symbols of \( \mathfrak{A} \)}.
-Consequently, all function symbols in \( s \) can be unambiguously replaced with a unique n-ary operation symbol from \( \mathfrak{A} \).
+Thus, all function symbols in \( s \) can be unambiguously replaced with unique n-ary operation symbols from \( \mathfrak{A} \).
 The problem, however, lies with the substitution of the variable symbols in \( s \).
-Given an argument tuple \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), one could, for instance,
-interpret \( s \) by replacing every occurrence of \( x \) with \( a \), \( y \) with \( b \), and \( z \) with \( c \);
+Given an argument tuple \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \),
+there are combinatorially different ways to replace the variable symbols \( x \), \( y \), \( z \) with the elements of
+\( \mleft\{ a, b, c \mright\} \). For example, one could replace every occurrence of \( x \) with \( a \), \( y \) with \( b \), and \( z \) with \( c \);
 but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), and \( z \) with \( b \)!
-In other words, there are combinatorially different ways to carry out the substitution, and unless a substitution scheme is specified,
-the interpretation is ambiguous.
+Since there is no precise rule in \aref{dfn:first-order-language-terms}{the syntax of first-order terms} to help us decide which manner of substitution is preferred,
+the interpretation is inherently ambiguous and thus impossible to make precise.
 
 \vspace{0.3cm}
 \noindent
-A simple way to specify a substitution scheme is to define a sequence for the variable symbols in \( s \)
-and then perform the substitution based on the positions of the variable symbols in said sequence.
+One way to resolve this ambiguity is to arrange the variable symbols in \( s \) in a \aref{dfn:n-tuples}{finite sequence}
+and then make that sequence a part of the interpretation.
 For example, suppose that we now prescribe the sequence \( \tuple{x, y, z} \) for the variable symbols in \( s \).
 Thus, if \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) is the argument tuple, then we have by \cref{dfn:n-tuples-sequence-notation},
 \begin{align*}
@@ -332,44 +344,40 @@ is given by:
     \phantomsection \label{eq:interpreted-s-explicit}
     s^{\mathfrak{A}}(a, b, c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c))
 \end{equation}
-
 \noindent
-It is worth emphasizing again that without the specification (either explicit or implicit) of a sequence for the variable symbols,
-a precise and unambiguous interpretation of first-order terms is \emph{not} possible.
-Indeed, just having a structure that is compatible with \( \mathcal{L} \) is insufficient; proper interpretations of \( \mathcal{L} \)-terms
-also require \emph{positional data} to be associated with each variable symbol in the term so that objects from \aref{dfn:n-tuples}{n-tuples}
-of \( \abs{\mathfrak{A}} \) can meaningfully take the place of each variable symbol. In a sense, both the structure and the positional data form intrinsic
-parts of an interpretation.
+The key point here is that the information from an \( \mathcal{L} \)-structure alone is insufficient to determine a precise interpretation for compound \( \mathcal{L} \)-terms;
+the process also requires \emph{positional data} to be associated with each variable symbol in the term so that objects from
+the \aref{dfn:n-tuples}{n-tuples} of \( \abs{\mathfrak{A}} \) can be meaningfully assigned to each variable symbol in the term.
+In a sense, a precise interpretation of first-order language and terms entails both structure and positional data.
 \begin{equation*}
-    \text{Interpretation} = \text{Structure} + \text{Positional Data}
+    \text{Interpretation} = \text{Mathematical Structure} + \text{Positional Data}
 \end{equation*}
 \noindent
-Next, we draw the reader's attention to the fact that the internal structure of \( s \) in our example is explicitly defined;
-that is, the exact sequences of symbols constituting the subterms are known.
-For example, it is known that the zeroth subterm of \( s \) comprises of the sequence of symbols `\( f \)', `\( ( \)', `\( x \)', and `\( ) \)',
-the first subterm `\( f \)', `\( ( \)', `\( y \)', and `\( ) \)', and the second subterm `\( g \)', `\( ( \)', `\( x \)', `,',
-`\( z \)', and `\( ) \)'.
-This is the most straightforward way to specify the internal structure of \aref{dfn:first-order-language-terms-compound-terms}{compound terms}.
+In practice, it is often more useful to interpret \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} recursively; i.e.,
+starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure of the term
+one layer at a time.
+So for \( s \), this process will begin at the term \( h(\tau) \) where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root}
+of \( s \) and \( \tau \) a tuple of the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
+Since \( \tau \) is a tuple of \aref{dfn:first-order-language-terms-root-and-subterms}{subterms}, it follows that any variable symbol in \( s \)
+must appear in at least one term contained in \( \ran \tau \).
+The main difficulty, however, is that the variable symbols in \( s \) can appear across the subterms in combinatorially different
+ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}.
+To prevent ambiguities, the exact distribution of the variable symbols across \( \tau \) must therefore be specified.
 
 \vspace{0.3cm}
 \noindent
-Nevertheless, there are situations in which explicit definitions of subterms are neither practical nor viable; e.g., in recursive definitions.
-In such cases, the internal structure of a compound term can be specified \emph{implicitly} via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-where \( k \in \naturalset \) is the number of variable symbols \aref{dfn:first-order-language-variable-occurrence}{occurring in the term} and \( \tau \)
-is a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of the compound term.
-Naturally, \( \abs{\tau} \) must correspond to the arity of the \aref{dfn:first-order-language-terms-root-and-subterms}{root of the compound term} as required
+One way of doing this is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
+where \( k \in \naturalset \) is the number of variable symbols occurring in \( s \).
+Naturally, \( \abs{\tau} \) must correspond to the arity of \aref{dfn:first-order-language-terms-root-and-subterms}{\( h \) (the root of \( s \))} as required
 by the \aref{dfn:first-order-language-terms}{syntax of first-order languages}.
-Furthermore, it is required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \) and that
-\( \abs{\delta_{i}} = m_{i} \) for all \( i \in \abs{\tau} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm \( \tau_{i} \).
-
-\vspace{0.3cm}
-\noindent
-The most salient advantage of the implicit approach is its expressiveness. To illustrate this, let us suppose that
-\( s \coloneq h(f(x), f(y), g(x, z)) \) and that \( \tuple{x,y,z} \) is the designated sequence for the variable symbols in \( s \).
-As mentioned above, an implicit description of \( s \) entails a function \( \function{\delta}{\abs{\tau}}{\finiteseq{3}} \) such that
-\( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0,2}} \).
-Since \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \),
-the interpreted term \( s^{\mathfrak{A}} \) can then be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
+Furthermore, it is also required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \) and that
+\( \abs{\delta_{i}} = m_{i} \) for all \( i \in \abs{\tau} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm denoted by \( \tau_{i} \).
+So for \( s \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) and \( k = 3 \)
+with \( \tau \) being a tuple of \( \mathcal{L}^{\prime} \)-terms such that
+\aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( \tau_{0}^{\mathfrak{A}} = \tau_{1}^{\mathfrak{A}} = f^{\mathfrak{A}} \)
+and \( \tau_{2}^{\mathfrak{A}} = g^{\mathfrak{A}} \)} for any \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \).
+As such, given any \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s \) is a function \( s^{\mathfrak{A}} \)
+that can be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-implicit}
     s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{k}
@@ -377,9 +385,9 @@ the interpreted term \( s^{\mathfrak{A}} \) can then be expressed in terms of \(
     \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
     }
 \end{equation}
-It is easy to verify that \( s^{\mathfrak{A}} \) as defined in \eqref{eq:interpreted-s-implicit} is the same function one would obtain
-if one were to interpret the term \( h(f(x), f(y), g(x, z)) \) directly in the context of \( \mathfrak{A} \) using \( \tuple{x, y, z} \)
-as the established sequence of variables.
+It is not difficult to verify that the \( s^{\mathfrak{A}} \) defined in \eqref{eq:interpreted-s-implicit} is in fact the same \( s^{\mathfrak{A}} \) one is expected to obtain
+if one were to interpret \( s \) non-recursively by prescribing the sequence \( \tuple{x, y, z} \) for the interpretation and then replacing \( x \), \( y \),
+and \( z \) with objects from the argument tuple based on their positions in the sequence.
 We start by noting the fact that \aref{ssec:von-neumann-ordinals}{\( k = 3 = \mleft\{ 0, 1, 2 \mright\} \)}.
 Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \alpha = \tuple{a,b,c} \)
 for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
@@ -388,9 +396,8 @@ for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
     \composition{\alpha}{\delta_{1}} &= \tuple{b}\\
     \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
 \end{align*}
-Since \( \tau_{0} \coloneq f(x) \), \( \tau_{1} \coloneq f(y) \), and \( \tau_{2} \coloneq g(x, z) \),
-we have \( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \).
-Thus, we can delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit} like so:
+Since  \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \)
+and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \)}, we can delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit} like so:
 \begin{equation*}
     \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
     = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
@@ -403,18 +410,19 @@ using \( \tuple{x,y,z} \) as the designated sequence.
 
 \vspace{0.3cm}
 \noindent
-Note that the specification of \( \delta \) is dependent on the designated sequence.
+Note that the specification of \( \delta \) is very much dependent on the choice of the designated sequence.
 For instance, if the designated sequence for the variable symbols is \( \tuple{y, x, z} \) instead of \( \tuple{x, y, z} \),
 then \( \delta \) would have to be modified from \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) to
 \( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \).
 In a sense, the information for the designated sequence is ``embedded'' within \( \delta \);
 i.e., defining a \( \delta \) indirectly determines the designated sequence for the variable symbols.
-In other words, both the distribution of variable symbols across the subterms and their designated sequence are specified in a single, set-theoretic construct
-(the function \( \delta \)), hence the expressiveness of the implicit approach.
+This means that with the recursive approach, both the distribution of variable symbols across the subterms and their designated sequence can be defined/specified using a single,
+set-theoretic construct.
 
 \vspace{0.3cm}
 \noindent
-The sequence in \eqref{eq:interpreted-s-implicit} is of considerable interest
+Next, we draw the reader's attention to the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
+in \eqref{eq:interpreted-s-implicit}, which is of considerable interest
 since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure;
 that is, the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
 can be thought of as the result of interpreting the tuple \( \tuple{f(x), f(y), g(x,z)} \) in the context of \( \mathfrak{A} \).
@@ -615,7 +623,7 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
 
 \begin{dfn}[Tautology]
     \phantomsection \label{dfn:first-order-language-tautology}
-    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} (denoted as \( \models \varphi \)) if and only if it is satisfied by any \( \mathcal{L} \)-structure. 
+    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} (denoted as \( \models \varphi \)) if and only if it is satisfied by any \( \mathcal{L} \)-structure.
 \end{dfn}
 
 \begin{dfn}
@@ -645,7 +653,7 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
 \end{thm}
 
 \begin{proof}
-    Let \( \varphi \) and \( \psi \) be formulas of some \aref{}{first-order language} \( \mathcal{L} \).
+    Let \( \varphi \) and \( \psi \) be formulas of some \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \).
     Let \( \phi \) denote the \( \mathcal{L} \)-formula \( \mleft( \lnot \, \psi \,\,{\lor}\,\, \varphi \mright) \).
     Furthermore, let \( v \) be a tuple of all the \( \mathcal{L} \)-variables occurring in \( \phi \) and
     \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) be a variable-distribution function of \( \tuple{\lnot \, \psi, \varphi} \)
