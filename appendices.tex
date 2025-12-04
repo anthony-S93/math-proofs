@@ -423,12 +423,7 @@ set-theoretic construct.
 \noindent
 Next, we draw the reader's attention to the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
 in \eqref{eq:interpreted-s-implicit}, which is of considerable interest
-since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure;
-that is, the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
-can be thought of as the result of interpreting the tuple \( \tuple{f(x), f(y), g(x,z)} \) in the context of \( \mathfrak{A} \).
-
-\vspace{0.3cm}
-\noindent
+since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure.
 In general, any non-empty tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
 as long as two pieces of information are available:
 \begin{enumerate*}[label=(\roman*)]
@@ -493,15 +488,14 @@ We are now ready to give a general definition of the interpretation of an \( \ma
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-terms}
-    Let \( \mathcal{L} \) be a first-order language. If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
+    If \( t \) is an \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-term} and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
     then \( t^{\mathfrak{A}} \) is a function defined according to the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( t \) is \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term, then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
         \item If \( t \) is an \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
         \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( s \) is a tuple of \( \mathcal{L} \)-terms such that
             \( \abs{s} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{s}}{\finiteseq{k}} \) is the
-            \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( s \) with \( k \) being the number of variable symbols
-            occurring in at least one \( \mathcal{L} \)-term in \( \ran s \), then,
+            \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( s \), then,
             \begin{equation*}
                 t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k}
                 \,\,{\land}\,\,
@@ -521,8 +515,8 @@ We are now ready to give a general definition of the interpretation of an \( \ma
 
 \noindent
 A similar approach can be employed to define the interpretation of \( \mathcal{L} \)-formulas in the context of \( \mathcal{L} \)-structures;
-however, unlike the interpretation of \( \mathcal{L} \)-terms, which evaluates to elements in the structure's universe,
-the interpretation of \( \mathcal{L} \)-formulas evaluates to either true or false.
+however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in the structure's universe,
+\( \mathcal{L} \)-formulas are interpreted as either \emph{true} or \emph{false} (but not both).
 
 \begin{notation}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be a tuple of
@@ -530,9 +524,9 @@ the interpretation of \( \mathcal{L} \)-formulas evaluates to either true or fal
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \),
     then we write \( \varphi(\alpha) \) to mean the following equivalent statements\footnote{\,The meaning
     of the functional notation \( \varphi(v) \) depends on what \( v \) represents.
-    If \( v \) denotes a tuple of free variables occurring in \( \varphi \), then \( \varphi(v) \) denotes
+    If \( v \) denotes a tuple of variable symbols occurring in \( \varphi \), then \( \varphi(v) \) denotes
     the \( \mathcal{L} \)-formula itself but with an \aref{notation:first-order-language-formulas-using-functional-notation}{emphasis on the presence of free variables} in
-    the formula. If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) is an \emph{assertion};
+    the formula. If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) denotes an \emph{assertion};
     it asserts that the formula \( \varphi \) is satisfied by \( v \).
     }:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -568,7 +562,7 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms and \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a
             \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( \tau = \tuple{t_{0}, t_{1}} \),
             then \( \varphi(\alpha) \) if and only if
-            \( \aref{dfn:first-order-language-interpretation-of-a-tuple-of-terms}{\tau^{\mathfrak{A}}_{\delta}}
+            \( \aref{dfn:first-order-language-interpretation-of-a-tuple-of-terms}{\tau^{\mathfrak{A}}_{\delta}(\alpha)}
                \in
                \aref{dfn:identity-relation}{\identityrel{\abs{\mathfrak{A}}}} \)
         \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atomic \( \mathcal{L} \)-formula} of the form \( P^{\mathcal{L}}_{i}(\tau) \)
@@ -583,6 +577,9 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
         \item If \( \varphi \) is of the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \varphi(\alpha) \) if and only if \( \alpha \) does not satisfy \( \psi \)
+        \item If \( \varphi \) is of the form \( \psi(u) \) such that \( u = \composition{v}{\rho} \)
+            where \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( \dom v \),
+            then \( \varphi(\alpha) \) if and only if \( \psi(\composition{\alpha}{\rho}) \)
         \item If \( \varphi \) is of the form \( \phi \,\,{\land}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
             \( \function{\delta}{2}{\abs{v}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
             of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
@@ -593,9 +590,9 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             \( \phi(\composition{\alpha}{\delta_{0}}) \) or \( \psi(\composition{\alpha}{\delta_{1}}) \)
         \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free
             variable, then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula
-            whose \aref{dfn:first-order-language-free-variables}{free variables} are contained in the tuple
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \), then \( \varphi(\alpha) \) if and only if
+        \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula such that
+            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is a tuple of all the
+            \aref{dfn:first-order-language-free-variables}{free variables} occurring in \( \psi \), then \( \varphi(\alpha) \) if and only if
             \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \) for all \( \beta \in \abs{\mathfrak{A}} \)
         \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free variable,
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
