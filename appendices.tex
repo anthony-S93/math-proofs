@@ -581,24 +581,24 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             where \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( \dom v \),
             then \( \varphi(\alpha) \) if and only if \( \psi(\composition{\alpha}{\rho}) \)
         \item If \( \varphi \) is of the form \( \phi \,\,{\land}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
-            \( \function{\delta}{2}{\abs{v}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
+            \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
             of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
             \( \phi(\composition{\alpha}{\delta_{0}}) \) and \( \psi(\composition{\alpha}{\delta_{1}}) \)
         \item If \( \varphi \) is of the form \( \phi \,\,{\lor}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
-            \( \function{\delta}{2}{\abs{v}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
+            \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
             of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
             \( \phi(\composition{\alpha}{\delta_{0}}) \) or \( \psi(\composition{\alpha}{\delta_{1}}) \)
         \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free
             variable, then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
         \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula such that
             \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is a tuple of all the
-            \aref{dfn:first-order-language-free-variables}{free variables} occurring in \( \psi \), then \( \varphi(\alpha) \) if and only if
+            \aref{dfn:first-order-language-free-variables}{free variables} occurring in it, then \( \varphi(\alpha) \) if and only if
             \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \) for all \( \beta \in \abs{\mathfrak{A}} \)
         \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free variable,
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula
-            whose \aref{dfn:first-order-language-free-variables}{free variables} are contained in the tuple
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \), then \( \varphi(\alpha) \) if and only if
+        \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula such that
+            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is a tuple of all the \aref{dfn:first-order-language-free-variables}{free variables}
+            occurring in it, then \( \varphi(\alpha) \) if and only if
             there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \)
     \end{enumerate}
 \end{dfn}
@@ -620,7 +620,7 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
 
 \begin{dfn}[Tautology]
     \phantomsection \label{dfn:first-order-language-tautology}
-    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} (denoted as \( \models \varphi \)) if and only if it is satisfied by any \( \mathcal{L} \)-structure.
+    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} (denoted as \( \models \varphi \)) if and only if it can be satisfied by any \( \mathcal{L} \)-structure.
 \end{dfn}
 
 \begin{dfn}
@@ -651,21 +651,6 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
 
 \begin{proof}
     Let \( \varphi \) and \( \psi \) be formulas of some \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \).
-    Let \( \phi \) denote the \( \mathcal{L} \)-formula \( \mleft( \lnot \, \psi \,\,{\lor}\,\, \varphi \mright) \).
-    Furthermore, let \( v \) be a tuple of all the \( \mathcal{L} \)-variables occurring in \( \phi \) and
-    \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) be a variable-distribution function of \( \tuple{\lnot \, \psi, \varphi} \)
-    such that for any \( \mathcal{L} \)-structure \( \mathfrak{A} \) and any \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \),
-    \( \phi(\alpha) \) if and only if \( \psi(\composition{\alpha}{\delta_{0}}) \) or \( \varphi(\composition{\alpha}{\delta_{1}}) \).
-
-    \vspace{0.3cm}
-    \noindent
-    We begin with the supposition that \( \models \phi \).
-    By \cref{dfn:first-order-language-tautology}, it follows that \( \mathfrak{A} \models \phi \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    Let \( \mathfrak{B} \) be any arbitrary \( \mathcal{L} \)-structure such that \( \mathfrak{B} \models \psi \).
-    By \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}, it follows that \( \mathfrak{B} \models \phi \).
-    Let \( v \) be a tuple of all the \( \mathcal{L} \)-variables occurring in \( \Psi \).
-    Let \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) be a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
-    of \( \tuple{\lnot \, \psi, \varphi} \) such that
 \end{proof}
 
 \begin{dfn}[Logical Equivalence]
