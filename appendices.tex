@@ -87,10 +87,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{rem}
-    Note the recursive nature of \cref{dfn:first-order-language-terms}.
-    This means that an \( \mathcal{L} \)-term can have any number (but still finite) of \( \mathcal{L} \)-terms nested within it.
-    Note also that if \( \Phi^{\mathcal{L}}(i) = 0 \),
-    then \( F^{\mathcal{L}}_{i} \) is a \( 0 \)-ary operation symbol, in which case \( s = \tuple{} \).
+    If \( \Phi^{\mathcal{L}}(i) = 0 \), then \( F^{\mathcal{L}}_{i} \) is a \( 0 \)-ary operation symbol, in which case \( s = \tuple{} \).
     An \( 0 \)-ary operation symbol represents a ``constant'' symbol in \( \mathcal{L} \).
 \end{rem}
 
@@ -184,8 +181,17 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \begin{notation}
     \phantomsection \label{notation:first-order-language-formulas-using-functional-notation}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v_{0}, \dots, v_{k-1} \) are the free variables of \( \varphi \),
-    we will use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
-    to make the free variables of \( \varphi \) explicit.
+    we can use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
+    to make the free variables of \( \varphi \) explicit. Note that with this notation, the variable symbols \( v_{0}, \dots, v_{k-1} \)
+    must be \emph{distinct} because it makes no sense to count the same variable symbol twice.
+    Alternatively, we can also denote the \( \mathcal{L} \)-formula as \( \varphi(v) \) where \( v \) is a tuple of all the free variables
+    occurring in \( \varphi \).
+    Since the variable symbols in \( \ran v \) are distinct, it follows that the tuple \( v \) must be a \aref{dfn:bijection}{bijection}.
+    This style of notation is not just limited to \( \mathcal{L} \)-formulas but can be applied to \( \mathcal{L} \)-terms as well.
+    For instance, if \( t \) denotes an \( \mathcal{L} \)-term and \( x \), \( y \) denote \( \mathcal{L} \)-variables, then the notation
+    \( t(x, y) \) can be used to emphasize the fact that \( x \) and \( y \) occur in \( t \)
+    and that \( \tuple{x, y} \) is \aref{text:designated-sequence-for-variable-symbols}{the designated sequence}\footnote{\,This will be explained
+    in detail later in the section.} for an interpretation of \( t \).
 \end{notation}
 
 \noindent
@@ -195,7 +201,7 @@ now have the tools at our disposal to determine whether that string of symbols i
 However, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
 and a set of rules to construct formulas using those symbols is not enough; there also needs to be a way to assign
 \emph{meaning} to all valid formulas just as English words like ``cats'', ``apples'', and ``oranges'' need to have meaning
-for English to have any value as a language.
+for English to have any value at all as a language.
 
 \vspace{0.3cm}
 \noindent
@@ -324,6 +330,7 @@ but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), a
 Since there is no precise rule in \aref{dfn:first-order-language-terms}{the syntax of first-order terms} to help us decide which manner of substitution is preferred,
 the interpretation is inherently ambiguous and thus impossible to make precise.
 
+\phantomsection \label{text:designated-sequence-for-variable-symbols}
 \vspace{0.3cm}
 \noindent
 One way to resolve this ambiguity is to arrange the variable symbols in \( s \) in a \aref{dfn:n-tuples}{finite sequence}
@@ -348,30 +355,43 @@ is given by:
 The key point here is that the information from an \( \mathcal{L} \)-structure alone is insufficient to determine a precise interpretation for compound \( \mathcal{L} \)-terms;
 the process also requires \emph{positional data} to be associated with each variable symbol in the term so that objects from
 the \aref{dfn:n-tuples}{n-tuples} of \( \abs{\mathfrak{A}} \) can be meaningfully assigned to each variable symbol in the term.
-In a sense, a precise interpretation of first-order language and terms entails both structure and positional data.
 \begin{equation*}
     \text{Interpretation} = \text{Mathematical Structure} + \text{Positional Data}
 \end{equation*}
 \noindent
-In practice, it is often more useful to interpret \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} recursively; i.e.,
-starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure of the term
-one layer at a time.
-So for \( s \), this process will begin at the term \( h(\tau) \) where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root}
-of \( s \) and \( \tau \) a tuple of the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
-Since \( \tau \) is a tuple of \aref{dfn:first-order-language-terms-root-and-subterms}{subterms}, it follows that any variable symbol in \( s \)
-must appear in at least one term contained in \( \ran \tau \).
-The main difficulty, however, is that the variable symbols in \( s \) can appear across the subterms in combinatorially different
-ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}.
-To prevent ambiguities, the exact distribution of the variable symbols across \( \tau \) must therefore be specified.
+In practice, the positional data associated with a term is often provided through a tuple \( v \) of all the variable symbols occurring in the term.
+The \aref{notation:first-order-language-formulas-using-functional-notation}{functional notation} can be utilized for this exact purpose.
+For example, the notation \( s(x, y, z) \) or \( s(\tuple{x,y,z}) \) denotes a term \( s \) but with emphasis on the fact that \( \tuple{x,y,z} \)
+is to be taken as the designated sequence during an interpretation.
 
 \vspace{0.3cm}
 \noindent
-One way of doing this is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-where \( k \in \naturalset \) is the number of variable symbols occurring in \( s \).
-Naturally, \( \abs{\tau} \) must correspond to the arity of \aref{dfn:first-order-language-terms-root-and-subterms}{\( h \) (the root of \( s \))} as required
-by the \aref{dfn:first-order-language-terms}{syntax of first-order languages}.
-Furthermore, it is also required that \( \Union_{i \,\in\, \abs{\tau}} \ran \delta_{i} = k \) and that
-\( \abs{\delta_{i}} = m_{i} \) for all \( i \in \abs{\tau} \) where \( m_{i} \) is the number of variable symbols occuring in the subterm denoted by \( \tau_{i} \).
+Next, we examine cases where \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} are interpreted recursively---i.e.,
+starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure one layer at a time.
+For instance, a recursive interpretation of \( s \) will begin at the term \( h(\tau) \)
+where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \) and
+\( \tau \) a tuple of all the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
+Since \( \tau \) is a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \),
+any variable symbol occurring in \( s \) must appear in at least one term in \( \ran (\tau) \); that much should be intuitively obvious.
+The main difficulty here, however, is that the variable symbols can appear across the subterms of \( s \) in combinatorially different
+ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}, which renders the interpretation ambiguous.
+In other words, a precise and \emph{interpretable} description of \( s \) requires not only a \aref{text:designated-sequence-for-variable-symbols}{designated sequence}
+for its variable symbols but also a specification of the exact distribution of those variable symbols across \( \tau \).
+
+\vspace{0.3cm}
+\noindent
+One way of achieving this is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \)
+where \( v \) is a tuple of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for all \( i \in \abs{\tau} \).
+Naturally, for the description to obey the \aref{dfn:first-order-language-terms}{syntax of first-order languages}, we must impose a few
+restrictions on \( \delta \):
+\begin{enumerate*}[label=(\roman*)]
+    \item \( \dom \delta = \abs{\tau} \) must correspond to the arity of \( h \) (the root of \( s \)),
+    \item for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) must be the designated sequence for all the variable symbols occurring
+        in the term \( \tau_{i} \).
+\end{enumerate*}
+
+\vspace{0.3cm}
+\noindent
 So for \( s \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) and \( k = 3 \)
 with \( \tau \) being a tuple of \( \mathcal{L}^{\prime} \)-terms such that
 \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( \tau_{0}^{\mathfrak{A}} = \tau_{1}^{\mathfrak{A}} = f^{\mathfrak{A}} \)
@@ -642,20 +662,11 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
     abbreviate \( \mleft\{ \psi \mright\} \models \varphi \) with \( \psi \models \varphi \).
 \end{notation}
 
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-semantic-consequence-in-terms-of-implication}
-    If \( \varphi \) and \( \psi \) are \aref{dfn:first-order-language-recursive-definition-of-formulas}{formulas}
-    of some \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \), then
-    \( \psi \models \varphi \) if and only if \( \models \mleft( \psi {\implies} \varphi \mright) \).
-\end{thm}
-
-\begin{proof}
-    Let \( \varphi \) and \( \psi \) be formulas of some \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \).
-\end{proof}
-
 \begin{dfn}[Logical Equivalence]
     \phantomsection \label{dfn:first-order-language-logical-equivalence}
     If \( \varphi \) and \( \psi \) are two \( \mathcal{L} \)-formulas,
+    then we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent} (denoted as \( \varphi \equiv \psi \) )
+    if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
 
 \chapter{Proof-Theoretic Concepts}
@@ -1135,165 +1146,46 @@ is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contr
 \aref{rule-of-inference:universal-generalization}{Universal Generalization} (take note!)
 which prohibits the reuse of any variable, free or bound, from the original formula.
 
-\chapter{Tautologies}
+\chapter{Logical Equivalences}
+The theorems in this chapter utilize the following notational conventions:
+\begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
+    \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
+    \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for denoting \( \mathcal{L} \)-formulas.
+    \item The upper case Greek letters \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for denoting sets or collections of \( \mathcal{L} \)-formulas.
+    \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
+    \item Tuple of all the free variables occurring in an \( \mathcal{L} \)-formula will be denoted using a superscripted \( v \); for instance, \( v^{\varphi} \).
+    \item Superscripts will be used to distinguish the \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution functions}
+        for different \( \mathcal{L} \)-formulas; e.g., \( \delta^{\varphi} \) denotes the variable distribution function of \( \varphi \).
+\end{enumerate}
+
 \begin{thm}
-    \label{tautology:grouping-disjuncts-into-universally-quantified-formula}
-    Given any well-formed formulas \( \Gamma \) and \( \varphi \)
-    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and
-    \(\beta_{1}, \dots, \beta_{m} \) respectively,
+    \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
+    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
+    If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but not in \( \psi \), then,
     \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \equiv
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m})  \big)
+        \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright]
     \end{equation*}
 \end{thm}
 
 \begin{proof}
-    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty domain \( D \).
-    Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) represent objects
-    in \( D \).
+    Let \( \omega \) and \( \phi \) denote the formulas \( \psi \,\,{\lor}\,\, \forall x \, \varphi \) and \( \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \)
+    respectively.
+    The goal, therefore, is to establish that \aref{dfn:first-order-language-logical-equivalence}{\( \omega \models \phi \) and \( \phi \models \omega \) are both true}.
 
     \vspace{0.3cm}
-    \noindent Suppose that the formula,
-    \begin{equation}
-        \label{eq:lhs-statement}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation}
-    holds. From the truth table for the logical-\( \lor \) operator,
-    it is clear that there are only three possible cases in which
-    \eqref{eq:lhs-statement} is true.
-
-    % Case 1
-    \vspace{0.5cm}
-    \noindent {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \neg \, \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
+    \noindent
+    {\scshape Claim}: \( \omega \models \phi \)
 
     \vspace{0.1cm}
     \noindent
-    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds, then by Disjunction Introduction,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
-    \end{equation*}
-    for any \( x_{0} \in D \). Since \( x_{0} \) is arbitrary, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-    \lor \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from Universal Generalization.
-
-
-    % Case 2
-    \vspace{0.5cm}
-    \noindent {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\).
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( x_{0} \in D \) be arbitrary. Since \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
-    is true, then \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) follows from Universal Instantiation. By Disjunction
-    Introduction, we thus have,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
-    \end{equation*}
-    Since \( x_{0} \) is arbitrary, we have \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-    \lor
-    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) as needed.
-
-
-    % Case 3
-    \vspace{0.5cm}
-    \noindent {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( x_{0} \in D \) be arbitrary. Clearly, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true. Thus,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
-    \end{equation*}
-    follows from Disjunction Introduction. With \( x_{0} \) being arbitrary, we conclude by Universal Generalization
-    that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
-
-
-    \vspace{0.5cm}
-    \noindent
-    In all three cases, \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) follows from the initial assumption that
-    \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
-    \begin{equation*}
-        \therefore \,
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation*}
-    Furthermore, this implication holds regardless of any interpretation.
-    Thus,
-    \begin{equation}
-        \label{eq:disjunct-into-universal-quantifier-forward-entailment}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation}
-
-    \noindent
-    Next, we show that the logical consequence also holds in the opposite direction. For that, we suppose that
-    the formula,
-    \begin{equation}
-        \label{eq:rhs-statement}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation}
-    holds. Clearly, there are only 2 possible cases in which \eqref{eq:rhs-statement} can be true.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) holds.
-
-    \vspace{0.1cm}
-    \noindent
-    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)\).
-
-    \vspace{0.5cm}
-    \noindent
-    In both cases,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    follows trivially by Disjunction Introduction.
-    \begin{equation*}
-        \therefore \,
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    Since the implication is independent of the interpretation, we have,
-    \begin{equation}
-        \label{eq:disjunct-into-universal-quantifier-backward-entailment}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-        \models
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation}
-
-    \vspace{0.5cm}
-    \noindent
-    The theorem follows directly from \eqref{eq:disjunct-into-universal-quantifier-forward-entailment}
-    and \eqref{eq:disjunct-into-universal-quantifier-backward-entailment}.
+    Let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \).
+    Let \( k \) be the number of free variables occurring in \( \omega \).
+    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \omega \).
+    Let \( \alpha \in \abs{\mathfrak{A}}^{k} \) be arbitrary.
+    Since \( \mathfrak{A} \models \omega \), it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that
+    \( \omega(\alpha) \) and therefore
+    \( \psi(\composition{\alpha}{\delta^{\omega}_{0}}) \) or \( \lambda(\composition{\alpha}{\delta^{\omega}_{1}}) \)
+    by \cref{dfn:first-order-language-recursive-interpretation-of-formulas}, which leaves us with only three possibilities.
 \end{proof}
 
 \begin{thm}
@@ -1579,7 +1471,7 @@ which prohibits the reuse of any variable, free or bound, from the original form
 \begin{proof}
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty
     domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) be objects in \( D \).
-    Using the truth table for logical implication and \cref{tautology:grouping-disjuncts-into-universally-quantified-formula},
+    Using the truth table for logical implication and \cref{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula},
     we transform one of the statement into the other like so:
     \begin{align*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
@@ -1621,7 +1513,7 @@ which prohibits the reuse of any variable, free or bound, from the original form
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary,
     non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \)
     be objects in \( D \). Using the truth table of the logical implication and
-    \cref{tautology:grouping-disjuncts-into-universally-quantified-formula}, we can transform one statement into
+    \cref{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}, we can transform one statement into
     another like so:
     \begin{align*}
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
