@@ -75,7 +75,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} \( t \) is an \( \mathcal{L} \)-term if and only if
     one of the following conditions holds:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t \) is a string of \( \mathcal{L} \)-symbols consisting of a single \( \mathcal{L} \)-variable.
+        \item \( t \) is a single \( \mathcal{L} \)-variable
         \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
             \begin{itemize}[topsep=2pt,leftmargin=10pt]
                 \item \( s \) is a tuple of \aref{dfn:n-tuples}{length} \( \Phi^{\mathcal{L}}(i) \)
@@ -95,8 +95,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \phantomsection \label{dfn:first-order-language-terms-compound-terms}
     An \( \mathcal{L} \)-term is \keyword{compound} if and only if it has the form \( F^{\mathcal{L}}_{i}(\tau) \)
     for some \( i \in \dom F^{\mathcal{L}} \)
-    where \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms such that for some \( j \in \abs{\tau} \),
-    \( \tau_{j} \) contains at least one symbol from \( \ran F^{\mathcal{L}} \).
+    where \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms.
     Moreover, if \( t \) is a compound term, then \( \mleft( t \mright) \) and \( \mleft[\,t\,\mright] \) are also compound terms.
 \end{dfn}
 
@@ -108,10 +107,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \begin{rem}
     It follows then that a simple \( \mathcal{L} \)-term is either:
     \begin{enumerate*}[label=(\roman*)]
-        \item a single \( \mathcal{L} \)-variable,
-        \item a term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is empty, or
-        \item a term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a non-empty
-            tuple of \( \mathcal{L} \)-variables such that \( \tau_{j} = \tau_{k} \) if and only if  \( j = k \) for all \( j, k \in \abs{\tau} \).
+        \item a single \( \mathcal{L} \)-variable, or
+        \item a term of the form \( F^{\mathcal{L}}_{i}(\tuple{}) \) for some \( i \in \dom F^{\mathcal{L}} \).
     \end{enumerate*}
 \end{rem}
 
@@ -119,6 +116,12 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \phantomsection \label{dfn:first-order-language-terms-root-and-subterms}
     If \( s \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
     \( F^{\mathcal{L}}_{i} \) is called the \keyword{root} of \( s \) and the elements of \( \ran \tau \) are called the \emph{subterms} of \( s \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-terms-parent-terms}
+    If \( s \) is a compound \( \mathcal{L} \)-term with a subterm \( t \), then we say that \( s \) is the \keyword{parent term} or simply the \keyword{parent}
+    of \( s \).
 \end{dfn}
 
 \begin{dfn}
@@ -179,19 +182,18 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{notation}
-    \phantomsection \label{notation:first-order-language-formulas-using-functional-notation}
+    \phantomsection \label{notation:first-order-language-functional-notation}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v_{0}, \dots, v_{k-1} \) are the free variables of \( \varphi \),
     we can use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
-    to make the free variables of \( \varphi \) explicit. Note that with this notation, the variable symbols \( v_{0}, \dots, v_{k-1} \)
-    must be \emph{distinct} because it makes no sense to count the same variable symbol twice.
-    Alternatively, we can also denote the \( \mathcal{L} \)-formula as \( \varphi(v) \) where \( v \) is a tuple of all the free variables
-    occurring in \( \varphi \).
-    Since the variable symbols in \( \ran v \) are distinct, it follows that the tuple \( v \) must be a \aref{dfn:bijection}{bijection}.
+    to make the \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}\footnote{\,This will be
+    explained in detail later.} for \( \varphi \) explicit.
+    Note also that the variable symbols \( v_{0}, \dots, v_{k-1} \) must be \emph{distinct} because it makes no sense to count the same variable symbol twice.
+    Alternatively, we can also replace \( \varphi(v_{0}, \dots, v_{k-1}) \) with its more compact version \( \varphi(v) \) where \( v \) is a
+    \aref{dfn:bijection}{bijective} tuple.
     This style of notation is not just limited to \( \mathcal{L} \)-formulas but can be applied to \( \mathcal{L} \)-terms as well.
     For instance, if \( t \) denotes an \( \mathcal{L} \)-term and \( x \), \( y \) denote \( \mathcal{L} \)-variables, then the notation
     \( t(x, y) \) can be used to emphasize the fact that \( x \) and \( y \) occur in \( t \)
-    and that \( \tuple{x, y} \) is \aref{text:designated-sequence-for-variable-symbols}{the designated sequence}\footnote{\,This will be explained
-    in detail later in the section.} for an interpretation of \( t \).
+    and that \( \tuple{x, y} \) is \aref{dfn:first-order-language-designated-variable-sequence-for-terms}{the designated variable sequence} for \( t \).
 \end{notation}
 
 \noindent
@@ -280,13 +282,11 @@ then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \) for any \( \mathcal{L} \)-structu
 For terms that are \aref{dfn:first-order-language-terms-simple-terms}{simple}, the results of their interpretations are also fairly straightforward.
 If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-terms}{simple term} of \( \mathcal{L} \), then it must be of either one of the following forms:
 \begin{enumerate*}[label=(\roman*)]
-    \item \( v \) where \( v \) is an \( \mathcal{L} \)-symbol,
+    \item \( x \) where \( x \) is an \( \mathcal{L} \)-variable, or
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
-        is an empty tuple,
-    \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) \neq 0 \) and
-        \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-variables such that \( \tau_{j} = \tau_{k} \) if and only if \( j = k \) for all \( j, k \in \abs{\tau}\).
+        is an empty tuple.
 \end{enumerate*}
-For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second and third forms,
+For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second form,
 \( t^{\mathfrak{A}} = F^{\mathfrak{A}}_{i} \).
 
 \vspace{0.3cm}
@@ -328,7 +328,7 @@ there are combinatorially different ways to replace the variable symbols \( x \)
 \( \mleft\{ a, b, c \mright\} \). For example, one could replace every occurrence of \( x \) with \( a \), \( y \) with \( b \), and \( z \) with \( c \);
 but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), and \( z \) with \( b \)!
 Since there is no precise rule in \aref{dfn:first-order-language-terms}{the syntax of first-order terms} to help us decide which manner of substitution is preferred,
-the interpretation is inherently ambiguous and thus impossible to make precise.
+the interpretation is inherently ambiguous and thus impossible to make precise without additional information.
 
 \phantomsection \label{text:designated-sequence-for-variable-symbols}
 \vspace{0.3cm}
@@ -354,70 +354,63 @@ is given by:
 \noindent
 The key point here is that the information from an \( \mathcal{L} \)-structure alone is insufficient to determine a precise interpretation for compound \( \mathcal{L} \)-terms;
 the process also requires \emph{positional data} to be associated with each variable symbol in the term so that objects from
-the \aref{dfn:n-tuples}{n-tuples} of \( \abs{\mathfrak{A}} \) can be meaningfully assigned to each variable symbol in the term.
+\( \abs{\mathfrak{A}} \) can be meaningfully assigned to each variable symbol in the term.
 \begin{equation*}
     \text{Interpretation} = \text{Mathematical Structure} + \text{Positional Data}
 \end{equation*}
 \noindent
-In practice, the positional data associated with a term is often provided through a tuple \( v \) of all the variable symbols occurring in the term.
-The \aref{notation:first-order-language-formulas-using-functional-notation}{functional notation} can be utilized for this exact purpose.
-For example, the notation \( s(x, y, z) \) or \( s(\tuple{x,y,z}) \) denotes a term \( s \) but with emphasis on the fact that \( \tuple{x,y,z} \)
-is to be taken as the designated sequence during an interpretation.
+In practice, the positional data is often provided through the use of the \aref{notation:first-order-language-functional-notation}{functional notation}.
+For instance, \( s(x, y, z) \) or \( s(\tuple{x,y,z}) \) denotes a term \( s \) but with emphasis on the fact that \( \tuple{x,y,z} \)
+is to be taken as the designated sequence for any interpretation of \( s \).
+But, of course, this is purely notational and has no bearing on the actual form and definition
+of the term itself; i.e., \( s(x, y, z) \) and \( s(z, x, y) \) both denote the same underlying term (the same string of symbols) but with different \emph{intended} meanings.
 
 \vspace{0.3cm}
 \noindent
 Next, we examine cases where \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} are interpreted recursively---i.e.,
 starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure one layer at a time.
-For instance, a recursive interpretation of \( s \) will begin at the term \( h(\tau) \)
-where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \) and
-\( \tau \) a tuple of all the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
-Since \( \tau \) is a tuple of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \),
-any variable symbol occurring in \( s \) must appear in at least one term in \( \ran (\tau) \); that much should be intuitively obvious.
-The main difficulty here, however, is that the variable symbols can appear across the subterms of \( s \) in combinatorially different
+A recursive interpretation of \( s \), for instance, will begin with \( h(\tau) \) where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root}
+of \( s \) and \( \tau \) a tuple of all the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
+Naturally, this means that any variable symbol occurring in \( s \) must appear in at least one term in \( \ran (\tau) \); that much should be intuitively obvious.
+The main difficulty here is that the variable symbols can appear across the subterms in combinatorially different
 ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}, which renders the interpretation ambiguous.
-In other words, a precise and \emph{interpretable} description of \( s \) requires not only a \aref{text:designated-sequence-for-variable-symbols}{designated sequence}
-for its variable symbols but also a specification of the exact distribution of those variable symbols across \( \tau \).
+In other words, a precise and \emph{interpretable} specification of \( s \) requires not only a \aref{text:designated-sequence-for-variable-symbols}{designated sequence}
+for its variable symbols but also a precise description of how those variable symbols are distributed across the subterms in \( \ran (\tau) \).
 
 \vspace{0.3cm}
 \noindent
-One way of achieving this is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \)
+One way of achieving the latter is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \)
 where \( v \) is a tuple of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for all \( i \in \abs{\tau} \).
-Naturally, for the description to obey the \aref{dfn:first-order-language-terms}{syntax of first-order languages}, we must impose a few
+Naturally, for this description of \( s \) to obey the \aref{dfn:first-order-language-terms}{syntax of first-order language}, we must impose a few
 restrictions on \( \delta \):
 \begin{enumerate*}[label=(\roman*)]
     \item \( \dom \delta = \abs{\tau} \) must correspond to the arity of \( h \) (the root of \( s \)),
-    \item for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) must be the designated sequence for all the variable symbols occurring
+    \item for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) is the designated sequence for all the variable symbols occurring
         in the term \( \tau_{i} \).
 \end{enumerate*}
-
-\vspace{0.3cm}
-\noindent
-So for \( s \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) and \( k = 3 \)
-with \( \tau \) being a tuple of \( \mathcal{L}^{\prime} \)-terms such that
-\aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( \tau_{0}^{\mathfrak{A}} = \tau_{1}^{\mathfrak{A}} = f^{\mathfrak{A}} \)
-and \( \tau_{2}^{\mathfrak{A}} = g^{\mathfrak{A}} \)} for any \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \).
-As such, given any \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s \) is a function \( s^{\mathfrak{A}} \)
-that can be expressed in terms of \( k \), \( \tau \), and \( \delta \) as follows:
+So in the case of \( s(x, y, z) \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \). Moreover, for any given
+\( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s(x, y, z) \) is a function \( s^{\mathfrak{A}} \)
+that can be expressed in terms of \( v \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-implicit}
-    s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{k}
+    s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{\abs{v}}
     \,\,{\land}\,\,
     \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
     }
 \end{equation}
 It is not difficult to verify that the \( s^{\mathfrak{A}} \) defined in \eqref{eq:interpreted-s-implicit} is in fact the same \( s^{\mathfrak{A}} \) one is expected to obtain
-if one were to interpret \( s \) non-recursively by prescribing the sequence \( \tuple{x, y, z} \) for the interpretation and then replacing \( x \), \( y \),
-and \( z \) with objects from the argument tuple based on their positions in the sequence.
-We start by noting the fact that \aref{ssec:von-neumann-ordinals}{\( k = 3 = \mleft\{ 0, 1, 2 \mright\} \)}.
-Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \alpha = \tuple{a,b,c} \)
+if one were to interpret \( s \) non-recursively using \( \tuple{x, y, z} \) as the \aref{text:designated-sequence-for-variable-symbols}{designated sequence}.
+We start by noting the fact that \aref{ssec:von-neumann-ordinals}{\( \abs{v} = 3 = \mleft\{ 0, 1, 2 \mright\} \)}.
+Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \), \( \alpha = \tuple{a,b,c} \)
 for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
 \begin{align*}
     \composition{\alpha}{\delta_{0}} &= \tuple{a}\\
     \composition{\alpha}{\delta_{1}} &= \tuple{b}\\
     \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
 \end{align*}
-Since  \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \)
-and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \)}, we can delineate the components of the internal sequence in \eqref{eq:interpreted-s-implicit} like so:
+Since \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are all \aref{dfn:first-order-language-terms-simple-terms}{simple terms},
+we have \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \)}.
+As such, the components of the internal sequence in \eqref{eq:interpreted-s-implicit} can be delineated like so:
 \begin{equation*}
     \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
     = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
@@ -426,80 +419,83 @@ It should be clear from \eqref{eq:interpreted-s-implicit} that
 \( s^{\mathfrak{A}}(a,b,c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)) \) for
 any \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), which is in exact agreement with \eqref{eq:interpreted-s-explicit}.
 Thus, \( s^{\mathfrak{A}} \) is indeed the function that will be obtained via an interpretion of \( h(f(x), f(y), g(x,z)) \) in the context of \( \mathfrak{A} \)
-using \( \tuple{x,y,z} \) as the designated sequence.
+using \( \tuple{x,y,z} \) as the \aref{text:designated-sequence-for-variable-symbols}{designated sequence}.
 
 \vspace{0.3cm}
 \noindent
-Note that the specification of \( \delta \) is very much dependent on the choice of the designated sequence.
+The observant reader has undoubtedly noticed that the value of \( \delta \) is very much dependent on the choice of designated sequences.
 For instance, if the designated sequence for the variable symbols is \( \tuple{y, x, z} \) instead of \( \tuple{x, y, z} \),
 then \( \delta \) would have to be modified from \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) to
-\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \).
-In a sense, the information for the designated sequence is ``embedded'' within \( \delta \);
-i.e., defining a \( \delta \) indirectly determines the designated sequence for the variable symbols.
-This means that with the recursive approach, both the distribution of variable symbols across the subterms and their designated sequence can be defined/specified using a single,
-set-theoretic construct.
+\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \); otherwise, \( \delta \) would be describing the term \( h(f(y), f(x), g(y, z))\) instead of
+the original \( h(f(x), f(y), g(x, z)) \).
 
 \vspace{0.3cm}
 \noindent
-Next, we draw the reader's attention to the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
+As a final point, we would like to draw the reader's attention to the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
 in \eqref{eq:interpreted-s-implicit}, which is of considerable interest
 since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure.
-In general, any non-empty tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
+In general, any tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
 as long as two pieces of information are available:
 \begin{enumerate*}[label=(\roman*)]
-    \item a natural number \( k \) denoting the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for some \( i \in \abs{\tau} \),
-    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) that describes the distribution of \( \mathcal{L} \)-variables
+    \item a designated sequence for all the \( \mathcal{L} \)-variables occurring in the \( \mathcal{L} \)-terms in \( \ran \tau \),
+    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) that describes the distribution of \( \mathcal{L} \)-variables
         across the \( \mathcal{L} \)-terms in \( \ran \tau \).
 \end{enumerate*}
-The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{k} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
-To emphasize that \( \delta \) is just as much a part of the interpretation as the structure \( \mathfrak{A} \) is,
-we shall adopt the following notational convention.
+The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{\abs{v}} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
 
 \begin{notation}
-    If \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms with the function \( \delta \) describing the distribution of \( \mathcal{L} \)-variables across
-    the \( \mathcal{L} \)-terms in \( \ran \tau \), then the resulting function from an interpretation of \( \tau \) in the context of \( \mathfrak{A} \) is denoted as
-    \( \tau^{\mathfrak{A}}_{\delta} \).
+    To emphasize that \( \delta \) is an integral part of the interpretation, we will denote this function as \( \tau^{\mathfrak{A}}_{\delta} \).
 \end{notation}
 
 \noindent
-We now formalize the intuitive discussion above with the following two definitions.
+The intuitive discussion above can be formalized with the following definitions.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-terms}
+    If \( t \) is an \( \mathcal{L} \)-term, then \aref{dfn:n-tuples}{a finite sequence} \( v \) is a \keyword{designated variable sequence} for \( t \)
+    if and only if \( \ran v \) is the set of all \( \mathcal{L} \)-symbols occurring in \( t \).
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( \mu = \sequence{\mu_{i}}{i \in \abs{\tau}} \) is a finite sequence such
+    that \( \mu_{i} \) is the designated variable sequence of \( \tau_{i} \) for all \( i \in \abs{\tau} \),
+    then \aref{dfn:n-tuples}{a finite sequence} \( v \) is a designated variable sequence for
+    \( \tau \) if and only if \( \ran v = \Union_{i \,\in\, \abs{\tau}} \ran \mu_{i}  \).
+\end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-terms}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms,
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( v \) is the designated variable sequence for \( \tau \),
     then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is a \keyword{variable distribution function} of \( \tau \)
     if and only if:
     \begin{enumerate*}[label=(\roman*)]
-        \item \( k \in \naturalset \) is the number of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{j} \) where \( j \in \abs{\tau} \),
-        \item for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} \) corresponds to the number of \( \mathcal{L} \)-variables occurring in
-    the term \( \tau_{i} \).
+        \item \( k = \abs{v} \),
+        \item for all \( i \in \abs{\tau} \), \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-term \( \tau_{i} \).
     \end{enumerate*}
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-a-tuple-of-terms}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms and \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-    be a \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( \tau \).
+    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms, \( v \) be a designated variable sequence for \( \tau \),
+    and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) be a
+    \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( \tau \).
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then the interpretion of \( \tau \) in the context of \( \mathfrak{A} \)
-    is defined as the function \( \function{\tau^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \)
+    is defined as the function \( \function{\tau^{\mathfrak{A}}_{\delta}}{\abs{\mathfrak{A}}^{\abs{v}}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \)
     such that:
     \begin{equation*}
-        \tau^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k} \,\,{\land}\,\,
+        \tau^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{\abs{v}} \,\,{\land}\,\,
         y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
         }
     \end{equation*}
 \end{dfn}
 
 \begin{rem}
-    If \( k = 0 \), then \aref{thm:seq-empty-set-is-the-singleton-containing-the-empty-set}{\( \finiteseq{k} = \finiteseq{\emptyset} =
-    \mleft\{ \emptyset \mright\} \)} and thus \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \);
-    additionally, \( \abs{\mathfrak{A}}^{k} = \abs{\mathfrak{A}}^{\emptyset} = \mleft\{ \emptyset \mright\} \) by
+    If \( v = \tuple{} \), then \aref{thm:seq-empty-set-is-the-singleton-containing-the-empty-set}{\( \finiteseq{\abs{v}} = \finiteseq{\emptyset} =
+    \mleft\{ \emptyset \mright\} \)}, in which case \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \);
+    additionally, \( \abs{\mathfrak{A}}^{\abs{v}} = \abs{\mathfrak{A}}^{\emptyset} = \mleft\{ \emptyset \mright\} \) by
     \cref{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation},
     in which case \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta \) is an element of \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
-    If \( \tau \) is the empty tuple, then necessarily \( k = 0 \) because there aren't any \( \mathcal{L} \)-terms in \( \ran \tau \) for any
+    If \( \tau \) is the empty tuple, then necessarily \( v = \tuple{} \) because there aren't any \( \mathcal{L} \)-terms in \( \ran \tau \) for any
     \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence}{occur in}.
     Moreover, since \( \abs{\tau} = \emptyset \), it follows that \( \delta = \emptyset \) and that
-    \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\tuple{}} \mright\} = \mleft\{ \orderedpair{\emptyset}{\emptyset} \mright\} \).
+    \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\tuple{}} \mright\} \).
 \end{rem}
 
 \vspace{0.1cm}
@@ -508,16 +504,18 @@ We are now ready to give a general definition of the interpretation of an \( \ma
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-terms}
-    If \( t \) is an \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-term} and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
-    then \( t^{\mathfrak{A}} \) is a function defined according to the following rules:
+    If \( t \) is an \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-term} with
+    \aref{dfn:first-order-language-designated-variable-sequence-for-terms}{a designated variable sequence} \( v \)
+    and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
+    then the following rules apply:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( t \) is \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term, then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
         \item If \( t \) is an \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
         \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( s \) is a tuple of \( \mathcal{L} \)-terms such that
-            \( \abs{s} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{s}}{\finiteseq{k}} \) is the
+            \( \abs{s} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{s}}{\finiteseq{\abs{v}}} \) is a
             \aref{dfn:first-order-language-variable-distribution-function-of-terms}{variable distribution function} of \( s \), then,
             \begin{equation*}
-                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{k}
+                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{ \abs{v} }
                 \,\,{\land}\,\,
                 y = F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}}_{\delta}(x))}
             \end{equation*}
@@ -525,18 +523,18 @@ We are now ready to give a general definition of the interpretation of an \( \ma
 \end{dfn}
 
 \begin{rem}
-    For the third rule, if \( k = 0 \), then \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}}_{\delta}(\emptyset))} \mright\} \)
+    For the third rule, if \( v = \tuple{} \), then \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}}_{\delta}(\emptyset))} \mright\} \)
     because \aref{thm:set-exponentiation-with-empty-exponent}{\( \abs{\mathfrak{A}}^{0} = \mleft\{ \emptyset \mright\} \)}.
-    Note also that if \( k = 0 \), then for all \( j \in \Phi^{\mathcal{L}}(i) \), no variable symbol of \( \mathcal{L} \) can possibly occur in
-    \( s_{j} \) (otherwise, \( k  \) would not be \( 0 \)). This implies that \( s_{j} \) can only be a function symbol of \( \mathcal{L} \) with arity 0 for
-    all \( j \in \abs{s} \).
-    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( s = \tuple{} \) and thus \( k = 0 \).
+    Note also that if \( v = \tuple{} \), then for all \( j \in \Phi^{\mathcal{L}}(i) \), no variable symbol of \( \mathcal{L} \) can possibly occur in
+    \( s_{j} \) (otherwise, \( v \) would not be an empty tuple).
+    This implies that for all \( j \in \abs{s} \), \( s_{j} \) must be a function symbol of \( \mathcal{L} \) with arity 0.
+    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( s = \tuple{} \) and thus \( v = \tuple{} \).
 \end{rem}
 
 \noindent
 A similar approach can be employed to define the interpretation of \( \mathcal{L} \)-formulas in the context of \( \mathcal{L} \)-structures;
 however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in the structure's universe,
-\( \mathcal{L} \)-formulas are interpreted as either \emph{true} or \emph{false} (but not both).
+\( \mathcal{L} \)-formulas are interpreted as either \keyword{true} or \keyword{false} (but not both).
 
 \begin{notation}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be a tuple of
@@ -544,9 +542,10 @@ however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in th
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \),
     then we write \( \varphi(\alpha) \) to mean the following equivalent statements\footnote{\,The meaning
     of the functional notation \( \varphi(v) \) depends on what \( v \) represents.
-    If \( v \) denotes a tuple of variable symbols occurring in \( \varphi \), then \( \varphi(v) \) denotes
-    the \( \mathcal{L} \)-formula itself but with an \aref{notation:first-order-language-formulas-using-functional-notation}{emphasis on the presence of free variables} in
-    the formula. If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) denotes an \emph{assertion};
+    If \( v \) denotes a tuple of \emph{free} variable symbols occurring in \( \varphi \), then \( \varphi(v) \) represents
+    the \( \mathcal{L} \)-formula itself but
+    with an \aref{notation:first-order-language-functional-notation}{emphasis on the presence of free variables and their intended ordering} in the formula.
+    If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) is an \emph{assertion}, not a formula;
     it asserts that the formula \( \varphi \) is satisfied by \( v \).
     }:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -561,20 +560,28 @@ It remains now to define precisely what it means for a given \( \mathcal{L} \)-f
 for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
 
 \begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{designated variable sequence}
+    for \( \varphi \) if and only if \( \ran v \) is the set of all the \aref{dfn:first-order-language-free-variables}{\emph{free} variables} occurring
+    in \( \varphi \).
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas and \( \mu = \sequence{\mu_{i}}{i \in \abs{\tau}} \) is a finite sequence such that
+    \( \mu_{i} \) is the designated variable sequence for \( \tau_{i} \) for all \( i \in \abs{\tau} \), then a finite sequence \( v \) is a
+    designated variable sequence for \( \tau \) if and only if \( \ran v = \Union_{i \,\in\, \abs{\tau}} \ran \mu_{i}  \).
+\end{dfn}
+
+\begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \)
-    is a \keyword{variable distribution function} of \( \tau \) if and only if:
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas and \( v \) is the designated variable sequence for \( \tau \),
+    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is a \keyword{variable distribution function} of \( \tau \) if and only if:
     \begin{enumerate*}[label=(\roman*)]
-        \item \( k \in \naturalset \) is the number of free variables occurring in at least one \( \tau_{j} \) where
-            \( j \in \abs{\tau} \),
-        \item for all \( i \in \abs{\tau} \), \( \abs{\delta_{i}} \) corresponds to the number of free variables occurring in
-            the \( \mathcal{L} \)-formula \( \tau_{i}\).
+        \item \( k = \abs{v} \),
+        \item for all \( i \in \abs{\tau} \), \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-formula \( \tau_{i} \).
     \end{enumerate*}
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-formulas}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula with \( v \) being a tuple of all the free variables occurring in \( \varphi \).
+    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be the designated variable sequence for \( \varphi \).
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \) is an element of \( \abs{\mathfrak{A}}^{\abs{v}} \), then
     the following rules apply:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -596,9 +603,9 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
         \item If \( \varphi \) is of the form \( [\,\psi\,] \) where \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
         \item If \( \varphi \) is of the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula,
-            then \( \varphi(\alpha) \) if and only if \( \alpha \) does not satisfy \( \psi \)
-        \item If \( \varphi \) is of the form \( \psi(u) \) such that \( u = \composition{v}{\rho} \)
-            where \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( \dom v \),
+            then \( \varphi(\alpha) \) if and only if \( \lnot \, \psi(\alpha) \)
+        \item If \( \varphi \) is of the form \( \psi(\composition{v}{\rho}) \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( \abs{v} \),
             then \( \varphi(\alpha) \) if and only if \( \psi(\composition{\alpha}{\rho}) \)
         \item If \( \varphi \) is of the form \( \phi \,\,{\land}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
             \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
@@ -608,25 +615,28 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
             of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
             \( \phi(\composition{\alpha}{\delta_{0}}) \) or \( \psi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free
-            variable, then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula such that
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is a tuple of all the
-            \aref{dfn:first-order-language-free-variables}{free variables} occurring in it, then \( \varphi(\alpha) \) if and only if
-            \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \) for all \( \beta \in \abs{\mathfrak{A}} \)
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula that does not contain \( x \) as a free variable,
+        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) does not
+            \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) and \( \psi \) is an \( \mathcal{L} \)-formula such that
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is a tuple of all the \aref{dfn:first-order-language-free-variables}{free variables}
-            occurring in it, then \( \varphi(\alpha) \) if and only if
+        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is the
+            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for \( \psi \),
+            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \) for all \( \beta \in \abs{\mathfrak{A}} \)
+        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \)
+            does not \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
+            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
+        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and 
+            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is the
+            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for \( \psi \),
+            then \( \varphi(\alpha) \) if and only if
             there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \)
     \end{enumerate}
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-models-of-first-order-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula with \( k \in \naturalset \) free variables
-    and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then the following statements are equivalent:
+    If \( \varphi \) is an \( \mathcal{L} \)-formula with a \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
+    \( v \) and \( \mathfrak{A} \) is any \( \mathcal{L} \)-structure, then the following statements are equivalent:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \mathfrak{A} \models \varphi \)
         \item \( \mathfrak{A} \) models \( \varphi \)
@@ -634,7 +644,7 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
         \item \( \mathfrak{A} \) satisfies \( \varphi \)
         \item \( \varphi \) is true in \( \mathfrak{A} \)
         \item \( \varphi \) is satisfied by \( \mathfrak{A} \)
-        \item \( \varphi(\alpha) \) for all \( \alpha \in \abs{\mathfrak{A}}^{k} \)
+        \item \( \varphi(\alpha) \) for all \( \alpha \in \abs{\mathfrak{A}}^{ \abs{v} } \)
     \end{enumerate}
 \end{dfn}
 
@@ -1150,12 +1160,14 @@ which prohibits the reuse of any variable, free or bound, from the original form
 The theorems in this chapter utilize the following notational conventions:
 \begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
     \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
-    \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for denoting \( \mathcal{L} \)-formulas.
-    \item The upper case Greek letters \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for denoting sets or collections of \( \mathcal{L} \)-formulas.
+    \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
+    \item The upper case Greek letters \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
     \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
-    \item Tuple of all the free variables occurring in an \( \mathcal{L} \)-formula will be denoted using a superscripted \( v \); for instance, \( v^{\varphi} \).
-    \item Superscripts will be used to distinguish the \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution functions}
-        for different \( \mathcal{L} \)-formulas; e.g., \( \delta^{\varphi} \) denotes the variable distribution function of \( \varphi \).
+    \item The \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for an \( \mathcal{L} \)-formula
+        will be denoted using a superscripted \( v \); e.g., \( v^{\varphi} \).
+    \item The \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution functions}
+        for different \( \mathcal{L} \)-formulas will be distinguished using superscripts;
+        e.g., \( \delta^{\varphi} \) denotes the variable distribution function of \( \varphi \).
 \end{enumerate}
 
 \begin{thm}
@@ -1170,22 +1182,14 @@ The theorems in this chapter utilize the following notational conventions:
 \begin{proof}
     Let \( \omega \) and \( \phi \) denote the formulas \( \psi \,\,{\lor}\,\, \forall x \, \varphi \) and \( \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \)
     respectively.
-    The goal, therefore, is to establish that \aref{dfn:first-order-language-logical-equivalence}{\( \omega \models \phi \) and \( \phi \models \omega \) are both true}.
+    Furthermore, let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \) 
+    so that \( \omega \coloneq \psi \,\,{\lor}\,\, \lambda \) and \( \phi \coloneq \forall x \, \theta \).
+    To prove that \( \omega \equiv \phi \), we must show that
+    \aref{dfn:first-order-language-logical-equivalence}{\( \omega \models \phi \) and \( \phi \models \omega \) are both true}.
 
     \vspace{0.3cm}
     \noindent
     {\scshape Claim}: \( \omega \models \phi \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \).
-    Let \( k \) be the number of free variables occurring in \( \omega \).
-    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \omega \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{k} \) be arbitrary.
-    Since \( \mathfrak{A} \models \omega \), it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that
-    \( \omega(\alpha) \) and therefore
-    \( \psi(\composition{\alpha}{\delta^{\omega}_{0}}) \) or \( \lambda(\composition{\alpha}{\delta^{\omega}_{1}}) \)
-    by \cref{dfn:first-order-language-recursive-interpretation-of-formulas}, which leaves us with only three possibilities.
 \end{proof}
 
 \begin{thm}
