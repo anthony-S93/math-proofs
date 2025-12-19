@@ -254,27 +254,22 @@ Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we mus
 by defining precisely how \( \mathcal{L} \)-terms are interpreted in the context
 of an \( \mathcal{L} \)-structure.
 
-\begin{notation}
-    If \( t \) denotes an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
-    then we write \( t^{\mathfrak{A}} \) to denote the entity obtained from an interpretation of \( t \) in the context
-    of \( \mathfrak{A} \).
-\end{notation}
-
+\vspace{0.3cm}
 \noindent
 In general, an interpretation of \( t \) in the context of \( \mathfrak{A} \) yields a function
-\( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}} \) where \( k \in \naturalset \)
+\( \function{\mathcal{I}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}} \) where \( k \in \naturalset \)
 is the number of \( \mathcal{L} \)-variables \aref{dfn:first-order-language-variable-occurrence}{occurring in} \( t \).
-Moreover, for each \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( t^{\mathfrak{A}}(\alpha) \) denotes the element
+Moreover, for each \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \mathcal{I}(\alpha) \) denotes the element
 of \( \abs{\mathfrak{A}} \) that the string of symbols constituting \( t \) refers to after every function symbol \( F^{\mathcal{L}}_{i} \) in \( t \)
 has been replaced with \( F^{\mathfrak{A}}_{i} \) and every \( \mathcal{L} \)-variable in \( t \) has been substituted with objects from \( \ran (\alpha) \).
-The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \( t^{\mathfrak{A}} \).
+The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \( \mathcal{I} \).
 
 \vspace{0.3cm}
 \noindent
 Several observations can be made from the outset.
 First, we note the fact that parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) is of the form
 \( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is another \( \mathcal{L} \)-term,
-then \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
+then for any \( \mathcal{L} \)-structure \( \mathfrak{A} \), the interpretation of \( t \) yields the same function as the interpretation of \( s \).
 
 \phantomsection \label{text:interpretation-of-simple-terms-intuitive-explanation}
 \vspace{0.3cm}
@@ -286,8 +281,8 @@ If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
         is an empty tuple.
 \end{enumerate*}
-For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second form,
-\( t^{\mathfrak{A}} = F^{\mathfrak{A}}_{i} \).
+For the first form, \( \mathcal{I} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second form,
+\( \mathcal{I} = F^{\mathfrak{A}}_{i} \).
 
 \vspace{0.3cm}
 \noindent
@@ -308,7 +303,7 @@ Now consider the following \aref{dfn:first-order-language-terms-compound-terms}{
     s \coloneq h(f(x), f(y), g(x, z))
 \end{equation*}
 Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \) will
-yield a function \( \function{s^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
+yield a function \( \function{\mathcal{I}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
 can be obtained by:
 \begin{enumerate*}[label=(\roman*)]
     \item substituting every occurrence of the variable symbols \( x \), \( y \), \( z \)
@@ -345,11 +340,11 @@ Observe that the positions of the variable symbols \( x \), \( y \), and \( z \)
 the positions of \( a \), \( b \), and \( c \) respectively in the argument tuple \( \tuple{a,b,c} \).
 Using this correspondence as the basis of our substitution scheme,
 we can now complete the interpretation by substituting every occurrence of \( x \), \( y \), and \( z \) in \( s \)
-with \( a \), \( b \), and \( c \) respectively so that the value of \( s^{\mathfrak{A}} \) at \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
+with \( a \), \( b \), and \( c \) respectively so that the value of \( \mathcal{I} \) at \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
 is given by:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-explicit}
-    s^{\mathfrak{A}}(a, b, c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c))
+    \mathcal{I}(a, b, c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c))
 \end{equation}
 \noindent
 The key point here is that the information from an \( \mathcal{L} \)-structure alone is insufficient to determine a precise interpretation for compound \( \mathcal{L} \)-terms;
@@ -364,8 +359,13 @@ For instance, \( s(x, y, z) \) or \( s(\tuple{x,y,z}) \) denotes a term \( s \) 
 is to be taken as the designated sequence for any interpretation of \( s \).
 But, of course, this is purely notational and has no bearing on the actual form and definition
 of the term itself; i.e., \( s(x, y, z) \) and \( s(z, x, y) \) both denote the same underlying term (the same string of symbols) but with different \emph{intended} meanings.
+The fact that the interpretation of first-order terms require both structure and positional data can be indicated notationally as follows.
 
-\vspace{0.3cm}
+\begin{notation}
+    If \( t \) is a \aref{dfn:first-order-language-terms}{term} of a \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \),
+    then an interpretation of \( t \) in the context of an \( \mathcal{L} \)-structure \( \mathfrak{A} \) using the
+    variable sequence \( v \) is denoted as \( t^{\mathfrak{A}}_{v} \).
+\end{notation}
 \noindent
 Next, we examine cases where \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} are interpreted recursively---i.e.,
 starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure one layer at a time.
@@ -375,12 +375,13 @@ Naturally, this means that any variable symbol occurring in \( s \) must appear 
 The main difficulty here is that the variable symbols can appear across the subterms in combinatorially different
 ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}, which renders the interpretation ambiguous.
 In other words, a precise and \emph{interpretable} specification of \( s \) requires not only a \aref{text:designated-sequence-for-variable-symbols}{designated sequence}
-for its variable symbols but also a precise description of how those variable symbols are distributed across the subterms in \( \ran (\tau) \).
+for its variable symbols (to provided the needed positional data) but also a precise description of how those variable symbols are distributed across the subterms
+in \( \ran (\tau) \).
 
 \vspace{0.3cm}
 \noindent
 One way of achieving the latter is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \)
-where \( v \) is a tuple of \( \mathcal{L} \)-variables occurring in at least one \( \tau_{i} \) for all \( i \in \abs{\tau} \).
+where \( v \) is the designated sequence for the variable symbols occurring in \( s \).
 Naturally, for this description of \( s \) to obey the \aref{dfn:first-order-language-terms}{syntax of first-order language}, we must impose a few
 restrictions on \( \delta \):
 \begin{enumerate*}[label=(\roman*)]
@@ -388,18 +389,19 @@ restrictions on \( \delta \):
     \item for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) is the designated sequence for all the variable symbols occurring
         in the term \( \tau_{i} \).
 \end{enumerate*}
-So in the case of \( s(x, y, z) \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \). Moreover, for any given
-\( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s(x, y, z) \) is a function \( s^{\mathfrak{A}} \)
+So if \( v = \tuple{x, y, z} \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \). Moreover, for any given
+\( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s(v) \) is a function \( s^{\mathfrak{A}}_{v} \)
 that can be expressed in terms of \( v \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-implicit}
-    s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{\abs{v}}
+    s^{\mathfrak{A}}_{v} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{\abs{v}}
     \,\,{\land}\,\,
-    \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
+    \beta = h^{\mathfrak{A}}\mleft( \sequencebig{(\tau_{i})^{\mathfrak{A}}_{\composition{v}{\delta_{i}}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
     }
 \end{equation}
-It is not difficult to verify that the \( s^{\mathfrak{A}} \) defined in \eqref{eq:interpreted-s-implicit} is in fact the same \( s^{\mathfrak{A}} \) one is expected to obtain
-if one were to interpret \( s \) non-recursively using \( \tuple{x, y, z} \) as the \aref{text:designated-sequence-for-variable-symbols}{designated sequence}.
+It is not difficult to verify that the \( s^{\mathfrak{A}}_{v} \) is in fact the same function one is expected to obtain if
+one were to interpret \( s \) non-recursively using \( \tuple{x, y, z} \) as the \aref{text:designated-sequence-for-variable-symbols}{designated sequence};
+we simply have to show that \( s^{\mathfrak{A}}_{v} \) is the same function as \( \mathcal{I} \) in \eqref{eq:interpreted-s-explicit}.
 We start by noting the fact that \aref{ssec:von-neumann-ordinals}{\( \abs{v} = 3 = \mleft\{ 0, 1, 2 \mright\} \)}.
 Thus, for any \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \), \( \alpha = \tuple{a,b,c} \)
 for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
@@ -409,42 +411,47 @@ for some \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
     \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
 \end{align*}
 Since \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are all \aref{dfn:first-order-language-terms-simple-terms}{simple terms},
-we have \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}} = (\tau_{1})^{\mathfrak{A}} = f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = g^{\mathfrak{A}} \)}.
+we have \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}}_{\composition{v}{\delta_{0}}}
+{=} (\tau_{1})^{\mathfrak{A}}_{\composition{v}{\delta_{1}}} {=} \, f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}}_{\composition{v}{\delta_{2}}} {=} \, g^{\mathfrak{A}} \)}.
 As such, the components of the internal sequence in \eqref{eq:interpreted-s-implicit} can be delineated like so:
 \begin{equation*}
-    \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
+    \sequencebig{(\tau_{i})^{\mathfrak{A}}_{\composition{v}{\delta_{i}}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
     = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
 \end{equation*}
 It should be clear from \eqref{eq:interpreted-s-implicit} that
-\( s^{\mathfrak{A}}(a,b,c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)) \) for
+\( s^{\mathfrak{A}}_{v}(a,b,c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)) \) for
 any \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), which is in exact agreement with \eqref{eq:interpreted-s-explicit}.
-Thus, \( s^{\mathfrak{A}} \) is indeed the function that will be obtained via an interpretion of \( h(f(x), f(y), g(x,z)) \) in the context of \( \mathfrak{A} \)
+Thus, \( s^{\mathfrak{A}}_{v} \) is indeed the function that will be obtained via an interpretion of \( h(f(x), f(y), g(x,z)) \) in the context of \( \mathfrak{A} \)
 using \( \tuple{x,y,z} \) as the \aref{text:designated-sequence-for-variable-symbols}{designated sequence}.
 
 \vspace{0.3cm}
 \noindent
-The observant reader has undoubtedly noticed that the value of \( \delta \) is very much dependent on the choice of designated sequences.
-For instance, if the designated sequence for the variable symbols is \( \tuple{y, x, z} \) instead of \( \tuple{x, y, z} \),
+The observant reader has undoubtedly noticed that the value of \( \delta \) is very much dependent on the choice of \( v \).
+For instance, if \( v \) is \( \tuple{y, x, z} \) instead of \( \tuple{x, y, z} \),
 then \( \delta \) would have to be modified from \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) to
-\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \); otherwise, \( \delta \) would be describing the term \( h(f(y), f(x), g(y, z))\) instead of
-the original \( h(f(x), f(y), g(x, z)) \).
+\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \) for \( \delta \) to still be describing the same tuple of terms;
+i.e., if \( \delta \) is taken to be \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) while \( v = \tuple{y, x, z} \),
+then the resulting term would be \( h(f(y), f(x), g(y, z))\) instead of the original \( h(f(x), f(y), g(x, z)) \).
 
 \vspace{0.3cm}
 \noindent
-As a final point, we would like to draw the reader's attention to the sequence \( \sequencebig{(\tau_{i})^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \)
+As a final point, we would like to draw the reader's attention to the sequence,
+\begin{equation*}
+    \sequencebig{(\tau_{i})^{\mathfrak{A}}_{\composition{v}{\delta_{i}}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}}
+\end{equation*}
 in \eqref{eq:interpreted-s-implicit}, which is of considerable interest
 since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure.
 In general, any tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
 as long as two pieces of information are available:
 \begin{enumerate*}[label=(\roman*)]
-    \item a designated sequence for all the \( \mathcal{L} \)-variables occurring in the \( \mathcal{L} \)-terms in \( \ran \tau \),
+    \item a designated sequence \( v \) for all the \( \mathcal{L} \)-variables occurring in at least one \( \mathcal{L} \)-term in \( \ran \tau \),
     \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) that describes the distribution of \( \mathcal{L} \)-variables
         across the \( \mathcal{L} \)-terms in \( \ran \tau \).
 \end{enumerate*}
 The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{\abs{v}} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
 
 \begin{notation}
-    To emphasize that \( \delta \) is an integral part of the interpretation, we will denote this function as \( \tau^{\mathfrak{A}}_{\delta} \).
+    To emphasize that \( \delta \) is also an integral part of the interpretation, we will denote this function as \( \tau^{\mathfrak{A}}_{\delta} \).
 \end{notation}
 
 \noindent
@@ -481,7 +488,7 @@ The intuitive discussion above can be formalized with the following definitions.
     such that:
     \begin{equation*}
         \tau^{\mathfrak{A}}_{\delta} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{\abs{v}} \,\,{\land}\,\,
-        y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
+        y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}_{\composition{v}{\delta_{i}}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
         }
     \end{equation*}
 \end{dfn}
@@ -604,9 +611,6 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
         \item If \( \varphi \) is of the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \varphi(\alpha) \) if and only if \( \lnot \, \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \psi(\composition{v}{\rho}) \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( \abs{v} \),
-            then \( \varphi(\alpha) \) if and only if \( \psi(\composition{\alpha}{\rho}) \)
         \item If \( \varphi \) is of the form \( \phi \,\,{\land}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
             \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
             of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
@@ -618,18 +622,38 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
         \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) does not
             \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is the
-            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for \( \psi \),
-            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \) for all \( \beta \in \abs{\mathfrak{A}} \)
         \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \)
             does not \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and 
-            \( v \union \mleft\{ \orderedpair{\abs{v}}{x} \mright\} \) is the
-            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for \( \psi \),
-            then \( \varphi(\alpha) \) if and only if
-            there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \psi(\alpha \union \mleft\{ \orderedpair{\abs{v}}{\beta} \mright\}) \)
+        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula with a
+            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} \( u \) such that
+            \( u_{i} = x \) for some \( i \in \dom u \) and,
+            \begin{equation*}
+                v = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = u_{x}} \union 
+                    \setbuilderbig{\orderedpair{x}{y}}{i \in x \union \mleft\{ x \mright\} \,\,{\land}\,\,
+                    x \union \mleft\{ x \mright\} \in \abs{u} \,\,{\land}\,\, y = u_{x \union \mleft\{ x \mright\}}}
+            \end{equation*}
+            then \( \varphi(\alpha) \) if and only if \( \psi(\mu) \) for all \( \beta \in \abs{\mathfrak{A}} \) where \( \mu \) is defined as,
+            \begin{multline*}
+                \mu = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = \alpha_{x}} \union \mleft\{ \orderedpair{i}{\beta} \mright\}\\
+                    \union \setbuilderbig{\orderedpair{ x \union \mleft\{ x \mright\} }{y}}{( i = x \,\,{\lor}\,\, i \in x) \,\,{\land}\,\,
+                    x \in \abs{u} \,\,{\land}\,\, y = \alpha_{x}}
+            \end{multline*}
+        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula with a
+            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} \( u \)
+            such that \( u_{i} = x \) for some \( i \in \dom u \) and,
+            \begin{equation*}
+                v = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = u_{x}} \union 
+                    \setbuilderbig{\orderedpair{x}{y}}{i \in x \union \mleft\{ x \mright\} \,\,{\land}\,\,
+                    x \union \mleft\{ x \mright\} \in \abs{u} \,\,{\land}\,\, y = u_{ x \union \mleft\{ x \mright\} }}
+            \end{equation*}
+            then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \psi(\mu) \) where \( \mu \) is defined
+            as,
+            \begin{multline*}
+                \mu = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = \alpha_{x}} \union \mleft\{ \orderedpair{i}{\beta} \mright\}\\
+                    \union \setbuilderbig{\orderedpair{ x \union \mleft\{ x \mright\} }{y}}{( i = x \,\,{\lor}\,\, i \in x) \,\,{\land}\,\,
+                    x \in \abs{u} \,\,{\land}\,\, y = \alpha_{x}}
+            \end{multline*}
     \end{enumerate}
 \end{dfn}
 
@@ -678,6 +702,101 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
     then we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent} (denoted as \( \varphi \equiv \psi \) )
     if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
+
+\noindent
+We now prove several useful results.
+
+\begin{lem}
+    \phantomsection \label{lem:composing-permutation-and-its-inverse-to-obtain-the-original-function}
+    If \( f \) is a function and \( \rho \) is a permutation of \( \dom f \),
+    then,
+    \begin{equation*}
+        \composition{\mleft( \composition{f}{\rho^{-1}} \mright)}{\rho} = f
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Since \( \rho \) is a bijection between \( \dom f \) and itself, it follows that \( \rho^{-1} \) is also a bijection between \( \dom f \) and itself.
+    Let \( g = \composition{f}{\rho^{-1}} \).
+    Let \( \orderedpair{x}{y} \in \composition{g}{\rho} \).
+    Thus, \aref{dfn:composition-of-two-sets-of-ordered-pairs}{\( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{y} \in g \)} for some
+    \( z \in \ran \rho \). Since \( \orderedpair{z}{y} \in g \),
+    it follows that \aref{dfn:composition-of-two-sets-of-ordered-pairs}{\( \orderedpair{z}{w} \in \rho^{-1} \) and \( \orderedpair{w}{y} \in f \)}
+    for some \( w \in \ran \rho^{-1} \). Moreover, it follows from \( \orderedpair{z}{w} \in \rho^{-1} \) that
+    \aref{dfn:inverse-of-a-set-of-ordered-pairs}{\( \orderedpair{w}{z} \in \rho \)}. Since \( \rho \) is a function, the fact that \( \orderedpair{x}{z} \in \rho \)
+    and \( \orderedpair{w}{z} \in \rho \) are both true implies that \( x = w \). We know that \( \orderedpair{w}{y} \in f \), so it follows that
+    \( \orderedpair{x}{y} \in f \).
+    In other words, every ordered pair in \( \composition{g}{\rho} \) is also in \( f \). Since \( \composition{g}{\rho} \) is a function and
+    \aref{dfn:function-basic}{functions can only contain ordered pairs}, it follows that \( \composition{g}{\rho} \subseteq f \).
+
+    \vspace{0.3cm}
+    \noindent
+    We can also prove that \( f \subseteq \composition{g}{\rho} \) in a similar manner. Let \( \orderedpair{x}{y} \in f \).
+    Clearly, \( x \in \dom f \). Since \( \rho \) is a bijection between \( \dom f \) and itself, it follows that
+    \( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{x} \in \rho^{-1} \) for some \( z \in \dom f \).
+    Thus, there exists an \( x \) such that \( \orderedpair{z}{x} \in \rho^{-1} \) and \( \orderedpair{x}{y} \in f \).
+    Therefore, \( \orderedpair{z}{y} \in \composition{f}{\rho^{-1}} = g \). Since \( \orderedpair{x}{z} \in \rho \),
+    this also means that there exists a \( z \) such that \( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{y} \in g \);
+    in other words, \( \orderedpair{x}{y} \in \composition{g}{\rho} \). Thus, \( f \subseteq \composition{g}{\rho} \).
+\end{proof}
+
+
+\begin{lem}
+    \phantomsection \label{lem:permuted-tuples-span-the-entire-nary-product}
+    If \( A \) is a non-empty set, \( k \) is a natural number, and \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( k \), then,
+    \begin{equation*}
+        A^{k} = \setbuilderbig{x}{\exists y\,{\in}\,A^{k} \, \big( x = \composition{y}{\rho} \big)}
+    \end{equation*}
+\end{lem}
+
+\begin{proof}
+    Let \( T = \setbuilder{x}{\exists y\,{\in}\,A^{k} \, \mleft( x = \composition{y}{\rho} \mright)} \).
+    It suffices, therefore, to prove that \( A^{k} \subseteq T \) and \( T \subseteq A^{k} \) are both true.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim}: \( A^{k} \subseteq T \)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x \in A^{k} \) be arbitrary. Thus, \( \function{x}{k}{A} \) by \cref{dfn:set-exponentiation}.
+    We know that \( \rho \) is a bijection between \( k \) and \( k \), so it follows that \( \rho^{-1} \) is also a bijection between
+    \( k \) and \( k \).
+    Since \( x \) is a function with \( \dom x = k \) and \( \rho \) is a permutation of \( k \), \cref{lem:composing-permutation-and-its-inverse-to-obtain-the-original-function}
+    applies and we have \( \composition{(\composition{x}{\rho^{-1}})}{\rho} = x \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now let \( y = \composition{x}{\rho^{-1}} \).
+    Clearly, \( \ran \rho^{-1} = \dom x = k \), so it follows that \( \dom y = \dom \rho^{-1} = k \).
+    Moreover, \( \ran y \subseteq \ran x \subseteq A \), so it follows that \( \function{y}{k}{A} \).
+    By \cref{dfn:set-exponentiation}, this means that \( y \in A^{k} \)
+    In other words, there exists a \( y \in A^{k} \) such that \( x = \composition{y}{\rho} \) so \( x \in T \).
+    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, it follows that \( x \in A^{k} \) implies \( x \in T \).
+    Since \( x \) is arbitrary, \( A^{k} \subseteq T \) follows readily from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim}: \( T \subseteq A^{k} \)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x \in T \) be arbitrary. Thus, \( x = \composition{y}{\rho} \) for some \( y \in A^{k} \). Since \( y \in A^{k} \), it follows from
+    \cref{dfn:set-exponentiation} that \( \function{y}{k}{A} \). Since \( x = \composition{y}{\rho} \) and \( \ran \rho = \dom y = k \), it follows
+    that \( \function{x}{k}{A} \); or, in other words, \( x \in A^{k} \). Thus, \( T \subseteq A^{k} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:models-of-formulas-are-invariant-under-permutations-of-designated-variable-sequence}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula with a \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
+    \( v \) and \( \rho \) is any permutation of \( \abs{v} \), then \( \varphi(v) \equiv \varphi(\composition{v}{\rho}) \).
+\end{thm}
+
+\begin{proof}
+    If \( \varphi \) is a sentence (i.e., \( v = \tuple{} \)), then the proof is trivial since \( \composition{v}{\rho} = \tuple{} \) and obviously
+    \( \varphi \equiv \varphi \). Now let us suppose that \( v \) is a non-empty tuple of variable symbols. Let \( \mathfrak{A} \) be any
+    \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \varphi \).
+\end{proof}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
@@ -1157,7 +1276,7 @@ is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contr
 which prohibits the reuse of any variable, free or bound, from the original formula.
 
 \chapter{Logical Equivalences}
-The theorems in this chapter utilize the following notational conventions:
+This chapter utilizes the following notational conventions:
 \begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
     \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
     \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
@@ -1170,6 +1289,10 @@ The theorems in this chapter utilize the following notational conventions:
         e.g., \( \delta^{\varphi} \) denotes the variable distribution function of \( \varphi \).
 \end{enumerate}
 
+\vspace{0.3cm}
+\noindent
+We shall begin with a few useful lemmas.
+
 \begin{thm}
     \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
     Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
@@ -1180,16 +1303,6 @@ The theorems in this chapter utilize the following notational conventions:
 \end{thm}
 
 \begin{proof}
-    Let \( \omega \) and \( \phi \) denote the formulas \( \psi \,\,{\lor}\,\, \forall x \, \varphi \) and \( \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \)
-    respectively.
-    Furthermore, let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \) 
-    so that \( \omega \coloneq \psi \,\,{\lor}\,\, \lambda \) and \( \phi \coloneq \forall x \, \theta \).
-    To prove that \( \omega \equiv \phi \), we must show that
-    \aref{dfn:first-order-language-logical-equivalence}{\( \omega \models \phi \) and \( \phi \models \omega \) are both true}.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim}: \( \omega \models \phi \)
 \end{proof}
 
 \begin{thm}
