@@ -37,14 +37,9 @@ Since the empty set is unique, we can denote it with a single universal symbol.
     \( \emptyset \) denotes the empty set; in other words, \(  \forall x \, ( x \notin \emptyset ) \).
 \end{dfn}
 
-\begin{dfn}
-    The term \emph{formula} refers to a well-formed formula of a \aref{dfn:first-order-language}{first-order language}.
-    Unless otherwise specified, the reader should always assume that a formula has exactly one free variable.
-\end{dfn}
-
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    Given any formula \( \varphi \) and any set \( A \), the set \( S \) such that
+    Given any \aref{dfn:first-order-language-recursive-definition-of-formulas}{first-order formula} \( \varphi \) and any set \( A \), the set \( S \) such that
     \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
 \end{thm}
 
@@ -78,7 +73,7 @@ Since the empty set is unique, we can denote it with a single universal symbol.
 \end{thm}
 
 \begin{proof}
-    Let \( \varphi \) be a predicate such that,
+    Let \( \varphi \) be any first-order formula such that,
     \begin{equation}
         \label{eq:phi-x-implies-x-in-A}
         \forall x \, ( \varphi(x) \implies x \in A )
@@ -90,7 +85,7 @@ Since the empty set is unique, we can denote it with a single universal symbol.
         \label{eq:property-of-S}
         \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright)
     \end{equation}
-    Let \( x_{0} \in S \) be arbitrary. Then \( x_{0} \,{\in}\, A \land \varphi(x_{0}) \) follows immediately
+    Let \( x_{0} \in S \) be arbitrary. Then \( x_{0} \in A \,\,{\land}\,\, \varphi(x_{0}) \) follows immediately
     from \eqref{eq:property-of-S}. By \aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}, we can infer \( \varphi(x_{0}) \).
     \begin{equation}
         \label{eq:x-in-S-implies-phi-x}

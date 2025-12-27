@@ -76,13 +76,13 @@ As such, any comprehensive definition of the grammar of a first-order language m
     one of the following conditions holds:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( t \) is a single \( \mathcal{L} \)-variable
-        \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
+        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
             \begin{itemize}[topsep=2pt,leftmargin=10pt]
                 \item \( s \) is a tuple of \aref{dfn:n-tuples}{length} \( \Phi^{\mathcal{L}}(i) \)
                 \item \( s_{j} \) is an \( \mathcal{L} \)-term for all \( j \in \Phi^{\mathcal{L}}(i) \)
             \end{itemize}
-        \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
-        \item \( t \) is a string of \( \mathcal{L} \)-symbols of the form \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term
+        \item \( t \) has the form \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
+        \item \( t \) has the form \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term
     \end{enumerate}
 \end{dfn}
 
@@ -114,15 +114,28 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-terms-root-and-subterms}
-    If \( s \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
-    \( F^{\mathcal{L}}_{i} \) is called the \keyword{root} of \( s \) and the elements of \( \ran \tau \) are called the \emph{subterms} of \( s \).
+    If \( t \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
+    \( F^{\mathcal{L}}_{i} \) is called the \keyword{root} of \( t \) and the elements of \( \ran \tau \) are called the \emph{subterms} of \( t \).
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-terms-parent-terms}
-    If \( s \) is a compound \( \mathcal{L} \)-term with a subterm \( t \), then we say that \( s \) is the \keyword{parent term} or simply the \keyword{parent}
+    If \( t \) is a compound \( \mathcal{L} \)-term with a subterm \( s \), then we say that \( t \) is the \keyword{parent term} or simply the \keyword{parent}
     of \( s \).
 \end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-variable-occurrence-in-terms}
+    If \( t \) is an \( \mathcal{L} \)-term containing an \( \mathcal{L} \)-variable \( v \), then we say that
+    ``\( v \) occurs in \( t \)'' or ``\( v \) is in \( t \).''
+    
+\end{dfn}
+
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-set-of-all-variable-symbols-occurring-in-term}
+    If \( t \) is an \( \mathcal{L} \)-term, then the set of all the \( \mathcal{L} \)-variables occurring in \( t \)
+    is denoted as \( V^{t} \).
+\end{notation}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-atom}
@@ -137,7 +150,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
-    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible from a finite number of steps
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible in a finite number of steps
     via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
@@ -150,6 +163,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
             then \( \forall v \, \varphi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
             then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that
+            \( \dom \tau = \abs{V^{\varphi}} \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
     \end{enumerate}
 \end{dfn}
 
@@ -160,58 +175,52 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{rem}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-occurrence}
-    If \( t \) is an \( \mathcal{L} \)-term containing an \( \mathcal{L} \)-variable \( v \), then we say that
-    ``\( v \) occurs in \( t \)'' or ``\( v \) is in \( t \).''
+    \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula containing at least one \( \mathcal{L} \)-term in which an \( \mathcal{L} \)-variable \( v \) occurs,
     then we say that ``\( v \) occurs in \( \varphi \)'' or ``\( v \) is in \( \varphi \).''
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-free-variables}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then any \( \mathcal{L} \)-variable in \( \varphi \)
-    that does not occur within the scope of any quantifier in \( \varphi \) is called a \keyword{free} varible of \( \varphi \).
-    Variables in \( \varphi \) that are not free are called the \keyword{bound} variables of \( \varphi \).
-    If \( x \) is a free variable of \( \varphi \), then we also say that \( x \) \keyword{occurs freely} in \( \varphi \). On the other
-    hand, if \( x \) does not occur freely in \( \varphi \), then we also say that \( x \) is \keyword{bound}.
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( x \) is an \( \mathcal{L} \)-variable occurring in \( \varphi \),
+    then \( x \) is a \keyword{free variable} of \( \varphi \) if and only if it does not occur immediately to the right
+    of a quantifier.
+    If \( x \) is a free variable of \( \varphi \), then we also say that ``\( x \) occurs freely in \( \varphi \).''
+\end{dfn}
+
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-set-of-all-free-variable-symbols-occurring-in-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then we denote the set of all free variables of \( \varphi \)
+    as \( V^{\varphi} \).
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-bound-variables}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( x \) is an \( \mathcal{L} \)-variable occurring in \( \varphi \)
+    that is not a free variable, then \( x \) is called a \keyword{bound variable} of \( \varphi \).
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-sentences}
-    An \( \mathcal{L} \)-formula that does not contain any free variables is called an \( \mathcal{L} \)-\keyword{sentence}.
+    An \( \mathcal{L} \)-formula that does not contain any free variables is called an \( \mathcal{L} \)-sentence.
 \end{dfn}
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-functional-notation}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v_{0}, \dots, v_{k-1} \) are the free variables of \( \varphi \),
-    we can use the \aref{notation:functional-notation-tuple-version}{functional notation} \( \varphi(v_{0}, \dots, v_{k-1}) \)
-    to make the \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}\footnote{\,This will be
-    explained in detail later.} for \( \varphi \) explicit.
-    Note also that the variable symbols \( v_{0}, \dots, v_{k-1} \) must be \emph{distinct} because it makes no sense to count the same variable symbol twice.
-    Alternatively, we can also replace \( \varphi(v_{0}, \dots, v_{k-1}) \) with its more compact version \( \varphi(v) \) where \( v \) is a
-    \aref{dfn:bijection}{bijective} tuple.
-    This style of notation is not just limited to \( \mathcal{L} \)-formulas but can be applied to \( \mathcal{L} \)-terms as well.
-    For instance, if \( t \) denotes an \( \mathcal{L} \)-term and \( x \), \( y \) denote \( \mathcal{L} \)-variables, then the notation
-    \( t(x, y) \) can be used to emphasize the fact that \( x \) and \( y \) occur in \( t \)
-    and that \( \tuple{x, y} \) is \aref{dfn:first-order-language-designated-variable-sequence-for-terms}{the designated variable sequence} for \( t \).
-\end{notation}
 
 \noindent
 The syntactic rules of \( \mathcal{L} \) are now fully defined;
 that is, given any finite string of symbols in \aref{dfn:first-order-language}{\( \mathcal{L} \)}, we
-now have the tools at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
-However, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
-and a set of rules to construct formulas using those symbols is not enough; there also needs to be a way to assign
-\emph{meaning} to all valid formulas just as English words like ``cats'', ``apples'', and ``oranges'' need to have meaning
+now have the information at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
+Nevertheless, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
+and a set of rules to construct valid formulas using those symbols is not enough; there also needs to be a set of rules that allows
+\emph{meaning} to be assigned to all valid formulas---just as English words like ``cats'', ``apples'', and ``oranges'' need to have meaning
 for English to have any value at all as a language.
 
 \vspace{0.3cm}
 \noindent
-The assignment of meaning to the expressions of a language is called the \keyword{semantics} of a language. This typically involves
+The assignment of meaning to the expressions of a formal language is called the \keyword{semantics} of a formal language. This typically involves
 associating the symbols in the language (and the valid expressions constructed using those symbols) with existing concepts or mental imageries.
 These mental imageries can be either concrete or abstract. For instance, when a native English speaker sees the word ``apple,'' their minds
 construct the image of a fruit with red skin. In other words, the semantics of a language allows the language to be \keyword{interpreted};
-it provides a connection between a string of seemingly meaningless symbols and the real world.
+it provides a connection between a string of seemingly meaningless symbols and concepts from the real world.
 
 \vspace{0.3cm}
 \noindent
@@ -250,15 +259,14 @@ which leads us to the following definition.
 
 \noindent
 The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
-Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we must begin
-by defining precisely how \( \mathcal{L} \)-terms are interpreted in the context
-of an \( \mathcal{L} \)-structure.
+Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we must therefore begin
+by defining how \( \mathcal{L} \)-terms are interpreted in the context of an \( \mathcal{L} \)-structure.
 
 \vspace{0.3cm}
 \noindent
-In general, an interpretation of \( t \) in the context of \( \mathfrak{A} \) yields a function
+In general, an interpretation of an \( \mathcal{L} \)-term \( t \) in the context of an \( \mathcal{L} \)-structure \( \mathfrak{A} \) yields a function
 \( \function{\mathcal{I}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}} \) where \( k \in \naturalset \)
-is the number of \( \mathcal{L} \)-variables \aref{dfn:first-order-language-variable-occurrence}{occurring in} \( t \).
+is the number of \( \mathcal{L} \)-variables \aref{dfn:first-order-language-variable-occurrence-in-terms}{occurring in} \( t \).
 Moreover, for each \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( \mathcal{I}(\alpha) \) denotes the element
 of \( \abs{\mathfrak{A}} \) that the string of symbols constituting \( t \) refers to after every function symbol \( F^{\mathcal{L}}_{i} \) in \( t \)
 has been replaced with \( F^{\mathfrak{A}}_{i} \) and every \( \mathcal{L} \)-variable in \( t \) has been substituted with objects from \( \ran (\alpha) \).
@@ -277,7 +285,7 @@ then for any \( \mathcal{L} \)-structure \( \mathfrak{A} \), the interpretation 
 For terms that are \aref{dfn:first-order-language-terms-simple-terms}{simple}, the results of their interpretations are also fairly straightforward.
 If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-terms}{simple term} of \( \mathcal{L} \), then it must be of either one of the following forms:
 \begin{enumerate*}[label=(\roman*)]
-    \item \( x \) where \( x \) is an \( \mathcal{L} \)-variable, or
+    \item \( x \) where \( x \) is an \( \mathcal{L} \)-variable;
     \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
         is an empty tuple.
 \end{enumerate*}
@@ -286,8 +294,7 @@ For the first form, \( \mathcal{I} \) is simply \aref{dfn:identity-function}{\( 
 
 \vspace{0.3cm}
 \noindent
-For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, the interpretation process is substantially more involved and complex due to the
-recursive nature of first-order terms.
+For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, the interpretation process is substantially more involved and complex.
 To illustrate this, we shall go over an example using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
 \begin{enumerate*}[label=(\roman*)]
     \item \( f \), a function symbol with arity \( 1 \);
@@ -299,6 +306,7 @@ To illustrate this, we shall go over an example using an ad hoc first-order lang
 \vspace{0.3cm}
 \noindent
 Now consider the following \aref{dfn:first-order-language-terms-compound-terms}{compound} \( \mathcal{L}^{\prime} \)-term:
+\phantomsection \label{eq:compound-term-for-ad-hoc-language}
 \begin{equation*}
     s \coloneq h(f(x), f(y), g(x, z))
 \end{equation*}
@@ -330,7 +338,7 @@ the interpretation is inherently ambiguous and thus impossible to make precise w
 \noindent
 One way to resolve this ambiguity is to arrange the variable symbols in \( s \) in a \aref{dfn:n-tuples}{finite sequence}
 and then make that sequence a part of the interpretation.
-For example, suppose that we now prescribe the sequence \( \tuple{x, y, z} \) for the variable symbols in \( s \).
+For example, suppose that we now designate the sequence \( \tuple{x, y, z} \) for the variable symbols in \( s \).
 Thus, if \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) is the argument tuple, then we have by \cref{dfn:n-tuples-sequence-notation},
 \begin{align*}
     \tuple{x, y, z} &= \big\{ \orderedpair{0}{x}, \orderedpair{1}{y}, \orderedpair{2}{z} \big\}\\
@@ -348,19 +356,13 @@ is given by:
 \end{equation}
 \noindent
 The key point here is that the information from an \( \mathcal{L} \)-structure alone is insufficient to determine a precise interpretation for compound \( \mathcal{L} \)-terms;
-the process also requires \emph{positional data} to be associated with each variable symbol in the term so that objects from
-\( \abs{\mathfrak{A}} \) can be meaningfully assigned to each variable symbol in the term.
+the process also requires \emph{positional data} to be associated with each variable symbol in the term so that objects from the argument tuple
+can be meaningfully assigned to each variable symbol in the term.
 \begin{equation*}
     \text{Interpretation} = \text{Mathematical Structure} + \text{Positional Data}
 \end{equation*}
 \noindent
-In practice, the positional data is often provided through the use of the \aref{notation:first-order-language-functional-notation}{functional notation}.
-For instance, \( s(x, y, z) \) or \( s(\tuple{x,y,z}) \) denotes a term \( s \) but with emphasis on the fact that \( \tuple{x,y,z} \)
-is to be taken as the designated sequence for any interpretation of \( s \).
-But, of course, this is purely notational and has no bearing on the actual form and definition
-of the term itself; i.e., \( s(x, y, z) \) and \( s(z, x, y) \) both denote the same underlying term (the same string of symbols) but with different \emph{intended} meanings.
-The fact that the interpretation of first-order terms require both structure and positional data can be indicated notationally as follows.
-
+To emphasize the fact that interpretations of first-order terms require both mathematical structure and positional data, we introduce the following notational convention.
 \begin{notation}
     If \( t \) is a \aref{dfn:first-order-language-terms}{term} of a \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \),
     then an interpretation of \( t \) in the context of an \( \mathcal{L} \)-structure \( \mathfrak{A} \) using the
@@ -369,9 +371,13 @@ The fact that the interpretation of first-order terms require both structure and
 \noindent
 Next, we examine cases where \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} are interpreted recursively---i.e.,
 starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure one layer at a time.
-A recursive interpretation of \( s \), for instance, will begin with \( h(\tau) \) where \( h \) is the \aref{dfn:first-order-language-terms-root-and-subterms}{root}
+A recursive interpretation of \aref{eq:compound-term-for-ad-hoc-language}{\( s \)}, for instance, will begin with \( h(\tau) \) where \( h \)
+is the \aref{dfn:first-order-language-terms-root-and-subterms}{root}
 of \( s \) and \( \tau \) a tuple of all the immediate \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \).
-Naturally, this means that any variable symbol occurring in \( s \) must appear in at least one term in \( \ran (\tau) \); that much should be intuitively obvious.
+A designated sequence tells us how to replace the variable symbols in \( s \) with the objects from an argument tuple,
+
+\vspace{0.3cm}
+\noindent
 The main difficulty here is that the variable symbols can appear across the subterms in combinatorially different
 ways\footnote{For instance, \( \tau \) can be \(\,\tuple{f(x), f(z), g(y, x)} \), \( \tuple{f(z), f(y), g(x, z)} \), etc.}, which renders the interpretation ambiguous.
 In other words, a precise and \emph{interpretable} specification of \( s \) requires not only a \aref{text:designated-sequence-for-variable-symbols}{designated sequence}
@@ -380,18 +386,29 @@ in \( \ran (\tau) \).
 
 \vspace{0.3cm}
 \noindent
-One way of achieving the latter is through a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \)
-where \( v \) is the designated sequence for the variable symbols occurring in \( s \).
-Naturally, for this description of \( s \) to obey the \aref{dfn:first-order-language-terms}{syntax of first-order language}, we must impose a few
-restrictions on \( \delta \):
-\begin{enumerate*}[label=(\roman*)]
-    \item \( \dom \delta = \abs{\tau} \) must correspond to the arity of \( h \) (the root of \( s \)),
-    \item for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) is the designated sequence for all the variable symbols occurring
-        in the term \( \tau_{i} \).
-\end{enumerate*}
-So if \( v = \tuple{x, y, z} \), we have \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \). Moreover, for any given
-\( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \), the result of the interpretation of \( s(v) \) is a function \( s^{\mathfrak{A}}_{v} \)
-that can be expressed in terms of \( v \), \( \tau \), and \( \delta \) as follows:
+To achieve the latter, we must first introduce an important rule pertaining to the interpretation of \aref{dfn:first-order-language-terms-compound-terms}{compound terms}:
+the designated sequence for every subterm is the finite sequence obtained by arranging the variable symbols in the subterm in the order they appear in the
+designated sequence for the \aref{dfn:first-order-language-terms-parent-terms}{parent}.
+For instance, if \( t \) is a term to be interpreted using a designated sequence \( \tuple{w,x,y,z} \) and \( u \) is a
+\aref{dfn:first-order-language-terms-root-and-subterms}{subterm} of \( t \) containing the variable symbols \( z \), \( w \), and \( x \),
+then the designated sequence of \( u \) for that same intepretation must be \( \tuple{w, x, z} \).
+With this new rule in place, the distribution of variable symbols in \( s(v) \coloneq h(\tau) \coloneq h((f(x), f(y), g(x, z))) \) can be specified
+in terms of a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) such that
+for every \( i \in \dom \delta \), \( \composition{v}{\delta_{i}} \) is the designated sequence for the
+\aref{dfn:first-order-language-terms-root-and-subterms}{subterm} \( \tau_{i} \).
+
+\vspace{0.3cm}
+\noindent
+For instance, if \( v \) is chosen to be \( \tuple{x, y, z} \), then the designated sequences for
+\( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) (in the same interpretation) must be
+\( \tuple{x} \), \( \tuple{y} \), and \( \tuple{x, z} \) respectively according to the new rule.
+Therefore, necessarily \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) so that
+\( \composition{v}{\delta_{0}} = \composition{\tuple{x, y, z}}{\tuple{0}} = \tuple{x} \),
+\( \composition{v}{\delta_{1}} = \composition{\tuple{x, y, z}}{\tuple{1}} = \tuple{y} \),
+and \( \composition{v}{\delta_{2}} = \composition{\tuple{x, y, z}}{\tuple{0, 2}} = \tuple{x, z} \).
+Finally, given an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \),
+the result of the interpretation of \( s \) in the context of \( \mathfrak{A} \) using the designated sequence \( v \)
+is a function \( s^{\mathfrak{A}}_{v} \) that can be expressed in terms of \( v \), \( \tau \), and \( \delta \) as follows:
 \begin{equation}
     \phantomsection \label{eq:interpreted-s-implicit}
     s^{\mathfrak{A}}_{v} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{\abs{v}}
@@ -429,7 +446,7 @@ using \( \tuple{x,y,z} \) as the \aref{text:designated-sequence-for-variable-sym
 The observant reader has undoubtedly noticed that the value of \( \delta \) is very much dependent on the choice of \( v \).
 For instance, if \( v \) is \( \tuple{y, x, z} \) instead of \( \tuple{x, y, z} \),
 then \( \delta \) would have to be modified from \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) to
-\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \) for \( \delta \) to still be describing the same tuple of terms;
+\( \tuple{\tuple{1}, \tuple{0}, \tuple{1,2}} \) for \( \delta \) to still be describing the same term;
 i.e., if \( \delta \) is taken to be \( \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) while \( v = \tuple{y, x, z} \),
 then the resulting term would be \( h(f(y), f(x), g(y, z))\) instead of the original \( h(f(x), f(y), g(x, z)) \).
 
@@ -448,24 +465,77 @@ as long as two pieces of information are available:
     \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) that describes the distribution of \( \mathcal{L} \)-variables
         across the \( \mathcal{L} \)-terms in \( \ran \tau \).
 \end{enumerate*}
-The result of such an interpretation is a function that assigns to each tuple in \( \abs{\mathfrak{A}}^{\abs{v}} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
+The result of such an interpretation is a function \( \tau^{\mathfrak{A}}_{v} \) that assigns to each tuple
+in \( \abs{\mathfrak{A}}^{\abs{v}} \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
 
-\begin{notation}
-    To emphasize that \( \delta \) is also an integral part of the interpretation, we will denote this function as \( \tau^{\mathfrak{A}}_{\delta} \).
-\end{notation}
-
+\vspace{0.3cm}
 \noindent
 The intuitive discussion above can be formalized with the following definitions.
-
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-terms}
     If \( t \) is an \( \mathcal{L} \)-term, then \aref{dfn:n-tuples}{a finite sequence} \( v \) is a \keyword{designated variable sequence} for \( t \)
-    if and only if \( \ran v \) is the set of all \( \mathcal{L} \)-symbols occurring in \( t \).
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( \mu = \sequence{\mu_{i}}{i \in \abs{\tau}} \) is a finite sequence such
-    that \( \mu_{i} \) is the designated variable sequence of \( \tau_{i} \) for all \( i \in \abs{\tau} \),
-    then \aref{dfn:n-tuples}{a finite sequence} \( v \) is a designated variable sequence for
-    \( \tau \) if and only if \( \ran v = \Union_{i \,\in\, \abs{\tau}} \ran \mu_{i}  \).
+    if and only if:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( v \) is a \aref{dfn:bijection}{bijection},
+        \item \( \ran v \) is the set of all \( \mathcal{L} \)-symbols occurring in \( t \).
+    \end{enumerate*}
 \end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-tuples-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then \aref{dfn:n-tuples}{a finite sequence} \( v \) is a designated variable sequence for
+    \( \tau \) if and only if:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( v \) is a bijection,
+        \item \( \ran v \) is the set of all variable symbols occurring in at least one term in \( \ran \tau \).
+    \end{enumerate*}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-tuple-of-terms-in-a-compound-term}
+    Let \( t \) be a \aref{dfn:first-order-language-terms-compound-terms}{compound \( \mathcal{L} \)-term} and \( \tau \) be a tuple
+    of all the \aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( t \). If \( v \) is the designated variable sequence
+    for an interpretation of \( t \), then \( v \) is also the designated variable sequence for \( \tau \) in the same interpretation.
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-subterms}
+    Let \( t \) be a compound \( \mathcal{L} \)-term and \( s \) be a \aref{dfn:first-order-language-terms-root-and-subterms}{subterm} of \( t \).
+    If \( \bijection{v}{\abs{V^{t}}}{\aref{notation:first-order-language-set-of-all-variable-symbols-occurring-in-term}{V^{t}}} \) is the designated variable sequence for \( t \)
+    then \( w \) is the designated variable sequence for \( s \) (in the same interpretation) if and only if:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \bijection{w}{\abs{V^{s}}}{\aref{notation:first-order-language-set-of-all-variable-symbols-occurring-in-term}{V^{s}}} \),
+        \item for all \( i, j \in \abs{V^{s}} \), \( i \subseteq j \) if and only if \( v^{-1}(w(i)) \subseteq v^{-1}(w(j)) \).
+    \end{enumerate*}
+\end{dfn}
+
+\noindent
+We can in fact prove that the designated variable sequence determined using the criteria stated in \cref{dfn:first-order-language-designated-variable-sequence-for-subterms}
+is unique for every interpretation.
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-uniqueness-of-designated-variable-sequence-for-subterms}
+    If \( t \) is a compound \( \mathcal{L} \)-term with a subterm \( s \), then the designated variable sequence for \( s \) is unique for any given interpretation.
+\end{thm}
+
+\begin{proof}
+    Let \( \bijection{v}{\abs{V^{t}}}{V^{t}} \) be the designated variable sequence for a given interpretation of \( t \).
+    Let \( u \) and \( w \) be two finite sequences that meet the criteria stated in \cref{dfn:first-order-language-designated-variable-sequence-for-subterms};
+    i.e., \( u \) and \( w \) are designated variable sequences for \( s \). The goal, therefore, is to show that \( u = w \); that is,
+    \aref{thm:set-equality-in-terms-of-subsets}{\( u \subseteq w \) and \( w \subseteq u \) are both true}.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim:} \(u \subseteq w\)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( x \) be an arbitrary element of \( u \). Since \( u \) is the designated variable sequence for \( s \),
+    a \aref{dfn:first-order-language-terms-root-and-subterms}{subterm} of \( t \), it follows from \cref{dfn:first-order-language-designated-variable-sequence-for-subterms}
+    that \( u \) is a \aref{dfn:bijection}{bijection} between \( \abs{V^{s}} \) and \( V^{s} \).
+    In other words, \aref{dfn:function-basic}{\( x \) must be an ordered pair \( \orderedpair{\alpha}{\beta}\)} such that \( \alpha \in \abs{V^{s}} \) and
+    \( y \in V^{s} \).
+\end{proof}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-terms}
@@ -500,7 +570,7 @@ The intuitive discussion above can be formalized with the following definitions.
     \cref{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation},
     in which case \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta \) is an element of \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
     If \( \tau \) is the empty tuple, then necessarily \( v = \tuple{} \) because there aren't any \( \mathcal{L} \)-terms in \( \ran \tau \) for any
-    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence}{occur in}.
+    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence-in-terms}{occur in}.
     Moreover, since \( \abs{\tau} = \emptyset \), it follows that \( \delta = \emptyset \) and that
     \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\tuple{}} \mright\} \).
 \end{rem}
@@ -551,7 +621,7 @@ however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in th
     of the functional notation \( \varphi(v) \) depends on what \( v \) represents.
     If \( v \) denotes a tuple of \emph{free} variable symbols occurring in \( \varphi \), then \( \varphi(v) \) represents
     the \( \mathcal{L} \)-formula itself but
-    with an \aref{notation:first-order-language-functional-notation}{emphasis on the presence of free variables and their intended ordering} in the formula.
+    with an emphasis on the presence of free variables and their intended ordering in the formula.
     If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) is an \emph{assertion}, not a formula;
     it asserts that the formula \( \varphi \) is satisfied by \( v \).
     }:
