@@ -507,14 +507,22 @@ We now formalize the intuitive discussion above with the following definitions.
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}
     If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( v \) is the designated variable sequence for \( \tau \),
-    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) is a \keyword{distribution function} of \( v \) over \( \tau \)
-    if and only if for all \( i \in \abs{\tau} \), \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-term \( \tau_{i} \).
+    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) is the \keyword{distribution function} of \( v \) over \( \tau \)
+    if and only if for all \( i \in \abs{\tau} \):
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \dom \delta_{i} = \abs{V^{\tau_{i}}} \)
+        \item \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-term \( \tau_{i} \)
+    \end{enumerate}
 \end{dfn}
+
+\begin{rem}
+    These two criteria are sufficient to guarantee the uniqueness of the distribution function unique for a given \( v \) and \( \tau \).
+\end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-a-tuple-of-terms}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms, \( v \) be a designated variable sequence for an interpretation of \( \tau \),
-    and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) be a
+    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms, \( v \) be a designated variable sequence for \( \tau \),
+    and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) be the
     \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{distribution function} of \( v \) over \( \tau \).
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then the interpretion of \( \tau \) using \( v \) in the context of \( \mathfrak{A} \)
     is defined as the function \( \function{\tau^{\mathfrak{A}}_{v}}{\abs{\mathfrak{A}}^{\abs{v}}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \)
@@ -550,31 +558,53 @@ We are now ready to give a general definition of the interpretation of an \( \ma
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( t \) has the form \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term,
             then \( t^{\mathfrak{A}}_{v} = s^{\mathfrak{A}}_{v} \)
-        \item If \( t \) consists of a single \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
-        \item If \( t \) is \( F^{\mathcal{L}}_{i}(s) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( s \) is a tuple of \( \mathcal{L} \)-terms such that
-            \( \abs{s} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{s}}{\finiteseq{\abs{v}}} \) is a
-            \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{variable distribution function} of \( s \), then,
+        \item If \( t \) consists of a single \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}}_{v} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
+        \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of all the subterms of \( t \) such that
+            \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) is the
+            \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{distribution function} of \( v \) over \( \tau \), then,
             \begin{equation*}
-                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{ \abs{v} }
+                t^{\mathfrak{A}}_{v} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{ \abs{v} }
                 \,\,{\land}\,\,
-                y = F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}}_{\delta}(x))}
+                y = F^{\mathfrak{A}}_{i}(\tau^{\mathfrak{A}}_{v}(x))}
             \end{equation*}
     \end{enumerate}
 \end{dfn}
 
 \begin{rem}
-    For the third rule, if \( v = \tuple{} \), then \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(s^{\mathfrak{A}}_{\delta}(\emptyset))} \mright\} \)
+    For the third rule, if \( v = \tuple{} \), then \( t^{\mathfrak{A}}_{v} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(\tau^{\mathfrak{A}}_{v}(\emptyset))} \mright\} \)
     because \aref{thm:set-exponentiation-with-empty-exponent}{\( \abs{\mathfrak{A}}^{0} = \mleft\{ \emptyset \mright\} \)}.
-    Note also that if \( v = \tuple{} \), then for all \( j \in \Phi^{\mathcal{L}}(i) \), no variable symbol of \( \mathcal{L} \) can possibly occur in
-    \( s_{j} \) (otherwise, \( v \) would not be an empty tuple).
-    This implies that for all \( j \in \abs{s} \), \( s_{j} \) must be a function symbol of \( \mathcal{L} \) with arity 0.
-    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( s = \tuple{} \) and thus \( v = \tuple{} \).
+    Note also that if \( v = \tuple{} \), then necessarily \( V^{\tau_{j}} = \emptyset \) for all \( j \in \Phi^{\mathcal{L}}(i) \).
+    This implies that for all \( j \in \abs{\tau} \), \( \tau_{j} \) must be a function symbol of \( \mathcal{L} \) with arity 0.
+    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( \tau = \tuple{} \) and thus \( v = \tuple{} \).
 \end{rem}
 
 \noindent
-A similar approach can be employed to define the interpretation of \( \mathcal{L} \)-formulas in the context of \( \mathcal{L} \)-structures;
-however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in the structure's universe,
-\( \mathcal{L} \)-formulas are interpreted as either \keyword{true} or \keyword{false} (but not both).
+The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar approach but with several important extensions.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{designated variable sequence}
+    for \( \varphi \) if and only if \( \bijection{v}{\abs{V^{\varphi}}}{V^{\varphi}} \).
+\end{dfn}
+
+\begin{rem}
+    Note that \( V^{\varphi} \) denotes the set of all \emph{free} variables occurring in \( \varphi \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-set-of-all-possible-designated-sequences-for-formulas}
+    If \( \varphi \) if an \( \mathcal{L} \)-formula, then the set \( \mathcal{V}(\varphi) \) is the set of all
+    possible designated variable sequences for \( \varphi \).
+    \begin{equation*}
+        \mathcal{V}(\varphi) = \setbuilder{x \in \finiteseq{V^{\varphi}}}{\bijection{x}{\abs{V^{\varphi}}}{V^{\varphi}}}
+    \end{equation*}
+\end{dfn}
+
+%\noindent
+%A similar approach can be employed to define the interpretation of \( \mathcal{L} \)-formulas in the context of \( \mathcal{L} \)-structures,
+%but with several additional concepts.
+%However, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in the structure's universe,
+%\( \mathcal{L} \)-formulas are interpreted as either \keyword{true} or \keyword{false} (but not both).
 
 \begin{notation}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be a tuple of
@@ -598,16 +628,6 @@ however, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in th
 \noindent
 It remains now to define precisely what it means for a given \( \mathcal{L} \)-formula \( \varphi(v) \) to be true
 for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{designated variable sequence}
-    for \( \varphi \) if and only if \( \ran v \) is the set of all the \aref{dfn:first-order-language-free-variables}{\emph{free} variables} occurring
-    in \( \varphi \).
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas and \( \mu = \sequence{\mu_{i}}{i \in \abs{\tau}} \) is a finite sequence such that
-    \( \mu_{i} \) is the designated variable sequence for \( \tau_{i} \) for all \( i \in \abs{\tau} \), then a finite sequence \( v \) is a
-    designated variable sequence for \( \tau \) if and only if \( \ran v = \Union_{i \,\in\, \abs{\tau}} \ran \mu_{i}  \).
-\end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-formulas}
