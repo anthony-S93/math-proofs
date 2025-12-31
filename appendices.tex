@@ -175,6 +175,19 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{rem}
 
 \begin{dfn}
+    \phantomsection \label{dfn:first-order-language-subformulas}
+    If \( \varphi \), \( \psi \), and \( \phi \) are \( \mathcal{L} \)-formulas, then the following definitions apply:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( \varphi \) has the form \( (\psi) \) or \( [\,\psi\,] \), then \( \psi \) is the subformula of \( \varphi \)
+        \item If \( \varphi \) has the form \( \lnot \, \psi \), then \( \psi \) is the subformula of \( \varphi \)
+        \item If \( \varphi \) has the form \( \psi \,\,{\land}\,\, \phi \), then \( \psi \) and \( \phi \) are both subformulas of \( \varphi \)
+        \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \), then \( \psi \) and \( \phi \) are both subformulas of \( \varphi \)
+        \item If \( \varphi \) has the form  \( \forall x \, \psi \), then \( \psi \) is a subformula of \( \varphi \)
+        \item If \( \varphi \) has the form \( \exists x \, \psi \), then \( \psi \) is a subformula of \( \varphi \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula containing at least one \( \mathcal{L} \)-term in which an \( \mathcal{L} \)-variable \( v \) occurs,
     then we say that ``\( v \) occurs in \( \varphi \)'' or ``\( v \) is in \( \varphi \).''
@@ -497,11 +510,16 @@ We now formalize the intuitive discussion above with the following definitions.
     \end{enumerate*}
 \end{dfn}
 
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-the-set-of-all-variable-symbols-occurring-in-a-tuple-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then \( V^{\tau} \) denotes the set of all variable symbols occurring
+    in \( \tau_{i} \) for at least one \( i \in \abs{\tau} \). In other words, \( V^{\tau} = \Union_{i \,\in\, \abs{\tau}} V^{\tau_{i}} \).
+\end{notation}
+
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-a-tuple-of-terms}
     If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then a finite sequence \( v \) is a designated variable sequence
-    for \( \tau \) if and only if \( v \) is a \aref{dfn:bijection}{bijection} between
-    \( \abs{\Union_{i \,\in\, \tau_{i}} V^{\tau_{i}}} \) and \( \Union_{i \,\in\, \tau_{i}} V^{\tau_{i}} \).
+    for \( \tau \) if and only if \( \bijection{v}{\abs{V^{\tau}}}{V^{\tau}} \).
 \end{dfn}
 
 \begin{dfn}
@@ -516,7 +534,7 @@ We now formalize the intuitive discussion above with the following definitions.
 \end{dfn}
 
 \begin{rem}
-    These two criteria are sufficient to guarantee the uniqueness of the distribution function unique for a given \( v \) and \( \tau \).
+    These two criteria are sufficient to guarantee the uniqueness of the distribution function for a given \( v \) and \( \tau \).
 \end{rem}
 
 \begin{dfn}
@@ -584,40 +602,57 @@ The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{designated variable sequence}
-    for \( \varphi \) if and only if \( \bijection{v}{\abs{V^{\varphi}}}{V^{\varphi}} \).
+    for \( \varphi \) if and only if
+    \( \bijection{v}{\abs{V^{\varphi}}}{\aref{notation:first-order-language-set-of-all-free-variable-symbols-occurring-in-a-formula}{V^{\varphi}}} \).
 \end{dfn}
-
-\begin{rem}
-    Note that \( V^{\varphi} \) denotes the set of all \emph{free} variables occurring in \( \varphi \).
-\end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-set-of-all-possible-designated-sequences-for-formulas}
-    If \( \varphi \) if an \( \mathcal{L} \)-formula, then the set \( \mathcal{V}(\varphi) \) is the set of all
+    If \( \varphi \) if an \( \mathcal{L} \)-formula, then the set \( \mathcal{V}(\varphi) \) denotes the set of all
     possible designated variable sequences for \( \varphi \).
     \begin{equation*}
-        \mathcal{V}(\varphi) = \setbuilder{x \in \finiteseq{V^{\varphi}}}{\bijection{x}{\abs{V^{\varphi}}}{V^{\varphi}}}
+        \mathcal{V}(\varphi) = \setbuilderBig{x \in \finiteseq{V^{\varphi}}}{\bijection{x}{\abs{V^{\varphi}}}{V^{\varphi}}}
     \end{equation*}
 \end{dfn}
 
-%\noindent
-%A similar approach can be employed to define the interpretation of \( \mathcal{L} \)-formulas in the context of \( \mathcal{L} \)-structures,
-%but with several additional concepts.
-%However, unlike \( \mathcal{L} \)-terms, which are interpreted as elements in the structure's universe,
-%\( \mathcal{L} \)-formulas are interpreted as either \keyword{true} or \keyword{false} (but not both).
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( V^{\tau} \) denotes the set of all the variable symbols that occur
+    freely in \( \tau_{i} \) for at least one \( i \in \abs{\tau} \). In other words, \(  V^{\tau} = \Union_{i \,\in\, \abs{\tau}} V^{\tau_{i}} \).
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a designated variable sequence for
+    \( \tau \) if and only if \( \bijection{v}{\abs{V^{\tau}}}{V^{\tau}} \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-possible-designated-variable-sequences-for-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \mathcal{V}(\tau) \) denotes the set of all possible designated variable sequences for
+    \( \tau \).
+    \begin{equation*}
+        \mathcal{V}(\tau) = \setbuilderBig{x \in \finiteseq{V^{\tau}}}{\bijection{x}{\abs{V^{\tau}}}{V^{\tau}}}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-designated-variable-sequence-for-subformulas-of-a-formula}
+    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \psi \) be a \aref{dfn:first-order-language-subformulas}{subformula of \( \varphi \)}.
+    If \( v \) is the designated sequence for \( \varphi \), then a finite sequence \( u \) is the designated variable sequence for \( \psi \)
+    if and only if:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \bijection{u}{\abs{V^{\psi}}}{V^{\psi}} \);
+        \item for all \( i, j \in \abs{V^{\psi}} \), \( i \subseteq j \) if and only if \( v^{-1}(u(i)) \subseteq v^{-1}(u(j)) \).
+    \end{enumerate*}
+\end{dfn}
 
 \begin{notation}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be a tuple of
-    all the \aref{dfn:first-order-language-free-variables}{free variables} occurring in \( \varphi \).
+    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be the
+    \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
+    for \( \varphi \).
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \),
-    then we write \( \varphi(\alpha) \) to mean the following equivalent statements\footnote{\,The meaning
-    of the functional notation \( \varphi(v) \) depends on what \( v \) represents.
-    If \( v \) denotes a tuple of \emph{free} variable symbols occurring in \( \varphi \), then \( \varphi(v) \) represents
-    the \( \mathcal{L} \)-formula itself but
-    with an emphasis on the presence of free variables and their intended ordering in the formula.
-    If, on the other hand, \( v \) denotes an element of an n-ary product of the universe of some structure, then \( \varphi(v) \) is an \emph{assertion}, not a formula;
-    it asserts that the formula \( \varphi \) is satisfied by \( v \).
-    }:
+    then we write \( \varphi_{v}(\alpha) \) to mean the following equivalent statements:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \varphi \) is true for \( \alpha \)
         \item \( \alpha \) satisfies \( \varphi \)
