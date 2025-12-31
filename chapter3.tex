@@ -2075,17 +2075,17 @@ Suppose, for instance, that \( \leq \) is a non-strict ordering on some set \( A
 \cref{thm:a-bijection-exists-between-all-partial-orderings-and-strict-partial-orderings,lem:any-strict-partial-ordering-corresponds-to-a-partial-ordering}
 guarantee the existence of a unique binary relation \( < \) such that \( < \) is a strict ordering on \( A \) and that,
 \begin{equation*}
-    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x \leq y \iff \big( x < y \lor x = y \big) \Big]
+    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x \leq y \iff \big( x < y \,\,{\lor}\,\, x = y \big) \Big]
 \end{equation*}
 The condition for linearity given in \cref{dfn:total-non-strict-ordering} is that,
 \begin{equation*}
-    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x \leq y \lor y \leq x \Big]
+    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x \leq y \,\,{\lor}\,\, y \leq x \Big]
 \end{equation*}
 Using elementary logic, we can re-express that condition as,
 \begin{align*}
-    &\forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \mleft( x < y \lor x = y \mright) \lor \mleft( y < x \lor y = x \mright) \Big]\\
+    &\forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ \mleft( x < y \,\,{\lor}\,\, x = y \mright) \,\,{\lor}\,\, \mleft( y < x \,\,{\lor}\,\, y = x \mright) \Big]\\
     &\iff
-    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x = y \lor x < y \lor y < x \Big]
+    \forall x\,{\in}\,A \, \forall y\,{\in}\,A \, \Big[ x = y \,\,{\lor}\,\, x < y \,\,{\lor}\,\, y < x \Big]
 \end{align*}
 Thus, we have the following definition.
 
@@ -2094,7 +2094,7 @@ Thus, we have the following definition.
     A binary relation \( < \) on \( A \) is a \keyword{total} strict ordering on \( T \) if and only if:
     \begin{enumerate}[topsep=2pt,label=\texttt{\textup{(\alph*)}}]
         \item \( < \) is asymmetric and transitive.
-        \item \( \forall x\,{\in}\,T \, \forall y\,{\in}\,T \, \big( x = y \lor x < y \lor y < x \big) \)
+        \item \( \forall x\,{\in}\,T \, \forall y\,{\in}\,T \, \big( x = y \,\,{\lor}\,\, x < y \,\,{\lor}\,\, y < x \big) \)
     \end{enumerate}
 \end{dfn}
 
