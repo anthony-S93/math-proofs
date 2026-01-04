@@ -3,8 +3,13 @@
 
 \newcommand{\folsymbols}[1]{\ensuremath{\operatorname{sym} \langle#1\rangle}}
 \newcommand{\folvars}[1]{\ensuremath{\operatorname{var} \langle#1\rangle}}
-\newcommand{\folvarsec}[1]{\ensuremath{\vv{\operatorname{var}}\langle#1\rangle}}
+\newcommand{\folvarseq}[1]{\ensuremath{\vv{\operatorname{var}}\langle#1\rangle}}
 \newcommand{\folnumvars}[1]{\ensuremath{\Vert#1\Vert}}
+\newcommand{\folfreevars}[1]{\ensuremath{\operatorname{var}_{\ast} \langle#1\rangle}}
+\newcommand{\folnumfreevars}[1]{\ensuremath{\Vert#1\Vert}}
+\newcommand{\folboundvars}[1]{\ensuremath{\operatorname{var}_{\diamond} \langle#1\rangle}}
+\newcommand{\folfreevarseq}[1]{\ensuremath{\vv{\operatorname{var}}_{\ast}\langle#1\rangle}}
+
 \chapter{First-Order Languages}
 In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
 to \aref{dfn:general-mathematical-structures}{mathematical structures}. Conceptually, a first-order language
@@ -30,7 +35,7 @@ strings of symbols from said collection are valid expressions of that language.
                     \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset - \mleft\{ 0 \mright\}} \) associated with it
                 \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with an arity function
                     \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) associated with it
-                    \phantomsection \label{text:first-order-language-canonical-total-ordering-for-variable-symbols}
+                    \phantomsection \label{text:first-order-language-canonical-well-ordering-for-variable-symbols}
                 \item Parameters: A \aref{dfn:well-ordering}{well-ordering} \( \prec \) for all the variable symbols in \( \mathcal{L} \)
             \end{enumerate}
     \end{enumerate}
@@ -78,11 +83,11 @@ the symbols of \( \mathcal{L} \) can also be stringed together to form \emph{exp
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-langauge-the-set-of-all-variable-symbols-in-a-tuple-of-expressions}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-expressions, then \( \folvarsec{\tau} = \Union_{i \,\in\, \abs{\tau}} \folvarsec{\tau_{i}} \).
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-expressions, then \( \folvars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folvars{\tau_{i}} \).
 \end{dfn}
 
 \begin{notation}
-    \phantomsection \label{notation:first-order-langauge-abbreviation-for-number-of-variable-symbols}
+    \phantomsection \label{notation:first-order-language-abbreviation-for-number-of-variable-symbols}
     For brevity, we denote the number of \( \mathcal{L} \)-variables occurring in \( t \) or \( \tau \) as
     \( \folnumvars{t} \) or \( \folnumvars{\tau} \). Essentially, \( \folnumvars{t} = \abs{\folvars{t}} \) and
     \( \folnumvars{\tau} = \abs{\folvars{\tau}} \).
@@ -178,6 +183,22 @@ As such, any comprehensive definition of the grammar of a first-order language m
     If \( v \) is a free variable of \( \varphi \), then we also say that ``\( v \) \keyword{occurs freely} in \( \varphi \).''
 \end{dfn}
 
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) is the set of all free variables occurring in \( \varphi \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \folfreevars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folfreevars{\tau_{i}} \).
+\end{dfn}
+
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-the-number-of-free-variables-occurring-in-formulas}
+    If \( t \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, we will abbreviate
+    \( \abs{\folfreevars{t}} \) and \( \abs{\folfreevars{\tau}} \) with \( \folnumfreevars{t} \) and \( \folnumfreevars{\tau} \)
+    respectively.
+\end{notation}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-bound-variables}
@@ -185,8 +206,18 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-bound-variables-in-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folboundvars{t} \) is the set of all bound variables occurring in \( \varphi \).
+\end{dfn}
+
+\begin{cor}
+    For any \( \mathcal{L} \)-formula \( \varphi \), \( \folfreevars{\varphi} \union \folboundvars{\varphi} = \folvars{\varphi} \).
+\end{cor}
+
+\begin{dfn}
     \phantomsection \label{dfn:first-order-language-sentences}
-    An \( \mathcal{L} \)-formula that does not contain any free variables is called an \( \mathcal{L} \)-sentence.
+    An \( \mathcal{L} \)-formula is an \( \mathcal{L} \)-sentence if and only if it does not contain any free variables
+    (i.e., \( \folfreevars{\varphi} = \emptyset \)).
 \end{dfn}
 
 \begin{dfn}
@@ -202,7 +233,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
-    The following rules apply to any \aref{dfn:first-order-language}{first-order language} \( \mathcal{L} \):
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible in a finite number of steps
+    via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is an \( \mathcal{L} \)-formula
@@ -215,7 +247,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
             then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that
-            \( \dom \tau = \abs{V^{\varphi}} \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
+            \( \dom \tau = \abs{\folfreevars{\varphi}} \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
     \end{enumerate}
 \end{dfn}
 
@@ -369,7 +401,7 @@ Since there is no rule in the syntax of first-order languages that specifies the
 \vspace{0.3cm}
 \noindent
 An easy way to resolve this ambiguity is to simply arrange the elements of \(  \folvars{s} \) sequentially using the 
-\aref{text:first-order-language-canonical-total-ordering-for-variable-symbols}{canonical ordering for the variable symbols of \( \mathcal{L}^{\prime} \)}
+\aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{canonical ordering for the variable symbols of \( \mathcal{L}^{\prime} \)}
 and then perform the substitution based on the relative position of each variable symbol in the resulting sequence.
 As previously mentioned, the canonical ordering for the variable symbols of \( \mathcal{L}^{\prime} \) is
 \( \prec \,\, = \big\{ \orderedpair{x}{y}, \orderedpair{x}{z}, \orderedpair{y}{z} \big\} \).
@@ -397,8 +429,8 @@ is given by:
 \noindent
 Notice that \( \composition{\tuple{a,b,c}}{\tuple{x,y,z}^{-1}} \) is a bijection between \( \mleft\{ x, y, z \mright\} \) and \( \mleft\{ a, b, c \mright\} \);
 i.e., it enables an unambiguous translation between the elements of \( \folvars{s} \) and \( \ran \alpha \).
-We shall call \( \tuple{x, y, z} \) the \keyword{canonical variable sequence} of \( s \) and denote it as \( \folvarsec{s} \).
-The variable translation using an argument tuple \( \alpha \) is therefore defined by the mapping \( \composition{\alpha}{\folvarsec{s}} \).
+We shall call \( \tuple{x, y, z} \) the \keyword{canonical variable sequence} of \( s \) and denote it as \( \folvarseq{s} \).
+The variable translation using an argument tuple \( \alpha \) is therefore defined by the mapping \( \composition{\alpha}{\folvarseq{s}} \).
 
 \vspace{0.3cm}
 \noindent
@@ -416,14 +448,14 @@ as starting points.
 \noindent
 The next task is to specify the \emph{distribution} of variable symbols across \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \)
 so that the objects from \( \ran \alpha \) can be assigned correctly to \( \tau_{0}^{\mathfrak{A}} \), \( \tau_{1}^{\mathfrak{A}} \), and \( \tau_{2}^{\mathfrak{A}} \).
-This can be done via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\aref{notation:first-order-langauge-abbreviation-for-number-of-variable-symbols}{\folnumvars{s}}}} \) such that \( \composition{\folvarsec{s}}{\delta_{i}} = \folvarsec{\tau_{i}} \) for all \( i \in \abs{\tau} \).
-Since \( \folvarsec{s} = \tuple{x, y, z} \) and \( \folvarsec{\tau_{0}} \), \( \folvarsec{\tau_{1}} \), \( \folvarsec{\tau_{2}} \) are
+This can be done via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\aref{notation:first-order-language-abbreviation-for-number-of-variable-symbols}{\folnumvars{s}}}} \) such that \( \composition{\folvarseq{s}}{\delta_{i}} = \folvarseq{\tau_{i}} \) for all \( i \in \abs{\tau} \).
+Since \( \folvarseq{s} = \tuple{x, y, z} \) and \( \folvarseq{\tau_{0}} \), \( \folvarseq{\tau_{1}} \), \( \folvarseq{\tau_{2}} \) are
 \( \tuple{x} \), \( \tuple{y} \), and \( \tuple{x, z} \) respectively, necessarily \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) so that,
 \begin{equation*}
     \begin{aligned}
-        \composition{\folvarsec{s}}{\delta_{0}}& \\
-        \composition{\folvarsec{s}}{\delta_{1}}& \\
-        \composition{\folvarsec{s}}{\delta_{2}}&
+        \composition{\folvarseq{s}}{\delta_{0}}& \\
+        \composition{\folvarseq{s}}{\delta_{1}}& \\
+        \composition{\folvarseq{s}}{\delta_{2}}&
     \end{aligned}
     \begin{aligned}
         &= \composition{\tuple{x, y, z}}{\tuple{0}} \\
@@ -436,9 +468,9 @@ Since \( \folvarsec{s} = \tuple{x, y, z} \) and \( \folvarsec{\tau_{0}} \), \( \
         &= \tuple{x, z}
     \end{aligned}
     \begin{aligned}
-        &= \folvarsec{\tau_{0}} \\
-        &= \folvarsec{\tau_{1}} \\
-        &= \folvarsec{\tau_{2}}
+        &= \folvarseq{\tau_{0}} \\
+        &= \folvarseq{\tau_{1}} \\
+        &= \folvarseq{\tau_{2}}
     \end{aligned}
 \end{equation*}
 Thus, given an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \),
@@ -473,23 +505,6 @@ any \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), which is in exact agreement 
 
 \vspace{0.3cm}
 \noindent
-As a final point, we would like to draw the reader's attention to the sequence,
-\begin{equation*}
-    \sequencebig{\tau_{i}^{\mathfrak{A}}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}}
-\end{equation*}
-in \eqref{eq:interpreted-s-recursive}, which is of considerable interest
-since it hints at the possibility of interpreting a \emph{tuple} of terms (not just a single term) in the context of a structure.
-In general, any tuple \( \tau \) of \( \mathcal{L} \)-terms can be interpreted in the context a compatible \( \mathcal{L} \)-structure
-as long as two pieces of information are available:
-\begin{enumerate*}[label=(\roman*)]
-    \item \( \tau^{\mathfrak{A}}_{i} \) for every \( i \in \abs{\tau} \);
-    \item a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\aref{dfn:first-order-langauge-the-set-of-all-variable-symbols-in-a-tuple-of-expressions}{\folnumvars{\tau}}}} \) that describes the distribution of \( \mathcal{L} \)-variables across the \( \mathcal{L} \)-terms in \( \ran \tau \).
-\end{enumerate*}
-The result of such an interpretation is a function \( \tau^{\mathfrak{A}} \) that assigns to each tuple
-in \( \abs{\mathfrak{A}}^{ \folnumvars{\tau} } \) a tuple from \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
-
-\vspace{0.3cm}
-\noindent
 The informal discussion above can be formalized with the following definitions.
 
 \begin{dfn}
@@ -502,8 +517,18 @@ The informal discussion above can be formalized with the following definitions.
     \end{enumerate*}
 \end{dfn}
 
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then a finite sequence \( v \) is a \keyword{canonical variable sequence} for \( \tau \)
+    if and only if it has the following properties:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \bijection{v}{\aref{notation:first-order-language-abbreviation-for-number-of-variable-symbols}{\folnumvars{\tau}}}{ \aref{dfn:first-order-langauge-the-set-of-all-variable-symbols-in-a-tuple-of-expressions}{\folvars{\tau}} } \);
+        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumvars{\tau} \).
+    \end{enumerate*}
+\end{dfn}
+
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-uniqueness-of-canonical-variable-sequence}
+    \phantomsection \label{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}
     The canonical variable sequence for any first-order term is unique.
 \end{thm}
 
@@ -511,9 +536,7 @@ The informal discussion above can be formalized with the following definitions.
     Let \( t \) be a term of some arbitrary first-order language \( \mathcal{L} \).
     Let \( u \) and \( v \) be two finite sequences that meet the two criteria stated in
     \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}---i.e., they are both canonical variable sequences of \( t \).
-    Since \( \dom u = \dom v = \folnumvars{t} \), it remains to show that \( u_{i} = v_{i} \) for all \( i \in \folnumvars{t} \) so that
-    \( u = v \).
-    Since \( \folnumvars{t} \in \naturalset \), there are two cases to consider: \( \folnumvars{t} = 0 \) or \( \folnumvars{t} \neq 0 \)
+    The goal is to show that \( u = v \) for all possible cases.
 
     \vspace{0.3cm}
     \noindent
@@ -526,7 +549,9 @@ The informal discussion above can be formalized with the following definitions.
     So it remains to prove that \( u_{i} = v_{i} \) for all \( i \in \folnumvars{t} \), which can be done by finite induction.
     Let \( V^{\mathcal{L}} \) be the set of all \( \mathcal{L} \)-variables.
     Now suppose that \( u_{0} \neq v_{0} \). In other words, either \( u_{0} \prec v_{0} \) or \( v_{0} \prec u_{0} \)
-    because \( \prec \) is a well-ordering of \( V^{\mathcal{L}} \). But by \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}, this would imply that
+    since \aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{\( \prec \) is a well-ordering
+    of \( V^{\mathcal{L}} \)}.
+    But by \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}, \( u_{0} \prec v_{0} \) or \( v_{0} \prec u_{0} \) would imply that
     \( 0 \in 0 \), which is absurd since \( 0 = \emptyset \) and \( \emptyset \) cannot contain any element.
     In other words, the supposition that \( u_{0} \neq v_{0} \) must be
     false by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
@@ -538,253 +563,234 @@ The informal discussion above can be formalized with the following definitions.
     Since \( i \in k \), it follows that either \( i \union \mleft\{ i \mright\} \in k \) or \( i \union \mleft\{ i \mright\} = k \). In both cases, necessarily
     \( i \union \mleft\{ i \mright\} \in \folnumvars{t} = \dom u = \dom v \). If we denote \( i \union \mleft\{ i \mright\} \) as \( i + 1 \), then it follows that
     \( u_{i+1} = \alpha \) and \( v_{i+1} = \beta \) for some \( \alpha, \beta \in \folvars{t} \).
-    If \( \alpha \neq \beta \), then either \( \alpha \prec \beta \) or \( \beta \prec \alpha \) since \( \prec \) is a well-ordering on \( V^{\mathcal{L}} \).
-    But neither \( \alpha \prec \beta \) nor \( \beta \prec \alpha \) is possible since they both imply \( (i + 1) \in (i + 1) \) by
+    If \( \alpha \neq \beta \), then either \( \alpha \prec \beta \) or \( \beta \prec \alpha \) since
+    \aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{\( \prec \) is a well-ordering on \( V^{\mathcal{L}} \)}.
+    However, neither \( \alpha \prec \beta \) nor \( \beta \prec \alpha \) is possible since they would both imply \( (i + 1) \in (i + 1) \) by
     \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}. Therefore, the supposition that \( \alpha \neq \beta \) cannot be true, which means
     that \( \alpha = \beta \).
     In other words, if \( u_{i} = v_{i} \) for any \( i \in k \), then necessarily \( u_{i+1} = v_{i+1} \).
 
     \vspace{0.3cm}
     \noindent
-    Having proven the base case and induction step, we may conclude by finite induction that \( u_{i} = v_{i} \) for all \( i \in k \union \mleft\{ k \mright\} \).
-    Since \( k \union \mleft\{ k \mright\} = \folnumvars{t} \), the theorem follows readily.
+    Having proven the base case and induction step, we conclude by finite induction that \( u_{i} = v_{i} \) for all \( i \in k \union \mleft\{ k \mright\} \).
+    Since \( k \union \mleft\{ k \mright\} = \folnumvars{t} \), it follows that \( \dom u = \dom v \) and \( u_{i} = v_{i} \) for all \( i \in \dom u \).
+    By \cref{thm:equality-of-functions}, it follows that \( u = v \).
+\end{proof}
+
+\begin{rem}
+    The uniqueness of the canonical variable sequence for a tuple of \( \mathcal{L} \)-terms can be proven in the exact same argument as above.
+\end{rem}
+
+\noindent
+Since the canonical variable sequence for every \( \mathcal{L} \)-term (or tuples of \( \mathcal{L} \)-terms) is unique,
+it is justifiable to introduce a special notation for it.
+
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-special-notation-for-canonical-sequences-for-terms}
+    For any \( \mathcal{L} \)-term \( t \), the unique canonical variable sequence for \( t \) is denoted as \( \folvarseq{t} \).
+    Similarly, for any tuple of \( \mathcal{L} \)-terms \( \tau \), the unique canonical variable sequence for \( \tau \) is denoted as \( \folvarseq{\tau} \).
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then a function \( \delta \) is a \keyword{variable distribution function} for \( \tau \)
+    if and only if it has the following properties:
+    \begin{enumerate}[topsep=2pt,itemsep=1pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \function{\delta}{\abs{\tau}}{ \finiteseq{\folnumvars{\tau}} } \)
+        \item \( \dom \delta_{i} = \folnumvars{\tau_{i}} \) for all \( i \in \dom \delta \)
+        \item \( \composition{ \folvarseq{\tau} }{\delta_{i}} = \folvarseq{\tau_{i}} \) for all \( i \in \dom \delta \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    If \( \folnumvars{\tau} = 0 \), then \aref{thm:seq-empty-set-is-the-singleton-containing-the-empty-set}{\( \finiteseq{\folnumvars{\tau}} = \finiteseq{\emptyset} = \mleft\{ \emptyset \mright\} \)}, in which case \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \).
+\end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-uniqueness-of-the-variable-distribution-function-of-a-tuple-of-terms}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then the variable distribution function for \( \tau \) is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( \delta \) and \( \lambda \) be variable distribution functions of a tuple \( \tau \) of \( \mathcal{L} \)-terms.
+    Clearly, \( \dom \delta = \dom \lambda = \abs{\tau} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}.
+    Thus, it remains to prove that \( \delta_{i} = \lambda_{i} \) for all \( i \in \abs{\tau} \) so that we may conclude that \( \delta = \lambda \)
+    by \cref{thm:equality-of-functions}.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( i \in \abs{\tau} \) be arbitrary. It follows from \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms} that
+    \( \dom \delta_{i} = \dom \lambda_{i} = \folnumvars{\tau_{i}} \) and that \( \composition{\folvarseq{\tau}}{\delta_{i}} = \composition{\folvarseq{\tau}}{\lambda_{i}} =
+    \folvarseq{\tau_{i}} \).
+    Suppose that \( \orderedpair{j}{\alpha} \in \delta_{i} \) and \( \orderedpair{j}{\beta} \in \lambda_{i} \) for some
+    \( j \in \folnumvars{\tau_{i}} \). Since \( j \in \folnumvars{\tau_{i}} \) and \( \folnumvars{\tau_{i}} = \dom (\folvarseq{\tau_{i}}) \),
+    it follows that \( \orderedpair{j}{\gamma} \in \folvarseq{\tau_{i}} \) for some \( \mathcal{L} \)-variable \( \gamma \).
+    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{\alpha}{\gamma} \in \folvarseq{\tau} \)
+    and \( \orderedpair{\beta}{\gamma} \in \folvarseq{\tau} \). But \( \folvarseq{\tau} \) is a bijection by
+    \cref{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}, so necessarily \( \alpha = \beta \).
+    In other words, \( \delta_{i}(j) = \lambda_{i}(j) \) for all \( i \in \folnumvars{\tau_{i}} \), so \( \delta_{i} = \lambda_{i} \)
+    by \cref{thm:equality-of-functions}.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( i \in \abs{\tau} \) is arbitrary, we can conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \delta_{i} = \lambda_{i} \)
+    for all \( i \in \abs{\tau} \). Thus,  we have by \cref{thm:equality-of-functions} \( \delta = \lambda \). In other words, the variable distribution function
+    of \( \tau \) is unique.
+\end{proof}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-interpretation-of-terms}
+    If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then an \keyword{interpretation} of \( t \) in the
+    context of \( \mathfrak{A} \) is a function \( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^{\folnumvars{t}}}{\abs{\mathfrak{A}}} \) defined recursively
+    as follows:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( t \) has the form \( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is an \( \mathcal{L} \)-term, then
+            \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
+        \item If \( t \) consists of a single \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
+        \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of all the subterms of \( t \) such that
+            \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \) and \( \delta \) is the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function} of \( \tau \), then,
+            \begin{equation*}
+                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{\folnumvars{t}} \,\,{\land}\,\,
+                y = F^{\mathfrak{A}}_{i}\big(\sequencebig{\tau_{j}^{\mathfrak{A}}(\composition{x}{\delta_{j}})}{j \in \dom \tau}\big)
+                }
+            \end{equation*}
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    For the third case, if \( \tau = \tuple{} \), then \( \dom \tau = \emptyset \) and \( \folnumvars{t} = \folnumvars{\tau} = 0 \).
+    Therefore, \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta = F^{\mathfrak{A}}_{i}(\emptyset)\).
+\end{rem}
+
+\noindent
+The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar approach with only a few trivial alterations.
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{canonical variable sequence}
+    for \( \varphi \) if and only if it has the following properties:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \bijection{v}{\folnumfreevars{\varphi}}{\folfreevars{\varphi}} \);
+        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumfreevars{\varphi} \).
+    \end{enumerate*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-the-uniqueness-of-the-canonical-variable-sequence-for-a-formula}
+    The canonical variable sequence for any \( \mathcal{L} \)-formula is unique.
+\end{thm}
+
+\begin{proof}
+    Same as \cref{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}.
+\end{proof}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a finite sequence \( v \) is a \keyword{canonical variable sequence}
+    for \( \tau \) if and only if it has the following properties:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \bijection{v}{\folnumfreevars{\varphi}}{\aref{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}{\folfreevars{\varphi}}} \);
+        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumfreevars{\varphi} \).
+    \end{enumerate*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-the-uniqueness-of-the-canonical-variable-sequence-for-a-tuple-of-formulas}
+    The canonical variable sequence for any tuple of \( \mathcal{L} \)-formulas is unique.
+\end{thm}
+
+\begin{proof}
+   Same as \cref{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}.
 \end{proof}
 
 \noindent
-Since the canonical variable sequence for every \( \mathcal{L} \)-term is unique, it is justifiable to introduce a special notation for it.
+The uniqueness of the canonical variable sequences for formulas and tuples of formulas permits us to introduce a special notation for it.
 
 \begin{notation}
-    \phantomsection \label{notation:first-order-language-notation-for-canonical-sequence-for-terms}
-    For any \( \mathcal{L} \)-term \( t \), the unique canonical variable sequence for \( t \) is denoted as \( \folvarsec{t} \).
+    \phantomsection \label{notation:first-order-language-special-notation-for-canonical-variable-sequences-for-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, then we denote their unique canonical variable sequences as
+    \( \folfreevarseq{\varphi} \) and \( \folfreevarseq{\tau} \) respectively.
 \end{notation}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( v \) is the designated variable sequence for \( \tau \),
-    then a function \( \function{\delta}{\abs{\tau}}{k} \) is the \keyword{distribution function} of \( v \) over \( \tau \)
-    if and only if for all \( i \in \abs{\tau} \):
+    \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a function \( \delta \) is a \keyword{variable distribution function}
+    for \( \tau \) if and only if it has the following properties:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \dom \delta_{i} = \abs{V^{\tau_{i}}} \)
-        \item \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-term \( \tau_{i} \)
+        \item \( \function{\delta}{\abs{\tau}}{\finiteseq{\folnumfreevars{\tau}}} \)
+        \item \( \dom \delta_{i} = \folnumfreevars{\tau_{i}} \) for all \( i \in \dom \delta \)
+        \item \( \composition{\folfreevarseq{\tau}}{\delta_{i}} = \folfreevarseq{\tau_{i}} \) for all \( i \in \dom \delta \)
     \end{enumerate}
 \end{dfn}
 
-\begin{rem}
-    These two criteria are sufficient to guarantee the uniqueness of the distribution function for a given \( v \) and \( \tau \).
-\end{rem}
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-the-uniqueness-of-the-variable-distribution-function-for-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then the variable distribution function for \( \tau \) is unique.
+\end{thm}
+
+\begin{proof}
+    Same as \cref{thm:first-order-language-uniqueness-of-the-variable-distribution-function-of-a-tuple-of-terms}.
+\end{proof}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-interpretation-of-a-tuple-of-terms}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms, \( v \) be a designated variable sequence for \( \tau \),
-    and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) be the
-    \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{distribution function} of \( v \) over \( \tau \).
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then the interpretion of \( \tau \) using \( v \) in the context of \( \mathfrak{A} \)
-    is defined as the function \( \function{\tau^{\mathfrak{A}}_{v}}{\abs{\mathfrak{A}}^{\abs{v}}}{\abs{\mathfrak{A}}^{\abs{\tau}}} \)
-    such that:
-    \begin{equation*}
-        \tau^{\mathfrak{A}}_{v} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{\abs{v}} \,\,{\land}\,\,
-        y = \sequencebig{\mleft( \tau_{i} \mright)^{\mathfrak{A}}_{\composition{v}{\delta_{i}}}(\composition{x}{\delta_{i}})}{i \in \abs{\tau}}
-        }
-    \end{equation*}
-\end{dfn}
-
-\begin{rem}
-    If \( v = \tuple{} \), then \aref{thm:seq-empty-set-is-the-singleton-containing-the-empty-set}{\( \finiteseq{\abs{v}} = \finiteseq{\emptyset} =
-    \mleft\{ \emptyset \mright\} \)}, in which case \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \);
-    additionally, \( \abs{\mathfrak{A}}^{\abs{v}} = \abs{\mathfrak{A}}^{\emptyset} = \mleft\{ \emptyset \mright\} \) by
-    \cref{thm:the-exponentiation-of-a-set-A-with-a-natural-number-as-exponent-in-set-builder-notation},
-    in which case \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta \) is an element of \( \abs{\mathfrak{A}}^{\abs{\tau}} \).
-    If \( \tau \) is the empty tuple, then necessarily \( v = \tuple{} \) because there aren't any \( \mathcal{L} \)-terms in \( \ran \tau \) for any
-    \( \mathcal{L} \)-variable to \aref{dfn:first-order-language-variable-occurrence-in-terms}{occur in}.
-    Moreover, since \( \abs{\tau} = \emptyset \), it follows that \( \delta = \emptyset \) and that
-    \( \tau^{\mathfrak{A}}_{\delta} = \mleft\{ \orderedpair{\emptyset}{\tuple{}} \mright\} \).
-\end{rem}
-
-\vspace{0.1cm}
-\noindent
-We are now ready to give a general definition of the interpretation of an \( \mathcal{L} \)-term in the context of an \( \mathcal{L} \)-structure.
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-terms}
-    If \( t \) is an \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-term} to be interpreted using
-    \( v \)
-    and an \( \mathcal{L} \)-structure \( \mathfrak{A} \), then the following rules apply:
+    \phantomsection \label{dfn:first-order-language-functional-satisfaction-of-formulas-with-argument-tuples}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, and
+    \( \alpha \) is an element of \( \abs{\mathfrak{A}}^{\folnumfreevars{\varphi}} \), then the following statements equivalent:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) has the form \( (s) \) or \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term,
-            then \( t^{\mathfrak{A}}_{v} = s^{\mathfrak{A}}_{v} \)
-        \item If \( t \) consists of a single \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}}_{v} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
-        \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of all the subterms of \( t \) such that
-            \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \) and \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) is the
-            \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{distribution function} of \( v \) over \( \tau \), then,
-            \begin{equation*}
-                t^{\mathfrak{A}}_{v} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{ \abs{v} }
-                \,\,{\land}\,\,
-                y = F^{\mathfrak{A}}_{i}(\tau^{\mathfrak{A}}_{v}(x))}
-            \end{equation*}
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    For the third rule, if \( v = \tuple{} \), then \( t^{\mathfrak{A}}_{v} = \mleft\{ \orderedpair{\emptyset}{F^{\mathfrak{A}}_{i}(\tau^{\mathfrak{A}}_{v}(\emptyset))} \mright\} \)
-    because \aref{thm:set-exponentiation-with-empty-exponent}{\( \abs{\mathfrak{A}}^{0} = \mleft\{ \emptyset \mright\} \)}.
-    Note also that if \( v = \tuple{} \), then necessarily \( V^{\tau_{j}} = \emptyset \) for all \( j \in \Phi^{\mathcal{L}}(i) \).
-    This implies that for all \( j \in \abs{\tau} \), \( \tau_{j} \) must be a function symbol of \( \mathcal{L} \) with arity 0.
-    Finally, if \( \Phi^{\mathcal{L}}(i) = 0 \), then \( \tau = \tuple{} \) and thus \( v = \tuple{} \).
-\end{rem}
-
-\noindent
-The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar approach but with several important extensions.
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{designated variable sequence}
-    for \( \varphi \) if and only if
-    \( \bijection{v}{\abs{V^{\varphi}}}{V^{\varphi}} \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-set-of-all-possible-designated-sequences-for-formulas}
-    If \( \varphi \) if an \( \mathcal{L} \)-formula, then the set \( \mathcal{V}(\varphi) \) denotes the set of all
-    possible designated variable sequences for \( \varphi \).
-    \begin{equation*}
-        \mathcal{V}(\varphi) = \setbuilderBig{x \in \finiteseq{V^{\varphi}}}{\bijection{x}{\abs{V^{\varphi}}}{V^{\varphi}}}
-    \end{equation*}
-\end{dfn}
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( V^{\tau} \) denotes the set of all the variable symbols that occur
-    freely in \( \tau_{i} \) for at least one \( i \in \abs{\tau} \). In other words, \(  V^{\tau} = \Union_{i \,\in\, \abs{\tau}} V^{\tau_{i}} \).
-\end{notation}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-designated-variable-sequence-for-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a designated variable sequence for
-    \( \tau \) if and only if \( \bijection{v}{\abs{V^{\tau}}}{V^{\tau}} \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-possible-designated-variable-sequences-for-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \mathcal{V}(\tau) \) denotes the set of all possible designated variable sequences for
-    \( \tau \).
-    \begin{equation*}
-        \mathcal{V}(\tau) = \setbuilderBig{x \in \finiteseq{V^{\tau}}}{\bijection{x}{\abs{V^{\tau}}}{V^{\tau}}}
-    \end{equation*}
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-designated-variable-sequence-for-subformulas-of-a-formula}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \psi \) be a \aref{dfn:first-order-language-subformulas}{subformula of \( \varphi \)}.
-    If \( v \) is the designated sequence for \( \varphi \), then a finite sequence \( u \) is the designated variable sequence for \( \psi \)
-    if and only if:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{u}{\abs{V^{\psi}}}{V^{\psi}} \);
-        \item for all \( i, j \in \abs{V^{\psi}} \), \( i \subseteq j \) if and only if \( v^{-1}(u(i)) \subseteq v^{-1}(u(j)) \).
-    \end{enumerate*}
-\end{dfn}
-
-\begin{notation}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be the
-    \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
-    for \( \varphi \).
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \),
-    then we write \( \varphi_{v}(\alpha) \) to mean the following equivalent statements:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \varphi(\alpha) \)
         \item \( \varphi \) is true for \( \alpha \)
-        \item \( \alpha \) satisfies \( \varphi \)
         \item \( \varphi \) is satisfied by \( \alpha \)
     \end{enumerate}
-\end{notation}
-
-\noindent
-It remains now to define precisely what it means for a given \( \mathcal{L} \)-formula \( \varphi(v) \) to be true
-for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-distribution-function-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas and \( v \) is the designated variable sequence for \( \tau \),
-    then a function \( \function{\delta}{\abs{\tau}}{\finiteseq{k}} \) is a \keyword{variable distribution function} of \( \tau \) if and only if:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( k = \abs{v} \),
-        \item for all \( i \in \abs{\tau} \), \( \composition{v}{\delta_{i}} \) is the designated variable sequence for the \( \mathcal{L} \)-formula \( \tau_{i} \).
-    \end{enumerate*}
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-recursive-interpretation-of-formulas}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( v \) be the designated variable sequence for \( \varphi \).
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \) is an element of \( \abs{\mathfrak{A}}^{\abs{v}} \), then
-    the following rules apply:
+    \phantomsection \label{dfn:first-order-language-interpretation-of-first-order-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\varphi}} \) where \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
+    then the following rules hold:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atomic \( \mathcal{L} \)-formula} of the form \( t_{0} = t_{1} \)
-            where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms and \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a
-            \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{variable distribution function} of \( \tau = \tuple{t_{0}, t_{1}} \),
-            then \( \varphi(\alpha) \) if and only if
-            \( \aref{dfn:first-order-language-interpretation-of-a-tuple-of-terms}{\tau^{\mathfrak{A}}_{\delta}(\alpha)}
-               \in
-               \aref{dfn:identity-relation}{\identityrel{\abs{\mathfrak{A}}}} \)
-        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atomic \( \mathcal{L} \)-formula} of the form \( P^{\mathcal{L}}_{i}(\tau) \)
-            for some \( i \in \dom P^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
-            with a \aref{dfn:first-order-language-distribution-function-of-a-designated-variable-sequence-over-a-tuple-of-terms}{variable distribution function}
-            \( \function{\delta}{\abs{\tau}}{\finiteseq{\abs{v}}} \) and \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \), then
-            \( \varphi(\alpha) \) if and only if
-            \aref{dfn:first-order-language-interpretation-of-a-tuple-of-terms}{\( \tau^{\mathfrak{A}}_{\delta}(\alpha) \in P^{\mathfrak{A}}_i \)}
-        \item If \( \varphi \) is of the form \( (\psi) \) where \( \psi \) is an \( \mathcal{L} \)-formula,
+        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atom of \( \mathcal{L} \)} with the form \( t_{0} = t_{1} \)
+            where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms and \( \delta \) is the
+            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function of \tuple{t_{0}, t_{1}}},
+            then \( \varphi(\alpha) \) if and only if \( t^{\mathfrak{A}}_{0}(\composition{\alpha}{\delta_{0}}) = t^{\mathfrak{A}}_{1}(\composition{\alpha}{\delta_{1}}) \)
+        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atom of \( \mathcal{L} \)} with the form
+            \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) and \( \delta \) is the
+            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function of \( \tau \)},
+            then \( \varphi(\alpha) \) if and only if \(  \sequencebig{\tau_{j}^{\mathfrak{A}}(\composition{\alpha}{\delta_{j}})}{j \in \dom \tau} \in P^{\mathfrak{A}}_{i} \)
+        \item If \( \varphi \) has the form \( \mleft( \psi \mright) \) or \( \mleft[ \,\psi\, \mright] \) where \( \psi \) is a \( \mathcal{L} \)-formula,
             then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( [\,\psi\,] \) where \( \psi \) is an \( \mathcal{L} \)-formula,
-            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula,
-            then \( \varphi(\alpha) \) if and only if \( \lnot \, \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \phi \,\,{\land}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
-            \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
-            of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
-            \( \phi(\composition{\alpha}{\delta_{0}}) \) and \( \psi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) is of the form \( \phi \,\,{\lor}\,\, \psi \) where \( \phi \), \( \psi \) are both \( \mathcal{L} \)-formulas and
-            \( \function{\delta}{2}{\finiteseq{\abs{v}}} \) is a \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution function}
-            of \( \tau = \tuple{\phi, \psi} \), then \( \varphi(\alpha) \) if and only if
-            \( \phi(\composition{\alpha}{\delta_{0}}) \) or \( \psi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) does not
-            \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
-            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \)
-            does not \aref{dfn:first-order-language-free-variables}{occur freely} in \( \psi \),
-            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) is of the form \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula with a
-            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} \( u \) such that
-            \( u_{i} = x \) for some \( i \in \dom u \) and,
-            \begin{equation*}
-                v = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = u_{x}} \union 
-                    \setbuilderbig{\orderedpair{x}{y}}{i \in x \union \mleft\{ x \mright\} \,\,{\land}\,\,
-                    x \union \mleft\{ x \mright\} \in \abs{u} \,\,{\land}\,\, y = u_{x \union \mleft\{ x \mright\}}}
+        \item If \( \varphi \) has the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula, then \( \varphi(\alpha) \) if and only if
+            \( \psi \) is not satisfied by \( \alpha \)
+        \item If \( \varphi \) has the form \( \psi \,\,{\land}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas and \( \delta \) is the
+            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution function of \( \tuple{\psi, \phi} \)},
+            then \( \varphi(\alpha) \) if and only if both \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \phi(\composition{\alpha}{\delta_{1}}) \)
+        \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas and \( \delta \) is the
+            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution function of \( \tuple{\psi, \phi} \)},
+            then \( \varphi(\alpha) \) if and only if either \( \psi(\composition{\alpha}{\delta_{0}}) \) or \( \phi(\composition{\alpha}{\delta_{1}}) \)
+        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable such
+            that \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
+        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable such
+            that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if for all \( \beta \in \abs{\mathfrak{A}} \),
+            \begin{equation*} 
+                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j \in n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
+                \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{\mleft( n = j \,\,{\lor}\,\, n \in j \mright) \,\,{\land}\,\, j \in \folnumfreevars{\psi}} \Big)
             \end{equation*}
-            then \( \varphi(\alpha) \) if and only if \( \psi(\mu) \) for all \( \beta \in \abs{\mathfrak{A}} \) where \( \mu \) is defined as,
-            \begin{multline*}
-                \mu = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = \alpha_{x}} \union \mleft\{ \orderedpair{i}{\beta} \mright\}\\
-                    \union \setbuilderbig{\orderedpair{ x \union \mleft\{ x \mright\} }{y}}{( i = x \,\,{\lor}\,\, i \in x) \,\,{\land}\,\,
-                    x \in \abs{u} \,\,{\land}\,\, y = \alpha_{x}}
-            \end{multline*}
-        \item If \( \varphi \) is of the form \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula with a
-            \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} \( u \)
-            such that \( u_{i} = x \) for some \( i \in \dom u \) and,
-            \begin{equation*}
-                v = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = u_{x}} \union 
-                    \setbuilderbig{\orderedpair{x}{y}}{i \in x \union \mleft\{ x \mright\} \,\,{\land}\,\,
-                    x \union \mleft\{ x \mright\} \in \abs{u} \,\,{\land}\,\, y = u_{ x \union \mleft\{ x \mright\} }}
+        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable
+            such that \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
+        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable
+            such that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \)
+            such that,
+            \begin{equation*} 
+                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j \in n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
+                \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{\mleft( n = j \,\,{\lor}\,\, n \in j \mright) \,\,{\land}\,\, j \in \folnumfreevars{\psi}} \Big)
             \end{equation*}
-            then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \psi(\mu) \) where \( \mu \) is defined
-            as,
-            \begin{multline*}
-                \mu = \setbuilderbig{\orderedpair{x}{y}}{x \in i \,\,{\land}\,\, y = \alpha_{x}} \union \mleft\{ \orderedpair{i}{\beta} \mright\}\\
-                    \union \setbuilderbig{\orderedpair{ x \union \mleft\{ x \mright\} }{y}}{( i = x \,\,{\lor}\,\, i \in x) \,\,{\land}\,\,
-                    x \in \abs{u} \,\,{\land}\,\, y = \alpha_{x}}
-            \end{multline*}
+        \item If \( \varphi \) has the form \( \psi(\tau) \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms
+            such that \( \dom \tau = \folnumfreevars{\psi} \),
     \end{enumerate}
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-models-of-first-order-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula with a \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
-    \( v \) and \( \mathfrak{A} \) is any \( \mathcal{L} \)-structure, then the following statements are equivalent:
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \mathfrak{A} \) is a \( \mathcal{L} \)-structure, then the following statements are equivalent:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \mathfrak{A} \models \varphi \)
         \item \( \mathfrak{A} \) models \( \varphi \)
@@ -826,101 +832,6 @@ for (or satisfied by) an \( \alpha \in \abs{\mathfrak{A}}^{\abs{v}} \) given an 
     then we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent} (denoted as \( \varphi \equiv \psi \) )
     if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
-
-\noindent
-We now prove several useful results.
-
-\begin{lem}
-    \phantomsection \label{lem:composing-permutation-and-its-inverse-to-obtain-the-original-function}
-    If \( f \) is a function and \( \rho \) is a permutation of \( \dom f \),
-    then,
-    \begin{equation*}
-        \composition{\mleft( \composition{f}{\rho^{-1}} \mright)}{\rho} = f
-    \end{equation*}
-\end{lem}
-
-\begin{proof}
-    Since \( \rho \) is a bijection between \( \dom f \) and itself, it follows that \( \rho^{-1} \) is also a bijection between \( \dom f \) and itself.
-    Let \( g = \composition{f}{\rho^{-1}} \).
-    Let \( \orderedpair{x}{y} \in \composition{g}{\rho} \).
-    Thus, \aref{dfn:composition-of-two-sets-of-ordered-pairs}{\( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{y} \in g \)} for some
-    \( z \in \ran \rho \). Since \( \orderedpair{z}{y} \in g \),
-    it follows that \aref{dfn:composition-of-two-sets-of-ordered-pairs}{\( \orderedpair{z}{w} \in \rho^{-1} \) and \( \orderedpair{w}{y} \in f \)}
-    for some \( w \in \ran \rho^{-1} \). Moreover, it follows from \( \orderedpair{z}{w} \in \rho^{-1} \) that
-    \aref{dfn:inverse-of-a-set-of-ordered-pairs}{\( \orderedpair{w}{z} \in \rho \)}. Since \( \rho \) is a function, the fact that \( \orderedpair{x}{z} \in \rho \)
-    and \( \orderedpair{w}{z} \in \rho \) are both true implies that \( x = w \). We know that \( \orderedpair{w}{y} \in f \), so it follows that
-    \( \orderedpair{x}{y} \in f \).
-    In other words, every ordered pair in \( \composition{g}{\rho} \) is also in \( f \). Since \( \composition{g}{\rho} \) is a function and
-    \aref{dfn:function-basic}{functions can only contain ordered pairs}, it follows that \( \composition{g}{\rho} \subseteq f \).
-
-    \vspace{0.3cm}
-    \noindent
-    We can also prove that \( f \subseteq \composition{g}{\rho} \) in a similar manner. Let \( \orderedpair{x}{y} \in f \).
-    Clearly, \( x \in \dom f \). Since \( \rho \) is a bijection between \( \dom f \) and itself, it follows that
-    \( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{x} \in \rho^{-1} \) for some \( z \in \dom f \).
-    Thus, there exists an \( x \) such that \( \orderedpair{z}{x} \in \rho^{-1} \) and \( \orderedpair{x}{y} \in f \).
-    Therefore, \( \orderedpair{z}{y} \in \composition{f}{\rho^{-1}} = g \). Since \( \orderedpair{x}{z} \in \rho \),
-    this also means that there exists a \( z \) such that \( \orderedpair{x}{z} \in \rho \) and \( \orderedpair{z}{y} \in g \);
-    in other words, \( \orderedpair{x}{y} \in \composition{g}{\rho} \). Thus, \( f \subseteq \composition{g}{\rho} \).
-\end{proof}
-
-
-\begin{lem}
-    \phantomsection \label{lem:permuted-tuples-span-the-entire-nary-product}
-    If \( A \) is a non-empty set, \( k \) is a natural number, and \( \rho \) is a \aref{dfn:permutation-of-a-set}{permutation} of \( k \), then,
-    \begin{equation*}
-        A^{k} = \setbuilderbig{x}{\exists y\,{\in}\,A^{k} \, \big( x = \composition{y}{\rho} \big)}
-    \end{equation*}
-\end{lem}
-
-\begin{proof}
-    Let \( T = \setbuilder{x}{\exists y\,{\in}\,A^{k} \, \mleft( x = \composition{y}{\rho} \mright)} \).
-    It suffices, therefore, to prove that \( A^{k} \subseteq T \) and \( T \subseteq A^{k} \) are both true.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim}: \( A^{k} \subseteq T \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( x \in A^{k} \) be arbitrary. Thus, \( \function{x}{k}{A} \) by \cref{dfn:set-exponentiation}.
-    We know that \( \rho \) is a bijection between \( k \) and \( k \), so it follows that \( \rho^{-1} \) is also a bijection between
-    \( k \) and \( k \).
-    Since \( x \) is a function with \( \dom x = k \) and \( \rho \) is a permutation of \( k \), \cref{lem:composing-permutation-and-its-inverse-to-obtain-the-original-function}
-    applies and we have \( \composition{(\composition{x}{\rho^{-1}})}{\rho} = x \).
-
-    \vspace{0.3cm}
-    \noindent
-    Now let \( y = \composition{x}{\rho^{-1}} \).
-    Clearly, \( \ran \rho^{-1} = \dom x = k \), so it follows that \( \dom y = \dom \rho^{-1} = k \).
-    Moreover, \( \ran y \subseteq \ran x \subseteq A \), so it follows that \( \function{y}{k}{A} \).
-    By \cref{dfn:set-exponentiation}, this means that \( y \in A^{k} \)
-    In other words, there exists a \( y \in A^{k} \) such that \( x = \composition{y}{\rho} \) so \( x \in T \).
-    By the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}, it follows that \( x \in A^{k} \) implies \( x \in T \).
-    Since \( x \) is arbitrary, \( A^{k} \subseteq T \) follows readily from \aref{rule-of-inference:universal-generalization}{Universal Generalization}.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim}: \( T \subseteq A^{k} \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( x \in T \) be arbitrary. Thus, \( x = \composition{y}{\rho} \) for some \( y \in A^{k} \). Since \( y \in A^{k} \), it follows from
-    \cref{dfn:set-exponentiation} that \( \function{y}{k}{A} \). Since \( x = \composition{y}{\rho} \) and \( \ran \rho = \dom y = k \), it follows
-    that \( \function{x}{k}{A} \); or, in other words, \( x \in A^{k} \). Thus, \( T \subseteq A^{k} \).
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:models-of-formulas-are-invariant-under-permutations-of-designated-variable-sequence}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula with a \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence}
-    \( v \) and \( \rho \) is any permutation of \( \abs{v} \), then \( \varphi(v) \equiv \varphi(\composition{v}{\rho}) \).
-\end{thm}
-
-\begin{proof}
-    If \( \varphi \) is a sentence (i.e., \( v = \tuple{} \)), then the proof is trivial since \( \composition{v}{\rho} = \tuple{} \) and obviously
-    \( \varphi \equiv \varphi \). Now let us suppose that \( v \) is a non-empty tuple of variable symbols. Let \( \mathfrak{A} \) be any
-    \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \varphi \).
-\end{proof}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
@@ -1400,22 +1311,15 @@ is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contr
 which prohibits the reuse of any variable, free or bound, from the original formula.
 
 \chapter{Logical Equivalences}
-This chapter utilizes the following notational conventions:
-\begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
-    \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
-    \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
-    \item The upper case Greek letters \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
-    \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
-    \item The \aref{dfn:first-order-language-designated-variable-sequence-for-formulas}{designated variable sequence} for an \( \mathcal{L} \)-formula
-        will be denoted using a superscripted \( v \); e.g., \( v^{\varphi} \).
-    \item The \aref{dfn:first-order-language-variable-distribution-function-of-formulas}{variable distribution functions}
-        for different \( \mathcal{L} \)-formulas will be distinguished using superscripts;
-        e.g., \( \delta^{\varphi} \) denotes the variable distribution function of \( \varphi \).
-\end{enumerate}
-
-\vspace{0.3cm}
-\noindent
-We shall begin with a few useful lemmas.
+\begin{notation}
+    This chapter utilizes the following notational conventions:
+    \begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
+        \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
+        \item The upper case Greek letters \( \Lambda \), \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
+        \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
+    \end{enumerate}
+\end{notation}
 
 \begin{thm}
     \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
