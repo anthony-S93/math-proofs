@@ -176,45 +176,6 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-free-variables}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable occurring in \( \varphi \),
-    then \( v \) is a \keyword{free variable} of \( \varphi \) if and only if it does not occur immediately to the right
-    of a quantifier.
-    If \( v \) is a free variable of \( \varphi \), then we also say that ``\( v \) \keyword{occurs freely} in \( \varphi \).''
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) is the set of all free variables occurring in \( \varphi \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \folfreevars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folfreevars{\tau_{i}} \).
-\end{dfn}
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-the-number-of-free-variables-occurring-in-formulas}
-    If \( t \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, we will abbreviate
-    \( \abs{\folfreevars{t}} \) and \( \abs{\folfreevars{\tau}} \) with \( \folnumfreevars{t} \) and \( \folnumfreevars{\tau} \)
-    respectively.
-\end{notation}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-bound-variables}
-    Any variable symbol that occurs within a formula but is not a free variable of that formula is called a \keyword{bound variable}.
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-bound-variables-in-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folboundvars{t} \) is the set of all bound variables occurring in \( \varphi \).
-\end{dfn}
-
-\begin{cor}
-    For any \( \mathcal{L} \)-formula \( \varphi \), \( \folfreevars{\varphi} \union \folboundvars{\varphi} = \folvars{\varphi} \).
-\end{cor}
-
-\begin{dfn}
     \phantomsection \label{dfn:first-order-language-sentences}
     An \( \mathcal{L} \)-formula is an \( \mathcal{L} \)-sentence if and only if it does not contain any free variables
     (i.e., \( \folfreevars{\varphi} = \emptyset \)).
@@ -246,8 +207,6 @@ As such, any comprehensive definition of the grammar of a first-order language m
             then \( \forall v \, \varphi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
             then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that
-            \( \dom \tau = \abs{\folfreevars{\varphi}} \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
     \end{enumerate}
 \end{dfn}
 
@@ -257,17 +216,46 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \( \varphi {\iff} \psi \) to abbreviate \( \mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)  \), and so on.
 \end{rem}
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-subformulas}
-    If \( \varphi \), \( \psi \), and \( \phi \) are \( \mathcal{L} \)-formulas, then the following definitions apply:
+\begin{dfn}[Free Variables]
+    \phantomsection \label{dfn:first-order-language-recursive-definition-of-free-variables}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas and \( x \) and \( v \) are \( \mathcal{L} \)-variables, then the following holds:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) has the form \( (\psi) \) or \( [\,\psi\,] \), then \( \psi \) is the subformula of \( \varphi \)
-        \item If \( \varphi \) has the form \( \lnot \, \psi \), then \( \psi \) is the subformula of \( \varphi \)
-        \item If \( \varphi \) has the form \( \psi \,\,{\land}\,\, \phi \), then \( \psi \) and \( \phi \) are both subformulas of \( \varphi \)
-        \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \), then \( \psi \) and \( \phi \) are both subformulas of \( \varphi \)
-        \item If \( \varphi \) has the form  \( \forall x \, \psi \), then \( \psi \) is a subformula of \( \varphi \)
-        \item If \( \varphi \) has the form \( \exists x \, \psi \), then \( \psi \) is a subformula of \( \varphi \)
+        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( x \) is a free variable of \( \varphi \) if and only if \( x \in \folsymbols{\varphi} \)
+        \item \( x \) is a free variable of \( \lnot \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \)
+        \item \( x \) is a free variable of \( \varphi \,\,{\land}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
+        \item \( x \) is a free variable of \( \varphi \,\,{\lor}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
+        \item \( x \) is a free variable of \( \forall v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
+        \item \( x \) is a free variable of \( \exists v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
     \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely in} \( \varphi \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) is the set of all free variables occurring in \( \varphi \).
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \folfreevars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folfreevars{\tau_{i}} \).
+\end{dfn}
+
+\begin{notation}
+    \phantomsection \label{notation:first-order-language-the-number-of-free-variables-occurring-in-formulas}
+    If \( t \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, we will abbreviate
+    \( \abs{\folfreevars{t}} \) and \( \abs{\folfreevars{\tau}} \) with \( \folnumfreevars{t} \) and \( \folnumfreevars{\tau} \)
+    respectively.
+\end{notation}
+
+\begin{dfn}[Composite Formulas]
+    \phantomsection \label{dfn:first-order-language-composite-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \folnumfreevars{\varphi} \),
+    then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
+    Furthermore, an \( \mathcal{L} \)-variable \( x \) is a free variable of \( \varphi(\tau) \) if and only if \( x \) occurs freely in \( \tau_{i} \) for some
+    \( i \in \abs{\tau} \).
 \end{dfn}
 
 \noindent
@@ -397,7 +385,6 @@ there are combinatorially different ways to replace the variable symbols \( x \)
 but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), and \( z \) with \( b \)!
 Since there is no rule in the syntax of first-order languages that specifies the preferred substitution scheme, the interpretation is inherently ambiguous.
 
-\phantomsection \label{text:designated-sequence-for-variable-symbols}
 \vspace{0.3cm}
 \noindent
 An easy way to resolve this ambiguity is to simply arrange the elements of \(  \folvars{s} \) sequentially using the 
@@ -527,59 +514,38 @@ The informal discussion above can be formalized with the following definitions.
     \end{enumerate*}
 \end{dfn}
 
+\begin{lem}
+    \phantomsection \label{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}
+    Let \( A \) be a set with a well-ordering \( \prec \) defined on it. Let \( S \) be any subset of \( A \).
+    If \( u \) and \( v \) are two finite sequences with the following properties:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( u \) and \( v \) are bijections from \( \abs{S} \) to \( S \);
+        \item \( i \in j \) if and only if \( u_{i} \prec u_{j} \) and \( v_{i} \prec v_{j} \) for all \( i,j \in \abs{S} \),
+    \end{enumerate*}
+    then necessarily \( u = v \).
+\end{lem}
+
+\begin{proof}
+    Since \( u \) and \( v \) are functions with equal domains (\( \dom u = \dom v = \abs{S} \)), it suffices to prove
+    that \( u_{i} = v_{i} \) for all \( i \in \abs{S} \) in order to establish equality.
+    Let \( i \in \abs{S} \) be arbitrary. Since \( \dom u = \dom v = \abs{S} \), it follows that \( u_{i} = \alpha \)
+    and \( v_{i} = \beta \) for some \( \alpha, \beta \in S \). Now suppose that \( \alpha \neq \beta \).
+    Since \( S \subseteq A \), it follows that \( \alpha, \beta \in A \). But \( \prec \) is a well-ordering on \( A \),
+    so if \( \alpha \neq \beta \), then necessarily either \( \alpha \prec \beta \) or \( \beta \prec \alpha \), both of which
+    imply \( i \in i \), an obvious contradiction. Therefore, the supposition that \( \alpha \neq \beta \) must be false
+    by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
+    In other words, \( u_{i} = v_{i} \) for all \( \abs{S} \).
+\end{proof}
+
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}
-    The canonical variable sequence for any first-order term is unique.
+    \phantomsection \label{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term-or-a-tuple-of-terms}
+    The canonical variable sequence for any first-order term or any tuple of first-order terms is unique.
 \end{thm}
 
 \begin{proof}
-    Let \( t \) be a term of some arbitrary first-order language \( \mathcal{L} \).
-    Let \( u \) and \( v \) be two finite sequences that meet the two criteria stated in
-    \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}---i.e., they are both canonical variable sequences of \( t \).
-    The goal is to show that \( u = v \) for all possible cases.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Case} \( \folnumvars{t} = 0 \): Clearly, \( \bijection{u}{\emptyset}{\emptyset} \) and \( \bijection{v}{\emptyset}{\emptyset} \).
-    So \( u = v \) is trivially true.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Case} \( \folnumvars{t} \neq 0 \): We know that \( \dom u = \dom v = \folnumvars{t} \) by \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}.
-    So it remains to prove that \( u_{i} = v_{i} \) for all \( i \in \folnumvars{t} \), which can be done by finite induction.
-    Let \( V^{\mathcal{L}} \) be the set of all \( \mathcal{L} \)-variables.
-    Now suppose that \( u_{0} \neq v_{0} \). In other words, either \( u_{0} \prec v_{0} \) or \( v_{0} \prec u_{0} \)
-    since \aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{\( \prec \) is a well-ordering
-    of \( V^{\mathcal{L}} \)}.
-    But by \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}, \( u_{0} \prec v_{0} \) or \( v_{0} \prec u_{0} \) would imply that
-    \( 0 \in 0 \), which is absurd since \( 0 = \emptyset \) and \( \emptyset \) cannot contain any element.
-    In other words, the supposition that \( u_{0} \neq v_{0} \) must be
-    false by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
-    Thus, \( u_{0} = v_{0} \), which takes care of the base case.
-
-    \vspace{0.3cm}
-    \noindent
-    For the induction step, we begin by supposing that \( u_{i} = v_{i} \) for some \( i \in k \) where \( k \,{\union}\, \mleft\{ k \mright\} = \folnumvars{t} \).
-    Since \( i \in k \), it follows that either \( i \union \mleft\{ i \mright\} \in k \) or \( i \union \mleft\{ i \mright\} = k \). In both cases, necessarily
-    \( i \union \mleft\{ i \mright\} \in \folnumvars{t} = \dom u = \dom v \). If we denote \( i \union \mleft\{ i \mright\} \) as \( i + 1 \), then it follows that
-    \( u_{i+1} = \alpha \) and \( v_{i+1} = \beta \) for some \( \alpha, \beta \in \folvars{t} \).
-    If \( \alpha \neq \beta \), then either \( \alpha \prec \beta \) or \( \beta \prec \alpha \) since
-    \aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{\( \prec \) is a well-ordering on \( V^{\mathcal{L}} \)}.
-    However, neither \( \alpha \prec \beta \) nor \( \beta \prec \alpha \) is possible since they would both imply \( (i + 1) \in (i + 1) \) by
-    \cref{dfn:first-order-language-canonical-variable-sequence-for-terms}. Therefore, the supposition that \( \alpha \neq \beta \) cannot be true, which means
-    that \( \alpha = \beta \).
-    In other words, if \( u_{i} = v_{i} \) for any \( i \in k \), then necessarily \( u_{i+1} = v_{i+1} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Having proven the base case and induction step, we conclude by finite induction that \( u_{i} = v_{i} \) for all \( i \in k \union \mleft\{ k \mright\} \).
-    Since \( k \union \mleft\{ k \mright\} = \folnumvars{t} \), it follows that \( \dom u = \dom v \) and \( u_{i} = v_{i} \) for all \( i \in \dom u \).
-    By \cref{thm:equality-of-functions}, it follows that \( u = v \).
+    Since \( \prec \) is a well-ordering defined on the set of all \( \mathcal{L} \)-variables, the uniqueness follows readily from
+    \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
 \end{proof}
-
-\begin{rem}
-    The uniqueness of the canonical variable sequence for a tuple of \( \mathcal{L} \)-terms can be proven in the exact same argument as above.
-\end{rem}
 
 \noindent
 Since the canonical variable sequence for every \( \mathcal{L} \)-term (or tuples of \( \mathcal{L} \)-terms) is unique,
@@ -638,6 +604,29 @@ it is justifiable to introduce a special notation for it.
     of \( \tau \) is unique.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-every-element-in-the-range-of-variable-distribution-function-is-an-injection}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( \delta \) is the variable distribution function for \( \tau \), then
+    \( \delta_{i} \) is injective for all \( i \in \abs{\tau} \).
+\end{thm}
+
+\begin{proof}
+    Let \( i \in \abs{\tau} \) be arbitrary.
+    Suppose that \( \orderedpair{x_{1}}{y} \in \delta_{i} \) and \( \orderedpair{x_{2}}{y} \in \delta_{i} \).
+    By \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}, it follows that \( x_{1}, x_{2} \in \folnumvars{\tau_{i}} \).
+    But \( \folvarseq{\tau_{i}} \) is a bijection from \( \folnumvars{\tau_{i}} \) to \( \folvars{\tau_{i}} \)
+    by \cref{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}.
+    Thus, \( x_{1}, x_{2} \in \dom \folvarseq{\tau_{i}} \).
+    In other words, \( \orderedpair{x_{1}}{u} \in \folvarseq{\tau_{i}} \) and \( \orderedpair{x_{2}}{v} \in \folvarseq{\tau_{i}} \) for some
+    \( \mathcal{L} \)-variables \( u \) and \( v \).
+    But this would also imply that \( \orderedpair{x_{1}}{z} \in \delta_{i} \) and \( \orderedpair{z}{u} \in \folvarseq{\tau} \) because
+    \( \composition{ \folvarseq{\tau} }{\delta_{i}} = \folvarseq{\tau_{i}} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}.
+    Similarly, \( \orderedpair{x_{2}}{w} \in \delta_{i} \) and \( \orderedpair{w}{v} \in \folvarseq{\tau} \).
+    \aref{dfn:function-basic}{Since \( \delta_{i} \) and \( \folvarseq{\tau} \) are functions, it follows that \( y = z = w \) and thus \( u = v \)}.
+    Finally, \aref{dfn:injection}{we can conclude that \( x_{1} = x_{2} \) from the fact that}
+    \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{\( \folvarseq{\tau_{i}} \) is injective}.
+\end{proof}
+
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-the-interpretation-of-terms}
     If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then an \keyword{interpretation} of \( t \) in the
@@ -681,7 +670,7 @@ The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar 
 \end{thm}
 
 \begin{proof}
-    Same as \cref{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}.
+    Follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
 \end{proof}
 
 \begin{dfn}
@@ -689,7 +678,7 @@ The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar 
     If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a finite sequence \( v \) is a \keyword{canonical variable sequence}
     for \( \tau \) if and only if it has the following properties:
     \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{v}{\folnumfreevars{\varphi}}{\aref{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}{\folfreevars{\varphi}}} \);
+        \item \( \bijection{v}{\folnumfreevars{\tau}}{\aref{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}{\folfreevars{\tau}}} \);
         \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumfreevars{\varphi} \).
     \end{enumerate*}
 \end{dfn}
@@ -700,7 +689,7 @@ The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar 
 \end{thm}
 
 \begin{proof}
-   Same as \cref{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term}.
+    Follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
 \end{proof}
 
 \noindent
@@ -711,6 +700,20 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, then we denote their unique canonical variable sequences as
     \( \folfreevarseq{\varphi} \) and \( \folfreevarseq{\tau} \) respectively.
 \end{notation}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-canonical-variable-sequence-of-a-formula-with-one-extra-variable-symbol}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) where
+    \( x \) is an \( \mathcal{L} \)-variable, then for some \( n \in \folnumfreevars{\varphi} \),
+    \begin{equation*}
+        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{j}{\folfreevarseq{\psi}(j)}}{j < n}
+        \union \big\{ \orderedpair{n}{x} \big\}
+        \union \setbuilderbig{\orderedpair{j+1}{\folfreevarseq{\psi}(j)}}{n \leq j < \folnumvars{\psi}}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+\end{proof}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}
@@ -744,7 +747,7 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-interpretation-of-first-order-formulas}
+    \phantomsection \label{dfn:first-order-language-interpretation-of-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\varphi}} \) where \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
     then the following rules hold:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -771,8 +774,8 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
         \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable such
             that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if for all \( \beta \in \abs{\mathfrak{A}} \),
             \begin{equation*} 
-                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j \in n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
-                \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{\mleft( n = j \,\,{\lor}\,\, n \in j \mright) \,\,{\land}\,\, j \in \folnumfreevars{\psi}} \Big)
+                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
+                \setbuilderbig{\orderedpair{j+1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
             \end{equation*}
         \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable
             such that \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
@@ -780,11 +783,9 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
             such that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \)
             such that,
             \begin{equation*} 
-                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j \in n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
-                \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{\mleft( n = j \,\,{\lor}\,\, n \in j \mright) \,\,{\land}\,\, j \in \folnumfreevars{\psi}} \Big)
+                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
+                \setbuilderbig{\orderedpair{j + 1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
             \end{equation*}
-        \item If \( \varphi \) has the form \( \psi(\tau) \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms
-            such that \( \dom \tau = \folnumfreevars{\psi} \),
     \end{enumerate}
 \end{dfn}
 
@@ -798,7 +799,7 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
         \item \( \mathfrak{A} \) satisfies \( \varphi \)
         \item \( \varphi \) is true in \( \mathfrak{A} \)
         \item \( \varphi \) is satisfied by \( \mathfrak{A} \)
-        \item \( \varphi(\alpha) \) for all \( \alpha \in \abs{\mathfrak{A}}^{ \abs{v} } \)
+        \item \( \varphi(\alpha) \) for all \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\varphi} } \)
     \end{enumerate}
 \end{dfn}
 
@@ -1314,8 +1315,10 @@ which prohibits the reuse of any variable, free or bound, from the original form
 \begin{notation}
     This chapter utilizes the following notational conventions:
     \begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item The symbol \( \mathcal{L} \) refers to any \aref{dfn:first-order-language}{first-order language}.
+        \item The symbol \( \mathcal{L} \) denotes any \aref{dfn:first-order-language}{first-order language}.
+        \item The symbol \( V^{\mathcal{L}} \) denotes the set of all \( \mathcal{L} \)-variables.
         \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
+        \item The lower case Greek letters \( \delta \) and \( \varepsilon \) are reserved for variable distribution functions.
         \item The upper case Greek letters \( \Lambda \), \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
         \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
     \end{enumerate}
@@ -1331,6 +1334,46 @@ which prohibits the reuse of any variable, free or bound, from the original form
 \end{thm}
 
 \begin{proof}
+    Let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \).
+    Let \( \phi_{0} \coloneq \psi \,\,{\lor}\,\, \lambda \) and \( \phi_{1} \coloneq \forall x \, \theta \).
+    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
+    functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
+    The goal, therefore, is to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
+    We begin by establishing several important claims.
+
+    \phantomsection \label{text:claim-both-formulas-have-equal-set-of-all-free-variables}
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim 1}: \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \)
+
+    \vspace{2pt}
+    \noindent
+    Observe that \( \folfreevars{\phi_{0}} = \folfreevars{\psi} \union \folfreevars{\lambda}
+    = \folfreevars{\psi} \union \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright)
+    \).
+    Similarly, \( \folfreevars{\phi_{1}} = \folfreevars{\theta} - \mleft\{ x \mright\} = \mleft( \folfreevars{\psi} \union \folfreevars{\varphi} \mright) - \mleft\{ x \mright\}
+    = \mleft( \folfreevars{\psi} - \mleft\{ x \mright\} \mright) \union \folfreevars{\varphi} - \mleft\{ x \mright\}
+    \). Since \( x \) does not occur freely in \( \psi \), it follows that \( \folfreevars{\psi} - \mleft\{ x \mright\} = \folfreevars{\psi} \).
+    Thus, \( \folfreevars{\phi_{1}} = \folfreevars{\psi} \union \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright) = \folfreevars{\phi_{0}} \).
+
+    \phantomsection \label{text:claim-both-formulas-have-equal-canonical-sequence-of-free-variables}
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim 2}: \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \)
+
+    \vspace{2pt}
+    \noindent
+    Let \( u \) and \( v \) denote the canonical variable sequences for \( \phi_{0} \) and \( \phi_{1} \) respectively.
+    By \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}, this means that \( u \) and \( v \)
+    are bijections from \( \abs{\folfreevars{\phi_{0}}} \) to \( \folfreevars{\phi_{0}} \) and \( \abs{\folfreevars{\phi_{1}}} \) to \( \folfreevars{\phi_{1}} \)
+    respectively. But it has just been established that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \), which means that \( u \) and \( v \) must have
+    the same domain and range. Moreover, \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas} also requires that
+    \( i \in j \) if and only if \( u_{i} \prec u_{j} \) and \( v_{i} \prec v_{j} \).
+    It follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence} that \( u = v \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim 3}: If \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \), then,
 \end{proof}
 
 \begin{thm}

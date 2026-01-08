@@ -26,7 +26,7 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-extensionality}
     If every element of \( A \) is an element of \( B \) and every element of \( B \) is also an element of \( A \), then \( A = B \).
     \begin{equation*}
-        \forall A,B \, \Big[\, \forall x \left( x \in A \iff x \in B \right) \implies A = B \,\Big]
+        \forall A,B \, \Big[\, \forall x \left( x \in A \iff x \in B \right) \implies \mleft( A = B \mright) \,\Big]
     \end{equation*}
 \end{axm}
 
@@ -34,16 +34,16 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-pairing}
     For any objects \( a \) and \( b \), there exists a set \( S \) such that \( S \) contains exactly \( a \) and \( b \).
     \begin{equation*}
-        \forall a,b \, \exists S \, \forall x \, \Big[ x \in S \iff (x = a \lor x = b) \Big]
+        \forall a,b \, \exists S \, \forall x \, \Big[ x \in S \iff (x = a \,\,{\lor}\,\, x = b) \Big]
     \end{equation*}
 \end{axm}
 
 \begin{axm}[Axiom Schema of Specification]
     \label{axm:axiom-schema-of-specification}
-    Given any predicate \( \varphi \) and any existing set \( A \), there exists a set \( S \)
-    such that \( x \in S \) if and only if \( x \in A \land \varphi(x) \).
+    Given any formula \( \varphi \) in the language of set theory and any existing set \( A \), there exists a set \( S \)
+    such that \( x \in S \) if and only if \( x \in A \,\,{\land}\,\, \varphi(x) \).
     \begin{equation*}
-        \forall A \, \exists S \, \forall x \, \Big[ x \in S \iff x \in A \land \varphi(x) \Big]
+        \forall A \, \exists S \, \forall x \, \Big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi(x) \Big]
     \end{equation*}
 \end{axm}
 
@@ -51,7 +51,7 @@ The following is a list of axioms from which every other statement in set theory
     \label{axm:axiom-of-union}
     For any set \( A \), there exists a set \( U \) such that \( x \in U \) if and only if \( x \in S \) for some \( S \in A \).
     \begin{equation*}
-        \forall A \, \exists U \, \forall x \, \Big[ x \in U \iff \exists S \, \big( S \in A \land x \in S \big) \Big]
+        \forall A \, \exists U \, \forall x \, \Big[ x \in U \iff \exists S \, \big( S \in A \,\,{\land}\,\, x \in S \big) \Big]
     \end{equation*}
 \end{axm}
 
