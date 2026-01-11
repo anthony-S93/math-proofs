@@ -194,12 +194,12 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
-    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible in a finite number of steps
-    via the application of the following rules:
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible in a finite number of steps via
+    the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft[ \, \varphi \, \mright] \) is an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft[ \, \varphi \, \mright] \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \lnot \, \varphi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\land}\,\, \psi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\lor}\,\, \psi \) is also an \( \mathcal{L} \)-formula
@@ -207,6 +207,9 @@ As such, any comprehensive definition of the grammar of a first-order language m
             then \( \forall v \, \varphi \) is also an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
             then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
+        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-variables such that
+            \( \abs{\tau} \) is the number of \aref{dfn:first-order-language-recursive-definition-of-free-variables}{free variables}
+            of \( \varphi \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula
     \end{enumerate}
 \end{dfn}
 
@@ -218,7 +221,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}[Free Variables]
     \phantomsection \label{dfn:first-order-language-recursive-definition-of-free-variables}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas and \( x \) and \( v \) are \( \mathcal{L} \)-variables, then the following holds:
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, \( x \) and \( v \) are \( \mathcal{L} \)-variables, and \( \tau \) is a tuple of \( \mathcal{L} \)-variables,
+    then the following holds:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( x \) is a free variable of \( \varphi \) if and only if \( x \in \folsymbols{\varphi} \)
         \item \( x \) is a free variable of \( \lnot \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \)
@@ -226,6 +230,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
         \item \( x \) is a free variable of \( \varphi \,\,{\lor}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
         \item \( x \) is a free variable of \( \forall v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
         \item \( x \) is a free variable of \( \exists v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
+        \item \( x \) is a free variable of \( \varphi(\tau) \) if and only if \( x \in \ran \tau \)
     \end{enumerate}
 \end{dfn}
 
@@ -249,14 +254,6 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \( \abs{\folfreevars{t}} \) and \( \abs{\folfreevars{\tau}} \) with \( \folnumfreevars{t} \) and \( \folnumfreevars{\tau} \)
     respectively.
 \end{notation}
-
-\begin{dfn}[Composite Formulas]
-    \phantomsection \label{dfn:first-order-language-composite-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \folnumfreevars{\varphi} \),
-    then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula.
-    Furthermore, an \( \mathcal{L} \)-variable \( x \) is a free variable of \( \varphi(\tau) \) if and only if \( x \) occurs freely in \( \tau_{i} \) for some
-    \( i \in \abs{\tau} \).
-\end{dfn}
 
 \noindent
 The syntactic rules of \( \mathcal{L} \) are now fully defined;
@@ -704,16 +701,177 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
 \begin{thm}
     \phantomsection \label{thm:first-order-language-canonical-variable-sequence-of-a-formula-with-one-extra-variable-symbol}
     If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) where
-    \( x \) is an \( \mathcal{L} \)-variable, then for some \( n \in \folnumfreevars{\varphi} \),
-    \begin{equation*}
-        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{j}{\folfreevarseq{\psi}(j)}}{j < n}
-        \union \big\{ \orderedpair{n}{x} \big\}
-        \union \setbuilderbig{\orderedpair{j+1}{\folfreevarseq{\psi}(j)}}{n \leq j < \folnumvars{\psi}}
-    \end{equation*}
+    \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folfreevars{\psi} \), then there exists some \( n \in \folnumfreevars{\varphi} \):
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \folfreevarseq{\varphi}(i) = \folfreevarseq{\psi}(i) \) for all \( i < n \) \phantomsection \label{enum:match-sequence-for-i-less-than-n}
+        \item \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i < \folnumfreevars{\psi} \) \phantomsection \label{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n}
+    \end{enumerate}
 \end{thm}
 
 \begin{proof}
+    Let \( n \) be a natural number such that \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \). Such an \( n \) must exist because
+    \( x \in \folfreevars{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection from \( \folnumfreevars{\varphi} \) to \( \folfreevars{\varphi} \).
+    Since \( n \in \folnumfreevars{\varphi} \) and \( \folnumfreevars{\varphi} \in \naturalset \), there are only two cases to consider.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case} \( n = 0 \):
+    Clearly \ref{enum:match-sequence-for-i-less-than-n} is vacuously true because nothing can be less than \( 0 \).
+    To prove \ref{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n}, we resort to finite induction.
+    First, we establish the base case where \( i = 0 \). Suppose that \( \orderedpair{0}{v} \in \folfreevarseq{\varphi} \).
+    Since \( n = 0 \) and \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \), it follows that \( v = x \) because \( \folfreevarseq{\varphi} \)
+    is a function.
+    Moreover, \( x \) must also be the least element of \( \folfreevars{\varphi} \) in the \( \prec \) ordering because \( 0 \) is the least element of \( \folnumfreevars{\varphi} \).
+    Now let \( \orderedpair{0}{u} \in \folfreevarseq{\psi} \).
+    We know that \( u \in \folfreevars{\varphi} \) by definition, which means there must exist some \( k \) such that \( \orderedpair{k}{u} \in \folfreevarseq{\varphi} \).
+    We know that \( u \neq x \) because \( u \in \folfreevars{\psi} \) and \( x \notin \folfreevars{\psi} \).
+    Thus, \( k \neq 0 \), which means that either \( 0 + 1 = k \) or \( 0 + 1 < k \).
+    If \( 0 + 1 < k \), then there must exist some \( \mathcal{L} \)-variable \( r \neq x \) such that \( \orderedpair{0+1}{r} \in \folfreevarseq{\varphi} \)
+    and thus \( r \prec u \) by \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
+    But \( r \) is also an element of \( \folfreevars{\psi} \), which means that \( \orderedpair{m}{r} \in \folfreevarseq{\psi} \) for some \( m \in \folnumfreevars{\psi} \).
+    At this point, we have arrived at a contradiction because \( r \prec u \) implies that \( m < 0 \), which is absurd.
+    In other words, the supposition that \( 0 + 1 < k \) must be false, which leaves us with the only remaining posibility \( k = 0+1 \).
+    Thus, \( \orderedpair{0}{u} \in \folfreevarseq{\psi} \) and \( \orderedpair{0+1}{u} \in \folfreevarseq{\varphi} \) are both true;
+    or, \( \folfreevarseq{\varphi}(0+1) = \folfreevarseq{\psi}(0) \) as required for the base case.
+
+    \vspace{0.3cm}
+    \noindent
+    For the inductive step, we suppose that \( \orderedpair{i+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \) for some
+    \( i \leq k \) where \( k + 1 = \folnumfreevars{\psi} \) and \( u \in \folfreevars{\psi} \).
+    Let \( j = i+1 \) and \( r, v \) be \( \mathcal{L} \)-variables such that \( r \neq x \), \( v \neq x \),
+    \( \orderedpair{j+1}{r} \in \folfreevarseq{\varphi} \),
+    and \( \orderedpair{j}{v} \in \folfreevarseq{\psi} \).
+    If \( r \neq v \), then either \( r \prec v \) or \( v \prec r \).
+    But \( r \prec v \) implies \( u \prec r \prec v \), which in turn implies the existence of some \( l \) such that \( i < l < i + 1 \) and
+    \( \orderedpair{l}{r} \in \folfreevarseq{\psi} \). This is of course absurd because there does not exist any natural number between \( i \) and \( i + 1 \).
+    Similarly, if \( v \prec r \), then necessarily \( u \prec v \prec r \), which again implies the existence of some \( l \) such that \( i < l < i + 1 \)
+    and \( \orderedpair{l}{v} \in \folfreevarseq{\varphi} \).
+    This means that neither \( r \prec v \) nor \( v \prec r \) is possible. Therefore, \( r = v \) as required to establish the inductive step.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case} \( n > 0 \): To prove \ref{enum:match-sequence-for-i-less-than-n}, we once again use finite induction.
+    Let \( u \) be an \( \mathcal{L} \)-variable such that \( \orderedpair{0}{u} \in \folfreevarseq{\varphi} \).
+    Since \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( n \neq 0 \), it follows that \( u \neq x \) because \( \folfreevarseq{\varphi} \) is a bijection.
+    Moreover, \( u \) is necessarily the least element of \( \folfreevars{\varphi} \) as required by \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
+    Since \( x \in \folfreevars{\varphi} \), it follows that \( u \prec x \).
+
+    \vspace{0.3cm}
+    \noindent
+    To establish the base case, we suppose that \( \orderedpair{0}{v} \in \folfreevarseq{\psi} \). If \( u \neq v \), then either \( u \prec v \) or \( v \prec u \).
+    Clearly, \( v \prec u \) is impossible because it contradicts the fact that \( u \) is the least element of \( \folfreevars{\varphi} \).
+    But if \( u \prec v \), then \( v \) must be the least element of \( \folfreevars{\psi} \) due to the second requirement in
+    \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
+    This means that \( u \) (the least element of \( \folfreevars{\varphi} \)) must be either \( v \) or \( x \).
+    But it has already been established that neither case is possible because \( u \neq v \) and \( u \neq x \),
+    so we have once again arrived at a contradiction. This means that the supposition that \( u \prec v \) must be false.
+    Since neither \( u \prec v \) and \( v \prec u \) can be true, it must be that \( u = v \).
+    In other words, \( \folfreevarseq{\varphi}(0) = \folfreevarseq{\psi}(0) \).
+
+    \vspace{0.3cm}
+    \noindent
+    To establish the inductive step, we suppose that \( \orderedpair{i}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \)
+    for some \( i < k \) where \( k \union \mleft\{ k \mright\} = n \) and \( u \neq x \).
+    Now let \( v, r \in \folfreevars{\psi} \) such that
+    \( \orderedpair{i+1}{v} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i+1}{r} \in \folfreevarseq{\psi} \).
+    If \( v \neq r \), then either \( v \prec r \) or \( r \prec v \).
+    Clearly, \( v \prec r \) is not possible because it implies \( u \prec v \prec r \), which in turn implies the existence of some
+    \( l \in \folnumfreevars{\psi} \) such that \( i < l < i + 1 \) and \( \orderedpair{l}{v} \in \folfreevarseq{\psi} \).
+    Similarly, \( r \prec v \) is also absurd because it implies \( u \prec r \prec v \), which in turn implies the existence of some
+    \( l \in \folnumfreevars{\varphi} \) such that \( i < l < i + l \) and \( \orderedpair{l}{r} \in \folfreevarseq{\varphi} \).
+    Thus, \( r = v \), so \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i + 1) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Having established both the base case and inductive step, we conclude by finite induction that \( \folfreevarseq{\varphi}(i) = \folfreevarseq{\psi}(i) \)
+    for all \( i \leq k \). Since \( k \union \mleft\{ k \mright\} = n \), it follows that the statement is true for all \( i < n \), hence
+    \ref{enum:match-sequence-for-i-less-than-n}.
+
+    \vspace{0.3cm}
+    \noindent
+    We can now prove \ref{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n} using \ref{enum:match-sequence-for-i-less-than-n}.
+
+    \vspace{0.3cm}
+    \noindent
+    Once again, we proceed by induction. First, we establish the base case where \( i = n \).
+    Suppose that \( \orderedpair{n+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for the \( \mathcal{L} \)-variables
+    \( u, v \).
+    Observe that \( u \neq x \) because \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection.
+    Similarly, \( v \neq x \) because \( v \in \folfreevars{\psi} \) and \( x \notin \folfreevars{\psi} \).
+    If \( u \neq v \), then either \( u \prec v \) or \( v \prec u \), neither of which are possible by the reasoning that follows.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( u \prec v \).
+    Since \( u \in \folfreevars{\varphi} \) and \( u \neq x \), necessarily \( u \in \folfreevars{\psi} \).
+    Thus, there must exist a \( j \in \folnumfreevars{\psi} \) such that \( \orderedpair{j}{u} \in \folfreevarseq{\psi} \).
+    Since \( u \prec v \), \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas} requires that \( j < n \).
+    But if \( j < n \), then \( \folfreevarseq{\varphi}(j) = \folfreevarseq{\psi}(j) = u \). But because \( \folfreevarseq{\varphi} \) is
+    a bijection, this would mean that \( j = n + 1 \) and thus \( n + 1 < n \), which is absurd.
+    Thus, \( u \prec v \) must be false.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( v \prec u \).
+    Since \( v \in \folfreevars{\psi} \), necessarily \( v \in \folfreevars{\varphi} \).
+    Therefore, there must exist some \( j \in \folnumfreevars{\varphi} \) such that \( \orderedpair{j}{v} \in \folfreevarseq{\varphi} \).
+    But because \( v \prec u \) and \( \orderedpair{n+1}{u} \in \folfreevarseq{\varphi} \), \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}
+    requires that \( j < n + 1 \), which leaves us with only two possibilities: \( j = n \) or \( j < n \).
+    If \( j = n \), then \( v = x \) because \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection.
+    But this contradicts the fact that \( v \neq x \), which has already been established. Thus, \( j \neq n \).
+    On the other hand, if \( j < n \), then \ref{enum:match-sequence-for-i-less-than-n} guarantees that \( \folfreevarseq{\varphi}(j) = \folfreevarseq{\psi}(j) = v \).
+    But this would mean that \( j = n \) because \( \folfreevarseq{\psi}(n) = v \) and \( \folfreevarseq{\psi} \) is a bijection.
+    Since it is impossible for \( j < n \) and \( j = n \) to be true at the same time, we have arrived at a contradiction.
+    This means that our supposition that \( v \prec u \) cannot be true.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( u \prec v \) and \( v \prec u \) are both impossible, it must be that \( u = v \).
+    In other words, \( \folfreevarseq{\varphi}(n+1) = \folfreevarseq{\psi}(n) \), which is our base case.
+
+    \vspace{0.3cm}
+    \noindent
+    For the inductive step, we suppose that \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i) \) for some arbitrary
+    \( n \leq i < k \) where \( k \union \mleft\{ k \mright\} = \folnumfreevars{\psi} \).
+    This means that \( \orderedpair{i+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \)
+    for some \( \mathcal{L} \)-variable \( u \).
+    Now let \( j = i + 1 \) and \( r, v \) be \( \mathcal{L} \)-variables such that
+    \( \orderedpair{j}{r} \in \folfreevarseq{\psi} \) and \( \orderedpair{j+1}{v} \in \folfreevarseq{\varphi} \).
+    If \( r \neq v \), then either \( r \prec v \) or \( v \prec r \).
+    Again, we will show that both of those statements lead to contradictions.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( r \prec v \). Clearly \( u \prec r \) since \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \) and \( \orderedpair{j}{r} \in \folfreevarseq{\psi} \).
+    We can therefore infer from the transitivity of \( \prec \) that \( u \prec r \prec v \).
+    But because \( \folfreevarseq{\varphi}(j) = u \) and \( \folfreevarseq{\varphi}(j+1) = v \),
+    \( u \prec r \prec v \) would imply the existence of an \( l \) such that \( j < l < j + 1 \), which is an obvious contradiction.
+    Therefore, the supposition that \( r \prec v \) must be false.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( v \prec r \). Again, \( u \prec v \) because \( \orderedpair{j}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{j+1}{v} \in \folfreevarseq{\varphi} \).
+    It follows from the transitivity of \( \prec \) that \( u \prec v \prec r \), which in turn implies the existence of an \( l \) such that
+    \( i < l < i + 1 \). Another obvious contradiction.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( v \prec r \) and \( r \prec v \) both lead to contradictions, it must be that \( r = v \), which establishes the inductive step.
+    By finite induction, we conclude that \( \folfreevarseq{\varphi}(i+1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i \leq k \).
+    Since \( k \union \mleft\{ k \mright\} = \folnumfreevars{\psi} \), this statement is equivalent to 
+    \( \folfreevarseq{\varphi}(i+1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i < \folnumfreevars{\psi} \).
 \end{proof}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol}
+    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) and
+    \( x \notin \folfreevars{\psi} \). If \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) for some \( n \in \folnumfreevars{\varphi} \) , then,
+    \begin{equation*}
+        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{ \folfreevarseq{\psi}(i) }}{i < n}
+        \union \big\{ \orderedpair{n}{x} \big\} \union
+        \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\psi}(i)}}{n \leq i < \folnumvars{\psi}}
+    \end{equation*}
+\end{cor}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}
@@ -769,23 +927,27 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
         \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas and \( \delta \) is the
             \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution function of \( \tuple{\psi, \phi} \)},
             then \( \varphi(\alpha) \) if and only if either \( \psi(\composition{\alpha}{\delta_{0}}) \) or \( \phi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable such
-            that \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable such
-            that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if for all \( \beta \in \abs{\mathfrak{A}} \),
+        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
+        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for some \( n \in \folnumfreevars{\psi} \),
+            then \( \varphi(\alpha) \) if and only if for all \( \beta \in \abs{\mathfrak{A}} \),
             \begin{equation*} 
                 \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
                 \setbuilderbig{\orderedpair{j+1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
             \end{equation*}
-        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable
-            such that \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable
-            such that \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \), then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \)
-            such that,
+        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
+        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
+            \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for some \( n \in \folnumfreevars{\psi} \),
+            then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \) such that,
             \begin{equation*} 
                 \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
                 \setbuilderbig{\orderedpair{j + 1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
             \end{equation*}
+        \item If \( \varphi \) has the form \( \psi(\tau) \) where \( \tau \) is a tuple of \( \mathcal{L} \)-variables with a variable distribution function
+            \( \delta \) and \( \abs{\tau} = \folnumfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if
+            \( \psi \big( \sequencebig{\composition{\alpha}{\delta_{i}}}{i \in \abs{\tau}} \big) \)
     \end{enumerate}
 \end{dfn}
 
@@ -1339,41 +1501,155 @@ which prohibits the reuse of any variable, free or bound, from the original form
     Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
     functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
     The goal, therefore, is to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
-    We begin by establishing several important claims.
-
-    \phantomsection \label{text:claim-both-formulas-have-equal-set-of-all-free-variables}
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim 1}: \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \)
-
-    \vspace{2pt}
-    \noindent
-    Observe that \( \folfreevars{\phi_{0}} = \folfreevars{\psi} \union \folfreevars{\lambda}
-    = \folfreevars{\psi} \union \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright)
-    \).
-    Similarly, \( \folfreevars{\phi_{1}} = \folfreevars{\theta} - \mleft\{ x \mright\} = \mleft( \folfreevars{\psi} \union \folfreevars{\varphi} \mright) - \mleft\{ x \mright\}
-    = \mleft( \folfreevars{\psi} - \mleft\{ x \mright\} \mright) \union \folfreevars{\varphi} - \mleft\{ x \mright\}
-    \). Since \( x \) does not occur freely in \( \psi \), it follows that \( \folfreevars{\psi} - \mleft\{ x \mright\} = \folfreevars{\psi} \).
-    Thus, \( \folfreevars{\phi_{1}} = \folfreevars{\psi} \union \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright) = \folfreevars{\phi_{0}} \).
-
-    \phantomsection \label{text:claim-both-formulas-have-equal-canonical-sequence-of-free-variables}
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim 2}: \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( u \) and \( v \) denote the canonical variable sequences for \( \phi_{0} \) and \( \phi_{1} \) respectively.
-    By \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}, this means that \( u \) and \( v \)
-    are bijections from \( \abs{\folfreevars{\phi_{0}}} \) to \( \folfreevars{\phi_{0}} \) and \( \abs{\folfreevars{\phi_{1}}} \) to \( \folfreevars{\phi_{1}} \)
-    respectively. But it has just been established that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \), which means that \( u \) and \( v \) must have
-    the same domain and range. Moreover, \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas} also requires that
-    \( i \in j \) if and only if \( u_{i} \prec u_{j} \) and \( v_{i} \prec v_{j} \).
-    It follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence} that \( u = v \).
 
     \vspace{0.3cm}
     \noindent
-    {\scshape Claim 3}: If \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \), then,
+    We begin with the observation that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \)
+    since \( \folfreevars{\phi_{0}} = \folfreevars{\psi} \,{\union}\, \folfreevars{\lambda} = \folfreevars{\psi} \,{\union}\, \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright) \)
+    and \( \folfreevars{\phi_{1}} = \folfreevars{\theta} - \mleft\{ x \mright\} = \mleft( \folfreevars{\psi} \,{\union}\, \folfreevars{\varphi} \mright) - \mleft\{ x \mright\}
+    = \folfreevars{\psi} \,{\union}\, \mleft( \folfreevars{\varphi} - \mleft\{ x \mright\} \mright) \).
+    Next, observe also that \( \folfreevarseq{\tuple{\psi, \lambda}} = \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We will use these facts to prove each claim \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) individually.
+   
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \). We have to prove that \( \mathfrak{A} \models \phi_{1} \)
+    is also true.
+    Since \( x \in \folfreevars{\theta} \) and \( \folfreevarseq{\theta} \) is a bijection from \( \folnumfreevars{\theta} \) to \( \folfreevars{\theta} \), there must
+    exist some \( n \in \folnumfreevars{\theta} \) such that \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
+    Since \( \folfreevars{\theta} = \folfreevars{\phi_{1}} \union \mleft\{ x \mright\} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \)
+    for some \( n \in \folnumfreevars{\theta} \),
+    \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} implies that,
+    \begin{equation}
+        \phantomsection \label{eq:expressing-freevarsec-of-theta-in-terms-of-freevarseq-of-phi1}
+        \folfreevarseq{\theta} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\phi_{1}}(i)}}{i < n}
+        \union \big\{ \orderedpair{n}{x} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\phi_{1}}(i)}}{n \leq i < \folnumfreevars{\phi_{1}}}
+    \end{equation}
+    \noindent
+    Now let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
+    Since \( \folnumfreevars{\phi_{1}} = \folnumfreevars{\phi_{0}} \), it follows that \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
+    Since \( \mathfrak{A} \models \phi_{0} \), it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that \( \phi_{0}(\alpha) \).
+    And by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either \( \psi(\composition{\alpha}{\delta_{0}}) \) or
+    \( \lambda(\composition{\alpha}{\delta_{1}}) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( \psi(\composition{\alpha}{\delta_{0}}) \). Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary.
+    Let \( \gamma \) be the set defined as,
+    \begin{equation}
+        \phantomsection \label{eq:expressing-gamma-in-terms-of-alpha}
+        \gamma = \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
+                 \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
+    \end{equation}
+    We then proceed to show that \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \).
+    Let \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
+    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{a}{c} \in \varepsilon_{0} \) and 
+    \( \orderedpair{c}{b} \in \gamma \) for some \( c < \abs{\gamma} \). Since \( c, n \in \naturalset \), there are only three
+    possibilities: \( c = n \), \( c < n \), or \( n < c \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c = n \), then it follows that \( \orderedpair{a}{n} \in \varepsilon_{0} \) and thus \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \)
+    because \( \composition{ \folfreevarseq{\theta} }{\varepsilon_{0}} = \folfreevarseq{\psi} \)
+    by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}.
+    But \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \) contradicts the fact that \( x \notin \folfreevars{\psi} \), so the supposition that \( n = c \)
+    cannot be true. This leaves us with only two possibilities: either \( c < n \) or \( c > n \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c < n \), then clearly \( \orderedpair{c}{b} \in \alpha \) by the definition of \( \gamma \).
+    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} = \dom \delta_{0} \), it follows that
+    \( a \in \dom \delta_{0} \) and thus \( \orderedpair{a}{d} \in \delta_{0} \) for some \( d \).
+    Furthermore, the fact that \( a \in \folnumfreevars{\psi} \) implies that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable
+    \( v \).
+    But \( \composition{ \folfreevarseq{\phi_{0}} }{\delta_{0}} = \folfreevarseq{\psi} \), which means that \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{0}} \).
+    Recall that \( \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} \) is also equal to \( \folfreevarseq{\psi} \), which means that
+    \( \orderedpair{c}{v} \in \folfreevarseq{\theta} \).
+    Since \( c < n \), \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} guarantees that
+    \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} = \folfreevarseq{\phi_{0}} \).
+    We then conclude from the fact that \( \folfreevarseq{\phi_{0}} \) is a bijection that \( c = d \).
+    Since \( \orderedpair{a}{c} \in \delta_{0} \) and \( \orderedpair{c}{b} \in \alpha \), it follows that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n < c \), then \( \orderedpair{e}{b} \in \alpha \) where \( e + 1 = c \).
+    Since \( a \in \dom \delta_{0} \), clearly \( \orderedpair{a}{d} \in \delta_{0} \) for some \( d \).
+    Moreover, \( \dom \delta_{0} = \folnumfreevars{\psi} = \dom \mleft( \folfreevarseq{\psi} \mright) \), which means that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \)
+    for some \( \mathcal{L} \)-variable \( v \).
+    Since \( \composition{ \folfreevarseq{\phi_{0}} }{\delta_{0}} = \composition{ \folfreevarseq{\theta} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
+    \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{1}} \), and \( \orderedpair{c = e + 1}{v} \in \folfreevarseq{\theta} \).
+    Since \( n < c \), necessarily \( n < e + 1 \) and thus \( n \leq e \).
+    Since \( \orderedpair{e+1}{v} \in \folfreevarseq{\theta} \) and \( n \leq e \), it follows from \eqref{eq:expressing-freevarsec-of-theta-in-terms-of-freevarseq-of-phi1}
+    that \( v = \folfreevarseq{\phi_{1}}(e) \); or equivalently, \( \orderedpair{e}{v} \in \folfreevarseq{\phi_{1}} \).
+    Since \( \folfreevarseq{\phi_{1}} \) is a bijection, this implies that \( d = e \) and thus \( \orderedpair{d}{b} \in \alpha \).
+    Since \( \orderedpair{a}{d} \in \delta_{0} \), it follows that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    In other words, both \( c < n \) and \( c > n \) implies \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \); that is, \( \orderedpair{a}{c} \in \delta_{0} \)
+    and \( \orderedpair{c}{b} \in \alpha \) for some \( c \).
+    Observe that \( c = n \) is impossible because it would imply \( x \in \folfreevars{\psi} \), which contradicts our initial assumption
+    that \( x \) does not occur in \( \psi \).
+    Thus, we are once again left with only two possibilities: \( c < n \) or \( n < c \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c < n \), then we have \( \orderedpair{c}{b} \in \gamma \) by \eqref{eq:expressing-gamma-in-terms-of-alpha}.
+    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \folnumfreevars{\psi} = \dom \varepsilon_{0} \),
+    it follows that \( \orderedpair{a}{d} \in \varepsilon_{0} \) for some \( d \).
+    Moreover, \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable \( v \).
+    By \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}, it follows that
+    \( \composition{\folfreevarseq{\phi_{0}}}{\delta_{0}} = \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} = \folfreevarseq{\psi} \).
+    Therefore, \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\theta} \).
+    Since \( c < n \), we know from \eqref{eq:expressing-freevarsec-of-theta-in-terms-of-freevarseq-of-phi1} that
+    \( \folfreevarseq{\theta}(c) = \folfreevarseq{\phi_{1}}(c) \), which means that \( \orderedpair{c}{v} \in \folfreevarseq{\theta} \).
+    Since \( \folfreevarseq{\theta} \) is a bijection, necessarily \( c = d \).
+    Since \( \orderedpair{a}{c} \in \varepsilon_{0} \) and \( \orderedpair{c}{b} \in \gamma \), it follows that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n < c \), then it follows from \eqref{eq:expressing-gamma-in-terms-of-alpha} that \( \orderedpair{c+1}{b} \in \gamma \).
+    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \dom \mleft( \folfreevarseq{\psi} \mright) = \folnumfreevars{\psi} = \dom \varepsilon_{0} \),
+    it follows that \( \orderedpair{a}{d} \in \varepsilon_{0} \) for some \( d \) and \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable
+    \( v \).
+    Given that \( \composition{\folfreevarseq{\phi_{0}}}{\delta_{0}} = \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
+    \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} \), and
+    \( \orderedpair{d}{v} \in \folfreevarseq{\theta} \).
+    But since \( n < c \), it follows from \eqref{eq:expressing-freevarsec-of-theta-in-terms-of-freevarseq-of-phi1} that \( \orderedpair{c+1}{v} \in \folfreevarseq{\theta} \).
+    Since \( \folfreevarseq{\theta} \) is a bijection, it follows that \( c + 1 = d \), which in turn implies \( \orderedpair{d}{b} \in \gamma \).
+    Since \( \orderedpair{a}{d} \in \varepsilon_{0} \) and \( \orderedpair{d}{b} \in \gamma \), necessarily \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Clearly, \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) in all
+    conceivable cases. In other words, \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \) and
+    \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon} \) are both true,
+    we conclude that \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \)
+    by the \nameref{axm:axiom-of-extensionality}.
+    Since both sets are equal, \( \psi(\composition{\alpha}{\delta_{0}}) \) must also imply \( \psi(\composition{\gamma}{\varepsilon_{0}}) \).
+    Since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization}
+    that \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) for all \( \beta \in \abs{\mathfrak{A}} \).
+    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that \( \theta(\alpha) \) if \( \psi(\composition{\alpha}{\delta_{0}}) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now suppose that \( \lambda(\composition{\alpha}{\delta_{1}}) \).
 \end{proof}
 
 \begin{thm}

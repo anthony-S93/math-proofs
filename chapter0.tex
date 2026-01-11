@@ -40,10 +40,10 @@ The following is a list of axioms from which every other statement in set theory
 
 \begin{axm}[Axiom Schema of Specification]
     \label{axm:axiom-schema-of-specification}
-    Given any formula \( \varphi \) in the language of set theory and any existing set \( A \), there exists a set \( S \)
-    such that \( x \in S \) if and only if \( x \in A \,\,{\land}\,\, \varphi(x) \).
+    If \( \varphi \) is a well-formed formula of any first-order language of set theory with \( v_{0},\dots, v_{n}\), \( x \), and \( A \)
+    being the only \aref{dfn:first-order-language-recursive-definition-of-free-variables}{free variables of \( \varphi \)}, then the following sentence is true:
     \begin{equation*}
-        \forall A \, \exists S \, \forall x \, \Big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi(x) \Big]
+        \forall v_{0},\dots,v_{n} \, \forall A \, \exists S \, \forall x \, \Big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi \Big]
     \end{equation*}
 \end{axm}
 

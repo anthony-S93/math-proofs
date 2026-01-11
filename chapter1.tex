@@ -39,8 +39,8 @@ Since the empty set is unique, we can denote it with a single universal symbol.
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    Given any \aref{dfn:first-order-language-recursive-definition-of-formulas}{first-order formula} \( \varphi \) and any set \( A \), the set \( S \) such that
-    \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
+    Let \( \varphi \) be a \aref{dfn:first-order-language-recursive-definition-of-formulas}{formula} with a single free variable.
+    Then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
 \end{thm}
 
 \begin{proof}
@@ -64,7 +64,7 @@ Since the empty set is unique, we can denote it with a single universal symbol.
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
-    For any formula \( \varphi \),
+    For any formula \( \varphi \) with a single free variable,
     \begin{equation*}
         \exists A \, \forall x \, \big[ \varphi(x) \implies x \in A \big]
         \implies
@@ -176,7 +176,6 @@ serve as the rigorous foundation for the familiar set-builder notation.
     \end{equation*}
 \end{proof}
 
-\vspace{0.5cm}
 \begin{rem}
     Note that the converse of \cref{thm:equal-predicate-specification}
     is \keyword{not} true as illustrated in the following counterexample.
