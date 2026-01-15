@@ -47,6 +47,15 @@
   {.}
   {5pt plus 1pt minus 1pt}
   {}
+\newtheoremstyle{prop}
+  {\topsep}
+  {3pt}
+  {\normalfont}
+  {0pt}
+  {\scshape}
+  {:}
+  {5pt plus 1pt minus 1pt}{}
+
 
 % Theorem-Like Environments
 \theoremstyle{thm}
@@ -59,6 +68,8 @@
 \newtheorem*{rem}{Remark}
 \theoremstyle{notation}
 \newtheorem*{notation}{Notation}
+\theoremstyle{prop}
+\newtheorem{prop}{Proposition}[chapter]
 % Define plural form
 \crefname{thm}{Theorem}{Theorems}
 \crefname{axm}{Axiom}{Axioms}
