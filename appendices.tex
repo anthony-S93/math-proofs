@@ -864,14 +864,18 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
 
 \begin{cor}
     \phantomsection \label{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol}
-    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) and
-    \( x \notin \folfreevars{\psi} \). If \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) for some \( n \in \folnumfreevars{\varphi} \) , then,
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) and
+    \( x \notin \folfreevars{\psi} \), then there exists some \( n \in \folnumfreevars{\varphi} \) such that
     \begin{equation*}
         \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{ \folfreevarseq{\psi}(i) }}{i < n}
         \union \big\{ \orderedpair{n}{x} \big\} \union
         \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\psi}(i)}}{n \leq i < \folnumvars{\psi}}
     \end{equation*}
 \end{cor}
+
+\begin{rem}
+    Obviously, the results of \cref{thm:first-order-language-canonical-variable-sequence-of-a-formula-with-one-extra-variable-symbol,cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} apply also to tuple of \( \mathcal{L} \)-formulas, not just single \( \mathcal{L} \)-formulas.
+\end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}
@@ -995,6 +999,364 @@ The uniqueness of the canonical variable sequences for formulas and tuples of fo
     then we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent} (denoted as \( \varphi \equiv \psi \) )
     if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
+
+\noindent
+Our formalization of first-order languages is now complete.
+The outcome of such an endeavor is a rigorous mathematical framework that allows us to \emph{prove} many of the familiar results
+from first-order logic that we know intuitively.
+
+\newpage
+\section{Logical Equivalences}
+\begin{notation}
+    The following notational conventions will be utilize for the material in this section:
+    \begin{enumerate}[topsep=2pt,itemsep=1pt,label=\textup{\texttt{(\alph*)}}]
+        \item The symbol \( \mathcal{L} \) denotes any \aref{dfn:first-order-language}{first-order language}.
+        \item The symbol \( V^{\mathcal{L}} \) denotes the set of all \( \mathcal{L} \)-variables.
+        \item The symbols \( u \), \( v \), \( w \), \( x \), \( y \), and \( z \) are reserved for \( \mathcal{L} \)-variables.
+        \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
+        \item The lower case Greek letters \( \delta \) and \( \varepsilon \) are reserved for variable distribution functions.
+        \item The upper case Greek letters \( \Lambda \), \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
+        \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
+    \end{enumerate}
+\end{notation}
+
+\begin{lem}
+    \phantomsection \label{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}
+    Let \( \psi \), \( \varphi \), and \( \lambda \) be \( \mathcal{L} \)-formulas such that \( \lambda \coloneq \forall x \, \varphi \)
+    or \( \lambda \coloneq \exists x \, \varphi \) for some \( \mathcal{L} \)-variable \( x \) where \( x \in \folfreevars{\varphi} \) and \( x \notin \folfreevars{\psi} \).
+    Let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution functions}
+    of \( \tau = \tuple{\psi, \lambda} \) and \( \sigma = \tuple{\psi, \varphi} \) respectively.
+    For any \( \mathcal{L} \)-structure \( \mathfrak{A} \), if \( \alpha \) and \( \beta \) are arbitrary elements of \( \abs{\mathfrak{A}}^{ \folnumfreevars{\tau} } \) and \( \abs{\mathfrak{A}} \) respectively, \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \)
+    for some \( k, n \in \naturalset \), and \( \gamma \) is a finite sequence of length \( \folnumfreevars{\sigma} \) defined in terms of \( \alpha \) and \( \beta \) as
+    \phantomsection \label{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}
+    \begin{equation*}
+        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
+         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}},
+    \end{equation*}
+    then the following equalities hold:
+    \begin{enumerate}[topsep=2pt,label=(\alph*)]
+        \item \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \) \phantomsection \label{enum:gamma-compose-varepsilon0-equals-alpha-compose-delta0}
+        \item \(\composition{\gamma}{ \varepsilon_{1} } = \phantomsection \label{enum:gamma-compose-varepsilon1-can-be-expressed-in-terms-of-alpha-compose-delta1}
+                \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
+                \union
+                \big\{ \orderedpair{k}{\beta} \big\}
+                \union
+                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
+            \)
+    \end{enumerate}
+\end{lem}
+
+\begin{proof}[Proof of \ref{enum:gamma-compose-varepsilon0-equals-alpha-compose-delta0}]
+    We begin with several important observations, the first of which being \(  \folfreevars{\tau} = \folfreevars{\psi} \union \folfreevars{\lambda} \)
+    and \( \folfreevars{\sigma} = \folfreevars{\psi} \union \folfreevars{\varphi} \).
+    Also, \( \folfreevars{\varphi} = \folfreevars{\lambda} \union \mleft\{ x \mright\} \) and thus
+    \begin{equation}
+        \phantomsection \label{eq:freevars-sigma-equals-freevars-tau-union-singleton-x}
+        \folfreevars{\sigma} = \folfreevars{\psi} \union \big(\folfreevars{\lambda} \union \mleft\{ x \mright\} \big)
+                             = \folfreevars{\tau} \union \mleft\{ x \mright\}
+    \end{equation}
+    By \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol}, we thus have
+    \begin{equation}
+        \phantomsection \label{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau}
+        \folfreevarseq{\sigma} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\tau}(i)}}{i < n}
+        \union \big\{ \orderedpair{n}{x} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\tau}(i)}}{n \leq i < \folnumfreevars{\tau}}
+    \end{equation}
+    \begin{equation}
+        \phantomsection \label{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}
+        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\lambda}(i)}}{i < k}
+        \union \big\{ \orderedpair{k}{x} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\lambda}(i)}}{k \leq i < \folnumfreevars{\lambda}}
+    \end{equation}
+    
+    \vspace{0.3cm}
+    \noindent
+    We now prove that \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \).
+    Suppose that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) for some arbitrary \( a \) and \( b \).
+    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{a}{c} \in \varepsilon_{0} \) and 
+    \( \orderedpair{c}{b} \in \gamma \) for some \( c < \abs{\gamma} \).
+    Similarly, there must also exist some \( d \) such that \( \orderedpair{a}{d} \in \delta_{0} \) because
+    \( \dom \varepsilon_{0} = \dom \delta_{0} = \folnumfreevars{\psi} \).
+    Since \( c, n \in \naturalset \) and \( \naturalset \) is linearly ordered,
+    there are only three possible cases to consider: \( c = n \), \( c < n \), or \( n < c \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c = n \), then it follows that \( \orderedpair{a}{n} \in \varepsilon_{0} \) and thus \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \)
+    because \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \) and
+    \( \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \).
+    But \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \) implies that \( x \in \folfreevars{\psi} \), thus contradicting our initial assumption that
+    \( x \notin \folfreevars{\psi} \); therefore, \( c = n \) cannot possibly be true.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c < n \), then clearly \( \orderedpair{c}{b} \in \alpha \) by \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
+    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} \), it follows that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \)
+    for some \( \mathcal{L} \)-variable \( v \).
+    But \( \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), so necessarily \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
+    Since \( c < n \), \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} implies that \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \).
+    But \( \composition{ \folfreevarseq{\tau} }{\delta_{0}} = \folfreevarseq{\psi} \), which means that \( \orderedpair{a}{c} \in \delta_{0} \).
+    We know that \( \folfreevarseq{\tau} \) is bijective, so necessarily \( c = d \).
+    Therefore, \( \orderedpair{a}{c} \in \delta_{0} \) and  \( \orderedpair{c}{b} \in \alpha \) so that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n < c \), then \( \orderedpair{c-1}{b} \in \alpha \) by \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \).}
+    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} \),
+    there must exist an \( \mathcal{L} \)-variable \( v \) such that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \).
+    Since \( \composition{ \folfreevarseq{\tau} }{\delta_{0}} = \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
+    \( \orderedpair{d}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
+    Since \( n < c \), necessarily \( n \leq c - 1 \) and thus \( \orderedpair{c-1}{v} \in \folfreevarseq{\tau} \)
+    by \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau}.
+    But it has already been proven that \( \orderedpair{d}{v} \in \folfreevarseq{\tau} \).
+    Since \( \folfreevarseq{\tau} \) is a bijection, \( c-1 \) and \( d \) must be equal.
+    Therefore, \( \orderedpair{d}{b} \in \alpha \) so that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Clearly, \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \)
+    for all possible cases. In other words, every ordered pair in \( \composition{\gamma}{ \varepsilon_{0} } \) must also belong to \( \composition{\alpha}{\delta_{0}} \).
+    But since \( \composition{\gamma}{\varepsilon_{0}} \) is a function and \aref{dfn:function-basic}{functions are sets of ordered pairs}, it follows that
+    \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    The converse can be proven using a similar argument.
+    Again, we suppose that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) is true for some arbitrary \( a \) and \( b \);
+    that is, \( \orderedpair{a}{c} \in \delta_{0} \) and \( \orderedpair{c}{b} \in \alpha \) for some \( c \).
+    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \dom \varepsilon_{0} = \folnumfreevars{\psi} \), it follows that
+    \( a \) also belongs to \( \dom \varepsilon_{0} \).
+    Therefore, there exists some \( d \) such that \( \orderedpair{a}{d} \in \varepsilon_{0} \).
+    Once again, we consider the only three possible ways \( c \) and \( n \) are related to each other: \( c < n \), \( c = n \), and \( c > n \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c < n \), then we have \( \orderedpair{c}{b} \in \gamma \) by \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
+    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \folnumfreevars{\psi} \), there must exists an \( \mathcal{L} \)-variable \( v \) such that
+    \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \).
+    We know that \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{\( \composition{\folfreevarseq{\tau}}{\delta_{0}} = \composition{\folfreevarseq{\sigma}}{\varepsilon_{0}} = \folfreevarseq{\psi} \)}.
+    Therefore, \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\sigma} \).
+    But if \( c < n \), then \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} implies \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
+    Since \( \folfreevarseq{\sigma} \) is a bijection, necessarily \( c = d \).
+    Since \( \orderedpair{a}{c} \in \varepsilon_{0} \) and \( \orderedpair{c}{b} \in \gamma \), it follows that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( c \geq n \), then \( \orderedpair{c+1}{b} \in \gamma \) by \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
+    Again, \( a \in \folnumfreevars{\psi} \), so there must exist an \( \mathcal{L} \)-variable \( v \) such that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \),
+    which in turn implies \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\sigma} \).
+    But if \( c \geq n \), we have by \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} that \( \orderedpair{c+1}{v} \in \folfreevarseq{\sigma} \).
+    Given that \( \folfreevarseq{\sigma} \) is a bijection, \( d = c+1 \) must follow.
+    Thus, \( \orderedpair{d}{b} \in \gamma \) and \( \orderedpair{a}{d} \in \varepsilon_{0} \) which yields
+    \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Once again, \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \)
+    in all conceivable cases, which allows us to conclude \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon_{0}} \).
+    Since \( \composition{\alpha}{\delta_{0}} \) and \( \composition{\gamma}{\varepsilon_{0}} \) are subsets of each other, they are necessarily equal
+    by \cref{thm:set-equality-in-terms-of-subsets}.
+\end{proof}
+
+\vspace{0.1cm}
+\noindent
+\begin{proof}[Proof of \ref{enum:gamma-compose-varepsilon1-can-be-expressed-in-terms-of-alpha-compose-delta1}]
+    We begin with the observation that \( \dom \varepsilon_{1} = \folnumfreevars{\varphi} \), which follows readily from the fact that
+    \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{\( \varepsilon \)
+    is the variable distribution function for \( \sigma = \tuple{\psi, \varphi} \)}.
+    It should be obvious from \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}
+    that any \( i \in \dom \varepsilon_{1} \) falls into either one of the following categories:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( i < k \);
+        \item \( i = k \);
+        \item \( i > k \).
+    \end{enumerate*}
+    Another vital observation is that \( \ran \varepsilon_{1} \subseteq \dom \gamma \)
+    (because \( \ran \varepsilon_{1} \subseteq \folnumfreevars{\sigma} \) and
+    \( \dom \gamma = \abs{\gamma} = \folnumfreevars{\sigma} \)),
+    from which we can infer the fact that \( \dom \composition{\gamma}{\varepsilon_{1}} = \dom \varepsilon_{1} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now suppose that \( \orderedpair{i}{j} \in \composition{\gamma}{\varepsilon_{1}} \) is true for some \( i \) and \( j \);
+    that is, there exists some \( f \) such that \( \orderedpair{i}{f} \in \varepsilon_{1} \) and \( \orderedpair{f}{j} \in \gamma \).
+    But \( i \in \dom \varepsilon_{1} \) and \( \dom \varepsilon_{1} = \folnumfreevars{\varphi} \), which means that \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \)
+    for some \( \mathcal{L} \)-variable \( v \).
+    As mentioned, \( i \) is either less than \( k \), equal to \( k \), or greater than \( k \).
+    We will now deduce the consequences of each possibility.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( i < k \), then \( v \prec x \) and \( \orderedpair{i}{v} \in \folfreevarseq{\lambda} \) by \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
+    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \), we can deduce from
+    \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \) the fact that \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \).
+    But \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \) from \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau},
+    so \( v \prec x \) must imply \( f < n \).
+    But if \( f < n \) and \( \orderedpair{f}{j} \in \gamma \), then we also have \( \orderedpair{f}{j} \in \alpha \) by
+    \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
+    Not only that, but \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} also implies \( \orderedpair{f}{v} \in \folfreevarseq{\tau} \)
+    because \( f < n \) and \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \).
+    Next, we avail ourselves to the fact that \( \composition{\folfreevarseq{\tau}}{\delta_{1}} = \folfreevarseq{\lambda} \).
+    Since \( \orderedpair{i}{v} \in \folfreevarseq{\lambda} \) and \( \orderedpair{f}{v} \in \folfreevarseq{\tau} \),
+    it follows that \( \orderedpair{i}{f} \in \delta_{1} \).
+    This allows us to draw the conclusion that for all \( i < k \) such that \( \orderedpair{i}{j} \in \composition{\gamma}{\varepsilon_{1}} \) for some \( j \), then
+    necessarily \( \orderedpair{i}{j} \in \composition{{\alpha}}{\delta_{1}} \);
+    equivalently, we can say that \( \mleft( \composition{\gamma}{\varepsilon_{1}}\mright)(i) = \mleft( \composition{\alpha}{\delta_{1}} \mright)(i) \)
+    for all \( i \in \folnumfreevars{\lambda} \) such that \( i < k \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( i = k \), then necessarily \( v = x \) by \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
+    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \) and \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \),
+    it follows that \( \orderedpair{f}{x} \in \folfreevarseq{\sigma} \).
+    But \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} requires that \( f = n \), thus allowing us to conclude from
+    \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)} that \( j = \beta \).
+    In other words, \( \orderedpair{k}{\beta} \in \composition{\gamma}{\varepsilon_{1}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( i > k \), then necessarily \( x \prec v \) and \( \orderedpair{i-1}{v} \in \folfreevarseq{\lambda} \) by
+    \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
+    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \), it follows that
+    \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \). But \( x \prec v \), so we can infer from
+    \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} the fact that \( f > n \) and \( \orderedpair{f-1}{v} \in \folfreevarseq{\tau} \).
+    Recall that \( \composition{\folfreevarseq{\tau}}{\delta_{1}} = \folfreevarseq{\lambda} \).
+    This means that \( \orderedpair{i-1}{f-1} \in \delta_{1} \).
+    But if \( \orderedpair{f}{j} \in \gamma \) and \( f > n \), then necessarily \( \orderedpair{f-1}{j} \in \alpha \) by
+    \aref{eq:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
+    In other words, \( \orderedpair{i-1}{j} \in \composition{\alpha}{\delta_{1}} \).
+    Thus, for all \( i \in \folnumfreevars{\lambda} \) such that \( k \geq i \), \( \mleft( \composition{\gamma}{\varepsilon_{1}} \mright)(i+1) =
+    \mleft( \composition{\alpha}{\delta_{1}} \mright)(i)\).
+
+    \vspace{0.3cm}
+    \noindent
+    Finally, we can combine the results from all three mutually exclusive cases using the set-builder notation like so:
+    \begin{equation*}
+        \composition{\gamma}{\varepsilon_{1}} = \setbuilderbig{\orderedpair{i}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{i < k}
+        \union \big\{ \orderedpair{k}{\beta} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{k \leq i < \folnumfreevars{\lambda}}
+        \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
+    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
+    If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but not in \( \psi \), then,
+    \begin{equation*}
+        \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright]
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( \lambda \coloneq \forall x \, \varphi \), \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \),
+    \( \phi_{0} \coloneq \psi \,\,{\lor}\,\, \lambda \), and \( \phi_{1} \coloneq \forall x \, \theta \).
+    Let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
+    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
+    functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
+    The goal is to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true so that one may conclude
+    \( \phi_{0} \equiv \phi_{1} \) by \cref{dfn:first-order-language-logical-equivalence}.
+
+    \vspace{0.3cm}
+    \noindent
+    First, we note that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \) and thus \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \)
+    and \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \).
+    We now proceed to establish \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) individually.
+   
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
+
+    \vspace{0.1cm}
+    \noindent
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \). We have to show that \( \mathfrak{A} \models \phi_{1} \) is also true
+    as a result of our supposition.
+    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
+    Since \( \folnumfreevars{\phi_{1}} = \folnumfreevars{\phi_{0}} \), necessarily \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
+    Since \( \mathfrak{A} \models \phi_{0} \) by assumption, it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that \( \phi_{0}(\alpha) \).
+    But \cref{dfn:first-order-language-interpretation-of-formulas} states that \( \phi_{0}(\alpha) \) holds if and only if \( \psi(\composition{\alpha}{\delta_{0}}) \) or
+    \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds.
+    We will show that \( \phi_{1}(\alpha) \) is implied in either case.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{{\bfseries Case}: \( \psi(\composition{\alpha}{\delta_{0}}) \)}
+
+    \vspace{0.2cm}
+    \noindent
+    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary.
+    Let \( \gamma \) be a sequence defined in terms of \( \alpha \) and \( \beta \) like so:
+    \begin{equation*}
+        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
+         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
+    \end{equation*}
+    Since \( \psi(\composition{\alpha}{\delta_{0}}) \) holds, then \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) must also hold because
+    \( \composition{\alpha}{\delta_{0}} \) and \( \composition{\gamma}{\varepsilon_{0}} \) are identical tuples by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}.
+    But \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) implies \( \theta(\gamma) \) by \cref{dfn:first-order-language-interpretation-of-formulas}.
+    And since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude that \( \theta(\gamma) \) for all \( \beta \in \abs{\mathfrak{A}} \).
+    In other words, \( \phi_{1}(\alpha) \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{{\bfseries Case}: \( \lambda(\composition{\alpha}{\delta_{1}}) \)}
+
+    \vspace{0.2cm}
+    \noindent
+    Since \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds, it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that
+    \begin{equation*}
+        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k} \union \big\{ \orderedpair{k}{\mu} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\varphi} }
+        \Big)
+    \end{equation*}
+    holds for all \( \mu \in \abs{\mathfrak{A}} \). Since \( \beta \in \abs{\mathfrak{A}} \), it follows that \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \).
+    And by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that \( \theta(\gamma) \) holds.
+    Since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
+    \( \phi_{1}(\alpha) \) holds.
+
+    \vspace{0.3cm}
+    \noindent
+    We have just proven that \( \phi_{1}(\alpha) \) for any arbitrary \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \).
+    Thus, \( \mathfrak{A} \models \phi_{1} \) by \cref{dfn:first-order-language-models-of-first-order-formulas}.
+    In other words, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any arbitrary \( \mathcal{L} \)-structure
+    \( \mathfrak{A} \); \( \phi_{0} \models \phi_{1} \) follows readily from \cref{dfn:first-order-language-semantic-consequence-entailment}.
+
+    \vspace{0.5cm}
+    \noindent
+    {\scshape Claim}: \( \phi_{1} \models \phi_{0} \)
+
+    \vspace{2pt}
+    \noindent
+    Suppose that \( \mathfrak{A} \models \phi_{1} \) for some arbitrary \( \mathcal{L} \)-structure \( \mathfrak{A} \).
+    Let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \) be arbitrary.
+    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), it follows that \( \alpha \)
+    is also an element of \( \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{1}} } \).
+    Since \( \mathfrak{A} \models \phi_{1} \) by assumption, \( \phi_{1}(\alpha) \) must hold.
+    Thus, we have by \cref{dfn:first-order-language-interpretation-of-formulas}
+    \begin{equation*}
+        \theta \Big( \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\mu} \big\} \union
+        \setbuilderbig{\orderedpair{i+1}{\alpha_{1}}}{n \leq i < \abs{\alpha}} \Big)
+    \end{equation*}
+    for all \( \mu \in \abs{\mathfrak{A}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence defined as in \eqref{eq:expressing-gamma-in-terms-of-alpha}.
+    Clearly, \( \theta(\gamma) \) by assumption; and by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either
+    \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) or \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \psi(\composition{\gamma}{\varepsilon_{0}}) \), then \( \psi(\composition{\alpha}{\delta_{0}}) \) follows immediately because
+    \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \) as proven above.
+    If \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \), then we invoke \eqref{eq:expressing-gamma-compose-epsilon1-in-terms-of-alpha-compose-delta1}
+    once again to conclude that
+    \begin{equation*}
+        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
+        \union \big\{ \orderedpair{k}{\beta} \big\}
+        \union \setbuilderbig{\orderedpair{i+1}{ (\composition{\alpha}{\delta_{1}})(i) }}{k \leq i < \folnumfreevars{\varphi} }
+        \Big)
+    \end{equation*}
+\end{proof}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
@@ -1474,342 +1836,6 @@ is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contr
 which prohibits the reuse of any variable, free or bound, from the original formula.
 
 \chapter{Logical Equivalences}
-\begin{notation}
-    This chapter utilizes the following notational conventions:
-    \begin{enumerate}[topsep=2pt,itemsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item The symbol \( \mathcal{L} \) denotes any \aref{dfn:first-order-language}{first-order language}.
-        \item The symbol \( V^{\mathcal{L}} \) denotes the set of all \( \mathcal{L} \)-variables.
-        \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
-        \item The lower case Greek letters \( \delta \) and \( \varepsilon \) are reserved for variable distribution functions.
-        \item The upper case Greek letters \( \Lambda \), \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
-        \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
-    \end{enumerate}
-\end{notation}
-
-\begin{thm}
-    \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
-    If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but not in \( \psi \), then,
-    \begin{equation*}
-        \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright]
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \lambda \coloneq \forall x \, \varphi \) and \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \).
-    Let \( \phi_{0} \coloneq \psi \,\,{\lor}\,\, \lambda \) and \( \phi_{1} \coloneq \forall x \, \theta \).
-    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
-    functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
-    The goal, therefore, is to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
-
-    \vspace{0.3cm}
-    \noindent
-    We begin with several important observations.
-
-    \begin{prop}
-        \phantomsection \label{prop:phi0-and-phi1-have-equal-canonical-sequences}
-        \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \) and \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \)
-    \end{prop}
-    \noindent
-    The fact that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \) is obvious from \cref{dfn:first-order-language-recursive-definition-of-free-variables}
-    and \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \) is simply a consequence of
-    \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
-
-    \begin{prop}
-        \phantomsection \label{prop:freevarsec-varphi-can-be-expressed-in-terms-of-freevarsec-lambda}
-        \( \folfreevarseq{\varphi} \) can be expressed in terms of \( \folfreevarseq{\lambda} \).
-    \end{prop}
-    \noindent
-    Since \( x \in \folfreevars{\varphi} \) by assumption and \( \folfreevarseq{\varphi} \) is a bijection from \( \folnumfreevars{\varphi} \) to \( \folfreevars{\varphi} \),
-    there must exist some \( k \in \folnumfreevars{\varphi} \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \).
-    Furthermore, since \( \folfreevars{\varphi} = \folfreevars{\lambda} \,{\union}\, \mleft\{ x \mright\} \),
-    \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} implies that,
-    \begin{equation*}
-        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\lambda}(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{x} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\lambda}(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation*}
-
-    \begin{prop}
-        \phantomsection \label{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1}
-        \( \folfreevarseq{\theta} \) can be expressed in terms of \( \folfreevarseq{\phi_{1}} \)
-    \end{prop}
-    \noindent
-    Since \( x \in \folfreevars{\theta} \) and \( \folfreevarseq{\theta} \) is a bijection from \( \folnumfreevars{\theta} \) to \( \folfreevars{\theta} \),
-    there must exist some \( n \in \folnumfreevars{\theta} \) such that \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Also, \( \folfreevars{\theta} = \folfreevars{\phi_{1}} \union \mleft\{ x \mright\} \), so
-    \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} implies,
-    \begin{equation*}
-        \folfreevarseq{\theta} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\phi_{1}}(i)}}{i < n}
-        \union \big\{ \orderedpair{n}{x} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\phi_{1}}(i)}}{n \leq i < \folnumfreevars{\phi_{1}}}
-    \end{equation*}
-
-    \noindent
-    We will use these facts to prove the claims \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) individually.
-   
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \). We have to prove that \( \mathfrak{A} \models \phi_{1} \)
-    is also true.
-    Now let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{1}} = \folnumfreevars{\phi_{0}} \), necessarily \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Since \( \mathfrak{A} \models \phi_{0} \) by assumption, it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that \( \phi_{0}(\alpha) \).
-    And by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either \( \psi(\composition{\alpha}{\delta_{0}}) \) or
-    \( \lambda(\composition{\alpha}{\delta_{1}}) \). We will show that \( \phi_{1}(\alpha) \) holds in both cases.
-
-    \vspace{0.3cm}
-    \noindent
-    \underline{{\bfseries Case}: \( \psi(\composition{\alpha}{\delta_{0}}) \)}
-
-    \vspace{0.2cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be the sequence defined as
-    \begin{equation}
-        \phantomsection \label{eq:expressing-gamma-in-terms-of-alpha}
-        \gamma = \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-                 \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    We then proceed to show that \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \).
-    Let \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
-    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{a}{c} \in \varepsilon_{0} \) and 
-    \( \orderedpair{c}{b} \in \gamma \) for some \( c < \abs{\gamma} \). Since \( c, n \in \naturalset \), there are only three
-    possibilities: \( c = n \), \( c < n \), or \( n < c \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c = n \), then it follows that \( \orderedpair{a}{n} \in \varepsilon_{0} \) and thus \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \)
-    because \( \composition{ \folfreevarseq{\theta} }{\varepsilon_{0}} = \folfreevarseq{\psi} \)
-    by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}.
-    But \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \) contradicts the fact that \( x \notin \folfreevars{\psi} \), so the supposition that \( n = c \)
-    cannot be true. This leaves us with only two possibilities: either \( c < n \) or \( c > n \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c < n \), then clearly \( \orderedpair{c}{b} \in \alpha \) by \eqref{eq:expressing-gamma-in-terms-of-alpha}.
-    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} = \dom \delta_{0} \), it follows that
-    \( a \in \dom \delta_{0} \) and thus \( \orderedpair{a}{d} \in \delta_{0} \) for some \( d \).
-    Furthermore, the fact that \( a \in \folnumfreevars{\psi} \) implies that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable
-    \( v \).
-    But \( \composition{ \folfreevarseq{\phi_{0}} }{\delta_{0}} = \folfreevarseq{\psi} \), which means that \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{0}} \).
-    Recall that \( \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} \) is also equal to \( \folfreevarseq{\psi} \), which means that
-    \( \orderedpair{c}{v} \in \folfreevarseq{\theta} \).
-    Since \( c < n \), \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} guarantees that
-    \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} = \folfreevarseq{\phi_{0}} \).
-    We then conclude from the fact that \( \folfreevarseq{\phi_{0}} \) is a bijection that \( c = d \).
-    Since \( \orderedpair{a}{c} \in \delta_{0} \) and \( \orderedpair{c}{b} \in \alpha \), it follows that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( n < c \), then \( \orderedpair{e}{b} \in \alpha \) where \( e + 1 = c \).
-    Since \( a \in \dom \delta_{0} \), clearly \( \orderedpair{a}{d} \in \delta_{0} \) for some \( d \).
-    Moreover, \( \dom \delta_{0} = \folnumfreevars{\psi} = \dom \mleft( \folfreevarseq{\psi} \mright) \), which means that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \)
-    for some \( \mathcal{L} \)-variable \( v \).
-    Since \( \composition{ \folfreevarseq{\phi_{0}} }{\delta_{0}} = \composition{ \folfreevarseq{\theta} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
-    \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{d}{v} \in \folfreevarseq{\phi_{1}} \), and \( \orderedpair{c = e + 1}{v} \in \folfreevarseq{\theta} \).
-    Since \( n < c \), necessarily \( n < e + 1 \) and thus \( n \leq e \).
-    Since \( \orderedpair{e+1}{v} \in \folfreevarseq{\theta} \) and \( n \leq e \), it follows from \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1} 
-    that \( v = \folfreevarseq{\phi_{1}}(e) \); or equivalently, \( \orderedpair{e}{v} \in \folfreevarseq{\phi_{1}} \).
-    Since \( \folfreevarseq{\phi_{1}} \) is a bijection, this implies that \( d = e \) and thus \( \orderedpair{d}{b} \in \alpha \).
-    Since \( \orderedpair{a}{d} \in \delta_{0} \), it follows that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
-    In other words, \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \) in all possible cases.
-
-    \vspace{0.3cm}
-    \noindent
-    To prove the converse, suppose that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \); that is, \( \orderedpair{a}{c} \in \delta_{0} \)
-    and \( \orderedpair{c}{b} \in \alpha \) for some \( c \).
-    Observe that \( c = n \) is impossible because it would imply \( x \in \folfreevars{\psi} \), which contradicts our initial assumption
-    that \( x \) does not occur in \( \psi \).
-    Thus, we are once again left with only two possibilities: \( c < n \) or \( n < c \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c < n \), then we have \( \orderedpair{c}{b} \in \gamma \) by \eqref{eq:expressing-gamma-in-terms-of-alpha}.
-    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \folnumfreevars{\psi} = \dom \varepsilon_{0} \),
-    it follows that \( \orderedpair{a}{d} \in \varepsilon_{0} \) for some \( d \).
-    Moreover, \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable \( v \).
-    By \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}, it follows that
-    \( \composition{\folfreevarseq{\phi_{0}}}{\delta_{0}} = \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} = \folfreevarseq{\psi} \).
-    Therefore, \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\theta} \).
-    Since \( c < n \), we know from \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1} that
-    \( \folfreevarseq{\theta}(c) = \folfreevarseq{\phi_{1}}(c) \), which means that \( \orderedpair{c}{v} \in \folfreevarseq{\theta} \).
-    Since \( \folfreevarseq{\theta} \) is a bijection, necessarily \( c = d \).
-    Since \( \orderedpair{a}{c} \in \varepsilon_{0} \) and \( \orderedpair{c}{b} \in \gamma \), it follows that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( n < c \), then it follows from \eqref{eq:expressing-gamma-in-terms-of-alpha} that \( \orderedpair{c+1}{b} \in \gamma \).
-    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \dom \mleft( \folfreevarseq{\psi} \mright) = \folnumfreevars{\psi} = \dom \varepsilon_{0} \),
-    it follows that \( \orderedpair{a}{d} \in \varepsilon_{0} \) for some \( d \) and \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \) for some \( \mathcal{L} \)-variable
-    \( v \).
-    Given that \( \composition{\folfreevarseq{\phi_{0}}}{\delta_{0}} = \composition{\folfreevarseq{\theta}}{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
-    \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{0}} \), \( \orderedpair{c}{v} \in \folfreevarseq{\phi_{1}} \), and
-    \( \orderedpair{d}{v} \in \folfreevarseq{\theta} \).
-    But since \( n < c \), it follows from \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1} that \( \orderedpair{c+1}{v} \in \folfreevarseq{\theta} \).
-    Since \( \folfreevarseq{\theta} \) is a bijection, it follows that \( c + 1 = d \), which in turn implies \( \orderedpair{d}{b} \in \gamma \).
-    Since \( \orderedpair{a}{d} \in \varepsilon_{0} \) and \( \orderedpair{d}{b} \in \gamma \), necessarily \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
-    Clearly, \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) in all
-    conceivable cases. Thus, \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon_{0}} \) is also true.
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \) and
-    \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon} \) are both true,
-    we conclude that \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \); i.e., they are identical tuples.
-    Therefore, \( \psi(\composition{\alpha}{\delta_{0}}) \) must also imply \( \psi(\composition{\gamma}{\varepsilon_{0}}) \).
-    But \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) implies \( \theta(\gamma) \) by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    And since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude that \( \theta(\gamma) \) for all \( \beta \in \abs{\mathfrak{A}} \).
-    In other words, \( \phi_{1}(\alpha) \).
-
-    \vspace{0.3cm}
-    \noindent
-    \underline{{\bfseries Case}: \( \lambda(\composition{\alpha}{\delta_{1}}) \)}
-
-    \vspace{0.2cm}
-    \noindent
-    For \( \phi_{1}(\alpha) \) to hold, it is necessary to show that
-    \begin{equation*}
-        \theta \Big( \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n}
-               \union
-               \big\{ \orderedpair{n}{\mu} \big\}
-               \union
-               \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \folnumfreevars{\phi_{1}}}
-        \Big)
-    \end{equation*}
-    holds for all \( \mu \in \abs{\mathfrak{A}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence defined as in \eqref{eq:expressing-gamma-in-terms-of-alpha}.
-    The goal is to prove that \( \lambda(\composition{\alpha}{\delta_{1}}) \) implies \( \theta(\gamma) \), which can be done by first
-    deriving a relationship between \( \composition{\gamma}{\varepsilon_{1}} \) and \( \composition{\alpha}{\delta_{1}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    We begin with the observation that \( \dom \varepsilon_{1} = \folnumfreevars{\varphi} \), which follows readily from the fact that
-    \( \varepsilon_{1} \) is the variable distribution function for \( \tuple{\psi, \varphi} \).
-    Moreover, the results from \cref{prop:freevarsec-varphi-can-be-expressed-in-terms-of-freevarsec-lambda} require that \( k \in \folnumfreevars{\varphi} \),
-    from which we can further deduce that any \( i \in \dom \varepsilon_{1} \) must fall into one of the following categories\footnote{\,Because
-    \( \folnumfreevars{\varphi} \subseteq \naturalset \) and \( \naturalset \) is totally ordered.}:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( i < k \);
-        \item \( i = k \);
-        \item \( i > k \).
-    \end{enumerate*}
-    Another essential observation is that \( \ran \varepsilon_{1} \subseteq \dom \gamma \) because
-    \( \varepsilon_{1} \in \finiteseq{ \folnumfreevars{\theta} } \) and \( \abs{\gamma} = \folnumfreevars{\theta} \).
-    From this we infer the fact that \( \dom \composition{\gamma}{\varepsilon_{1}} = \dom \varepsilon_{1} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Now let \( \orderedpair{i}{j} \in \composition{\gamma}{\varepsilon_{1}} \) be arbitrary.
-    In other words, there exists some \( f \) such that \( \orderedpair{i}{f} \in \varepsilon_{1} \) and \( \orderedpair{f}{j} \in \gamma \).
-    But \( i \) obviously belong to \( \dom \varepsilon_{1} \) and \( \dom \varepsilon_{1} = \dom ( \folfreevarseq{\varphi} ) \), which means
-    that \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \) for some \( \mathcal{L} \)-variable \( v \).
-    Furthermore, \( i \) must either be less than \( k \), equal to \( k \), or greater than \( k \).
-    We will now deduce the consequence of each possibility.
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i < k \), then necessarily \( v \prec x \) and \( \orderedpair{i}{v} \in \folfreevarseq{\lambda} \) as proven in
-    \cref{prop:freevarsec-varphi-can-be-expressed-in-terms-of-freevarsec-lambda}.
-    Moreover, \( \composition{\folfreevarseq{\theta}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \),
-    so we can deduce from \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \) the fact that \( \orderedpair{f}{v} \in \folfreevarseq{\theta} \) and subsequently
-    the fact that \( f < n \) because \( v \prec x \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Given that \( f < n \), \( \orderedpair{f}{j} \in \alpha \) follows readily from \eqref{eq:expressing-gamma-in-terms-of-alpha};
-    and from \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1}, we further infer
-    \( \orderedpair{f}{v} \in \folfreevarseq{\phi_{0}} \).
-    Now recall that \( \composition{\folfreevarseq{\phi_{0}}}{\delta_{1}} = \folfreevarseq{\lambda} \), which means that there exists some \( g \)
-    such that \( \orderedpair{i}{g} \in \delta_{1} \) and \( \orderedpair{g}{v} \in \folfreevarseq{\phi_{0}} \).
-    Since it has already been established that \( \orderedpair{f}{v} \in \folfreevarseq{\phi_{0}} \),
-    necessarily \( f = g \) because \( \folfreevarseq{\phi_{0}} \) is a bijection.
-    Combining \( \orderedpair{f}{j} \in \alpha \) and \( \orderedpair{i}{f} \in \delta_{1} \) then yields \( \orderedpair{i}{j} \in \composition{\alpha}{\delta_{1}} \).
-    In other words, \( (\composition{\gamma}{\varepsilon_{1}})(i) = (\composition{\alpha}{\delta_{1}})(i) \) for all \( i < k \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i = k \), then \( \orderedpair{k}{f} \in \varepsilon_{1} \) and \( \orderedpair{f}{j} \in \gamma \) for some \( f \).
-    Since \( \orderedpair{k}{v} \in \folfreevarseq{\varphi} \), we have by \cref{prop:freevarsec-varphi-can-be-expressed-in-terms-of-freevarsec-lambda}
-    \( v = x \), which means that \( \orderedpair{f}{x} \in \folfreevarseq{\theta} \).
-    By \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1}, it follows that \( f = n \); and by \eqref{eq:expressing-gamma-in-terms-of-alpha},
-    we also have \( j = \beta \).
-    In other words, \( \orderedpair{k}{\beta} \in \composition{\gamma}{\varepsilon_{1}} \), or \( (\composition{\gamma}{\varepsilon_{1}})(k) = \beta \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i > k \), then necessarily \( x \prec v \). Given that \( \composition{\folfreevarseq{\theta}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \),
-    there must exist some \( f \) such that \( \orderedpair{i}{f} \in \varepsilon_{1} \) and \( \orderedpair{f}{v} \in \folfreevarseq{\theta} \).
-    Since \( x \prec v \), it follows that \( n < f \).
-    Therefore, \( \orderedpair{f-1}{j} \in \alpha \) by \eqref{eq:expressing-gamma-in-terms-of-alpha}.
-    Similarly, \( i > k \) also implies \( \orderedpair{i-1}{v} \in \folfreevarseq{\lambda} \) by \cref{prop:freevarsec-varphi-can-be-expressed-in-terms-of-freevarsec-lambda}.
-    Recall that \( \composition{ \folfreevarseq{\phi_{0}} }{\delta_{1}} = \folfreevarseq{\lambda} \).
-    Thus, \( \orderedpair{i-1}{g} \in \delta_{1} \) and \( \orderedpair{g}{v} \in \folfreevarseq{\phi_{0}} \) for some \( g \).
-    But since \( f > n \), we know from \cref{prop:freevarsec-theta-can-be-expressed-in-terms-of-freevarsec-phi1} that \( \orderedpair{f-1}{v} \in \folfreevarseq{\phi_{0}} \).
-    Given that \( \folfreevarseq{\phi_{0}} \) is a bijection, it follows that \( g = f-1 \) and thus \( \orderedpair{i-1}{f-1} \in \delta_{1} \)
-    and \( \orderedpair{i-1}{j} \in \composition{\alpha}{\delta_{1}} \).
-    Thus, for all \( k \leq  i < \folnumfreevars{\varphi} \), \( \orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)} \in \composition{\gamma}{\varepsilon_{1}} \), or
-    \( (\composition{\gamma}{\varepsilon_{1}})(i+1) = (\composition{\alpha}{\delta_{1}})(i) \).
-
-    \vspace{0.3cm}
-    \noindent
-    We can combine the conclusions from all three cases with the set-builder notation as follows:
-    \begin{equation}
-        \phantomsection \label{eq:expressing-gamma-compose-epsilon1-in-terms-of-alpha-compose-delta1}
-        \composition{\gamma}{\varepsilon_{1}} = \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})}}{k \leq i < \folnumfreevars{\varphi}}
-    \end{equation}
-    Since \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds, it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \begin{equation*}
-        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k} \union \big\{ \orderedpair{k}{\mu} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\varphi} }
-        \Big)
-    \end{equation*}
-    holds for all \( \mu \in \abs{\mathfrak{A}} \). Since \( \beta \in \abs{\mathfrak{A}} \), it follows that \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \).
-    And by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that \( \theta(\gamma) \) holds.
-    Since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
-    \( \phi_{1}(\alpha) \) holds.
-
-    \vspace{0.3cm}
-    \noindent
-    We have just proven that \( \phi_{1}(\alpha) \) for any arbitrary \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \).
-    Thus, \( \mathfrak{A} \models \phi_{1} \) by \cref{dfn:first-order-language-models-of-first-order-formulas}.
-    In other words, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any arbitrary \( \mathcal{L} \)-structure
-    \( \mathfrak{A} \); \( \phi_{0} \models \phi_{1} \) follows readily from \cref{dfn:first-order-language-semantic-consequence-entailment}.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Claim}: \( \phi_{1} \models \phi_{0} \)
-
-    \vspace{2pt}
-    \noindent
-    Suppose that \( \mathfrak{A} \models \phi_{1} \) for some arbitrary \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), it follows that \( \alpha \)
-    is also an element of \( \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{1}} } \).
-    Since \( \mathfrak{A} \models \phi_{1} \) by assumption, \( \phi_{1}(\alpha) \) must hold.
-    Thus, we have by \cref{dfn:first-order-language-interpretation-of-formulas}
-    \begin{equation*}
-        \theta \Big( \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\mu} \big\} \union
-        \setbuilderbig{\orderedpair{i+1}{\alpha_{1}}}{n \leq i < \abs{\alpha}} \Big)
-    \end{equation*}
-    for all \( \mu \in \abs{\mathfrak{A}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence defined as in \eqref{eq:expressing-gamma-in-terms-of-alpha}.
-    Clearly, \( \theta(\gamma) \) by assumption; and by \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either
-    \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) or \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( \psi(\composition{\gamma}{\varepsilon_{0}}) \), then
-\end{proof}
-
 \begin{thm}
     \label{tautology:grouping-conjuncts-into-universally-quantified-formula}
     Given any well-formed formulas \( \Gamma \) and \( \varphi \)
