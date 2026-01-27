@@ -12,6 +12,7 @@
 \newcommand{\folterminterpretation}[3]{\ensuremath{#1^{#2}\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffsatisfaction}[3]{\ensuremath{ #1 \models #2\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffnonsatisfaction}[3]{\ensuremath{ #1 \not\models #2\llbracket\,#3 \,\rrbracket}}
+\newcommand{\folmodifiedvariabletranslationfunction}[3]{\ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) }}
 
 \chapter{First-Order Logic}
 In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
@@ -44,7 +45,7 @@ strings of symbols from said collection are valid expressions of that language.
 \end{dfn}
 
 \begin{rem}
-    The traditional ``constant'' symbols are treated as \aref{cor:0-ary-operations}{\( 0 \)-ary operations} in this approach.
+    The traditional ``constant'' symbols are treated as \( 0 \)-ary function symbols in this approach.
     That is why \( \ran \Phi^{\mathcal{L}} \) can be the entirety of \( \naturalset \) (which includes 0) whereas \( 0 \) must
     be excluded from the range of \( \Pi^{\mathcal{L}} \).
 \end{rem}
@@ -108,23 +109,20 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-terms}
-    An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} \( t \) is an \( \mathcal{L} \)-term if and only if
-    one of the following conditions holds:
+    An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} is an \( \mathcal{L} \)-term if and only if
+    it is constructible in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t \) consists of a single \( \mathcal{L} \)-variable
-        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) where \( i \in \dom F^{\mathcal{L}} \) and:
-            \begin{itemize}[topsep=2pt,leftmargin=10pt]
-                \item \( \tau \) is a tuple of \aref{dfn:n-tuples}{length} \( \Phi^{\mathcal{L}}(i) \)
-                \item \( \tau_{j} \) is an \( \mathcal{L} \)-term for all \( j \in \Phi^{\mathcal{L}}(i) \)
-            \end{itemize}
-        \item \( t \) has the form \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
-        \item \( t \) has the form \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term
+        \item If \( t \) is an \( \mathcal{L} \)-expression such that \( \folsymbols{t} = \mleft\{ x \mright\} \) where \( x \in \folvars{\mathcal{L}} \),
+             then \( t \) is an \( \mathcal{L} \)-term
+        \item If \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \) for some \( i \in \dom F^{\mathcal{L}} \),
+             then \( F^{\mathcal{L}}_{i}(\tau) \) is also an \( \mathcal{L} \)-term
+        \item If \( t \) is an \( \mathcal{L} \)-term, then \( (t) \) is also an \( \mathcal{L} \)-term
+        \item If \( t \) is an \( \mathcal{L} \)-term, then \( [\thinspace s \thinspace] \) is also an \( \mathcal{L} \)-term
     \end{enumerate}
 \end{dfn}
 
 \begin{rem}
-    If \( \Phi^{\mathcal{L}}(i) = 0 \), then \( F^{\mathcal{L}}_{i} \) is a \( 0 \)-ary operation symbol, in which case \( \tau = \tuple{} \).
-    An \( 0 \)-ary operation symbol represents a ``constant'' symbol in \( \mathcal{L} \).
+    
 \end{rem}
 
 \begin{dfn}
@@ -141,7 +139,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
     An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula\footnote{\,Also called a \keyword{well-formed formula} or wff in the language of \( \mathcal{L} \).}
-    if and only if it is constructible in a finite number of steps via the application of the following rules:
+    if and only if it is constructible from an atom in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is also an \( \mathcal{L} \)-formula
@@ -188,12 +186,12 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{rem}
-    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely in} \( \varphi \).
+    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely} or \keyword{occurs free} in \( \varphi \).
 \end{rem}
 
 \begin{notation}
     \phantomsection \label{notation:first-order-language-the-set-of-all-free-variables-in-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) is the set of all free variables occurring in \( \varphi \).
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables in \( \varphi \).
 \end{notation}
 
 \noindent
@@ -254,27 +252,27 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-translation-function}
     If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then a function \( \delta \) is a \keyword{variable translation function}
-    from \( \mathcal{L} \) into \( \mathfrak{A} \) if and only if \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
-    In other words, any function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \) is a variable translation function from \( \mathcal{L} \) into \( \mathfrak{A} \).
+    of \( \mathcal{L} \) under \( \mathfrak{A} \) if and only if \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
+    In other words, any function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \) is a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-modified-variable-translation-function}
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable translation function from
-    \( \mathcal{L} \) into \( \mathfrak{A} \).
-    If \( v \) is an \( \mathcal{L} \)-variable and \( e \in \abs{\mathfrak{A}} \), then \( \delta \mleft( v \mapsto e \mright) \) denotes
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable translation function of
+    \( \mathcal{L} \) under \( \mathfrak{A} \).
+    If \( v \) is an \( \mathcal{L} \)-variable and \( e \in \abs{\mathfrak{A}} \), then \( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \) denotes
     the function \( \restrictedfunction{\delta}{ \folvars{\mathcal{L}} - \mleft\{ v \mright\} } \union \big\{ \orderedpair{v}{e} \big\} \).
 \end{dfn}
 
 \begin{rem}
-    Note that \( \delta \mleft( v \mapsto e \mright) \) is still a variable translation function because
-    \( \dom \big( \delta \mleft( v \mapsto e \mright) \big) = \folvars{\mathcal{L}} \)
-    and \( \ran \big( \delta \mleft( v \mapsto e \mright) \big) \subseteq \abs{\mathfrak{A}} \).
+    Note that \( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \) is still a variable translation function because
+    \( \dom \big( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \big) = \folvars{\mathcal{L}} \)
+    and \( \ran \big( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \big) \subseteq \abs{\mathfrak{A}} \).
 \end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-terms}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \delta \) is a variable translation function from \( \mathcal{L} \) into some \( \mathcal{L} \)-structure \( \mathfrak{A} \),
+    If \( t \) is an \( \mathcal{L} \)-term and \( \delta \) is a variable translation function of \( \mathcal{L} \) under some \( \mathcal{L} \)-structure \( \mathfrak{A} \),
     then an \keyword{interpretation} of \( t \) in \( \mathfrak{A} \) with \( \delta \)
     (denoted as \folterminterpretation{t}{\mathfrak{A}}{\delta}) is defined as follows:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -288,16 +286,10 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \end{enumerate}
 \end{dfn}
 
-\begin{rem}
-    Note the recursive nature of \cref{dfn:first-order-language-interpretation-of-terms}. This means that \( \mathcal{L} \)-terms can be nested within each other.
-    But since \( \mathcal{L} \)-terms are \( \mathcal{L} \)-expressions and \( \mathcal{L} \)-expressions are finite sequences of \( \mathcal{L} \)-symbols,
-    the \( \mathcal{L} \)-term at the deepest level of nesting must either be an \( \mathcal{L} \)-variable or an 0-ary function (constant) symbol.
-\end{rem}
-
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-formulas}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \delta \) be a \aref{dfn:first-order-language-variable-translation-function}{variable translation function}
-    from \( \mathcal{L} \) into an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
+    of \( \mathcal{L} \) under an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
     We now define precisely what it means for \( \mathfrak{A} \) to satisfy \( \varphi \) with \( \delta \)
     (denoted as \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta}):
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -319,12 +311,53 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
             or \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta} \)
         \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if
-            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta \mleft( v \mapsto e \mright)} \) for all \( e \in \abs{\mathfrak{A}} \)
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta}{v}{e} } \) for all \( e \in \abs{\mathfrak{A}} \)
         \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if there exists an \( e \in \abs{\mathfrak{A}} \) such that
-            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \delta \mleft( v \mapsto e \mright) } \)
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta}{v}{e} } \)
     \end{enumerate}
 \end{dfn}
+
+\begin{lem}
+    \phantomsection \label{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    Let \( t \) be an \( \mathcal{L} \)-term and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
+    If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions}
+    of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
+    \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \),
+    then \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+\end{lem}
+
+\begin{proof}
+    Suppose that \( t \) is constructible by the application of the rules stated in \cref{dfn:first-order-language-terms} in \( n \in \naturalset \) steps.
+    Let \( s_{k} \) denote the \( \mathcal{L} \)-term obtained during the \( k^{\text{th}} \) step in the construction of \( t \).
+    Clearly, \( s_{n-1} = t \).
+    The goal, therefore, is to prove that \( \folterminterpretation{s_{k}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{s_{k}}{\mathfrak{A}}{\delta_{1}} \)
+    for all \( k \in n \), which can be done via finite induction.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{Base Case}: \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{1}} \)
+    
+    \vspace{0.1cm}
+    \noindent
+    Clearly \( s_{0} \) is either a single \( \mathcal{L} \)-variable or a 0-ary function symbol.
+    If \( s_{0} \) consists of a single \( \mathcal{L} \)-variable \( x \),
+    then we have \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{0}} = \delta_{0}(x) \) and \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{1}} = \delta_{1}(x) \)
+    by \cref{dfn:first-order-language-interpretation-of-terms}. But \( \delta_{0} \) and \( \delta_{1} \) have the same value at
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}
+    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
+    If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions} of \( \mathcal{L} \)
+    under \( \mathfrak{A} \) such that \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \),
+    then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+\end{thm}
+
+\begin{proof}
+    We begin by noting that \( \delta_{0}(x) = \delta_{1}(x) \) for all \( x \in \folfreevars{\varphi} \); that is, the variable translation functions \( \delta_{0} \)
+    and \( \delta_{1} \) agree wherever an \( \mathcal{L} \)-variable occurs free in \( \varphi \).
+\end{proof}
 
 \newpage
 \chapter{First-Order Languages}
@@ -551,7 +584,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{rem}
-    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely in} \( \varphi \).
+    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely in} or \keyword{occurs free} \( \varphi \).
 \end{rem}
 
 \begin{dfn}
