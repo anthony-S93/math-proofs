@@ -253,20 +253,28 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-translation-function}
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then a function \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \)
-    is called a \keyword{variable translation function} for \( \mathcal{L} \).
+    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then a function \( \delta \) is a \keyword{variable translation function}
+    from \( \mathcal{L} \) into \( \mathfrak{A} \) if and only if \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
+    In other words, any function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \) is a variable translation function from \( \mathcal{L} \) into \( \mathfrak{A} \).
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-translation-function-restricted}
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable translation function for
-    \( \mathcal{L} \). If \( v \) is an \( \mathcal{L} \)-variable, then \( \restrictedfunctionsmall{\delta}{-v} \) denotes the function obtained by
-    \aref{dfn:restricted-functions}{restricting} \( \delta \) to \( \folvars{\mathcal{L}} - \mleft\{ v \mright\} \).
+    \phantomsection \label{dfn:first-order-language-modified-variable-translation-function}
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable translation function from
+    \( \mathcal{L} \) into \( \mathfrak{A} \).
+    If \( v \) is an \( \mathcal{L} \)-variable and \( e \in \abs{\mathfrak{A}} \), then \( \delta \mleft( v \mapsto e \mright) \) denotes
+    the function \( \restrictedfunction{\delta}{ \folvars{\mathcal{L}} - \mleft\{ v \mright\} } \union \big\{ \orderedpair{v}{e} \big\} \).
 \end{dfn}
+
+\begin{rem}
+    Note that \( \delta \mleft( v \mapsto e \mright) \) is still a variable translation function because
+    \( \dom \big( \delta \mleft( v \mapsto e \mright) \big) = \folvars{\mathcal{L}} \)
+    and \( \ran \big( \delta \mleft( v \mapsto e \mright) \big) \subseteq \abs{\mathfrak{A}} \).
+\end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-terms}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \delta \) is a variable translation function for \( \mathcal{L} \),
+    If \( t \) is an \( \mathcal{L} \)-term and \( \delta \) is a variable translation function from \( \mathcal{L} \) into some \( \mathcal{L} \)-structure \( \mathfrak{A} \),
     then an \keyword{interpretation} of \( t \) in \( \mathfrak{A} \) with \( \delta \)
     (denoted as \folterminterpretation{t}{\mathfrak{A}}{\delta}) is defined as follows:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -274,7 +282,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
         \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) and \( \tau \) is a tuple of \( \mathcal{L} \)-terms
             such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \),
             then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = 
-            F^{\mathfrak{A}}_{i} \mleft( \sequence{\folterminterpretation{\tau_{k}}{\mathfrak{A}}{\delta}}{k \in \dom \tau} \mright)\)
+            F^{\mathfrak{A}}_{i} \sequence{\folterminterpretation{\tau_{k}}{\mathfrak{A}}{\delta}}{k \in \dom \tau}\)
         \item If \( t \) has the form \( \mleft( s \mright) \) or \( \mleft[ \thinspace s \thinspace \mright] \) where \( s \) is an \( \mathcal{L} \)-term,
             then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = \folterminterpretation{s}{\mathfrak{A}}{\delta} \)
     \end{enumerate}
@@ -289,7 +297,8 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-formulas}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \delta \) be a \aref{dfn:first-order-language-variable-translation-function}{variable translation function}
-    for \( \mathcal{L} \). Now we define precisely what it means for an \( \mathcal{L} \)-structure \( \mathfrak{A} \) to satisfy \( \varphi \) with \( \delta \)
+    from \( \mathcal{L} \) into an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
+    We now define precisely what it means for \( \mathfrak{A} \) to satisfy \( \varphi \) with \( \delta \)
     (denoted as \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta}):
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of the form \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms,
@@ -310,6 +319,10 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
             or \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta} \)
         \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
             then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta \mleft( v \mapsto e \mright)} \) for all \( e \in \abs{\mathfrak{A}} \)
+        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if there exists an \( e \in \abs{\mathfrak{A}} \) such that
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \delta \mleft( v \mapsto e \mright) } \)
     \end{enumerate}
 \end{dfn}
 
