@@ -13,6 +13,7 @@
 \newcommand{\folwffsatisfaction}[3]{\ensuremath{ #1 \models #2\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffnonsatisfaction}[3]{\ensuremath{ #1 \not\models #2\llbracket\,#3 \,\rrbracket}}
 \newcommand{\folmodifiedvariabletranslationfunction}[3]{\ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) }}
+\newcommand{\folcompositionfactorofterm}[1]{\ensuremath{ \mathcal{C} \mleft[ #1 \mright] }}
 
 \chapter{First-Order Logic}
 In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
@@ -107,30 +108,76 @@ clauses in natural languages. But just as clauses are composed of existing words
 formulas are also composed of smaller units called \emph{terms}.
 As such, any comprehensive definition of the grammar of a first-order language must begin with a precise definition of what a `term' means in that language.
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-terms}
+\begin{dfn}[Terms]
+    \phantomsection \label{dfn:first-order-language-construction-of-terms}
     An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} is an \( \mathcal{L} \)-term if and only if
-    it is constructible in a finite number of steps via the application of the following rules:
+    it is constructible in a finite number of steps via the application of the following two rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( t \) is an \( \mathcal{L} \)-expression such that \( \folsymbols{t} = \mleft\{ x \mright\} \) where \( x \in \folvars{\mathcal{L}} \),
              then \( t \) is an \( \mathcal{L} \)-term
         \item If \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \) for some \( i \in \dom F^{\mathcal{L}} \),
              then \( F^{\mathcal{L}}_{i}(\tau) \) is also an \( \mathcal{L} \)-term
-        \item If \( t \) is an \( \mathcal{L} \)-term, then \( (t) \) is also an \( \mathcal{L} \)-term
-        \item If \( t \) is an \( \mathcal{L} \)-term, then \( [\thinspace s \thinspace] \) is also an \( \mathcal{L} \)-term
     \end{enumerate}
 \end{dfn}
 
-\begin{rem}
-    
-\end{rem}
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-composition-factor-of-terms}
+    If \( t \) is an \( \mathcal{L} \)-term, then the \keyword{composition factor} of \( t \) (denoted as \( \folcompositionfactorofterm{t} \))
+    is the number of occurrences of function symbols with non-zero arity in \( t \).
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-every-term-has-a-finite-composition-factor}
+    Every \( \mathcal{L} \)-term has a finite composition factor.
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol}
+    If \( t \) is an \( \mathcal{L} \)-term and \( \folcompositionfactorofterm{t} \neq 0 \), then \( t \) must have the form
+    \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
+    and \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \).
+\end{cor}
+
+\begin{eg}
+    Thus, in a first-order language \( \mathcal{L} \) with function symbols \( F \), \( G \), and \( H \) (with arities 0, 1, and 2 respectively) and variable symbols
+    \( x \), \( y \), and \( z \), we have the following:
+    \begin{align*}
+        \folcompositionfactorofterm{x} &= 0\\
+        \folcompositionfactorofterm{F()} &= 0\\
+        \folcompositionfactorofterm{G(x)} &= 1\\
+        \folcompositionfactorofterm{H(F(), y)} &= 1\\
+        \folcompositionfactorofterm{H(G(x), z)} &= 2\\
+        \folcompositionfactorofterm{H(H(x, F()), y)} &= 2
+    \end{align*}
+\end{eg}
+
+\begin{dfn}[Subterms]
+    \phantomsection \label{dfn:first-order-language-subterms}
+    If \( t \) is an \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \)
+    such that \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \neq 0 \), then the elements of \( \ran \tau \) are called the \keyword{subterms}
+    of \( t \).
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-composition-factor-of-subterms-is-less}
+    If \( t \) is an \( \mathcal{L} \)-term and \( s \) is a subterm of \( t \), then \( \folcompositionfactorofterm{s} < \folcompositionfactorofterm{t} \).
+\end{thm}
+
+\begin{proof}
+    Since \( s \) is a subterm of \( t \), it follows from \cref{dfn:first-order-language-subterms} that \( t \) must have the form \( F^{\mathcal{L}}_{i}(\tau) \)
+    for some \( i \in \dom F^{\mathcal{L}} \) where \( s \in \ran \tau \).
+    This means any symbol constituting \( s \) also constitutes \( t \); that is, \( \folsymbols{s} \subseteq \folsymbols{t} \).
+    If \( s \) is the only subterm of \( t \), then necessarily \( \folcompositionfactorofterm{t} = \folcompositionfactorofterm{s} + 1 \)
+    because the symbol \( F^{\mathcal{L}}_{i} \) must be counted along with all the function symbols occurring in \( s \).
+    If \( t \) has other subterms aside from \( s \), the function symbols occurring in those terms have to be counted as well.
+\end{proof}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-atom}
     An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
     \( \varphi \) is of either one of the following forms:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-terms}
+        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
         \item \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where
             \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \)
     \end{enumerate}
@@ -154,11 +201,11 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \end{enumerate}
 \end{dfn}
 
-\begin{rem}
+\begin{notation}
     The familiar abbreviations from propositional logic do apply here, of course. For instance, if \( \varphi \) and \( \psi \) are
     \( \mathcal{L} \)-formulas, then we write \( \varphi {\implies} \psi \) to abbreviate \( \lnot \, \varphi \,\,{\lor}\,\, \psi \),
     \( \varphi {\iff} \psi \) to abbreviate \( \mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)  \), and so on.
-\end{rem}
+\end{notation}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
@@ -281,8 +328,6 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
             such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \),
             then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = 
             F^{\mathfrak{A}}_{i} \sequence{\folterminterpretation{\tau_{k}}{\mathfrak{A}}{\delta}}{k \in \dom \tau}\)
-        \item If \( t \) has the form \( \mleft( s \mright) \) or \( \mleft[ \thinspace s \thinspace \mright] \) where \( s \) is an \( \mathcal{L} \)-term,
-            then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = \folterminterpretation{s}{\mathfrak{A}}{\delta} \)
     \end{enumerate}
 \end{dfn}
 
@@ -318,32 +363,77 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \end{enumerate}
 \end{dfn}
 
-\begin{lem}
-    \phantomsection \label{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
     Let \( t \) be an \( \mathcal{L} \)-term and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
     If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions}
     of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
     \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \),
     then \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-\end{lem}
+\end{thm}
 
 \begin{proof}
-    Suppose that \( t \) is constructible by the application of the rules stated in \cref{dfn:first-order-language-terms} in \( n \in \naturalset \) steps.
-    Let \( s_{k} \) denote the \( \mathcal{L} \)-term obtained during the \( k^{\text{th}} \) step in the construction of \( t \).
-    Clearly, \( s_{n-1} = t \).
-    The goal, therefore, is to prove that \( \folterminterpretation{s_{k}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{s_{k}}{\mathfrak{A}}{\delta_{1}} \)
-    for all \( k \in n \), which can be done via finite induction.
+    Since every \( \mathcal{L} \)-term has a finite \aref{dfn:first-order-language-composition-factor-of-terms}{composition factor},
+    it suffices to prove that for all \( n \in \naturalset \), \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \)
+    is true for any \( \mathcal{L} \)-term \( t \) such that \( \folcompositionfactorofterm{t} = n \).
+    This can be done via induction.
 
     \vspace{0.3cm}
     \noindent
-    \underline{Base Case}: \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{1}} \)
-    
+    We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-term \( t \) with \( \folcompositionfactorofterm{t} = n \),
+    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    It remains how to establish the following strong inductive hypothesis: for any given \( n \in \naturalset \), if \( P(k) \) holds for all
+    \( k < n \), then \( P(n) \) holds.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n \in \naturalset \) be arbitrary.
+    Suppose that \( P(k) \) holds for all \( k < n \).
+    Now let \( t \) be any \( \mathcal{L} \)-term such that \( \folcompositionfactorofterm{t} = n \).
+    Since \( n \in \naturalset \), either \( n = 0 \) or \( n \neq 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( n = 0 \)
+
     \vspace{0.1cm}
     \noindent
-    Clearly \( s_{0} \) is either a single \( \mathcal{L} \)-variable or a 0-ary function symbol.
-    If \( s_{0} \) consists of a single \( \mathcal{L} \)-variable \( x \),
-    then we have \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{0}} = \delta_{0}(x) \) and \( \folterminterpretation{s_{0}}{\mathfrak{A}}{\delta_{1}} = \delta_{1}(x) \)
-    by \cref{dfn:first-order-language-interpretation-of-terms}. But \( \delta_{0} \) and \( \delta_{1} \) have the same value at
+    Clearly \( t \) consists of either a single \( \mathcal{L} \)-variable or a 0-ary function symbol.
+    If \( t \) consists of the variable symbol \( x \), then we have \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \delta_{0}(x) \)
+    and \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} = \delta_{1}(x) \) by \cref{dfn:first-order-language-interpretation-of-terms}.
+    Since \( x \in \folvars{t} \), necessarily \( \delta_{0}(x) = \delta_{1}(x) \) by our initial assumption.
+    Thus, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) so that \( P(n) \) holds.
+    If \( t \) consists of a 0-ary function symbol \( F^{\mathcal{L}}_{i}() \), then \cref{dfn:first-order-language-interpretation-of-terms}
+    requires that \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = F^{\mathfrak{A}}_{i}() = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    Once again, \( P(n) \) holds.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( n \neq 0 \)
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( n \neq 0 \), it follows from \cref{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol} that
+    \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
+    and \( \abs{\tau} = \Phi^{L}(i) \). Thus we have by \cref{dfn:first-order-language-interpretation-of-terms}
+    \begin{align}
+        \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}}
+        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{0}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta0}\\
+        \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}}
+        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{1}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta1}
+    \end{align}
+    Let \( m \in \dom \tau \) be arbitrary. It follows then that \( \tau_{m} \) is a \aref{dfn:first-order-language-subterms}{subterm} of \( t \); thus,
+    \cref{thm:first-order-language-composition-factor-of-subterms-is-less} guarantees that \( \folcompositionfactorofterm{\tau_{m}} < n \).
+    By the inductive hypothesis, we further deduce that
+    \( \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{1}} \).
+    This means that the tuples in \eqref{eq:interpret-with-delta0} and \eqref{eq:interpret-with-delta1} are equal and that
+    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    In other words, \( P(n) \) holds.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( P(n) \) holds for all possible cases, we conclude that for all \( n \in \naturalset \), the inductive hypothesis implies \( P(n) \), which completes the
+    inductive proof.
 \end{proof}
 
 \begin{thm}
@@ -535,7 +625,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
     \( \varphi \) is of either one of the following forms:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-terms}{\( \mathcal{L} \)-terms}
+        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
         \item \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where
             \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \)
     \end{enumerate}
