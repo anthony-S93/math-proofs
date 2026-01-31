@@ -14,9 +14,12 @@
 \newcommand{\folwffnonsatisfaction}[3]{\ensuremath{ #1 \not\models #2\llbracket\,#3 \,\rrbracket}}
 \newcommand{\folmodifiedvariabletranslationfunction}[3]{\ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) }}
 \newcommand{\folcompositionfactorofterm}[1]{\ensuremath{ \mathcal{C} \mleft[ #1 \mright] }}
+\newcommand{\folnumberofsyntacticoperators}[1]{\ensuremath{ \mathcal{R} \mleft[ #1 \mright] }}
+\newcommand{\folsubformula}{\ensuremath{ \sqsubset }}
 
 \chapter{First-Order Logic}
-In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
+\section{First-Order Languages}
+We now present the mathematical definition for a \keyword{first-order language} as well as its relationship
 to \aref{dfn:general-mathematical-structures}{mathematical structures}. Conceptually, a first-order language
 is simply a collection of symbols  together with a finite set of rules  that determine which
 strings of symbols from said collection are valid expressions of that language.
@@ -172,7 +175,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     If \( t \) has other subterms aside from \( s \), the function symbols occurring in those terms have to be counted as well.
 \end{proof}
 
-\begin{dfn}
+\begin{dfn}[Atoms]
     \phantomsection \label{dfn:first-order-language-atom}
     An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
     \( \varphi \) is of either one of the following forms:
@@ -183,8 +186,8 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \end{enumerate}
 \end{dfn}
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
+\begin{dfn}[Formulas]
+    \phantomsection \label{dfn:first-order-language-construction-of-formulas}
     An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula\footnote{\,Also called a \keyword{well-formed formula} or wff in the language of \( \mathcal{L} \).}
     if and only if it is constructible from an atom in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -207,6 +210,95 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \( \varphi {\iff} \psi \) to abbreviate \( \mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)  \), and so on.
 \end{notation}
 
+\begin{dfn}[Syntactic Operations]
+    \phantomsection \label{dfn:first-order-language-syntactic-operations}
+    If \( \mathcal{L} \) is a first-order language, then \( \mathcal{R}_{\ast} \) denotes an operation that can be applied to formulas of \( \mathcal{L} \)
+    to construct a new formulas of \( \mathcal{L} \).
+    The operation \( \mathcal{R}_{\ast} \) is also called a \keyword{syntactic operation} of \( \mathcal{L} \).
+\end{dfn}
+
+\begin{rem}
+    Every first-order language has the same set of syntactic operations: \( \mathcal{R}_{(} \), \( \mathcal{R}_{[} \),
+    \( \mathcal{R}_{\lnot} \), \( \mathcal{R}_{\land} \), \( \mathcal{R}_{\lor} \), \( \mathcal{R}_{\forall} \), and \( \mathcal{R}_{\exists} \).
+\end{rem}
+
+\begin{eg}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\land}\,\, \psi \) is the formula obtained by applying
+    the syntactic operation \( \mathcal{R}_{\land} \) to \( \varphi \) and \( \psi \), \( \varphi \,\,{\lor}\,\, \psi \) is the formula obtained
+    by applying the syntactic operation \( \mathcal{R}_{\lor} \) to \( \varphi \) and \( \psi \), etc.
+\end{eg}
+
+\begin{notation}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folnumberofsyntacticoperators{\varphi} \) denotes the number of
+    syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
+\end{notation}
+
+\begin{eg}
+    If \( \varphi \) and \( \psi \) are atoms of \( \mathcal{L} \) and \( x \) is an \( \mathcal{L} \)-variable, then we have the following:
+    \begin{align*}
+        \folnumberofsyntacticoperators{\varphi} &= 0\\
+        \folnumberofsyntacticoperators{\forall x \, \varphi} &= 1\\
+        \folnumberofsyntacticoperators{\varphi \,\,{\land}\,\, \psi} &= 1\\
+        \folnumberofsyntacticoperators{\lnot \, \varphi \,\,{\land}\,\, \psi} &= 2\\
+        \folnumberofsyntacticoperators{\varphi \,\,{\lor}\,\, \psi \,\,{\land}\,\, \psi} &= 2\\
+        \folnumberofsyntacticoperators{\mleft( \varphi \,\,{\lor}\,\, \psi \mright) \,\,{\land}\,\, \psi} &= 3
+    \end{align*}
+\end{eg}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-every-formula-has-a-finite-number-of-syntactic-operations}
+    It follows immediately from \cref{dfn:first-order-language-construction-of-formulas} that every \( \mathcal{L} \)-formula can be constructed
+    from \aref{dfn:first-order-language-atom}{atoms of \( \mathcal{L} \)} via the application of a finite number of
+    \aref{dfn:first-order-language-syntactic-operations}{syntactic operations}; that is, for every \( \mathcal{L} \)-formula \( \varphi \),
+    \( \folnumberofsyntacticoperators{\varphi} \in \naturalset \).
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-only-atoms-can-have-zero-number-of-syntactic-operations}
+    For all \( \mathcal{L} \)-formula \( \varphi \), \( \folnumberofsyntacticoperators{\varphi} = 0 \) if and only if \( \varphi \) is an atom.
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-every-formula-with-non-zero-syntactic-operations-can-be-decomposed}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula such that \( \folnumberofsyntacticoperators{\varphi} \neq 0 \),
+    then \( \varphi \) must have one of the following forms:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \mleft( \psi \mright) \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \mleft[ \, \psi \, \mright] \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \psi \,\,{\land}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas
+        \item \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas
+        \item \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) an \( \mathcal{L} \)-variable
+        \item \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) an \( \mathcal{L} \)-variable
+    \end{enumerate}
+\end{cor}
+
+\begin{dfn}[Subformulas]
+    \phantomsection \label{dfn:first-order-language-subformulas}
+    Let \( \varphi \), \( \psi \), and \( \phi \) denote \( \mathcal{L} \)-formulas.
+    We write \( \varphi \folsubformula \psi \) to mean ``\( \varphi \) is a subformula of \( \psi \)''.
+    The following properties hold for the \( \folsubformula \)-relation:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( \varphi \coloneq \mleft( \psi \mright) \), then \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \mleft[ \, \psi \, \mright] \), then \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \lnot \, \psi \), then \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \phi \,\,{\land}\,\, \psi \), then \( \phi \folsubformula \varphi \) and \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \phi \,\,{\lor}\,\, \psi \), then \( \phi \folsubformula \varphi \) and \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \forall x \, \psi \) for any \( \mathcal{L} \)-variable \( x \), then \( \psi \folsubformula \varphi \)
+        \item If \( \varphi \coloneq \exists x \, \psi \) for any \( \mathcal{L} \)-variable \( x \), then \( \psi \folsubformula \varphi \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \psi \folsubformula \varphi \), then
+    \( \folnumberofsyntacticoperators{\psi} < \folnumberofsyntacticoperators{\varphi} \).
+\end{cor}
+
+\begin{rem}
+    The converse of \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations} is obviously false.
+\end{rem}
+
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable, then we say that ``\( v \) occurs in \( \varphi \),'' 
@@ -218,7 +310,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, \( x \) and \( v \) are \( \mathcal{L} \)-variables, and \( \tau \) is a tuple of \( \mathcal{L} \)-variables,
     then the following holds:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( x \) is a free variable of \( \varphi \) if and only if \( x \in \folsymbols{\varphi} \)
+        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( x \) is a free variable of \( \varphi \) if and only if \( x \in \folvars{\varphi} \)
         \item \( x \) is a free variable of \( \lnot \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \)
         \item \( x \) is a free variable of \( \varphi \,\,{\land}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
         \item \( x \) is a free variable of \( \varphi \,\,{\lor}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
@@ -241,8 +333,9 @@ As such, any comprehensive definition of the grammar of a first-order language m
     If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables in \( \varphi \).
 \end{notation}
 
+\section{Semantics}
 \noindent
-The syntactic rules of \( \mathcal{L} \) are now fully defined;
+The syntactic rules of \( \mathcal{L} \) are fully defined in the previous section;
 that is, given any finite string of symbols in \aref{dfn:first-order-language}{\( \mathcal{L} \)}, we
 now have the information at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
 Nevertheless, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
@@ -363,57 +456,52 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \end{enumerate}
 \end{dfn}
 
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+\begin{lem}
+    \phantomsection \label{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
     Let \( t \) be an \( \mathcal{L} \)-term and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
     If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions}
     of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
     \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \),
     then \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-\end{thm}
+\end{lem}
 
 \begin{proof}
     Since every \( \mathcal{L} \)-term has a finite \aref{dfn:first-order-language-composition-factor-of-terms}{composition factor},
     it suffices to prove that for all \( n \in \naturalset \), \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \)
-    is true for any \( \mathcal{L} \)-term \( t \) such that \( \folcompositionfactorofterm{t} = n \).
-    This can be done via induction.
+    is true for any \( \mathcal{L} \)-term \( t \) such that \( \folcompositionfactorofterm{t} = n \), which can be done inductively.
 
     \vspace{0.3cm}
     \noindent
     We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-term \( t \) with \( \folcompositionfactorofterm{t} = n \),
-    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-    It remains how to establish the following strong inductive hypothesis: for any given \( n \in \naturalset \), if \( P(k) \) holds for all
-    \( k < n \), then \( P(n) \) holds.
+    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) holds.
+    We will now state the inductive hypothesis for an arbitrary \( n \in \naturalset \).
 
     \vspace{0.3cm}
     \noindent
-    Let \( n \in \naturalset \) be arbitrary.
-    Suppose that \( P(k) \) holds for all \( k < n \).
-    Now let \( t \) be any \( \mathcal{L} \)-term such that \( \folcompositionfactorofterm{t} = n \).
+    \underline{\scshape Inductive Hypothesis:}
+    \( P(k) \) holds for all \( k < n \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( t \) be any \( \mathcal{L} \)-term such that \( \folcompositionfactorofterm{t} = n \).
     Since \( n \in \naturalset \), either \( n = 0 \) or \( n \neq 0 \).
+    We have to show that \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) is implied in both cases.
 
     \vspace{0.3cm}
     \noindent
-    {\scshape Case:} \( n = 0 \)
-
-    \vspace{0.1cm}
-    \noindent
+    {\scshape Case} \( n = 0 \):
     Clearly \( t \) consists of either a single \( \mathcal{L} \)-variable or a 0-ary function symbol.
     If \( t \) consists of the variable symbol \( x \), then we have \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \delta_{0}(x) \)
     and \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} = \delta_{1}(x) \) by \cref{dfn:first-order-language-interpretation-of-terms}.
     Since \( x \in \folvars{t} \), necessarily \( \delta_{0}(x) = \delta_{1}(x) \) by our initial assumption.
-    Thus, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) so that \( P(n) \) holds.
+    Thus, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
     If \( t \) consists of a 0-ary function symbol \( F^{\mathcal{L}}_{i}() \), then \cref{dfn:first-order-language-interpretation-of-terms}
     requires that \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = F^{\mathfrak{A}}_{i}() = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-    Once again, \( P(n) \) holds.
 
     \vspace{0.3cm}
     \noindent
-    {\scshape Case:} \( n \neq 0 \)
-
-    \vspace{0.1cm}
-    \noindent
-    Since \( n \neq 0 \), it follows from \cref{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol} that
+    {\scshape Case} \( n \neq 0 \):
+    It follows from \cref{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol} that
     \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
     and \( \abs{\tau} = \Phi^{L}(i) \). Thus we have by \cref{dfn:first-order-language-interpretation-of-terms}
     \begin{align}
@@ -428,12 +516,11 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \( \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{1}} \).
     This means that the tuples in \eqref{eq:interpret-with-delta0} and \eqref{eq:interpret-with-delta1} are equal and that
     \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-    In other words, \( P(n) \) holds.
 
     \vspace{0.3cm}
     \noindent
-    Since \( P(n) \) holds for all possible cases, we conclude that for all \( n \in \naturalset \), the inductive hypothesis implies \( P(n) \), which completes the
-    inductive proof.
+    Evidently, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) is true for all possible cases.
+    From this we arrive at the conclusion that \( P(n) \) is implied by the inductive hypothesis, which completes the inductive proof.
 \end{proof}
 
 \begin{thm}
@@ -445,1945 +532,400 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 \end{thm}
 
 \begin{proof}
-    We begin by noting that \( \delta_{0}(x) = \delta_{1}(x) \) for all \( x \in \folfreevars{\varphi} \); that is, the variable translation functions \( \delta_{0} \)
-    and \( \delta_{1} \) agree wherever an \( \mathcal{L} \)-variable occurs free in \( \varphi \).
-\end{proof}
-
-\newpage
-\chapter{First-Order Languages}
-In this chapter, we present the mathematical definition for a \keyword{first-order language} as well as its relationship
-to \aref{dfn:general-mathematical-structures}{mathematical structures}. Conceptually, a first-order language
-is simply a collection of symbols  together with a finite set of rules  that determine which
-strings of symbols from said collection are valid expressions of that language.
-
-\begin{dfn}
-    %\phantomsection \label{dfn:first-order-language}
-    A \keyword{first-order language} \( \mathcal{L} \) is associated with the following symbols:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item Logical Symbols:
-            \begin{enumerate}[topsep=2pt,label=\arabic*.]
-                \item Parentheses: \( () \, , \,[ \, ] \)
-                \item Sentential Connectives\footnote{All the other familiar connectives can be defined in terms of \( \lnot \), \( \land \), and \( \lor \).}:
-                    \( \lnot \), \( \land \), \( \lor \)
-                \item Quantifiers: \( \forall \), \( \exists \)
-                \item Equality(optional): \( = \)
-                \item Variables: \( v_{0}, v_{1}, \dots \)
-            \end{enumerate}
-        \item Non-Logical Symbols:
-            \begin{enumerate}[topsep=2pt,label=\arabic*.]
-                \item Predicates: A tuple \( P^{\mathcal{L}} \) of predicate symbols with an arity function
-                    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset - \mleft\{ 0 \mright\}} \) associated with it
-                \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with an arity function
-                    \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) associated with it
-                    %\phantomsection \label{text:first-order-language-canonical-well-ordering-for-variable-symbols}
-            \end{enumerate}
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    The traditional ``constant'' symbols are treated as \aref{cor:0-ary-operations}{\( 0 \)-ary operations} in this approach.
-    That is why \( \ran \Phi^{\mathcal{L}} \) can be the entirety of \( \naturalset \) (which includes 0) whereas \( 0 \) must
-    be excluded from the range of \( \Pi^{\mathcal{L}} \).
-\end{rem}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-L-symbol}
-    A symbol associated with \( \mathcal{L} \) is called an \( \mathcal{L} \)-symbol.
-    An \( \mathcal{L} \)-symbol that is also a variable symbol is called an \( \mathcal{L} \)-variable.
-\end{dfn}
-
-\noindent
-The symbols defined in \cref{dfn:first-order-language} form the vocabulary of \( \mathcal{L} \), so to speak;
-each symbol in \( \mathcal{L} \) is analogous to a word\footnote{\,Technically, the parentheses are more like punctuations.} in a natural language.
-Just as the words of a natural language can be stringed together to form expressions,
-the symbols of \( \mathcal{L} \) can also be stringed together to form \emph{expressions} in the language of \( \mathcal{L} \), or
-\( \mathcal{L} \)-expressions for short.
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-expression}
-    An \( \mathcal{L} \)-expression is any finite sequence of \( \mathcal{L} \)-symbols.
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-the-set-of-all-symbols-constituting-an-expression}
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folsymbols{\varepsilon} \) is the set of all
-    the \( \mathcal{L} \)-symbols consituting \( \varepsilon \).
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-the-set-of-all-variable-symbols-in-an-expression}
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folvars{\varepsilon} \) is the set of all \( \mathcal{L} \)-variables
-    appearing in \( \varepsilon \).
-\end{dfn}
-
-\begin{cor}
-    It follows then that for any \( \mathcal{L} \)-expression \( \varepsilon \), \( \folvars{\varepsilon} \subseteq \folsymbols{\varepsilon} \).
-\end{cor}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-langauge-the-set-of-all-variable-symbols-in-a-tuple-of-expressions}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-expressions, then \( \folvars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folvars{\tau_{i}} \).
-\end{dfn}
-
-\begin{notation}
-%    \phantomsection \label{notation:first-order-language-abbreviation-for-number-of-variable-symbols}
-    For brevity, we denote the number of \( \mathcal{L} \)-variables occurring in \( t \) or \( \tau \) as
-    \( \folnumvars{t} \) or \( \folnumvars{\tau} \). Essentially, \( \folnumvars{t} = \abs{\folvars{t}} \) and
-    \( \folnumvars{\tau} = \abs{\folvars{\tau}} \).
-\end{notation}
-
-\noindent
-Of course, just having an infinite supply of expressions is not enough to fully define a language. We also need a set of rules to tell us
-which expressions are valid and which are not.
-For instance, the words `cats', `or', and `to' are all valid words of the English language; however, no native English speaker would deem the sequence
-of words `to or cats' a valid English expression for the simple reason that `to or cats' does not conform to the grammar of the English language.
-In other words, the grammar \emph{is} part of the language and should therefore be included in the language's specification.
-\begin{equation*}
-    \text{language} = \text{vocabulary} + \text{grammar}
-\end{equation*}
-\noindent
-Fortunately, the syntax (grammar) of first-order languages is relatively straightforward.
-In first-order languages, the most basic unit of grammar is formulas---analogous to
-clauses in natural languages. But just as clauses are composed of existing words (verbs, nouns, etc.) in a natural language,
-formulas are also composed of smaller units called \emph{terms}.
-As such, any comprehensive definition of the grammar of a first-order language must begin with a precise definition of what a `term' means in that language.
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-terms}
-    An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} \( t \) is an \( \mathcal{L} \)-term if and only if
-    one of the following conditions holds:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t \) is a single \( \mathcal{L} \)-variable
-        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(s) \) where \( i \in \dom F^{\mathcal{L}} \) and:
-            \begin{itemize}[topsep=2pt,leftmargin=10pt]
-                \item \( s \) is a tuple of \aref{dfn:n-tuples}{length} \( \Phi^{\mathcal{L}}(i) \)
-                \item \( s_{j} \) is an \( \mathcal{L} \)-term for all \( j \in \Phi^{\mathcal{L}}(i) \)
-            \end{itemize}
-        \item \( t \) has the form \( (s) \) where \( s \) is an \( \mathcal{L} \)-term
-        \item \( t \) has the form \( [\thinspace s \thinspace] \) where \( s \) is an \( \mathcal{L} \)-term
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    If \( \Phi^{\mathcal{L}}(i) = 0 \), then \( F^{\mathcal{L}}_{i} \) is a \( 0 \)-ary operation symbol, in which case \( s = \tuple{} \).
-    An \( 0 \)-ary operation symbol represents a ``constant'' symbol in \( \mathcal{L} \).
-\end{rem}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-terms-compound-terms}
-    An \( \mathcal{L} \)-term is \keyword{compound} if and only if it has the form \( F^{\mathcal{L}}_{i}(\tau) \)
-    for some \( i \in \dom F^{\mathcal{L}} \)
-    where \( \tau \) is a non-empty tuple of \( \mathcal{L} \)-terms.
-    Moreover, if \( t \) is a compound term, then \( \mleft( t \mright) \) and \( \mleft[\,t\,\mright] \) are also compound terms.
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-terms-simple-terms}
-    An \( \mathcal{L} \)-term is \keyword{simple} if and only if it is not compound.
-\end{dfn}
-
-\begin{rem}
-    It follows then that a simple \( \mathcal{L} \)-term is either:
-    \begin{enumerate*}[label=(\roman*)]
-        \item a single \( \mathcal{L} \)-variable, or
-        \item a term of the form \( F^{\mathcal{L}}_{i}(\tuple{}) \) for some \( i \in \dom F^{\mathcal{L}} \).
-    \end{enumerate*}
-\end{rem}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-terms-root-and-subterms}
-    If \( t \) is a compound \( \mathcal{L} \)-term of the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \), then
-    \( F^{\mathcal{L}}_{i} \) is called the \keyword{root} of \( t \) and the elements of \( \ran \tau \) are called the \emph{subterms} of \( t \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-terms-parent-terms}
-    If \( t \) is a compound \( \mathcal{L} \)-term with a subterm \( s \), then we say that \( t \) is the \keyword{parent term} or simply the \keyword{parent}
-    of \( s \).
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-variable-occurrence-in-terms}
-    If \( t \) is an \( \mathcal{L} \)-term and \( v \) is an \( \mathcal{L} \)-variable, then we say that ``\( v \) occurs in \( t \)'', ``\( v \) is in \( t \)'', or
-    ``\( t \) contains \( v \)'' if and only if \( v \in \folvars{t} \).
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is an \( \mathcal{L} \)-variable, then we say that ``\( v \) occurs in \( \varphi \),'' 
-    ``\( v \) is in \( \varphi \),'' or ``\( \varphi \) contains \( v \)'' if and only if \( v \in \folvars{\varphi} \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-sentences}
-    An \( \mathcal{L} \)-formula is an \( \mathcal{L} \)-sentence if and only if it does not contain any free variables
-    (i.e., \( \folfreevars{\varphi} = \emptyset \)).
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-atom}
-    An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
-    \( \varphi \) is of either one of the following forms:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
-        \item \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where
-            \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-recursive-definition-of-formulas}
-    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula if and only if it is constructible in a finite number of steps via
-    the application of the following rules:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft[ \, \varphi \, \mright] \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \lnot \, \varphi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\land}\,\, \psi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\lor}\,\, \psi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
-            then \( \forall v \, \varphi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( v \) is any \( \mathcal{L} \)-variable,
-            then \( \exists v \, \varphi \) is also an \( \mathcal{L} \)-formula
-        \item If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) is a tuple of \( \mathcal{L} \)-variables such that
-            \( \abs{\tau} \) is the number of \aref{dfn:first-order-language-recursive-definition-of-free-variables}{free variables}
-            of \( \varphi \), then \( \varphi(\tau) \) is also an \( \mathcal{L} \)-formula
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    The familiar abbreviations from propositional logic do apply here, of course. For instance, if \( \varphi \) and \( \psi \) are
-    \( \mathcal{L} \)-formulas, then we write \( \varphi {\implies} \psi \) to abbreviate \( \lnot \, \varphi \,\,{\lor}\,\, \psi \),
-    \( \varphi {\iff} \psi \) to abbreviate \( \mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)  \), and so on.
-\end{rem}
-
-\begin{dfn}[Free Variables]
-%    \phantomsection \label{dfn:first-order-language-recursive-definition-of-free-variables}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, \( x \) and \( v \) are \( \mathcal{L} \)-variables, and \( \tau \) is a tuple of \( \mathcal{L} \)-variables,
-    then the following holds:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( x \) is a free variable of \( \varphi \) if and only if \( x \in \folsymbols{\varphi} \)
-        \item \( x \) is a free variable of \( \lnot \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \)
-        \item \( x \) is a free variable of \( \varphi \,\,{\land}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
-        \item \( x \) is a free variable of \( \varphi \,\,{\lor}\,\, \psi \) if and only if \( x \) is a free variable of \( \varphi \) or \( \psi \)
-        \item \( x \) is a free variable of \( \forall v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
-        \item \( x \) is a free variable of \( \exists v \, \varphi \) if and only if \( x \) is a free variable of \( \varphi \) and \( x \neq v \)
-        \item \( x \) is a free variable of \( \varphi(\tau) \) if and only if \( x \in \ran \tau \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely in} or \keyword{occurs free} \( \varphi \).
-\end{rem}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) is the set of all free variables occurring in \( \varphi \).
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then \( \folfreevars{\tau} = \Union_{i \,\in\, \abs{\tau}} \folfreevars{\tau_{i}} \).
-\end{dfn}
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-the-number-of-free-variables-occurring-in-formulas}
-    If \( t \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, we will abbreviate
-    \( \abs{\folfreevars{t}} \) and \( \abs{\folfreevars{\tau}} \) with \( \folnumfreevars{t} \) and \( \folnumfreevars{\tau} \)
-    respectively.
-\end{notation}
-
-\noindent
-The syntactic rules of \( \mathcal{L} \) are now fully defined;
-that is, given any finite string of symbols in \aref{dfn:first-order-language}{\( \mathcal{L} \)}, we
-now have the information at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
-Nevertheless, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
-and a set of rules to construct valid formulas using those symbols is not enough; there also needs to be a set of rules that allows
-\emph{meaning} to be assigned to all valid formulas---just as English words like ``cats'', ``apples'', and ``oranges'' need to have meaning
-for English to have any value at all as a language.
-
-\vspace{0.3cm}
-\noindent
-The assignment of meaning to the expressions of a formal language is called the \keyword{semantics} of a formal language. This typically involves
-associating the symbols in the language (and the valid expressions constructed using those symbols) with existing concepts or mental imageries.
-These mental imageries can be either concrete or abstract. For instance, when a native English speaker sees the word ``apple,'' their minds
-construct the image of a fruit with red skin. In other words, the semantics of a language allows the language to be \keyword{interpreted};
-it provides a connection between a string of seemingly meaningless symbols and concepts from the real world.
-
-\vspace{0.3cm}
-\noindent
-In first-order languages, meaning is assigned to formulas via a special class of \aref{dfn:general-mathematical-structures}{mathematical structures}
-known as \keyword{first-order structures}.
-
-\begin{dfn}
-    A \keyword{first-order structure} is any \aref{dfn:general-mathematical-structures}{mathematical structure} \( \mathfrak{A} \) such that
-    \aref{notation:individual-components-of-mathematical-structures}{\( S^{\mathfrak{A}} = \emptyset \)}
-    and \aref{notation:individual-components-of-mathematical-structures}{\( G^{\mathfrak{A}} = \emptyset \)}.
-    In other words, a first-order structure is any mathematical structure that is endowed with no other features
-    aside from n-ary \aref{dfn:n-ary-relation-on-a-set}{relations} and \aref{dfn:n-ary-operation}{operations}.
-\end{dfn}
-
-\noindent
-Of course, not every first-order structure can be used to assign meaning to \( \mathcal{L} \)-formulas.
-In fact, for a first-order structure to be capable of interpreting formulas of \( \mathcal{L} \),
-its \aref{dfn:signature-of-a-structure}{signature} must be compatible with the arity functions
-\aref{dfn:first-order-language}{\( \Pi^{\mathcal{L}} \) and \( \Phi^{\mathcal{L}} \)},
-which leads us to the following definition.
-
-\begin{dfn}
-    An \( \mathcal{L} \)-structure is any first-order structure with \aref{dfn:signature-of-a-structure}{signature}
-    \( \tuple{\tuple{}, \Pi^{\mathcal{L}}, \Phi^{\mathcal{L}}, \tuple{}} \).
-\end{dfn}
-
-\begin{rem}
-%    \phantomsection \label{one-to-one-correspondences-between-first-order-language-and-first-order-structure}
-    Note that \( F^{\mathcal{L}} \), \( P^{\mathcal{L}} \), \( F^{\mathfrak{A}} \), and \( R^{\mathfrak{A}} \) are all bijective tuples
-    because the symbols associated with \( \mathcal{L} \) and \( \mathfrak{A} \) are bound to be unique.
-    As a result, \( \composition{F^{\mathfrak{A}}}{\mleft( F^{\mathcal{L}} \mright)^{-1}} \) and
-    \( \composition{R^{\mathfrak{A}}}{\mleft( P^{\mathcal{L}} \mright)^{-1}} \) are both bijections.
-    In other words, there exist one-to-one correspondences between the function symbols of \( \mathcal{L} \) and the n-ary operations of \( \mathfrak{A} \)
-    as well as between the predicate symbols of \( \mathcal{L} \) and the n-ary relation of \( \mathfrak{A} \).
-\end{rem}
-
-\noindent
-The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
-Since \( \mathcal{L} \)-formulas are composed of \( \mathcal{L} \)-terms, we must therefore begin
-by defining how \( \mathcal{L} \)-terms are interpreted in the context of an \( \mathcal{L} \)-structure.
-
-\vspace{0.3cm}
-\noindent
-In general, an interpretation of an \( \mathcal{L} \)-term \( t \) in the context of an \( \mathcal{L} \)-structure \( \mathfrak{A} \) yields a function
-\( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^{k}}{\abs{\mathfrak{A}}} \) where \( k \in \naturalset \)
-is the number of \( \mathcal{L} \)-variables \aref{dfn:first-order-language-variable-occurrence-in-terms}{occurring in} \( t \).
-Moreover, for each \( \alpha \in \abs{\mathfrak{A}}^{k} \), \( t^{\mathfrak{A}}(\alpha) \) denotes the element
-of \( \abs{\mathfrak{A}} \) that the string of symbols constituting \( t \) refers to after every function symbol \( F^{\mathcal{L}}_{i} \) in \( t \)
-has been replaced with \( F^{\mathfrak{A}}_{i} \) and every \( \mathcal{L} \)-variable in \( t \) has been substituted with objects from \( \ran (\alpha) \).
-The \( k \)-tuple \( \alpha \) is also called the \keyword{argument tuple} of \( t^{\mathfrak{A}} \).
-
-\vspace{0.3cm}
-\noindent
-Several observations can be made from the outset.
-First, we note the fact that parenthesization does not affect the outcome of an interpretation; that is, if an \( \mathcal{L} \)-term \( t \) has the form
-\( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is another \( \mathcal{L} \)-term,
-then for any \( \mathcal{L} \)-structure \( \mathfrak{A} \), an interpretation of \( t \) yields the same result as an interpretation of \( s \).
-
-\phantomsection \label{text:interpretation-of-simple-terms-intuitive-explanation}
-\vspace{0.3cm}
-\noindent
-For terms that are \aref{dfn:first-order-language-terms-simple-terms}{simple}, the results of their interpretations are also fairly straightforward.
-If \( t \) is a (non-parenthesized) \aref{dfn:first-order-language-terms-simple-terms}{simple term} of \( \mathcal{L} \), then it must be of either one of the following forms:
-\begin{enumerate*}[label=(\roman*)]
-    \item \( x \) where \( x \) is an \( \mathcal{L} \)-variable;
-    \item \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \Phi^{\mathcal{L}}(i) = 0 \) and \( \tau \)
-        is an empty tuple.
-\end{enumerate*}
-For the first form, \( t^{\mathfrak{A}} \) is simply \aref{dfn:identity-function}{\( \identityfunc{\abs{\mathfrak{A}}} \)} whereas for the second form,
-\( t^{\mathfrak{A}} = F^{\mathfrak{A}}_{i} \).
-
-\vspace{0.3cm}
-\noindent
-For \aref{dfn:first-order-language-terms-compound-terms}{compound terms}, the interpretation process is substantially more complex and involved.
-To illustrate this, we will go over an example using an ad hoc first-order language \( \mathcal{L}^{\prime} \) consisting of the following symbols:
-\begin{enumerate*}[label=(\roman*)]
-    \item \( f \), a function symbol with arity \( 1 \);
-    \item \( g \), a function symbol with arity \( 2 \);
-    \item \( h \), a function symbol with arity \( 3 \);
-    \item \( x, y, z \) representing variable symbols with the canonical ordering \( \prec \,\, = \big\{ \orderedpair{x}{y}, \orderedpair{x}{z}, \orderedpair{y}{z} \big\} \).
-\end{enumerate*}
-
-\vspace{0.3cm}
-\noindent
-Now consider the following \aref{dfn:first-order-language-terms-compound-terms}{compound} \( \mathcal{L}^{\prime} \)-term:
-\phantomsection \label{eq:compound-term-for-ad-hoc-language}
-\begin{equation*}
-    s \coloneq h(f(x), f(y), g(x, z))
-\end{equation*}
-Since \( s \) contains 3 variable symbols, an interpretation of \( s \) in the context of an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \) will
-yield a function \( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^3}{\abs{\mathfrak{A}}} \) whose value at each \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
-can be obtained by:
-\begin{enumerate*}[label=(\roman*)]
-    \item substituting every occurrence of the variable symbols \( x \), \( y \), \( z \)
-        with objects from \( \mleft\{ a, b, c \mright\} \);
-    \item replacing every occurrence of the function symbols \( f \), \( g \), and \( h \) with corresponding n-ary operations from \( \mathfrak{A} \).
-\end{enumerate*}
-
-\vspace{0.3cm}
-\noindent
-Since \( \mathfrak{A} \) is an \( \mathcal{L}^{\prime} \)-structure,
-there already exists a \aref{one-to-one-correspondences-between-first-order-language-and-first-order-structure}{one-to-one correspondence between the function symbols
-of \( \mathcal{L}^{\prime} \) and the n-ary operation symbols of \( \mathfrak{A} \)}.
-Thus, all function symbols in \( s \) can be unambiguously replaced with unique n-ary operation symbols from \( \mathfrak{A} \).
-The problem, however, lies with the substitution of the variable symbols occurring in \( s \).
-Given an argument tuple \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \),
-there are combinatorially different ways to replace the variable symbols \( x \), \( y \), \( z \) with the elements of
-\( \mleft\{ a, b, c \mright\} \). For example, one could replace every occurrence of \( x \) with \( a \), \( y \) with \( b \), and \( z \) with \( c \);
-but one could just as well replace \( x \) with \( c \), \( y \) with \( a \), and \( z \) with \( b \)!
-Since there is no rule in the syntax of first-order languages that specifies the preferred substitution scheme, the interpretation is inherently ambiguous.
-
-\vspace{0.3cm}
-\noindent
-An easy way to resolve this ambiguity is to simply arrange the elements of \(  \folvars{s} \) sequentially using the 
-\aref{text:first-order-language-canonical-well-ordering-for-variable-symbols}{canonical ordering for the variable symbols of \( \mathcal{L}^{\prime} \)}
-and then perform the substitution based on the relative position of each variable symbol in the resulting sequence.
-As previously mentioned, the canonical ordering for the variable symbols of \( \mathcal{L}^{\prime} \) is
-\( \prec \,\, = \big\{ \orderedpair{x}{y}, \orderedpair{x}{z}, \orderedpair{y}{z} \big\} \).
-Therefore, we must choose a finite sequence \( v \in \finiteseq{\folvars{s}} \) such that:
-\begin{enumerate*}[label=(\roman*)]
-    \item \( \abs{v} = \abs{\folvars{s}} \);
-    \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \).
-\end{enumerate*}
-For \( s \), only \( \tuple{x, y, z} \in \finiteseq{\mleft\{ x, y, z \mright\}} \) satisfies both criteria.
-Thus, if \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \) is the argument tuple, then we have by \cref{dfn:n-tuples-sequence-notation},
-\begin{align*}
-    \tuple{x, y, z} &= \big\{ \orderedpair{0}{x}, \orderedpair{1}{y}, \orderedpair{2}{z} \big\}\\
-    \tuple{a, b, c} &= \big\{ \orderedpair{0}{a}, \orderedpair{1}{b}, \orderedpair{2}{c} \big\}
-\end{align*}
-Observe that the positions of the variable symbols \( x \), \( y \), and \( z \) in \( \tuple{x,y,z} \) correspond directly to
-the positions of \( a \), \( b \), and \( c \) respectively in the argument tuple \( \tuple{a,b,c} \).
-Using this correspondence as the basis of our substitution scheme,
-we can now complete the interpretation by substituting every occurrence of \( x \), \( y \), and \( z \) in \( s \)
-with \( a \), \( b \), and \( c \) respectively so that the value of \( t^{\mathfrak{A}} \) at \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \)
-is given by:
-\begin{equation}
-    \phantomsection \label{eq:interpreted-s-explicit}
-    t^{\mathfrak{A}}(a, b, c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c))
-\end{equation}
-\noindent
-Notice that \( \composition{\tuple{a,b,c}}{\tuple{x,y,z}^{-1}} \) is a bijection between \( \mleft\{ x, y, z \mright\} \) and \( \mleft\{ a, b, c \mright\} \);
-i.e., it enables an unambiguous translation between the elements of \( \folvars{s} \) and \( \ran \alpha \).
-We shall call \( \tuple{x, y, z} \) the \keyword{canonical variable sequence} of \( s \) and denote it as \( \folvarseq{s} \).
-The variable translation using an argument tuple \( \alpha \) is therefore defined by the mapping \( \composition{\alpha}{\folvarseq{s}} \).
-
-\vspace{0.3cm}
-\noindent
-Next, we look at how to interpret \aref{dfn:first-order-language-terms-compound-terms}{compound first-order terms} recursively---i.e.,
-starting at the \aref{dfn:first-order-language-terms-root-and-subterms}{root} and then traversing down the (nested) internal structure one layer at a time.
-For instance, a recursive interpretation of \aref{eq:compound-term-for-ad-hoc-language}{\( s \)} will begin with \( h(\tau) \) where \( h \)
-is the \aref{dfn:first-order-language-terms-root-and-subterms}{root} of \( s \) and \( \tau \) a tuple of all the immediate
-\aref{dfn:first-order-language-terms-root-and-subterms}{subterms} of \( s \). To resolve the \( \mathcal{L} \)-expression \( h(\tau) \) into an
-element of \( \abs{\mathfrak{A}} \), we obviously need to replace \( h \) with \( h^{\mathfrak{A}} \) and interpret each and every term in \( \ran \tau \).
-Moreoever, if \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are themselves compound with their own tuple of subterms,
-then the interpretation process will be repeated for \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) using their respective roots
-as starting points.
-
-\vspace{0.3cm}
-\noindent
-The next task is to specify the \emph{distribution} of variable symbols across \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \)
-so that the objects from \( \ran \alpha \) can be assigned correctly to \( \tau_{0}^{\mathfrak{A}} \), \( \tau_{1}^{\mathfrak{A}} \), and \( \tau_{2}^{\mathfrak{A}} \).
-This can be done via a function \( \function{\delta}{\abs{\tau}}{\finiteseq{\aref{notation:first-order-language-abbreviation-for-number-of-variable-symbols}{\folnumvars{s}}}} \) such that \( \composition{\folvarseq{s}}{\delta_{i}} = \folvarseq{\tau_{i}} \) for all \( i \in \abs{\tau} \).
-Since \( \folvarseq{s} = \tuple{x, y, z} \) and \( \folvarseq{\tau_{0}} \), \( \folvarseq{\tau_{1}} \), \( \folvarseq{\tau_{2}} \) are
-\( \tuple{x} \), \( \tuple{y} \), and \( \tuple{x, z} \) respectively, necessarily \( \delta = \tuple{\tuple{0}, \tuple{1}, \tuple{0, 2}} \) so that,
-\begin{equation*}
-    \begin{aligned}
-        \composition{\folvarseq{s}}{\delta_{0}}& \\
-        \composition{\folvarseq{s}}{\delta_{1}}& \\
-        \composition{\folvarseq{s}}{\delta_{2}}&
-    \end{aligned}
-    \begin{aligned}
-        &= \composition{\tuple{x, y, z}}{\tuple{0}} \\
-        &= \composition{\tuple{x, y, z}}{\tuple{1}} \\
-        &= \composition{\tuple{x, y, z}}{\tuple{0, 1}}
-    \end{aligned}
-    \begin{aligned}
-        &= \tuple{x} \\
-        &= \tuple{y} \\
-        &= \tuple{x, z}
-    \end{aligned}
-    \begin{aligned}
-        &= \folvarseq{\tau_{0}} \\
-        &= \folvarseq{\tau_{1}} \\
-        &= \folvarseq{\tau_{2}}
-    \end{aligned}
-\end{equation*}
-Thus, given an \( \mathcal{L}^{\prime} \)-structure \( \mathfrak{A} \),
-the result of the interpretation of \( s \) in the context of \( \mathfrak{A} \)
-is a function \( s^{\mathfrak{A}} \) that can be expressed in terms of \( \tau \) and \( \delta \) as follows:
-\begin{equation}
-    \phantomsection \label{eq:interpreted-s-recursive}
-    s^{\mathfrak{A}} = \setbuilderBig{\orderedpair{\alpha}{\beta}}{\alpha \in \abs{\mathfrak{A}}^{\folnumvars{s}}
-    \,\,{\land}\,\,
-    \beta = h^{\mathfrak{A}}\mleft( \sequencebig{\tau^{\mathfrak{A}}_{i}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau}} \mright)
-    }
-\end{equation}
-It is not difficult to verify that \eqref{eq:interpreted-s-recursive} is indeed consistent with \eqref{eq:interpreted-s-explicit} that is obtained non-recursively.
-First of all, note that \aref{ssec:von-neumann-ordinals}{\( \folnumvars{s} = 3 = \mleft\{ 0, 1, 2 \mright\} \)}.
-Thus, any argument tuple \( \alpha \) for \( s^{\mathfrak{A}} \) must be a 3-tuple of the form \( \tuple{a,b,c} \)
-where \( a, b, c \in \abs{\mathfrak{A}} \). Moreover,
-\begin{align*}
-    \composition{\alpha}{\delta_{0}} &= \tuple{a}\\
-    \composition{\alpha}{\delta_{1}} &= \tuple{b}\\
-    \composition{\alpha}{\delta_{2}} &= \tuple{a ,c}
-\end{align*}
-Since \( \tau_{0} \), \( \tau_{1} \), and \( \tau_{2} \) are \aref{dfn:first-order-language-terms-simple-terms}{simple},
-necessarily \aref{text:interpretation-of-simple-terms-intuitive-explanation}{\( (\tau_{0})^{\mathfrak{A}}
-= (\tau_{1})^{\mathfrak{A}} = \, f^{\mathfrak{A}} \) and \( (\tau_{2})^{\mathfrak{A}} = \, g^{\mathfrak{A}} \)}.
-As such, the components of the internal sequence in \eqref{eq:interpreted-s-recursive} can be delineated like so:
-\begin{equation*}
-    \sequencebig{\tau^{\mathfrak{A}}_{i}(\composition{\alpha}{\delta_{i}})}{i \in \abs{\tau} }
-    = \tuple{f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)}
-\end{equation*}
-Clearly, \( s^{\mathfrak{A}}(a,b,c) = h^{\mathfrak{A}}(f^{\mathfrak{A}}(a), f^{\mathfrak{A}}(b), g^{\mathfrak{A}}(a, c)) \) for
-any \( \tuple{a,b,c} \in \abs{\mathfrak{A}}^{3} \), which is in exact agreement with \eqref{eq:interpreted-s-explicit}.
-
-\vspace{0.3cm}
-\noindent
-The informal discussion above can be formalized with the following definitions.
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-terms}
-    If \( t \) is an \( \mathcal{L} \)-term, then  a finite sequence \( v \) is a \keyword{canonical variable sequence} for \( t \)
-    if and only if it has the following properties:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{ v }{\folnumvars{t}}{\folvars{t}}  \);
-        \item \( i \in j \) if and only if \( v_{i} \,\,{\prec}\,\, v_{j} \) for all \( i, j \in \folnumvars{t} \).
-    \end{enumerate*}
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then a finite sequence \( v \) is a \keyword{canonical variable sequence} for \( \tau \)
-    if and only if it has the following properties:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{v}{\aref{notation:first-order-language-abbreviation-for-number-of-variable-symbols}{\folnumvars{\tau}}}{ \aref{dfn:first-order-langauge-the-set-of-all-variable-symbols-in-a-tuple-of-expressions}{\folvars{\tau}} } \);
-        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumvars{\tau} \).
-    \end{enumerate*}
-\end{dfn}
-
-\begin{lem}
-    \phantomsection \label{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}
-    Let \( A \) be a set with a well-ordering \( \prec \) defined on it. Let \( S \) be any subset of \( A \).
-    If \( u \) and \( v \) are two finite sequences with the following properties:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( u \) and \( v \) are bijections from \( \abs{S} \) to \( S \);
-        \item \( i \in j \) if and only if \( u_{i} \prec u_{j} \) and \( v_{i} \prec v_{j} \) for all \( i,j \in \abs{S} \),
-    \end{enumerate*}
-    then necessarily \( u = v \).
-\end{lem}
-
-\begin{proof}
-    Since \( u \) and \( v \) are functions with equal domains (\( \dom u = \dom v = \abs{S} \)), it suffices to prove
-    that \( u_{i} = v_{i} \) for all \( i \in \abs{S} \) in order to establish equality.
-    Let \( i \in \abs{S} \) be arbitrary. Since \( \dom u = \dom v = \abs{S} \), it follows that \( u_{i} = \alpha \)
-    and \( v_{i} = \beta \) for some \( \alpha, \beta \in S \). Now suppose that \( \alpha \neq \beta \).
-    Since \( S \subseteq A \), it follows that \( \alpha, \beta \in A \). But \( \prec \) is a well-ordering on \( A \),
-    so if \( \alpha \neq \beta \), then necessarily either \( \alpha \prec \beta \) or \( \beta \prec \alpha \), both of which
-    imply \( i \in i \), an obvious contradiction. Therefore, the supposition that \( \alpha \neq \beta \) must be false
-    by \aref{rule-of-inference:reductio-ad-absurdum}{Reductio ad Absurdum}.
-    In other words, \( u_{i} = v_{i} \) for all \( \abs{S} \).
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-the-uniqueness-of-canonical-variable-sequence-for-a-term-or-a-tuple-of-terms}
-    The canonical variable sequence for any first-order term or any tuple of first-order terms is unique.
-\end{thm}
-
-\begin{proof}
-    Since \( \prec \) is a well-ordering defined on the set of all \( \mathcal{L} \)-variables, the uniqueness follows readily from
-    \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
-\end{proof}
-
-\noindent
-Since the canonical variable sequence for every \( \mathcal{L} \)-term (or tuples of \( \mathcal{L} \)-terms) is unique,
-it is justifiable to introduce a special notation for it.
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-special-notation-for-canonical-sequences-for-terms}
-    For any \( \mathcal{L} \)-term \( t \), the unique canonical variable sequence for \( t \) is denoted as \( \folvarseq{t} \).
-    Similarly, for any tuple of \( \mathcal{L} \)-terms \( \tau \), the unique canonical variable sequence for \( \tau \) is denoted as \( \folvarseq{\tau} \).
-\end{notation}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then a function \( \delta \) is a \keyword{variable distribution function} for \( \tau \)
-    if and only if it has the following properties:
-    \begin{enumerate}[topsep=2pt,itemsep=1pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \function{\delta}{\abs{\tau}}{ \finiteseq{\folnumvars{\tau}} } \)
-        \item \( \dom \delta_{i} = \folnumvars{\tau_{i}} \) for all \( i \in \dom \delta \)
-        \item \( \composition{ \folvarseq{\tau} }{\delta_{i}} = \folvarseq{\tau_{i}} \) for all \( i \in \dom \delta \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    If \( \folnumvars{\tau} = 0 \), then \aref{thm:seq-empty-set-is-the-singleton-containing-the-empty-set}{\( \finiteseq{\folnumvars{\tau}} = \finiteseq{\emptyset} = \mleft\{ \emptyset \mright\} \)}, in which case \( \delta_{i} = \emptyset \) for all \( i \in \abs{\tau} \).
-\end{rem}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-uniqueness-of-the-variable-distribution-function-of-a-tuple-of-terms}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms, then the variable distribution function for \( \tau \) is unique.
-\end{thm}
-
-\begin{proof}
-    Let \( \delta \) and \( \lambda \) be variable distribution functions of a tuple \( \tau \) of \( \mathcal{L} \)-terms.
-    Clearly, \( \dom \delta = \dom \lambda = \abs{\tau} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}.
-    Thus, it remains to prove that \( \delta_{i} = \lambda_{i} \) for all \( i \in \abs{\tau} \) so that we may conclude that \( \delta = \lambda \)
-    by \cref{thm:equality-of-functions}.
+    Since \aref{cor:first-order-language-every-formula-has-a-finite-number-of-syntactic-operations}{every \( \mathcal{L} \)-formula is constructible
+    from atoms of \( \mathcal{L} \) via a finite number of syntactic operations},
+    it suffices to prove (inductively) that for all \( n \in \naturalset \), the statement
+    ``\( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}}\) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)'' holds for all
+    \( \mathcal{L} \)-formula \( \varphi \) such that \( \folnumberofsyntacticoperators{\varphi} = n \) and for all variable translation functions
+    \( \delta_{0} \) and \( \delta_{1} \) such that
+    \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \).
 
     \vspace{0.3cm}
     \noindent
-    Let \( i \in \abs{\tau} \) be arbitrary. It follows from \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms} that
-    \( \dom \delta_{i} = \dom \lambda_{i} = \folnumvars{\tau_{i}} \) and that \( \composition{\folvarseq{\tau}}{\delta_{i}} = \composition{\folvarseq{\tau}}{\lambda_{i}} =
-    \folvarseq{\tau_{i}} \).
-    Suppose that \( \orderedpair{j}{\alpha} \in \delta_{i} \) and \( \orderedpair{j}{\beta} \in \lambda_{i} \) for some
-    \( j \in \folnumvars{\tau_{i}} \). Since \( j \in \folnumvars{\tau_{i}} \) and \( \folnumvars{\tau_{i}} = \dom (\folvarseq{\tau_{i}}) \),
-    it follows that \( \orderedpair{j}{\gamma} \in \folvarseq{\tau_{i}} \) for some \( \mathcal{L} \)-variable \( \gamma \).
-    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{\alpha}{\gamma} \in \folvarseq{\tau} \)
-    and \( \orderedpair{\beta}{\gamma} \in \folvarseq{\tau} \). But \( \folvarseq{\tau} \) is a bijection by
-    \cref{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}, so necessarily \( \alpha = \beta \).
-    In other words, \( \delta_{i}(j) = \lambda_{i}(j) \) for all \( i \in \folnumvars{\tau_{i}} \), so \( \delta_{i} = \lambda_{i} \)
-    by \cref{thm:equality-of-functions}.
+    We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-formula \( \varphi \) such that
+    \( \folnumberofsyntacticoperators{\varphi} = n \) and for all variable translation functions (of \( \mathcal{L} \) under \( \mathfrak{A} \))
+    \( \delta_{0} \) and \( \delta_{1} \) such that
+    \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \),
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    We now proceed with an inductive proof of \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}.
+    First, we make the following hypothesis for some arbitrary \( n \in \naturalset \).
 
     \vspace{0.3cm}
     \noindent
-    Since \( i \in \abs{\tau} \) is arbitrary, we can conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \delta_{i} = \lambda_{i} \)
-    for all \( i \in \abs{\tau} \). Thus,  we have by \cref{thm:equality-of-functions} \( \delta = \lambda \). In other words, the variable distribution function
-    of \( \tau \) is unique.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-every-element-in-the-range-of-variable-distribution-function-for-a-tuple-of-terms-is-an-injection}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-terms and \( \delta \) is the variable distribution function for \( \tau \), then
-    \( \delta_{i} \) is injective for all \( i \in \abs{\tau} \).
-\end{thm}
-
-\begin{proof}
-    Let \( i \in \abs{\tau} \) be arbitrary.
-    Suppose that \( \orderedpair{x_{1}}{y} \in \delta_{i} \) and \( \orderedpair{x_{2}}{y} \in \delta_{i} \).
-    By \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}, it follows that \( x_{1}, x_{2} \in \folnumvars{\tau_{i}} \).
-    But \( \folvarseq{\tau_{i}} \) is a bijection from \( \folnumvars{\tau_{i}} \) to \( \folvars{\tau_{i}} \)
-    by \cref{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-terms}.
-    Thus, \( x_{1}, x_{2} \in \dom \folvarseq{\tau_{i}} \).
-    In other words, \( \orderedpair{x_{1}}{u} \in \folvarseq{\tau_{i}} \) and \( \orderedpair{x_{2}}{v} \in \folvarseq{\tau_{i}} \) for some
-    \( \mathcal{L} \)-variables \( u \) and \( v \).
-    But this would also imply that \( \orderedpair{x_{1}}{z} \in \delta_{i} \) and \( \orderedpair{z}{u} \in \folvarseq{\tau} \) because
-    \( \composition{ \folvarseq{\tau} }{\delta_{i}} = \folvarseq{\tau_{i}} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}.
-    Similarly, \( \orderedpair{x_{2}}{w} \in \delta_{i} \) and \( \orderedpair{w}{v} \in \folvarseq{\tau} \).
-    \aref{dfn:function-basic}{Since \( \delta_{i} \) and \( \folvarseq{\tau} \) are functions, it follows that \( y = z = w \) and thus \( u = v \)}.
-    Finally, \aref{dfn:injection}{we can conclude that \( x_{1} = x_{2} \) from the fact that}
-    \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{\( \folvarseq{\tau_{i}} \) is injective}.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-composition-of-variable-distribution-function-of-tuple-of-terms-spans-the-nary-product-of-the-universe}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-terms with a variable distribution function \( \delta \).
-    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure.
-    Then for every \( i \in \abs{\tau} \), \( x \in \abs{\mathfrak{A}}^{ \folnumvars{\tau_{i}} } \) if and only if
-    there exists an \( \alpha \in \abs{\mathfrak{A}}^{ \folnumvars{\tau} } \) such that
-    \( x = \composition{\alpha}{\delta_{i}} \).
-\end{thm}
-
-\begin{proof}
-    Let \( i \in \abs{\tau} \) be arbitrary.
-    Let \( x \) be an arbitrary element of \( \abs{\mathfrak{A}}^{ \folnumvars{\tau_{i}} } \).
-    Now let \( \beta \) be an element of \( \abs{\mathfrak{A}}^{\folnumvars{\tau}} \). Note that \( \beta \)
-    must exist because the universe of any structure is a non-empty.
-    Since \( \delta_{i} \in \finiteseq{\folnumvars{\tau}} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms},
-    it follows that \( \ran \delta_{i} \subseteq \folnumvars{\tau} \).
-    Furthermore, \( \delta_{i}^{-1} \) is a function because \( \delta_{i} \) is injective by \cref{thm:first-order-language-every-element-in-the-range-of-variable-distribution-function-for-a-tuple-of-formulas-is-an-injection}.
-    With these facts in mind, we can now construct a finite sequence \( \alpha \) with \( \dom \alpha = \folnumvars{\tau} \) such that for every \( j \in \folnumvars{\tau} \),
-    \begin{equation}
-        \phantomsection \label{eq:construct-alpha-with-x-and-beta}
-        \alpha_{j} =
-        \begin{cases}
-            x_{\delta_{i}^{-1}(j)} & \text{if \( j \in \ran \delta_{i} \) }\\
-            \beta & \text{if \( j \notin \ran \delta_{i} \) }
-        \end{cases}
-    \end{equation}
-    Since \( \ran x \subseteq \abs{\mathfrak{A}} \) and \( \beta \in \abs{\mathfrak{A}} \), it is obvious that \( \ran \alpha \subseteq \abs{\mathfrak{A}} \).
-    Given that \( \dom \alpha = \folnumvars{\tau} \), we can thus infer that \( \alpha \in \abs{\mathfrak{A}}^{\folnumvars{\tau}} \).
-    It remains now to prove that \( \composition{\alpha}{\delta_{i}} \) does indeed equal to \( x \). For this, we have to show that \( \composition{\alpha}{\delta_{i}} \)
-    and \( x \) are subsets of each other.
+    \underline{\scshape Inductive Hypothesis:} \( P(k) \) holds for all \( k \in \naturalset \) such that \( k < n \).
 
     \vspace{0.3cm}
     \noindent
-    Suppose that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{i}} \); that is, \( \orderedpair{a}{c} \in \delta_{i} \) and \( \orderedpair{c}{b} \in \alpha \)
-    for some \( c \). Clearly, \( c \in \ran \delta_{i} \), so we have \( \alpha_{c} = x_{\delta_{i}^{-1}(c)} \) by \eqref{eq:construct-alpha-with-x-and-beta}.
-    But \( \orderedpair{c}{a} \in \delta_{i}^{-1} \), so necessarily \( \delta_{i}^{-1}(c) = a \). Thus,
-    \begin{equation*}
-        \alpha_{c} = x_{\delta_{i}^{-1}(c)} = x_{a} = b,
-    \end{equation*}
-    from which we can infer that \( \orderedpair{a}{b} \in x \). In other words, every ordered pair in \( \composition{\alpha}{\delta_{i}} \) also belongs to \( x \).
-    Since \( \composition{\alpha}{\delta_{i}} \) is a function and functions consist only of ordered pairs, it follows that \( \composition{\alpha}{\delta_{i}} \subseteq x \).
+    The goal is to show that \( P(n) \) is implied by the inductive hypothesis so that we can conclude by the strong induction principle
+    that \( P(n) \) holds for all \( n \in \naturalset \) (and thus for all \( \mathcal{L} \)-formulas).
 
     \vspace{0.3cm}
     \noindent
-    Conversely, suppose that \( \orderedpair{a}{b} \in x \). Since \( x \in \abs{\mathfrak{A}}^{ \folnumvars{\tau_{i}} } \), it follows that
-    \( \dom x = \folnumvars{\tau_{i}} = \dom \delta_{i} = \ran \delta_{i}^{-1} \).
-    Since \( a \in \dom x \), it follows that \( a \in \ran \delta_{i}^{-1} \).
-    This means that there exists some \( c \) such that \( \orderedpair{c}{a} \in \delta_{i}^{-1} \); or \( \orderedpair{a}{c} \in \delta_{i} \) by
-    \cref{dfn:inverse-of-a-set-of-ordered-pairs}.
-    Clearly, \( c \in \ran \delta_{i} \), and since \( \ran \delta_{i} \subseteq \folnumvars{\tau} \) and \( \dom \alpha = \folnumvars{\tau} \),
-    it follows that \( c \in \dom \alpha \).
-    Furthermore, \eqref{eq:construct-alpha-with-x-and-beta} requires that \( \alpha_{c} = x_{\delta_{i}^{-1}(c)} = x_{a} = b \); or \( \orderedpair{c}{b} \in \alpha \).
-    Since \( \orderedpair{a}{c} \in \delta_{i} \) and \( \orderedpair{c}{b} \in \alpha \) are both true, necessarily \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{i}} \).
-    In other words, every ordered pair in \( x \) must also belong to \( \composition{\alpha}{\delta_{i}} \).
-    Since \( x \) is a function and functions consists only of ordered pairs, it follows that \( x \subseteq \composition{\alpha}{\delta_{i}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Having proven that \( x \) and \( \composition{\alpha}{\delta_{i}} \) are subsets of each other, we can validly conclude that they are indeed equal.
-    This means that if \( x \in \abs{\mathfrak{A}}^{\folnumvars{\tau_{i}}} \), then there exists an
-    \( \alpha \in \abs{\mathfrak{A}}^{\folnumvars{\tau}} \) such that \( x = \composition{\alpha}{\delta_{i}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    The proof for the converse is trivial. If \( \alpha \in \abs{\mathfrak{A}}^{\tau} \), then \( \composition{\alpha}{\delta_{i}} \) must be an
-    element of \( \abs{\mathfrak{A}}^{\folnumvars{\tau_{i}}} \) because \( \ran \delta_{i} \subseteq \folnumvars{\tau} \) and \( \folnumvars{\tau} = \dom \alpha \),
-    which implies that \( \dom \mleft( \composition{\alpha}{\delta_{i}} \mright) = \dom \delta_{i} = \folnumvars{\tau_{i}} \).
-\end{proof}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-interpretation-of-terms}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then an \keyword{interpretation} of \( t \) in the
-    context of \( \mathfrak{A} \) is a function \( \function{t^{\mathfrak{A}}}{\abs{\mathfrak{A}}^{\folnumvars{t}}}{\abs{\mathfrak{A}}} \) defined recursively
-    as follows:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) has the form \( \mleft( s \mright) \) or \( \mleft[ \, s \, \mright] \) where \( s \) is an \( \mathcal{L} \)-term, then
-            \( t^{\mathfrak{A}} = s^{\mathfrak{A}} \)
-        \item If \( t \) consists of a single \( \mathcal{L} \)-variable, then \( t^{\mathfrak{A}} = \aref{dfn:identity-function}{\identityfunc{\abs{\mathfrak{A}}}} \)
-        \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of all the subterms of \( t \) such that
-            \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \) and \( \delta \) is the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function} of \( \tau \), then,
-            \begin{equation*}
-                t^{\mathfrak{A}} = \setbuilderBig{\orderedpair{x}{y}}{x \in \abs{\mathfrak{A}}^{\folnumvars{t}} \,\,{\land}\,\,
-                y = F^{\mathfrak{A}}_{i}\big(\sequencebig{\tau_{j}^{\mathfrak{A}}(\composition{x}{\delta_{j}})}{j \in \dom \tau}\big)
-                }
-            \end{equation*}
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    For the third case, if \( \tau = \tuple{} \), then \( \dom \tau = \emptyset \) and \( \folnumvars{t} = \folnumvars{\tau} = 0 \).
-    Therefore, \( t^{\mathfrak{A}} = \mleft\{ \orderedpair{\emptyset}{\beta} \mright\} \) where \( \beta = F^{\mathfrak{A}}_{i}(\emptyset)\).
-\end{rem}
-
-\noindent
-The interpretation of \( \mathcal{L} \)-formulas can be defined using a similar approach with only a few trivial alterations.
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then a \aref{dfn:n-tuples}{finite sequence} \( v \) is a \keyword{canonical variable sequence}
-    for \( \varphi \) if and only if it has the following properties:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{v}{\folnumfreevars{\varphi}}{\folfreevars{\varphi}} \);
-        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumfreevars{\varphi} \).
-    \end{enumerate*}
-\end{dfn}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-the-uniqueness-of-the-canonical-variable-sequence-for-a-formula}
-    The canonical variable sequence for any \( \mathcal{L} \)-formula is unique.
-\end{thm}
-
-\begin{proof}
-    Follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
-\end{proof}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-canonical-variable-sequence-for-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a finite sequence \( v \) is a \keyword{canonical variable sequence}
-    for \( \tau \) if and only if it has the following properties:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \bijection{v}{\folnumfreevars{\tau}}{\aref{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas}{\folfreevars{\tau}}} \);
-        \item \( i \in j \) if and only if \( v_{i} \prec v_{j} \) for all \( i, j \in \folnumfreevars{\varphi} \).
-    \end{enumerate*}
-\end{dfn}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-the-uniqueness-of-the-canonical-variable-sequence-for-a-tuple-of-formulas}
-    The canonical variable sequence for any tuple of \( \mathcal{L} \)-formulas is unique.
-\end{thm}
-
-\begin{proof}
-    Follows from \cref{lem:the-elements-of-any-subset-of-a-well-ordered-set-can-be-uniquely-arranged-into-a-sequence}.
-\end{proof}
-
-\noindent
-The uniqueness of the canonical variable sequences for formulas and tuples of formulas permits us to introduce a special notation for it.
-
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-special-notation-for-canonical-variable-sequences-for-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \tau \) a tuple of \( \mathcal{L} \)-formulas, then we denote their unique canonical variable sequences as
-    \( \folfreevarseq{\varphi} \) and \( \folfreevarseq{\tau} \) respectively.
-\end{notation}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-canonical-variable-sequence-of-a-formula-with-one-extra-variable-symbol}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) where
-    \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folfreevars{\psi} \), then there exists some \( n \in \folnumfreevars{\varphi} \):
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \folfreevarseq{\varphi}(i) = \folfreevarseq{\psi}(i) \) for all \( i < n \) \phantomsection \label{enum:match-sequence-for-i-less-than-n}
-        \item \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i < \folnumfreevars{\psi} \) \phantomsection \label{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n}
-    \end{enumerate}
-\end{thm}
-
-\begin{proof}
-    Let \( n \) be a natural number such that \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \). Such an \( n \) must exist because
-    \( x \in \folfreevars{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection from \( \folnumfreevars{\varphi} \) to \( \folfreevars{\varphi} \).
-    Since \( n \in \folnumfreevars{\varphi} \) and \( \folnumfreevars{\varphi} \in \naturalset \), there are only two cases to consider.
+    Let \( \varphi \) be an arbitrary \( \mathcal{L} \)-formula such that \( \folnumberofsyntacticoperators{\varphi} = n \).
+    Let \( \delta_{0} \) and \( \delta_{1} \) be arbitrary variable translation functions of \( \mathcal{L} \) under \( \mathfrak{A} \)
+    such that \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \).
+    Since \( n \in \naturalset \), there are only two cases to consider: \( n = 0 \) or \( n \neq 0 \).
 
     \vspace{0.3cm}
     \noindent
     {\scshape Case} \( n = 0 \):
-    Clearly \ref{enum:match-sequence-for-i-less-than-n} is vacuously true because nothing can be less than \( 0 \).
-    To prove \ref{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n}, we resort to finite induction.
-    First, we establish the base case where \( i = 0 \). Suppose that \( \orderedpair{0}{v} \in \folfreevarseq{\varphi} \).
-    Since \( n = 0 \) and \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \), it follows that \( v = x \) because \( \folfreevarseq{\varphi} \)
-    is a function.
-    Moreover, \( x \) must also be the least element of \( \folfreevars{\varphi} \) in the \( \prec \) ordering because \( 0 \) is the least element of \( \folnumfreevars{\varphi} \).
-    Now let \( \orderedpair{0}{u} \in \folfreevarseq{\psi} \).
-    We know that \( u \in \folfreevars{\varphi} \) by definition, which means there must exist some \( k \) such that \( \orderedpair{k}{u} \in \folfreevarseq{\varphi} \).
-    We know that \( u \neq x \) because \( u \in \folfreevars{\psi} \) and \( x \notin \folfreevars{\psi} \).
-    Thus, \( k \neq 0 \), which means that either \( 0 + 1 = k \) or \( 0 + 1 < k \).
-    If \( 0 + 1 < k \), then there must exist some \( \mathcal{L} \)-variable \( r \neq x \) such that \( \orderedpair{0+1}{r} \in \folfreevarseq{\varphi} \)
-    and thus \( r \prec u \) by \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
-    But \( r \) is also an element of \( \folfreevars{\psi} \), which means that \( \orderedpair{m}{r} \in \folfreevarseq{\psi} \) for some \( m \in \folnumfreevars{\psi} \).
-    At this point, we have arrived at a contradiction because \( r \prec u \) implies that \( m < 0 \), which is absurd.
-    In other words, the supposition that \( 0 + 1 < k \) must be false, which leaves us with the only remaining posibility \( k = 0+1 \).
-    Thus, \( \orderedpair{0}{u} \in \folfreevarseq{\psi} \) and \( \orderedpair{0+1}{u} \in \folfreevarseq{\varphi} \) are both true;
-    or, \( \folfreevarseq{\varphi}(0+1) = \folfreevarseq{\psi}(0) \) as required for the base case.
+    In this case, \( \varphi \) must be an atom of \( \mathcal{L} \); that is, \( \varphi \) either has the form \( s = t \) where \( s \) and \( t \)
+    are \( \mathcal{L} \)-terms, or it has the form \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where \( \tau \) is a tuple of
+    \( \mathcal{L} \)-terms such that \( \dom \tau = \Pi^{\mathcal{L}}(i) \).
+    Suppose that \( \varphi \) has the form \( s = t \).
+    By \cref{dfn:first-order-language-recursive-definition-of-free-variables}, we have
+    \( \folfreevars{\varphi} = \folvars{\varphi} = \folvars{s} \union \folvars{t}  \) and thus
+    \( \folvars{s} \subseteq \folfreevars{\varphi} \) and \( \folvars{t} \subseteq \folfreevars{\varphi} \).
+    Since \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \),
+    it follows that \( \restrictedfunctionsmall{\delta_{0}}{\folvars{s}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{s}} \)
+    and \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \).
+    In other words, \cref{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    is applicable to \( \delta_{0} \) and \( \delta_{1} \), from which we infer:
+    \begin{align}
+        \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} &=
+        \folterminterpretation{s}{\mathfrak{A}}{\delta_{1}} \phantomsection \label{eq:interpreting-s-yields-the-same-entity}\\
+        \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} &=
+        \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \phantomsection \label{eq:interpreting-t-yields-the-same-entity}
+    \end{align}
+    From \cref{dfn:first-order-language-interpretation-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \)
+    if and only if \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} \).
+    But from \eqref{eq:interpreting-s-yields-the-same-entity} and \eqref{eq:interpreting-t-yields-the-same-entity}, it is clear that
+    \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} \) if and only if
+    \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{1}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    Applying \cref{dfn:first-order-language-interpretation-of-formulas} once again allows us to conclude that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
 
     \vspace{0.3cm}
     \noindent
-    For the inductive step, we suppose that \( \orderedpair{i+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \) for some
-    \( i \leq k \) where \( k + 1 = \folnumfreevars{\psi} \) and \( u \in \folfreevars{\psi} \).
-    Let \( j = i+1 \) and \( r, v \) be \( \mathcal{L} \)-variables such that \( r \neq x \), \( v \neq x \),
-    \( \orderedpair{j+1}{r} \in \folfreevarseq{\varphi} \),
-    and \( \orderedpair{j}{v} \in \folfreevarseq{\psi} \).
-    If \( r \neq v \), then either \( r \prec v \) or \( v \prec r \).
-    But \( r \prec v \) implies \( u \prec r \prec v \), which in turn implies the existence of some \( l \) such that \( i < l < i + 1 \) and
-    \( \orderedpair{l}{r} \in \folfreevarseq{\psi} \). This is of course absurd because there does not exist any natural number between \( i \) and \( i + 1 \).
-    Similarly, if \( v \prec r \), then necessarily \( u \prec v \prec r \), which again implies the existence of some \( l \) such that \( i < l < i + 1 \)
-    and \( \orderedpair{l}{v} \in \folfreevarseq{\varphi} \).
-    This means that neither \( r \prec v \) nor \( v \prec r \) is possible. Therefore, \( r = v \) as required to establish the inductive step.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Case} \( n > 0 \): To prove \ref{enum:match-sequence-for-i-less-than-n}, we once again use finite induction.
-    Let \( u \) be an \( \mathcal{L} \)-variable such that \( \orderedpair{0}{u} \in \folfreevarseq{\varphi} \).
-    Since \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( n \neq 0 \), it follows that \( u \neq x \) because \( \folfreevarseq{\varphi} \) is a bijection.
-    Moreover, \( u \) is necessarily the least element of \( \folfreevars{\varphi} \) as required by \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
-    Since \( x \in \folfreevars{\varphi} \), it follows that \( u \prec x \).
-
-    \vspace{0.3cm}
-    \noindent
-    To establish the base case, we suppose that \( \orderedpair{0}{v} \in \folfreevarseq{\psi} \). If \( u \neq v \), then either \( u \prec v \) or \( v \prec u \).
-    Clearly, \( v \prec u \) is impossible because it contradicts the fact that \( u \) is the least element of \( \folfreevars{\varphi} \).
-    But if \( u \prec v \), then \( v \) must be the least element of \( \folfreevars{\psi} \) due to the second requirement in
-    \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}.
-    This means that \( u \) (the least element of \( \folfreevars{\varphi} \)) must be either \( v \) or \( x \).
-    But it has already been established that neither case is possible because \( u \neq v \) and \( u \neq x \),
-    so we have once again arrived at a contradiction. This means that the supposition that \( u \prec v \) must be false.
-    Since neither \( u \prec v \) and \( v \prec u \) can be true, it must be that \( u = v \).
-    In other words, \( \folfreevarseq{\varphi}(0) = \folfreevarseq{\psi}(0) \).
-
-    \vspace{0.3cm}
-    \noindent
-    To establish the inductive step, we suppose that \( \orderedpair{i}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \)
-    for some \( i < k \) where \( k \union \mleft\{ k \mright\} = n \) and \( u \neq x \).
-    Now let \( v, r \in \folfreevars{\psi} \) such that
-    \( \orderedpair{i+1}{v} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i+1}{r} \in \folfreevarseq{\psi} \).
-    If \( v \neq r \), then either \( v \prec r \) or \( r \prec v \).
-    Clearly, \( v \prec r \) is not possible because it implies \( u \prec v \prec r \), which in turn implies the existence of some
-    \( l \in \folnumfreevars{\psi} \) such that \( i < l < i + 1 \) and \( \orderedpair{l}{v} \in \folfreevarseq{\psi} \).
-    Similarly, \( r \prec v \) is also absurd because it implies \( u \prec r \prec v \), which in turn implies the existence of some
-    \( l \in \folnumfreevars{\varphi} \) such that \( i < l < i + l \) and \( \orderedpair{l}{r} \in \folfreevarseq{\varphi} \).
-    Thus, \( r = v \), so \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i + 1) \).
-
-    \vspace{0.3cm}
-    \noindent
-    Having established both the base case and inductive step, we conclude by finite induction that \( \folfreevarseq{\varphi}(i) = \folfreevarseq{\psi}(i) \)
-    for all \( i \leq k \). Since \( k \union \mleft\{ k \mright\} = n \), it follows that the statement is true for all \( i < n \), hence
-    \ref{enum:match-sequence-for-i-less-than-n}.
-
-    \vspace{0.3cm}
-    \noindent
-    We can now prove \ref{enum:sequence-shifted-to-the-right-by-one-for-i-greater-than-or-equal-to-n} using \ref{enum:match-sequence-for-i-less-than-n}.
-
-    \vspace{0.3cm}
-    \noindent
-    Once again, we proceed by induction. First, we establish the base case where \( i = n \).
-    Suppose that \( \orderedpair{n+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for the \( \mathcal{L} \)-variables
-    \( u, v \).
-    Observe that \( u \neq x \) because \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection.
-    Similarly, \( v \neq x \) because \( v \in \folfreevars{\psi} \) and \( x \notin \folfreevars{\psi} \).
-    If \( u \neq v \), then either \( u \prec v \) or \( v \prec u \), neither of which are possible by the reasoning that follows.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( u \prec v \).
-    Since \( u \in \folfreevars{\varphi} \) and \( u \neq x \), necessarily \( u \in \folfreevars{\psi} \).
-    Thus, there must exist a \( j \in \folnumfreevars{\psi} \) such that \( \orderedpair{j}{u} \in \folfreevarseq{\psi} \).
-    Since \( u \prec v \), \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas} requires that \( j < n \).
-    But if \( j < n \), then \( \folfreevarseq{\varphi}(j) = \folfreevarseq{\psi}(j) = u \). But because \( \folfreevarseq{\varphi} \) is
-    a bijection, this would mean that \( j = n + 1 \) and thus \( n + 1 < n \), which is absurd.
-    Thus, \( u \prec v \) must be false.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( v \prec u \).
-    Since \( v \in \folfreevars{\psi} \), necessarily \( v \in \folfreevars{\varphi} \).
-    Therefore, there must exist some \( j \in \folnumfreevars{\varphi} \) such that \( \orderedpair{j}{v} \in \folfreevarseq{\varphi} \).
-    But because \( v \prec u \) and \( \orderedpair{n+1}{u} \in \folfreevarseq{\varphi} \), \cref{dfn:first-order-language-canonical-variable-sequence-for-formulas}
-    requires that \( j < n + 1 \), which leaves us with only two possibilities: \( j = n \) or \( j < n \).
-    If \( j = n \), then \( v = x \) because \( \orderedpair{n}{x} \in \folfreevarseq{\varphi} \) and \( \folfreevarseq{\varphi} \) is a bijection.
-    But this contradicts the fact that \( v \neq x \), which has already been established. Thus, \( j \neq n \).
-    On the other hand, if \( j < n \), then \ref{enum:match-sequence-for-i-less-than-n} guarantees that \( \folfreevarseq{\varphi}(j) = \folfreevarseq{\psi}(j) = v \).
-    But this would mean that \( j = n \) because \( \folfreevarseq{\psi}(n) = v \) and \( \folfreevarseq{\psi} \) is a bijection.
-    Since it is impossible for \( j < n \) and \( j = n \) to be true at the same time, we have arrived at a contradiction.
-    This means that our supposition that \( v \prec u \) cannot be true.
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( u \prec v \) and \( v \prec u \) are both impossible, it must be that \( u = v \).
-    In other words, \( \folfreevarseq{\varphi}(n+1) = \folfreevarseq{\psi}(n) \), which is our base case.
-
-    \vspace{0.3cm}
-    \noindent
-    For the inductive step, we suppose that \( \folfreevarseq{\varphi}(i + 1) = \folfreevarseq{\psi}(i) \) for some arbitrary
-    \( n \leq i < k \) where \( k \union \mleft\{ k \mright\} = \folnumfreevars{\psi} \).
-    This means that \( \orderedpair{i+1}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \)
-    for some \( \mathcal{L} \)-variable \( u \).
-    Now let \( j = i + 1 \) and \( r, v \) be \( \mathcal{L} \)-variables such that
-    \( \orderedpair{j}{r} \in \folfreevarseq{\psi} \) and \( \orderedpair{j+1}{v} \in \folfreevarseq{\varphi} \).
-    If \( r \neq v \), then either \( r \prec v \) or \( v \prec r \).
-    Again, we will show that both of those statements lead to contradictions.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( r \prec v \). Clearly \( u \prec r \) since \( \orderedpair{i}{u} \in \folfreevarseq{\psi} \) and \( \orderedpair{j}{r} \in \folfreevarseq{\psi} \).
-    We can therefore infer from the transitivity of \( \prec \) that \( u \prec r \prec v \).
-    But because \( \folfreevarseq{\varphi}(j) = u \) and \( \folfreevarseq{\varphi}(j+1) = v \),
-    \( u \prec r \prec v \) would imply the existence of an \( l \) such that \( j < l < j + 1 \), which is an obvious contradiction.
-    Therefore, the supposition that \( r \prec v \) must be false.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( v \prec r \). Again, \( u \prec v \) because \( \orderedpair{j}{u} \in \folfreevarseq{\varphi} \) and \( \orderedpair{j+1}{v} \in \folfreevarseq{\varphi} \).
-    It follows from the transitivity of \( \prec \) that \( u \prec v \prec r \), which in turn implies the existence of an \( l \) such that
-    \( i < l < i + 1 \). Another obvious contradiction.
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( v \prec r \) and \( r \prec v \) both lead to contradictions, it must be that \( r = v \), which establishes the inductive step.
-    By finite induction, we conclude that \( \folfreevarseq{\varphi}(i+1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i \leq k \).
-    Since \( k \union \mleft\{ k \mright\} = \folnumfreevars{\psi} \), this statement is equivalent to 
-    \( \folfreevarseq{\varphi}(i+1) = \folfreevarseq{\psi}(i) \) for all \( n \leq i < \folnumfreevars{\psi} \).
-\end{proof}
-
-\begin{cor}
-    \phantomsection \label{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \folfreevars{\varphi} = \folfreevars{\psi} \union \mleft\{ x \mright\} \) and
-    \( x \notin \folfreevars{\psi} \), then there exists some \( n \in \folnumfreevars{\varphi} \) such that
+    Similarly, if \( \varphi \) has the form \( P^{\mathcal{L}}_{i}(\tau) \),
+    then \cref{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    guarantees that
     \begin{equation*}
-        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{ \folfreevarseq{\psi}(i) }}{i < n}
-        \union \big\{ \orderedpair{n}{x} \big\} \union
-        \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\psi}(i)}}{n \leq i < \folnumvars{\psi}}
+        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{0}} }{j \in \dom \tau}
+        =
+        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{1}} }{j \in \dom \tau}
     \end{equation*}
-\end{cor}
+    since \( \restrictedfunctionsmall{\delta_{0}}{ \folvars{\tau_{j}} } = \restrictedfunctionsmall{\delta_{1}}{ \folvars{\tau_{j}} } \) for all
+    \( j \in \dom \tau \). It should be clear from \cref{dfn:first-order-language-interpretation-of-formulas} that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \) holds in this case as well.
 
-\begin{rem}
-    Obviously, the results of \cref{thm:first-order-language-canonical-variable-sequence-of-a-formula-with-one-extra-variable-symbol,cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol} apply also to tuple of \( \mathcal{L} \)-formulas, not just single \( \mathcal{L} \)-formulas.
-\end{rem}
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case} \( n \neq 0 \): From \cref{cor:first-order-language-every-formula-with-non-zero-syntactic-operations-can-be-decomposed}, we know that
+    \( \varphi \) must take one of seven forms.
+    Suppose that \( \varphi \coloneq \mleft( \psi \mright) \) for some \( \mathcal{L} \)-formula \( \psi \).
+    Clearly, \( \psi \folsubformula \varphi \),
+    so we have \( \folnumberofsyntacticoperators{\psi} < n \) by \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}.
+    Moreover, we also have \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\psi} } \)
+    since \( \folfreevars{\psi} = \folfreevars{\varphi} \) and
+    \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \) by our initial assumption.
+    From the inductive hypothesis, it thus follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{1}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    Note that the proof is exactly the same if \( \varphi \) has the form \( \mleft[ \, \psi \, \mright] \) or \( \lnot \, \psi \).
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then a function \( \delta \) is a \keyword{variable distribution function}
-    for \( \tau \) if and only if it has the following properties:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \function{\delta}{\abs{\tau}}{\finiteseq{\folnumfreevars{\tau}}} \)
-        \item \( \dom \delta_{i} = \folnumfreevars{\tau_{i}} \) for all \( i \in \dom \delta \)
-        \item \( \composition{\folfreevarseq{\tau}}{\delta_{i}} = \folfreevarseq{\tau_{i}} \) for all \( i \in \dom \delta \)
-    \end{enumerate}
-\end{dfn}
+    \vspace{0.3cm}
+    \noindent
+    Next, we consider the case where \( \varphi \) takes on the form \( \psi \,\,{\land}\,\, \phi \).
+    Once again, \( \folnumberofsyntacticoperators{\psi} < n \) and \( \folnumberofsyntacticoperators{\phi} < n \) are both true
+    by \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}
+    because \( \psi \) and \( \phi \) are subformulas of \( \varphi \).
+    Then from \cref{dfn:first-order-language-interpretation-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \)
+    if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{0}} \) both hold.
+    Since \( \folnumberofsyntacticoperators{\psi} \) and \( \folnumberofsyntacticoperators{\phi} \) are both less than \( n \) and the variable translation functions
+    \( \delta_{0} \) and \( \delta_{1} \) overlap for all free variables of \( \varphi \), it follows from the inductive hypothesis that
+    \begin{align*}
+        \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{1}}\\
+        \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{1}}
+    \end{align*}
+    Thus, necessarily \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    The same argument applies if \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \).
 
-\begin{thm}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas, then the variable distribution function for \( \tau \) is unique.
-\end{thm}
+    \vspace{0.3cm}
+    \noindent
+    Finally, we consider the case where \( \varphi \) is constructed by quantification (\( \mathcal{R}_{\forall} \) or \( \mathcal{R}_{\exists} \)).
+    If \( \varphi \coloneq \forall x \, \psi \), then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \) for all \( e \in \abs{\mathfrak{A}} \).
+    Now let \( e \in \abs{\mathfrak{A}} \) be arbitrary.
+    We know from \cref{dfn:first-order-language-recursive-definition-of-free-variables} that
+    \begin{equation*}
+        \folfreevars{\varphi} =
+        \begin{cases}
+            \folfreevars{\psi} - \mleft\{ x \mright\} & \text{\normalfont if }  x \in \folfreevars{\psi} \\
+            \folfreevars{\psi} & \text{\normalfont if } x \notin \folfreevars{\psi}
+        \end{cases}
+    \end{equation*}
+    If \( x \notin \folfreevars{\psi} \), then obviously \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\psi} }  \) because \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \) by our initial assumption
+    and \( \folfreevars{\varphi} \) and \( \folfreevars{\psi} \) are the same set.
+    We can deduce from this the fact that
+    \begin{equation}
+        \phantomsection \label{eq:modified-variable-translation-function-also-agree}
+        \restrictedfunctionsmall{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} }{ \folfreevars{\psi} }
+        =
+        \restrictedfunctionsmall{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} }{ \folfreevars{\psi} }
+    \end{equation} 
+    \noindent
+    On the other hand, if \( x \in \folfreevars{\psi} \), then \( \folfreevars{\psi} = \folfreevars{\varphi} \union \mleft\{ x \mright\} \).
+    If we were to construct the restricted functions \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\psi}} \)
+    and \( \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\psi}} \), we will end up with
+    \begin{align*}
+        \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{0}} \big\}\\
+        \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{1}} \big\}
+    \end{align*}
+    where \( e_{0} \) and \( e_{1} \) are elements of \( \abs{\mathfrak{A}} \). But for \( \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} \) and
+    \( \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} \), the values \( e_{0} \) and \( e_{1} \) will simply be replaced with the same value \( e \)
+    regardless of what they are; and given that \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} =  \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \)
+    by our initial assumption, we arrive at \eqref{eq:modified-variable-translation-function-also-agree} once again. In other words, \eqref{eq:modified-variable-translation-function-also-agree} holds for all possible cases.
 
-\begin{proof}
-    Same as \cref{thm:first-order-language-uniqueness-of-the-variable-distribution-function-of-a-tuple-of-terms}.
+    \vspace{0.3cm}
+    \noindent
+    Now recall that \( \folnumberofsyntacticoperators{\psi} < n \) since \( \psi \) is a subformula of \( \varphi \).
+    Together, \eqref{eq:modified-variable-translation-function-also-agree} and the inductive hypothesis implies that
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \),
+    which in turn implies that 
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \) 
+    for all \( e \in \abs{\mathfrak{A}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \)
+    for all \( e \in \abs{\mathfrak{A}} \).
+    In other words, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)
+    by \cref{dfn:first-order-language-interpretation-of-formulas}.
+    If \( \varphi \) is existentially quantified, then the proof is exactly the same except for the conclusion drawn at the end.
+    The key is to establish that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \), and the rest follows readily from
+    \cref{dfn:first-order-language-interpretation-of-formulas}.
+
+    \vspace{0.3cm}
+    \noindent
+    We have now established that the statement \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)
+    is true regardless of the form \( \varphi \) takes. Since \( \varphi \), \( \delta_{0} \), and \( \delta_{1} \) are all arbitrary, we conclude by
+    \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( P(n) \) holds.
+    Therefore, \( P(n) \) is implied by the inductive hypothesis for any arbitrary \( n \in \naturalset \).
+    \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula} follows
+    readily from the strong induction principle.
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-every-element-in-the-range-of-variable-distribution-function-for-a-tuple-of-formulas-is-an-injection}
-    If \( \tau \) is a tuple of \( \mathcal{L} \)-formulas and \( \delta \) is the variable distribution function for \( \tau \), then
-    \( \delta_{i} \) is injective for all \( i \in \abs{\tau} \).
+    \phantomsection \label{thm:first-order-language-sentences-must-be-satisfied-by-all-variable-translation-functions}
+    Let \( \varphi \) be an \( \mathcal{L} \)-sentence and \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure.
+    If \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) for some variable translation function \( \delta \),
+    then \( \mathfrak{A} \) satisfies \( \varphi \) for all variable translation functions.
 \end{thm}
 
 \begin{proof}
-    Same as \cref{thm:first-order-language-every-element-in-the-range-of-variable-distribution-function-for-a-tuple-of-terms-is-an-injection}.
+    Let \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
+    Let \( \varepsilon \) denote an arbitrary variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Since \( \varphi \) is a sentence in the language of \( \mathcal{L} \), it follows that \( \folfreevars{\varphi} = \emptyset \).
+    Therefore,
+    \begin{equation*}
+        \restrictedfunctionsmall{\delta}{ \folfreevars{\varphi} }
+        = \restrictedfunctionsmall{\delta}{ \emptyset }
+        = \emptyset
+        = \restrictedfunctionsmall{\varepsilon}{ \emptyset }
+        = \restrictedfunctionsmall{\varepsilon}{ \folfreevars{\varphi} }
+    \end{equation*}
+    By \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula},
+    it follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\varepsilon} \).
+    Since \( \varepsilon \) is arbitrary, it follows that \( \mathfrak{A} \) satisfies \( \varphi \) for all variable translation functions of \( \mathcal{L} \)
+    under \( \mathfrak{A} \).
 \end{proof}
 
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-composition-of-variable-distribution-function-of-tuple-of-formulas-spans-the-nary-product-of-the-universe}
-    Let \( \tau \) be a tuple of \( \mathcal{L} \)-formulas with a variable distribution function \( \delta \).
-    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure.
-    Then for every \( i \in \abs{\tau} \), \( x \in \abs{\mathfrak{A}}^{ \folnumvars{\tau_{i}} } \) if and only if
-    there exists an \( \alpha \in \abs{\mathfrak{A}}^{ \folnumvars{\tau} } \) such that
-    \( x = \composition{\alpha}{\delta_{i}} \).
-\end{thm}
+\noindent
+Now that we have defined what it means for a structure to satisfy a formula with a specific translation, we move on to define what it means for a structure
+to satisfy a formula \emph{in general}.
 
-\begin{proof}
-    Same as \cref{thm:first-order-language-composition-of-variable-distribution-function-of-tuple-of-terms-spans-the-nary-product-of-the-universe}.
-\end{proof}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-functional-satisfaction-of-formulas-with-argument-tuples}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, and
-    \( \alpha \) is an element of \( \abs{\mathfrak{A}}^{\folnumfreevars{\varphi}} \), then the following statements equivalent:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \varphi(\alpha) \)
-        \item \( \varphi \) is true for \( \alpha \)
-        \item \( \varphi \) is satisfied by \( \alpha \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}
-%    \phantomsection \label{dfn:first-order-language-interpretation-of-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\varphi}} \) where \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
-    then the following rules hold:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atom of \( \mathcal{L} \)} with the form \( t_{0} = t_{1} \)
-            where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms and \( \delta \) is the
-            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function of \tuple{t_{0}, t_{1}}},
-            then \( \varphi(\alpha) \) if and only if \( t^{\mathfrak{A}}_{0}(\composition{\alpha}{\delta_{0}}) = t^{\mathfrak{A}}_{1}(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) is an \aref{dfn:first-order-language-atom}{atom of \( \mathcal{L} \)} with the form
-            \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) and \( \delta \) is the
-            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-terms}{variable distribution function of \( \tau \)},
-            then \( \varphi(\alpha) \) if and only if \(  \sequencebig{\tau_{j}^{\mathfrak{A}}(\composition{\alpha}{\delta_{j}})}{j \in \dom \tau} \in P^{\mathfrak{A}}_{i} \)
-        \item If \( \varphi \) has the form \( \mleft( \psi \mright) \) or \( \mleft[ \,\psi\, \mright] \) where \( \psi \) is a \( \mathcal{L} \)-formula,
-            then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) has the form \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula, then \( \varphi(\alpha) \) if and only if
-            \( \psi \) is not satisfied by \( \alpha \)
-        \item If \( \varphi \) has the form \( \psi \,\,{\land}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas and \( \delta \) is the
-            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution function of \( \tuple{\psi, \phi} \)},
-            then \( \varphi(\alpha) \) if and only if both \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \phi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas and \( \delta \) is the
-            \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution function of \( \tuple{\psi, \phi} \)},
-            then \( \varphi(\alpha) \) if and only if either \( \psi(\composition{\alpha}{\delta_{0}}) \) or \( \phi(\composition{\alpha}{\delta_{1}}) \)
-        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for some \( n \in \folnumfreevars{\psi} \),
-            then \( \varphi(\alpha) \) if and only if for all \( \beta \in \abs{\mathfrak{A}} \),
-            \begin{equation*} 
-                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
-                \setbuilderbig{\orderedpair{j+1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
-            \end{equation*}
-        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( v \notin \folfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if \( \psi(\alpha) \)
-        \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and
-            \( \orderedpair{n}{v} \in \folfreevarseq{\psi} \) for some \( n \in \folnumfreevars{\psi} \),
-            then \( \varphi(\alpha) \) if and only if there exists a \( \beta \in \abs{\mathfrak{A}} \) such that,
-            \begin{equation*} 
-                \psi \Big( \setbuilderbig{\orderedpair{j}{\alpha_{j}}}{j < n} \union \big\{ \orderedpair{n}{\beta} \big\} \union
-                \setbuilderbig{\orderedpair{j + 1}{\alpha_{j}}}{n \leq j < \abs{\alpha}} \Big)
-            \end{equation*}
-        \item If \( \varphi \) has the form \( \psi(\tau) \) where \( \tau \) is a tuple of \( \mathcal{L} \)-variables with a variable distribution function
-            \( \delta \) and \( \abs{\tau} = \folnumfreevars{\psi} \), then \( \varphi(\alpha) \) if and only if
-            \( \psi \big( \sequencebig{\composition{\alpha}{\delta_{i}}}{i \in \abs{\tau}} \big) \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-models-of-first-order-formulas}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \mathfrak{A} \) is a \( \mathcal{L} \)-structure, then the following statements are equivalent:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \mathfrak{A} \models \varphi \)
-        \item \( \mathfrak{A} \) models \( \varphi \)
-        \item \( \mathfrak{A} \) is a model of \( \varphi \)
-        \item \( \mathfrak{A} \) satisfies \( \varphi \)
-        \item \( \varphi \) is true in \( \mathfrak{A} \)
-        \item \( \varphi \) is satisfied by \( \mathfrak{A} \)
-        \item \( \varphi(\alpha) \) for all \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\varphi} } \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}[Tautology]
-    \phantomsection \label{dfn:first-order-language-tautology}
-    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} (denoted as \( \models \varphi \)) if and only if it can be satisfied by any \( \mathcal{L} \)-structure.
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-models-of-sets-of-first-order-formulas}
-    If \( \Gamma \) is a set of \( \mathcal{L} \)-formulas and \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure,
-    then we say that \( \mathfrak{A} \) models \( \Gamma \) (denoted as \( \mathfrak{A} \models \Gamma \))
-    if and only if \( \mathfrak{A} \models \varphi \) for all \( \varphi \in \Gamma \).
+\begin{dfn}[Models]
+    \phantomsection \label{dfn:first-order-language-models-of-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then an \( \mathcal{L} \)-structure \( \mathfrak{A} \) is a \keyword{model} of \( \varphi \)
+    (denoted as \( \mathfrak{A} \models \varphi \)) if and only if it satisfies \( \varphi \) for all variable translation functions of \( \mathcal{L} \)
+    under \( \mathfrak{A} \); that is, \( \mathfrak{A} \models \varphi \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) for all variable translation
+    function \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
 \end{dfn}
 
 \begin{dfn}[Semantic Consequence]
-    \phantomsection \label{dfn:first-order-language-semantic-consequence-entailment}
-    Let \( \Gamma \) be a set of formulas in some first-order language \( \mathcal{L} \). Let \( \varphi \) be an \( \mathcal{L} \)-formula.
-    We say that \( \varphi \) is a \keyword{semantic consequence} of \( \Gamma \) (denoted as \( \Gamma \models \varphi \)) if and only if
-    for any \( \mathcal{L} \)-structure \( \mathfrak{A} \), \( \mathfrak{A} \models \Gamma \) implies \( \mathfrak{A} \models \varphi \).
+    \phantomsection \label{dfn:first-order-language-semantic-consequence}
+    Let \( \Gamma \) be a set of \( \mathcal{L} \)-formulas and \( \varphi \) be an \( \mathcal{L} \)-formula.
+    We say that \( \varphi \) is a semantic consequence of \( \Gamma \) (denoted as \( \Gamma \models \varphi \))
+    if and only if any \( \mathcal{L} \)-structure that is a model of all the formulas in \( \Gamma \) is also a model of \( \varphi \).
 \end{dfn}
 
 \begin{notation}
-    If \( \Gamma \) consists of only one formula (i.e., \( \Gamma = \mleft\{ \psi \mright\} \)), then we can
-    abbreviate \( \mleft\{ \psi \mright\} \models \varphi \) with \( \psi \models \varphi \).
+    If \( \Gamma \) consists of a single formula \( \psi \) (i.e., \( \Gamma = \mleft\{ \psi \mright\} \)), then we abbreviate the notation
+    \( \mleft\{ \psi \mright\} \models \varphi \) with \( \psi \models \varphi \).
+\end{notation}
+
+\begin{dfn}[Tautology]
+    \phantomsection \label{dfn:first-order-language-tautology}
+    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} if and only if every \( \mathcal{L} \)-structure is a model of \( \varphi \).
+\end{dfn}
+
+\begin{notation}
+    Clearly, \( \varphi \) is a tautology if and only if \( \emptyset \models \varphi \). Thus, we can simplify the notation to \( \models \varphi \).
 \end{notation}
 
 \begin{dfn}[Logical Equivalence]
     \phantomsection \label{dfn:first-order-language-logical-equivalence}
-    If \( \varphi \) and \( \psi \) are two \( \mathcal{L} \)-formulas,
-    then we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent} (denoted as \( \varphi \equiv \psi \) )
-    if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent}
+    (denoted as \( \varphi \equiv \psi \)) if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
 
+\section{Applications}
 \noindent
-Our formalization of first-order languages is now complete.
-The outcome of such an endeavor is a rigorous mathematical framework that allows us to \emph{prove} many of the familiar results
-from first-order logic that we know intuitively.
-
-\newpage
-\section{Logical Equivalences}
-\begin{notation}
-    The following notational conventions will be utilize for the material in this section:
-    \begin{enumerate}[topsep=2pt,itemsep=1pt,label=\textup{\texttt{(\alph*)}}]
-        \item The symbol \( \mathcal{L} \) denotes any \aref{dfn:first-order-language}{first-order language}.
-        \item The symbol \( V^{\mathcal{L}} \) denotes the set of all \( \mathcal{L} \)-variables.
-        \item The symbols \( u \), \( v \), \( w \), \( x \), \( y \), and \( z \) are reserved for \( \mathcal{L} \)-variables.
-        \item The lower case Greek letters  \( \lambda \), \( \varphi \), \( \phi \), \( \psi \), \( \theta \), and \( \omega \) are reserved for \( \mathcal{L} \)-formulas.
-        \item The lower case Greek letters \( \delta \) and \( \varepsilon \) are reserved for variable distribution functions.
-        \item The upper case Greek letters \( \Lambda \), \( \Gamma \), \( \Phi \), \( \Psi \), and \( \Omega \) are reserved for collections of \( \mathcal{L} \)-formulas.
-        \item Fraktur symbols (\( \mathfrak{A} \), \( \mathfrak{B} \), \( \mathfrak{C} \), \( \dots \)) denote \( \mathcal{L} \)-structures.
-    \end{enumerate}
-\end{notation}
+We now have enough theoretical foundation to start proving many of the familiar results from logic.
 
 \begin{thm}
-    \phantomsection \label{logical-equivalence:the-substitution-principle}
-    Let \( \varphi \), \( \psi \), and \( \phi \) be \( \mathcal{L} \)-formulas.
-    If \( \varphi \equiv \phi \), then the following hold:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \varphi \,\,{\lor}\,\, \psi \equiv \phi \,\,{\lor}\,\, \psi \)
-        \item \( \varphi \,\,{\land}\,\, \psi \equiv \phi \,\,{\land}\,\, \psi \)
-    \end{enumerate}
+    \phantomsection \label{thm:first-order-language-tautological-implication-implies-semantic-consequence}
+    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas.
+    Then \( \varphi \models \psi \) if \( \models (\varphi {\implies} \psi) \).
 \end{thm}
 
-\begin{lem}
-    \phantomsection \label{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}
-    Let \( \psi \), \( \varphi \), and \( \lambda \) be \( \mathcal{L} \)-formulas such that \( \lambda \coloneq \forall x \, \varphi \)
-    or \( \lambda \coloneq \exists x \, \varphi \) for some \( \mathcal{L} \)-variable \( x \) where \( x \in \folfreevars{\varphi} \) and \( x \notin \folfreevars{\psi} \).
-    Let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution functions}
-    of \( \tau = \tuple{\psi, \lambda} \) and \( \sigma = \tuple{\psi, \varphi} \) respectively.
-    Finally, let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure and \( \alpha \) is an element of \( \abs{\mathfrak{A}}^{ \folnumfreevars{\tau} } \),
-    then the following equalities hold for all \( \beta \in \abs{\mathfrak{A}} \) and
-    \( \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-       \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}\): \phantomsection \label{text:definition-of-gamma-as-the-argument-tuple-for-sigma}
-    \begin{enumerate}[topsep=5pt,label=(\alph*)]
-        \item \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \) \phantomsection \label{enum:gamma-compose-varepsilon0-equals-alpha-compose-delta0}
-        \item \(\composition{\gamma}{ \varepsilon_{1} } = \phantomsection \label{enum:gamma-compose-varepsilon1-can-be-expressed-in-terms-of-alpha-compose-delta1}
-                \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}\)
-    \end{enumerate}
-\end{lem}
-
-\begin{proof}[Proof \ref{enum:gamma-compose-varepsilon0-equals-alpha-compose-delta0}]
-    We begin with several important observations, the first of which being \(  \folfreevars{\tau} = \folfreevars{\psi} \union \folfreevars{\lambda} \)
-    and \( \folfreevars{\sigma} = \folfreevars{\psi} \union \folfreevars{\varphi} \).
-    Also, \( \folfreevars{\varphi} = \folfreevars{\lambda} \union \mleft\{ x \mright\} \) and thus
-    \begin{equation}
-        \phantomsection \label{eq:freevars-sigma-equals-freevars-tau-union-singleton-x}
-        \folfreevars{\sigma} = \folfreevars{\psi} \union \big(\folfreevars{\lambda} \union \mleft\{ x \mright\} \big)
-                             = \folfreevars{\tau} \union \mleft\{ x \mright\}
-    \end{equation}
-    By \cref{cor:first-order-language-variable-canonical-variable-sequence-with-one-extra-variable-symbol}, we thus have
-    \begin{equation}
-        \phantomsection \label{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau}
-        \folfreevarseq{\sigma} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\tau}(i)}}{i < n}
-        \union \big\{ \orderedpair{n}{x} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\tau}(i)}}{n \leq i < \folnumfreevars{\tau}}
-    \end{equation}
-    \begin{equation}
-        \phantomsection \label{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}
-        \folfreevarseq{\varphi} = \setbuilderbig{\orderedpair{i}{\folfreevarseq{\lambda}(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{x} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\folfreevarseq{\lambda}(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation}
+\begin{proof}
+    Suppose that \( \models \mleft( \varphi {\implies} \psi \mright) \); that is, \( \models \mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright) \).
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \varphi \).
+    Let \( \delta \) be an arbitrary \aref{dfn:first-order-language-variable-translation-function}{variable translation function} of \( \mathcal{L} \)
+    under \( \mathfrak{A} \).
+    Since \( \models \mleft( \varphi {\implies} \psi \mright) \) by assumption, it follows that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \),
+    which means that \( \folwffsatisfaction{\mathfrak{A}}{(\varphi {\implies} \psi)}{\delta} \).
+    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) or
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is true.
+    But since \( \mathfrak{A} \models \varphi \), \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) cannot possibly be true.
+    Therefore, we conclude by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism} that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
+    is necessarily true.
+    Since \( \delta \) is arbitrary, it follows that \( \mathfrak{A} \) satisfies \( \psi \) with all variable translation functions of \( \mathcal{L} \) under
+    \( \mathfrak{A} \); that is, \( \mathfrak{A} \models \psi \).
     
     \vspace{0.3cm}
     \noindent
-    Let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\tau} } \) and \( \beta \in \abs{\mathfrak{A}} \) be arbitrary.
-    Let \( \gamma \) be a finite sequence with the following definition:
-    \begin{equation*}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}},
-    \end{equation*}
-    We now prove that \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \).
-    Suppose that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) for some arbitrary \( a \) and \( b \).
-    By \cref{dfn:composition-of-two-sets-of-ordered-pairs}, it follows that \( \orderedpair{a}{c} \in \varepsilon_{0} \) and 
-    \( \orderedpair{c}{b} \in \gamma \) for some \( c < \abs{\gamma} \).
-    Similarly, there must also exist some \( d \) such that \( \orderedpair{a}{d} \in \delta_{0} \) because
-    \( \dom \varepsilon_{0} = \dom \delta_{0} = \folnumfreevars{\psi} \).
-    Since \( c, n \in \naturalset \) and \( \naturalset \) is linearly ordered,
-    there are only three possible cases to consider: \( c = n \), \( c < n \), or \( n < c \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c = n \), then it follows that \( \orderedpair{a}{n} \in \varepsilon_{0} \) and thus \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \)
-    because \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \) and
-    \( \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \).
-    But \( \orderedpair{a}{x} \in \folfreevarseq{\psi} \) implies that \( x \in \folfreevars{\psi} \), thus contradicting our initial assumption that
-    \( x \notin \folfreevars{\psi} \); therefore, \( c = n \) cannot possibly be true.
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c < n \), then clearly \( \orderedpair{c}{b} \in \alpha \) by \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
-    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} \), it follows that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \)
-    for some \( \mathcal{L} \)-variable \( v \).
-    But \( \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), so necessarily \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
-    Since \( c < n \), \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} implies that \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \).
-    But \( \composition{ \folfreevarseq{\tau} }{\delta_{0}} = \folfreevarseq{\psi} \), which means that \( \orderedpair{a}{c} \in \delta_{0} \).
-    We know that \( \folfreevarseq{\tau} \) is bijective, so necessarily \( c = d \).
-    Therefore, \( \orderedpair{a}{c} \in \delta_{0} \) and  \( \orderedpair{c}{b} \in \alpha \) so that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( n < c \), then \( \orderedpair{c-1}{b} \in \alpha \) by \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \).}
-    Since \( a \in \dom \varepsilon_{0} \) and \( \dom \varepsilon_{0} = \folnumfreevars{\psi} \),
-    there must exist an \( \mathcal{L} \)-variable \( v \) such that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \).
-    Since \( \composition{ \folfreevarseq{\tau} }{\delta_{0}} = \composition{ \folfreevarseq{\sigma} }{\varepsilon_{0}} = \folfreevarseq{\psi} \), it follows that
-    \( \orderedpair{d}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
-    Since \( n < c \), necessarily \( n \leq c - 1 \) and thus \( \orderedpair{c-1}{v} \in \folfreevarseq{\tau} \)
-    by \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau}.
-    But it has already been proven that \( \orderedpair{d}{v} \in \folfreevarseq{\tau} \).
-    Since \( \folfreevarseq{\tau} \) is a bijection, \( c-1 \) and \( d \) must be equal.
-    Therefore, \( \orderedpair{d}{b} \in \alpha \) so that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Clearly, \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \)
-    for all possible cases. In other words, every ordered pair in \( \composition{\gamma}{ \varepsilon_{0} } \) must also belong to \( \composition{\alpha}{\delta_{0}} \).
-    But since \( \composition{\gamma}{\varepsilon_{0}} \) is a function and \aref{dfn:function-basic}{functions are sets of ordered pairs}, it follows that
-    \( \composition{\gamma}{\varepsilon_{0}} \subseteq \composition{\alpha}{\delta_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    The converse can be proven using a similar argument.
-    Again, we suppose that \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) is true for some arbitrary \( a \) and \( b \);
-    that is, \( \orderedpair{a}{c} \in \delta_{0} \) and \( \orderedpair{c}{b} \in \alpha \) for some \( c \).
-    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \dom \varepsilon_{0} = \folnumfreevars{\psi} \), it follows that
-    \( a \) also belongs to \( \dom \varepsilon_{0} \).
-    Therefore, there exists some \( d \) such that \( \orderedpair{a}{d} \in \varepsilon_{0} \).
-    Once again, we consider the only three possible ways \( c \) and \( n \) are related to each other: \( c < n \), \( c = n \), and \( c > n \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c < n \), then we have \( \orderedpair{c}{b} \in \gamma \) by \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
-    Since \( a \in \dom \delta_{0} \) and \( \dom \delta_{0} = \folnumfreevars{\psi} \), there must exists an \( \mathcal{L} \)-variable \( v \) such that
-    \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \).
-    We know that \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{\( \composition{\folfreevarseq{\tau}}{\delta_{0}} = \composition{\folfreevarseq{\sigma}}{\varepsilon_{0}} = \folfreevarseq{\psi} \)}.
-    Therefore, \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\sigma} \).
-    But if \( c < n \), then \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} implies \( \orderedpair{c}{v} \in \folfreevarseq{\sigma} \).
-    Since \( \folfreevarseq{\sigma} \) is a bijection, necessarily \( c = d \).
-    Since \( \orderedpair{a}{c} \in \varepsilon_{0} \) and \( \orderedpair{c}{b} \in \gamma \), it follows that \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( c \geq n \), then \( \orderedpair{c+1}{b} \in \gamma \) by \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
-    Again, \( a \in \folnumfreevars{\psi} \), so there must exist an \( \mathcal{L} \)-variable \( v \) such that \( \orderedpair{a}{v} \in \folfreevarseq{\psi} \),
-    which in turn implies \( \orderedpair{c}{v} \in \folfreevarseq{\tau} \) and \( \orderedpair{d}{v} \in \folfreevarseq{\sigma} \).
-    But if \( c \geq n \), we have by \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} that \( \orderedpair{c+1}{v} \in \folfreevarseq{\sigma} \).
-    Given that \( \folfreevarseq{\sigma} \) is a bijection, \( d = c+1 \) must follow.
-    Thus, \( \orderedpair{d}{b} \in \gamma \) and \( \orderedpair{a}{d} \in \varepsilon_{0} \) which yields
-    \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Once again, \( \orderedpair{a}{b} \in \composition{\alpha}{\delta_{0}} \) implies \( \orderedpair{a}{b} \in \composition{\gamma}{\varepsilon_{0}} \)
-    in all conceivable cases, which allows us to conclude \( \composition{\alpha}{\delta_{0}} \subseteq \composition{\gamma}{\varepsilon_{0}} \).
-    Since \( \composition{\alpha}{\delta_{0}} \) and \( \composition{\gamma}{\varepsilon_{0}} \) are subsets of each other, they are necessarily equal
-    by \cref{thm:set-equality-in-terms-of-subsets}.
+    Having established that \( \mathfrak{A} \models \varphi \) implies \( \mathfrak{A} \models \psi \) for any arbitrary structure \( \mathfrak{A} \),
+    \( \varphi \models \psi \) follows readilly from \cref{dfn:first-order-language-semantic-consequence}.
 \end{proof}
 
-\begin{proof}[Proof \ref{enum:gamma-compose-varepsilon1-can-be-expressed-in-terms-of-alpha-compose-delta1}]
-    We begin with the observation that \( \dom \varepsilon_{1} = \folnumfreevars{\varphi} \), which follows readily from the fact that
-    \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{\( \varepsilon \)
-    is the variable distribution function for \( \sigma = \tuple{\psi, \varphi} \)}.
-    It should be obvious from \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}
-    that any \( i \in \dom \varepsilon_{1} \) falls into either one of the following categories:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( i < k \);
-        \item \( i = k \);
-        \item \( i > k \).
-    \end{enumerate*}
-    Another vital observation is that \( \ran \varepsilon_{1} \subseteq \dom \gamma \)
-    (because \( \ran \varepsilon_{1} \subseteq \folnumfreevars{\sigma} \) and
-    \( \dom \gamma = \abs{\gamma} = \folnumfreevars{\sigma} \)),
-    from which we can infer the fact that \( \dom \composition{\gamma}{\varepsilon_{1}} = \dom \varepsilon_{1} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Now suppose that \( \orderedpair{i}{j} \in \composition{\gamma}{\varepsilon_{1}} \) is true for some \( i \) and \( j \);
-    that is, there exists some \( f \) such that \( \orderedpair{i}{f} \in \varepsilon_{1} \) and \( \orderedpair{f}{j} \in \gamma \).
-    But \( i \in \dom \varepsilon_{1} \) and \( \dom \varepsilon_{1} = \folnumfreevars{\varphi} \), which means that \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \)
-    for some \( \mathcal{L} \)-variable \( v \).
-    As mentioned, \( i \) is either less than \( k \), equal to \( k \), or greater than \( k \).
-    We will now deduce the consequences of each possibility.
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i < k \), then \( v \prec x \) and \( \orderedpair{i}{v} \in \folfreevarseq{\lambda} \) by \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
-    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \), we can deduce from
-    \( \orderedpair{i}{v} \in \folfreevarseq{\varphi} \) the fact that \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \).
-    But \( \orderedpair{n}{x} \in \folfreevarseq{\sigma} \) from \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau},
-    so \( v \prec x \) must imply \( f < n \).
-    But if \( f < n \) and \( \orderedpair{f}{j} \in \gamma \), then we also have \( \orderedpair{f}{j} \in \alpha \) by
-    \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
-    Not only that, but \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} also implies \( \orderedpair{f}{v} \in \folfreevarseq{\tau} \)
-    because \( f < n \) and \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \).
-    Next, we avail ourselves to the fact that \( \composition{\folfreevarseq{\tau}}{\delta_{1}} = \folfreevarseq{\lambda} \).
-    Since \( \orderedpair{i}{v} \in \folfreevarseq{\lambda} \) and \( \orderedpair{f}{v} \in \folfreevarseq{\tau} \),
-    it follows that \( \orderedpair{i}{f} \in \delta_{1} \).
-    This allows us to draw the conclusion that for all \( i < k \) such that \( \orderedpair{i}{j} \in \composition{\gamma}{\varepsilon_{1}} \) for some \( j \), then
-    necessarily \( \orderedpair{i}{j} \in \composition{{\alpha}}{\delta_{1}} \);
-    equivalently, we can say that \( \mleft( \composition{\gamma}{\varepsilon_{1}}\mright)(i) = \mleft( \composition{\alpha}{\delta_{1}} \mright)(i) \)
-    for all \( i \in \folnumfreevars{\lambda} \) such that \( i < k \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i = k \), then necessarily \( v = x \) by \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
-    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \) and \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \),
-    it follows that \( \orderedpair{f}{x} \in \folfreevarseq{\sigma} \).
-    But \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} requires that \( f = n \), thus allowing us to conclude from
-    \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)} that \( j = \beta \).
-    In other words, \( \orderedpair{k}{\beta} \in \composition{\gamma}{\varepsilon_{1}} \).
-
-    \vspace{0.3cm}
-    \noindent
-    If \( i > k \), then necessarily \( x \prec v \) and \( \orderedpair{i-1}{v} \in \folfreevarseq{\lambda} \) by
-    \eqref{eq:expressing-freevarsec-varphi-in-terms-of-freevarsec-lambda}.
-    Since \( \composition{\folfreevarseq{\sigma}}{\varepsilon_{1}} = \folfreevarseq{\varphi} \), it follows that
-    \( \orderedpair{f}{v} \in \folfreevarseq{\sigma} \). But \( x \prec v \), so we can infer from
-    \eqref{eq:expressing-freevarsec-sigma-in-terms-of-freevarsec-tau} the fact that \( f > n \) and \( \orderedpair{f-1}{v} \in \folfreevarseq{\tau} \).
-    Recall that \( \composition{\folfreevarseq{\tau}}{\delta_{1}} = \folfreevarseq{\lambda} \).
-    This means that \( \orderedpair{i-1}{f-1} \in \delta_{1} \).
-    But if \( \orderedpair{f}{j} \in \gamma \) and \( f > n \), then necessarily \( \orderedpair{f-1}{j} \in \alpha \) by
-    \aref{text:definition-of-gamma-as-the-argument-tuple-for-sigma}{the definition of \( \gamma \)}.
-    In other words, \( \orderedpair{i-1}{j} \in \composition{\alpha}{\delta_{1}} \).
-    Thus, for all \( i \in \folnumfreevars{\lambda} \) such that \( k \geq i \), \( \mleft( \composition{\gamma}{\varepsilon_{1}} \mright)(i+1) =
-    \mleft( \composition{\alpha}{\delta_{1}} \mright)(i)\).
-
-    \vspace{0.3cm}
-    \noindent
-    Finally, we can combine the results from all three mutually exclusive cases using the set-builder notation like so:
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} = \setbuilderbig{\orderedpair{i}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{k \leq i < \folnumfreevars{\lambda}}
-        \qedhere
-    \end{equation*}
-\end{proof}
+\begin{rem}
+    It is important to note that the converse of \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} can only be true if \( \varphi \) and \( \psi \)
+    are \( \mathcal{L} \)-sentences; i.e., they have no free variables.
+\end{rem}
 
 \begin{thm}
-    \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
-    If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but not in \( \psi \), then
-    \begin{equation*}
-        \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright]
-    \end{equation*}
+    \phantomsection \label{thm:first-order-language-for-sentences-tautological-implication-iff-semantic-consequence}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-sentences, then \( \varphi \models \psi \) iff \( \models \mleft( \varphi {\implies} \psi \mright) \).
 \end{thm}
 
 \begin{proof}
-    Let \( \lambda \coloneq \forall x \, \varphi \), \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \),
-    \( \phi_{0} \coloneq \psi \,\,{\lor}\,\, \lambda \), and \( \phi_{1} \coloneq \forall x \, \theta \).
-    Let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
-    functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
-    The goal is to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true so that one may conclude
-    \( \phi_{0} \equiv \phi_{1} \) by \cref{dfn:first-order-language-logical-equivalence}.
+    Since \( \mathcal{L} \)-sentences are simply \( \mathcal{L} \)-formulas without free variables,
+    \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} applies and \( \models \mleft( \varphi {\implies} \psi \mright) \) implies \( \varphi \models \psi \).
+    It remains now to prove the converse.
 
     \vspace{0.3cm}
     \noindent
-    First, observe that \( \folfreevars{\phi_{0}} = \folfreevars{\phi_{1}} \) and thus \( \folfreevarseq{\phi_{0}} = \folfreevarseq{\phi_{1}} \)
-    and \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \).
-    Secondly, it is also obvious from \cref{dfn:first-order-language-the-set-of-all-free-variables-in-a-tuple-of-formulas,dfn:first-order-language-recursive-definition-of-free-variables}
-    that \( \folfreevars{\tuple{\psi,\lambda}} = \folfreevars{\phi_{0}} \), \( \folfreevars{\tuple{\psi, \varphi}} = \folfreevars{\theta} \)
-    and thus \( \folnumfreevars{\tuple{\psi, \lambda}} = \folnumfreevars{\phi_{0}} \) and \( \folnumfreevars{\tuple{\psi, \varphi}} = \folnumfreevars{\theta} \).
+    Suppose that \( \varphi \models \psi \).
+    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    By the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}, clearly
+    either \( \mathfrak{A} \models \psi \) or \( \mathfrak{A} \not\models \psi \).
+    If \( \mathfrak{A} \models \psi \), then obviously \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \).
+    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that
+    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \)
+    and thus \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \).
 
     \vspace{0.3cm}
     \noindent
-    We now proceed to establish \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) individually.
-   
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \).
-    We have to show that \( \mathfrak{A} \models \phi_{1} \) is also true.
-    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{1}} = \folnumfreevars{\phi_{0}} \), necessarily \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Since \( \mathfrak{A} \models \phi_{0} \) by assumption, it follows from \cref{dfn:first-order-language-models-of-first-order-formulas} that \( \phi_{0}(\alpha) \).
-    But \cref{dfn:first-order-language-interpretation-of-formulas} states that \( \phi_{0}(\alpha) \) holds if and only if \( \psi(\composition{\alpha}{\delta_{0}}) \) or
-    \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds.
-    We will show that \( \phi_{1}(\alpha) \) is implied in either case.
+    On the other hand, if \( \mathfrak{A} \not\models \psi \), then \( \mathfrak{A} \not\models \varphi \) by \aref{rule-of-inference:modus-tollens}{Modus Tollens}.
+    But if \( \mathfrak{A} \not\models \varphi \), then \( \mathfrak{A} \) cannot possibly satisfy \( \varphi \) with \( \delta \);
+    otherwise, \cref{thm:first-order-language-sentences-must-be-satisfied-by-all-variable-translation-functions} requires that
+    \( \mathfrak{A} \) satisfy \( \varphi \) with all variable translation functions, which would then imply \( \mathfrak{A} \models \varphi \), an obvious contradiction.
+    Thus, necessarily \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
+    We then conclude from \cref{dfn:first-order-language-interpretation-of-formulas} that
+    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \),
+    which is an abbreviation for \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \).
+    This means that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \) is true for all possible cases.
+    Since \( \delta \) is arbitrary, we conclude that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \).
 
     \vspace{0.3cm}
     \noindent
-    \underline{{\bfseries Case}: \( \psi(\composition{\alpha}{\delta_{0}}) \)}
-
-    \vspace{0.2cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary.
-    Let \( \gamma \) be a finite sequence constructed from \( \alpha \) and \( \beta \) like so:
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    Since \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \) and \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\tuple{\psi, \lambda}} \),
-    \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or} is applicable to both \( \alpha \) and \( \gamma \).
-    Since \( \psi(\composition{\alpha}{\delta_{0}}) \) holds by assumption, then \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) must also hold because
-    \( \composition{\alpha}{\delta_{0}} \) and \( \composition{\gamma}{\varepsilon_{0}} \) are identical tuples by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}.
-    But \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) implies \( \theta(\gamma) \) by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    And since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude that \( \theta(\gamma) \) for all \( \beta \in \abs{\mathfrak{A}} \).
-    In other words, \( \phi_{1}(\alpha) \).
-
-    \vspace{0.3cm}
-    \noindent
-    \underline{{\bfseries Case}: \( \lambda(\composition{\alpha}{\delta_{1}}) \)}
-
-    \vspace{0.2cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence defined as
-    \begin{equation}
-        \phantomsection \label{eq:define-gamma-as-the-argument-tuple-for-theta}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    \noindent
-    Since \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds, it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \begin{equation}
-        \phantomsection \label{eq:argument-tuple-gamma-satisfies-varphi}
-        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k} \union \big\{ \orderedpair{k}{\mu} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}} }
-        \Big)
-    \end{equation}
-    holds for all \( \mu \in \abs{\mathfrak{A}} \).
-    Moreover, we have by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}
-    \begin{equation}
-        \phantomsection \label{eq:gamma-composed-varepsilon1-derived-using-fundamental-lemma}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation}
-    \noindent
-    We know from \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas} that \( \dom \delta_{1} = \folnumfreevars{\lambda} \)
-    and \( \ran \delta_{1} \subseteq \folnumfreevars{\phi_{0}} \).
-    But \( \folnumfreevars{\phi_{0}} = \dom \alpha \) because \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \).
-    Therefore, it follows that \( \ran \delta_{1} \subseteq \dom \alpha \),
-    which in turn implies that \( \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) = \folnumfreevars{\lambda} \).
-    Since \( \folnumfreevars{\lambda} \in \naturalset \), \( \composition{\alpha}{\delta_{1}} \) must be a finite sequence, so necessarily
-    \( \abs{\composition{\alpha}{\delta_{1}}} = \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) \).
-    Thus, \eqref{eq:gamma-composed-varepsilon1-derived-using-fundamental-lemma} can be equivalently expressed as
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-    \end{equation*}
-    Notice that \( \composition{\gamma}{\varepsilon_{1}} \) has the same form as the argument tuple for \( \varphi \) used in
-    \eqref{eq:argument-tuple-gamma-satisfies-varphi}.
-    Since \( \beta \in \abs{\mathfrak{A}} \), we instantiate \eqref{eq:argument-tuple-gamma-satisfies-varphi}
-    and conclude that \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) holds.
-    Since \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) holds, \( \theta(\gamma) \) also holds by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    Since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
-    \( \phi_{1}(\alpha) \) holds.
-
-    \vspace{0.3cm}
-    \noindent
-    Thus, it has been shown that if \( \mathfrak{A} \models \phi_{0} \), then \( \phi_{1}(\alpha) \) holds for any arbitrary
-    \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \).
-    In other words, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any arbitrary \( \mathcal{L} \)-structure
-    \( \mathfrak{A} \); \( \phi_{0} \models \phi_{1} \) follows readily from \cref{dfn:first-order-language-semantic-consequence-entailment}.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Claim}: \( \phi_{1} \models \phi_{0} \)
-
-    \vspace{2pt}
-    \noindent
-    Suppose that \( \mathfrak{A} \models \phi_{1} \) for some arbitrary \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), it follows that \( \alpha \)
-    is also an element of \( \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{1}} } \).
-    Since \( \mathfrak{A} \models \phi_{1} \) by assumption, \( \phi_{1}(\alpha) \) must hold.
-    Now consider the tuple \( \composition{\alpha}{\delta_{0}} \).
-    It should be obvious that \( \abs{\composition{\alpha}{\delta_{0}}} = \dom \delta_{0} = \folnumfreevars{\psi} \).
-    By the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}, it follows that
-    \( \composition{\alpha}{\delta_{0}} \) either satisfies \( \psi \) or it doesn't.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( \composition{\alpha}{\delta_{0}} \) does satisfy \( \psi \). Then clearly \( \phi_{0}(\alpha) \) holds by
-    \cref{dfn:first-order-language-interpretation-of-formulas}.
-    On the other hand, suppose that \( \composition{\alpha}{\delta_{0}} \) does not satisfy \( \psi \).
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence defined as in \eqref{eq:define-gamma-as-the-argument-tuple-for-theta}.
-    Since \( \composition{\alpha}{\delta_{0}} = \composition{\gamma}{\varepsilon_{0}} \)
-    by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or},
-    it follows that \( \composition{\gamma}{\varepsilon_{0}} \) does not satisfy \( \psi \).
-    At this point, we can validly infer that \( \composition{\gamma}{\varepsilon_{1}} \) must satisfy \( \varphi \);
-    otherwise, \( \theta \) cannot be satisfied by \( \gamma \) for some \( \beta \in \abs{\mathfrak{A}} \),
-    which contradicts our initial assumption that \( \phi_{1}(\alpha) \) holds.
-    Since \( \beta \) is arbitrary and
-    \begin{equation*}
-        \composition{\gamma}{ \varepsilon_{1} } =
-                \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation*}
-    by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}, we conclude by
-    \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
-    \begin{equation}
-        \phantomsection \label{eq:gamma-satisfies-varphi-for-all-beta}
-        \varphi \Big( 
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-        \Big)
-    \end{equation}
-    for all \( \beta \in \abs{\mathfrak{A}} \). Since \( \lambda \coloneq \forall x \, \varphi \) and \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \),
-    \eqref{eq:gamma-satisfies-varphi-for-all-beta} implies \( \lambda(\composition{\alpha}{\delta_{1}}) \) by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    Since \( \lambda(\composition{\alpha}{\delta_{1}}) \), it follows that \( \phi_{0}(\alpha) \) holds.
-    Since \( \alpha \) is arbitrary, we have \( \mathfrak{A} \models \phi_{0} \).
-    Thus, for any \( \mathcal{L} \)-structure \( \mathfrak{A} \), \( \mathfrak{A} \models \phi_{1} \) implies \( \mathfrak{A} \models \phi_{0} \);
-    or \( \phi_{1} \models \phi_{0} \).
+    In other words, we have just proven that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \) follows from the assumption that
+    \( \varphi \models \psi \), which establishes the converse.
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{logical-equivalence:grouping-disjuncts-into-existentially-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas. If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \)
-    but not in \( \psi \), then
-    \begin{equation*}
-        \psi \,\,{\lor}\,\, \exists x \, \varphi \equiv \exists x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright]
-    \end{equation*}
+    \phantomsection \label{thm:first-order-language-tautological-biconditional-implies-logical-equivalence}
+    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas.
+    Then \( \varphi \equiv \psi \) if \( \models \mleft( \varphi {\iff} \psi \mright) \).
 \end{thm}
 
 \begin{proof}
-    Let \( \lambda \coloneq \exists x \, \varphi \), \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \), \( \phi_{0} \coloneq \psi \,\,{\lor}\,\, \lambda \),
-    and \( \phi_{1} \coloneq \exists x \, \theta \).
-    Let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Furthermore, let \( \delta \) and \( \varepsilon \) be the
-    \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution functions} for \( \tuple{\psi, \lambda} \)
-    and \( \tuple{\psi, \varphi} \) respectively.
-    It suffices to prove that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
+    Suppose that \( \models \mleft( \varphi {\iff} \psi \mright) \).
+    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure such that
+    \( \mathfrak{A} \models \varphi \).
+    \aref{dfn:first-order-language-tautology}{But since \( \models \mleft( \varphi {\iff} \psi \mright) \),
+    it follows that \( \mathfrak{A} \models \mleft( \varphi {\iff} \psi \mright) \)}.
+    Let \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Since \( \models \mleft( \varphi {\iff} \psi \mright) \), it follows that
+    \begin{align}
+        \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \phantomsection \label{eq:phi-implies-psi-is-satisfied-with-delta}\\
+        \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \psi \,\,{\lor}\,\, \varphi \mright)}{\delta} \phantomsection \label{eq:psi-implies-phi-is-satisfied-with-delta}
+    \end{align}
+    are both true.
+    \aref{dfn:first-order-language-models-of-a-formula}{But \( \mathfrak{A} \models \varphi \) by our initial assumption, so necessarily
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta}\)}.
+    But \eqref{eq:phi-implies-psi-is-satisfied-with-delta} implies that either \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \)
+    and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is true.
+    But we already know that \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) is false.
+    Therefore, \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is necessarily true by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}.
+    Since \( \delta \) is an arbitrarilly chosen variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \),
+    it follows that \( \mathfrak{A} \) satisfies \( \psi \) with any variable translation function.
+    In other words, \( \mathfrak{A} \models \psi \). At this point, it has been established that \( \mathfrak{A} \models \psi \) follows from \( \mathfrak{A} \models \varphi \)
+    for any arbitrary structure \( \mathfrak{A} \), \aref{dfn:first-order-language-semantic-consequence}{which permits us to draw the conclusion that \( \varphi \models \psi \)}.
 
     \vspace{0.3cm}
     \noindent
-    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \).
-    Now let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{1}} } \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{1}} = \folnumfreevars{\phi_{0}} \), it follows that \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \)
-    and thus \( \phi_{0}(\alpha) \) holds because \( \mathfrak{A} \models \phi_{0} \) by assumption.
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, this means that either \( \psi(\composition{\alpha}{\delta_{0}}) \) or
-    \( \lambda(\composition{\alpha}{\delta_{1}}) \). We will prove that \( \phi_{1}(\alpha) \) is implied in either case.
-
-    \vspace{0.3cm}
-    \noindent
-    \underline{{\bfseries Case}: \( \psi(\composition{\alpha}{\delta_{0}}) \)}
-
-    \vspace{2pt}
-    \noindent
-    Let \( \beta \) be any element\footnote{\,The existence of such an element is guaranteed because
-    \aref{dfn:general-mathematical-structures}{the universe of any mathematical structure is a non-empty set}.} of \( \abs{\mathfrak{A}} \).
-    Let \( \gamma \) be a finite sequence defined as
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-2}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    Since \( \composition{\alpha}{\delta_{0}} \) satisfies \( \psi \) and \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \)
-    by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or},
-    \( \composition{\gamma}{\varepsilon_{0}} \) must also satisfy \( \psi \).
-    Thus, \( \theta(\gamma) \) by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    In other words, there exists a \( \beta \in \abs{\mathfrak{A}} \) such that
-    \begin{equation*}
-        \theta \Big( \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}} \Big)
-    \end{equation*}
-    holds. Since \( \phi_{1} \coloneq \exists x \, \theta \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \), it follows from
-    \cref{dfn:first-order-language-interpretation-of-formulas} that \( \phi_{1}(\alpha) \) holds.
+    The justification for \( \psi \models \varphi \) follows the exact same line of reasoning.
+    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \psi \).
+    Let \( \delta \) be an arbitrary variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    \aref{dfn:first-order-language-models-of-a-formula}{Since \( \mathfrak{A} \models \psi \), it follows that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)}.
+    But \eqref{eq:psi-implies-phi-is-satisfied-with-delta} implies that either \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\delta} \) or
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) is true.
+    Since \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is impossible, we conclude by
+    \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism} that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
+    The truth of \( \psi \models \varphi \) follows readily from the fact that \( \delta \) and \( \mathfrak{A} \) are arbitrary.
 
     \vspace{0.3cm}
     \noindent
-    \underline{{\bfseries Case}: \( \lambda(\composition{\alpha}{\delta_{1}}) \)}
+    Since \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true, it follows from
+    \cref{dfn:first-order-language-logical-equivalence} that \( \varphi \equiv \psi \).
+\end{proof}
 
-    \vspace{2pt}
+\begin{rem}
+    The converse of \cref{thm:first-order-language-tautological-biconditional-implies-logical-equivalence} is not true unless \( \varphi \) and \( \psi \)
+    are \( \mathcal{L} \)-sentences.
+\end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-for-sentences-tautological-biconditional-iff-logically-equivalent}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-sentences, then \( \varphi \equiv \psi \) iff \( \models \mleft( \varphi {\iff} \psi \mright) \).
+\end{thm}
+
+\begin{proof}
+    Since all \( \mathcal{L} \)-sentences are \( \mathcal{L} \)-formulas, \cref{thm:first-order-language-tautological-biconditional-implies-logical-equivalence} clearly
+    applies and \( \models \mleft( \varphi {\iff} \psi \mright) \) implies \( \varphi \equiv \psi \).
+    To prove the converse, we begin with the supposition that \( \varphi \equiv \psi \);
+    that is, \aref{dfn:first-order-language-logical-equivalence}{ \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true}.
+    But since \( \varphi \) and \( \psi \) are both \( \mathcal{L} \)-sentences, it follows from
+    \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} that
+    \( \models \mleft( \varphi {\implies} \psi \mright) \) and \( \models \mleft( \psi {\implies} \varphi \mright) \).
+
+    \vspace{0.3cm}
     \noindent
-    Since \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds and \( \lambda \coloneq \exists x \, \varphi \), there must exist a \( \beta \in \abs{\mathfrak{A}} \) such that
-    \begin{equation}
-        \phantomsection \label{eq:varphi-is-satisfied-by-a-finite-sequence-constructed-using-alpha-for-some-beta}
-        \varphi \Big( 
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-        \Big)
-    \end{equation}
-    holds. Let \( \gamma \) be a finite sequence defined as in \eqref{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-2}.
-    Thus, we have by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation*}
-    Clearly, \( \dom \delta_{1} = \folnumfreevars{\lambda} \) and \( \ran \delta_{1} \subseteq \folnumfreevars{\tuple{\psi,\lambda}} \)
-    by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}.
-    But \( \folnumfreevars{\tuple{\psi,\lambda}} = \folnumfreevars{\phi_{0}} = \abs{\alpha} = \dom \alpha \)
-    because \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Thus, \( \ran \delta_{1} \subseteq \dom \alpha \).
-    Since \( \dom \delta_{1} = \folnumfreevars{\lambda} \) and \( \ran \delta_{1} \subseteq \dom \alpha \), it follows that
-    \( \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) = \dom \delta_{1} = \folnumfreevars{\lambda} = \abs{\composition{\alpha}{\delta_{1}}} \).
+    Now let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure. Clearly, \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \)
+    and \( \mathfrak{A} \models \mleft( \psi {\implies} \varphi \mright) \) are both true since the two formulas are \aref{dfn:first-order-language-tautology}{tautologies}.
+    Let \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be any variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Since \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \) and \( \mathfrak{A} \models \mleft( \psi {\implies} \varphi \mright) \) are both true,
+    \aref{dfn:first-order-language-models-of-a-formula}{it follows that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \)
+    and \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \psi {\implies} \varphi \mright)}{\delta} \) are both true.}
     In other words,
     \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
+        \aref{dfn:first-order-language-interpretation-of-formulas}{ \folwffsatisfaction{\mathfrak{A}}{ \big(\mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)\big)}{\delta}}
     \end{equation*}
-    Therefore, \eqref{eq:varphi-is-satisfied-by-a-finite-sequence-constructed-using-alpha-for-some-beta} is equivalent to
-    \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \).
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that there exists a \( \beta \in \abs{\mathfrak{A}} \) such that
-    \begin{equation*}
-        \theta \Big( \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}} \Big)
-    \end{equation*}
-    Therefore, \( \phi_{1}(\alpha) \) holds.
-
-    \vspace{0.3cm}
-    \noindent
-    Clearly, \( \phi_{1}(\alpha) \) is implied in all possible cases.
-    Since \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) is arbitrary, it follows that \( \mathfrak{A} \models \phi_{1} \).
-    In other words, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any arbitrary \( \mathcal{L} \)-structure
-    \( \mathfrak{A} \).
-    Thus, \( \phi_{0} \models \phi_{1} \) by \cref{dfn:first-order-language-semantic-consequence-entailment}.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{1} \models \phi_{0} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{1} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), it follows that \( \alpha \) also belongs to \( \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \).
-    Clearly, \( \phi_{1}(\alpha) \) holds because \( \mathfrak{A} \models \phi_{1} \) by assumption.
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, this means that there exists a \( \beta \in \mathfrak{A} \) such that
-    \( \theta(\gamma)\) holds where \( \gamma \) is a finite sequence constructed using \( \alpha \) and \( \beta \) like so:
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-3}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    But for \( \theta(\gamma) \) to hold, either \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) or \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) must hold.
-    If \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) holds, then clearly \( \psi(\composition{\alpha}{\delta_{0}}) \) also holds because
-    \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \) by
-    \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}.
-    And if \( \psi(\composition{\alpha}{\delta_{0}}) \) holds, then \( \phi_{0}(\alpha) \) follows by \cref{dfn:first-order-language-interpretation-of-formulas}.
-    If \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) holds, then \( \lambda(\composition{\alpha}{\delta_{1}}) \) also holds because
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}}=
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda} }
-    \end{equation*}
-    by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or} and
-    \( \folnumfreevars{\lambda} = \abs{\composition{\alpha}{\delta_{1}}} \). Since \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds,
-    \( \phi_{0}(\alpha) \) follows readily from \cref{dfn:first-order-language-interpretation-of-formulas}.
-    Clearly, \( \phi_{0}(\alpha) \) is implied for both possibilities.
-    Thus, \( \phi_{0}(\alpha) \) holds for any arbitrary \( \alpha \in \abs{\mathfrak{A}}^{ \folnumfreevars{\phi_{0}} } \).
-    By \aref{rule-of-inference:universal-generalization}{Universal Generalization}, we conclude that \( \mathfrak{A} \models \phi_{0} \).
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( \mathfrak{A} \models \phi_{1} \) implies \( \mathfrak{A} \models \phi_{0} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \),
-    we have \( \phi_{1} \models \phi_{0} \) y \cref{dfn:first-order-language-semantic-consequence-entailment}.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{logical-equivalence:grouping-conjuncts-into-universally-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas. If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but
-    not in \( \psi \), then
-    \begin{equation*}
-        \psi \,\,{\land}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright]
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \lambda \coloneq \forall x \, \varphi \), \( \theta \coloneq \psi \,\,{\land}\,\, \varphi \), \( \phi_{0} \coloneq \psi \,\,{\land}\,\, \lambda \),
-    and \( \phi_{1} \coloneq \forall x \, \theta \).
-    Let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
-    We must show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), \( \alpha \) must also belong to \( \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Since \( \mathfrak{A} \models \phi_{0} \), it follows that \( \alpha \) satisfies \( \phi_{0} \), which means that
-    \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \lambda(\composition{\alpha}{\delta_{1}}) \) both hold.
-
-    \vspace{0.3cm}
-    \noindent
-    Let \( \beta \in \abs{\mathfrak{A}} \) be arbitrary and \( \gamma \) be a finite sequence constructed using \( \alpha \) and \( \beta \) like so:
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-4}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    From \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}, we know that
-    \( \composition{\alpha}{\delta_{0}} \) and \( \composition{\gamma}{\varepsilon_{0}} \) are identical tuples.
-    Therefore, since \( \composition{\alpha}{\delta_{0}} \) satisfies \( \psi \), \( \composition{\gamma}{\varepsilon_{0}} \) must also
-    satisfy \( \psi \).
-    Furthermore, since \( \composition{\alpha}{\delta_{1}} \) satisfies \( \lambda \) and \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \),
-    it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that the finite sequence
-    \begin{equation}
-        \phantomsection \label{eq:argument-tuple-for-quantification-of-varphi}
-        \setbuilderbig{\orderedpair{i}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{i < k}
-        \union
-        \big\{ \orderedpair{k}{\beta} \big\}
-        \union
-        \setbuilderbig{\orderedpair{i+1}{\mleft( \composition{\alpha}{\delta_{1}} \mright)(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}} }
-    \end{equation}
-    satisfies \( \varphi \). By \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or},
-    we have
-    \begin{equation}
-        \phantomsection \label{eq:composing-gamma-and-varepsilon1-using-fundamental-lemma}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation}
-    We know that \( \dom \delta_{1} = \folnumfreevars{\lambda} \) and \( \ran \delta_{1} \subseteq \folnumfreevars{\phi_{0}} \).
-    But \( \alpha \) belongs to \( \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \), so necessarily \( \dom \alpha = \abs{\alpha} = \folnumfreevars{\phi_{0}} \).
-    This implies that \( \ran \delta_{1} \subseteq \dom \alpha \) and thus
-    \( \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) = \dom \delta_{1} = \folnumfreevars{\lambda} \).
-    The fact that\( \composition{\alpha}{\delta_{1}} \) is a finite sequence then allows us to conclude that
-    \( \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) = \abs{\composition{\alpha}{\delta_{1}}} \).
-    Thus \eqref{eq:composing-gamma-and-varepsilon1-using-fundamental-lemma} becomes
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-    \end{equation*}
-    In other words, \( \composition{\gamma}{\varepsilon_{1}} \) satisfies \( \varphi \).
-
-    \vspace{0.3cm}
-    \noindent
-    It has just been proven that \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) and \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) both hold, which means that
-    \( \gamma \) satisfies \( \theta \). Since \( \beta \) is arbitrary, it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \( \phi_{1}(\alpha) \). With \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) being arbitrary, we conclude that \( \mathfrak{A} \models \phi_{1} \).
-    Thus, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    In other words, \( \phi_{0} \models \phi_{1} \).
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{1} \models \phi_{0} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{1} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \),
-    it follows that \( \alpha \) also belongs to \( \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \),
-    and given that \( \mathfrak{A} \models \phi_{1} \) by assumption, necessarily \( \phi_{1}(\alpha) \).
-    This means that if we were to construct a finite sequence \( \gamma \) using an arbitrary \( \beta \in \abs{\mathfrak{A}} \) as in
-    \eqref{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-4}, then \( \gamma \) must satisfy \( \theta \).
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that both \( \psi(\composition{\gamma}{\varepsilon_{0}}) \)
-    and \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) hold.
-    Since \( \composition{\alpha}{\delta_{0}} = \composition{\gamma}{\varepsilon_{0}} \) by \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}, \( \psi(\composition{\alpha}{\delta_{0}}) \) must also hold.
-    Moreover,
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-    \end{equation*}
-    and \( \abs{\composition{\alpha}{\delta_{1}}} = \folnumfreevars{\lambda} \) as shown previously.
-    In other words,
-    \begin{equation*}
-        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda} }
-        \Big)
-    \end{equation*}
-    holds. Since \( \beta \in \abs{\mathfrak{A}} \) is arbitrary, it follows from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds.
-    Since both \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \lambda(\composition{\alpha}{\delta_{1}}) \) hold, it follows that \( \phi_{0}(\alpha) \).
-    Given that \( \alpha \) and \( \mathfrak{A} \) are both arbitrary, we conclude that \( \mathfrak{A} \models \phi_{1} \) implies \( \mathfrak{A} \models \phi_{0} \)
-    for all \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    In other words, \( \phi_{1} \models \phi_{0} \).
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{logical-equivalence:grouping-conjuncts-into-existentially-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas. If \( x \) is an \( \mathcal{L} \)-variable occurring freely in \( \varphi \) but not in \( \psi \),
-    then
-    \begin{equation*}
-        \psi \,\,{\land}\,\, \exists x \, \varphi \equiv \exists x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright]
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \lambda \coloneq \exists x \, \varphi \), \( \theta \coloneq \psi \,\,{\land}\,\, \varphi \), \( \phi_{0} \coloneq \psi \,\,{\land}\,\, \lambda \),
-    and \( \phi_{1} \coloneq \exists x \, \theta \).
-    Let \( k, n \in \naturalset \) such that \( \orderedpair{k}{x} \in \folfreevarseq{\varphi} \) and \( \orderedpair{n}{x} \in \folfreevarseq{\theta} \).
-    Furthermore, let \( \delta \) and \( \varepsilon \) be the \aref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas}{variable distribution
-    functions} for \( \tuple{\psi, \lambda} \) and \( \tuple{\psi, \varphi} \) respectively.
-    It suffices to show that \( \phi_{0} \models \phi_{1} \) and \( \phi_{1} \models \phi_{0} \) are both true.
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{0} \models \phi_{1} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{0} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), \( \alpha \) must also be an element of \( \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \).
-    Additionally, \( \alpha \) also satisfies \( \phi_{0} \) because \( \mathfrak{A} \models \phi_{0} \) by assumption.
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, this means that both \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \lambda(\composition{\alpha}{\delta_{1}}) \) hold.
-    
-    \vspace{0.3cm}
-    \noindent
-    Naturally, \( \lambda(\composition{\alpha}{\delta_{1}}) \) implies the existence of a
-    \( \beta \in \abs{\mathfrak{A}} \) such that
-    \begin{equation}
-        \phantomsection \label{eq:varphi-is-satisfied-by-a-tuple-constructed-from-alpha-compose-delta1}
-        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda} }
-        \Big)
-    \end{equation}
-    Now let \( \gamma \) be a finite sequence defined as:
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta-5}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    Since \( \composition{\alpha}{\delta_{0}} = \composition{\gamma}{\varepsilon_{0}} \) by
-    \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or},
-    it follows that \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) holds.
-    Furthermore, we have
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-    \end{equation*}
-    We can prove that \( \abs{\composition{\alpha}{\delta_{1}}} = \folnumfreevars{\lambda} \) via the following argument.
-    Since \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \), it has to be true that \( \dom \alpha = \folnumfreevars{\phi_{0}} \).
-    But \( \delta_{1} \in \finiteseq{\folnumfreevars{\tuple{\psi,\lambda}}} \) by \cref{dfn:first-order-language-variable-distribution-function-for-a-tuple-of-formulas},
-    which means that \( \ran \delta_{1} \subseteq \folnumfreevars{\tuple{\psi, \lambda}} \).
-    However, \( \folnumfreevars{\tuple{\psi,\lambda}} = \folnumfreevars{\phi_{0}} = \dom \alpha \), so necessarily \( \ran \delta_{1} \subseteq \dom \alpha \), from which
-    we can conclude that \( \abs{\composition{\alpha}{\delta_{1}}} = \dom \mleft( \composition{\alpha}{\delta_{1}} \mright) = \dom \delta_{1} = \folnumfreevars{\lambda} \).
-    In other words, \( \composition{\gamma}{\varepsilon_{1}} \) can be equivalently expressed as
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-                \union
-                \big\{ \orderedpair{k}{\beta} \big\}
-                \union
-                \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda}}
-    \end{equation*}
-    By \eqref{eq:varphi-is-satisfied-by-a-tuple-constructed-from-alpha-compose-delta1}, it follows that \( \composition{\gamma}{\varepsilon_{1}} \)
-    satisfies \( \varphi \).
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( \psi(\composition{\gamma}{\varepsilon_{0}}) \) and \( \varphi(\composition{\gamma}{\varepsilon_{1}}) \) both hold, it follows that
-    \( \theta(\gamma) \) holds for some \( \beta \in \abs{\mathfrak{A}} \). In other words, \( \phi_{1}(\alpha) \) holds.
-    Since \( \alpha \) is arbitrary, we may conclude that \( \mathfrak{A} \models \phi_{1} \).
-    In other words, \( \mathfrak{A} \models \phi_{0} \) implies \( \mathfrak{A} \models \phi_{1} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    By \cref{dfn:first-order-language-semantic-consequence-entailment}, we have \( \phi_{0} \models \phi_{1} \).
-
-    \vspace{0.3cm}
-    \noindent
-    {\scshape Claim:} \( \phi_{1} \models \phi_{0} \)
-
-    \vspace{2pt}
-    \noindent
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \phi_{1} \).
-    Let \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{0}}} \) be arbitrary.
-    Since \( \folnumfreevars{\phi_{0}} = \folnumfreevars{\phi_{1}} \), it follows that \( \alpha \in \abs{\mathfrak{A}}^{\folnumfreevars{\phi_{1}}} \).
-    Since \( \mathfrak{A} \models \phi_{1} \) by assumption, \( \alpha \) necessarily satisfies \( \phi_{1} \).
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, this means that there exists a \( \beta \in \abs{\mathfrak{A}} \) such that \( \theta \)
-    is satisfied by a finite sequence \( \gamma \) constructed from \( \alpha \) and \( \beta \) like so:
-    \begin{equation}
-        \phantomsection \label{eq:construct-gamma-using-alpha-to-be-used-as-an-argument-tuple-for-theta6}
-        \gamma \coloneq \setbuilderbig{\orderedpair{i}{\alpha_{i}}}{i < n} \union \big\{ \orderedpair{n}{\beta} \big\}
-         \union \setbuilderbig{\orderedpair{i+1}{\alpha_{i}}}{n \leq i < \abs{\alpha}}
-    \end{equation}
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that \( \composition{\gamma}{\varepsilon_{0}} \) satisfies \( \psi \)
-    and \( \composition{\gamma}{\varepsilon_{1}} \) satisfies \( \varphi \).
-    But since \( \composition{\gamma}{\varepsilon_{0}} = \composition{\alpha}{\delta_{0}} \) by
-    \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or}, it follows that \( \psi(\composition{\alpha}{\delta_{0}}) \)
-    holds.
-    Moreover, \cref{lem:fundamental-lemma-for-relationships-between-quantified-formulas-connected-by-logical-and-logical-or} also implies that
-    \begin{equation*}
-        \composition{\gamma}{\varepsilon_{1}} =
-        \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \abs{\composition{\alpha}{\delta_{1}}}}
-    \end{equation*}
-    And since \( \abs{\composition{\alpha}{\delta_{1}}} = \folnumfreevars{\lambda} \) as previously shown, it follows that there exists a \( \beta \in \abs{\mathfrak{A}} \)
-    such that
-    \begin{equation*}
-        \varphi \Big( \setbuilderbig{\orderedpair{i}{(\composition{\alpha}{\delta_{1}})(i)}}{i < k}
-        \union \big\{ \orderedpair{k}{\beta} \big\}
-        \union \setbuilderbig{\orderedpair{i+1}{(\composition{\alpha}{\delta_{1}})(i)}}{k \leq i < \folnumfreevars{\lambda} }
-        \Big)
-    \end{equation*}
-    holds. By \cref{dfn:first-order-language-interpretation-of-formulas}, this means that \( \lambda(\composition{\alpha}{\delta_{1}}) \) holds.
-    Since both \( \psi(\composition{\alpha}{\delta_{0}}) \) and \( \lambda(\composition{\alpha}{\delta_{1}}) \) hold, it follows that
-    \( \alpha \) satisfies \( \phi_{0} \).
-    With \( \alpha \) being arbitrary, we may conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that
-    \( \mathfrak{A} \models \phi_{0} \).
-    This means that \( \mathfrak{A} \models \phi_{1} \) implies \( \mathfrak{A} \models \phi_{0} \) for any \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    In other words, \( \phi_{1} \models \phi_{0} \).
+    for any variable translation function \( \delta \), which is equivalent to \( \mathfrak{A} \models \mleft( \varphi {\iff} \psi \mright) \).
+    Since \( \mathfrak{A} \) is an arbitrary \( \mathcal{L} \)-structure, it follows that \( \varphi {\iff} \psi \) can be satisfied by any \( \mathcal{L} \)-structure;
+    that is, \( \models \mleft( \varphi {\iff} \psi \mright) \).
 \end{proof}
 
 \chapter{Proof-Theoretic Concepts}
@@ -2436,7 +978,7 @@ from first-order logic that we know intuitively.
     We write \( \Gamma \derives_{\proofsystem{P}} \varphi \) to mean
     that \( \varphi \) is provable from \( \Gamma \) in \( \proofsystem{P} \).
     The subscript can be omitted if the context makes it clear which proof system is being used.
-    We write \( \Gamma \models \varphi \) to mean that \( \varphi \) is a \emph{semantic consequence}
+    We write \( \Gamma \models \varphi \) to mean that \( \varphi \) is a \emph{semantic consequence} or \keyword{logical consequence}
     of \( \Gamma \); that is, for every interpretation where all the \( \mathcal{L} \)-formulas in \( \Gamma \)
     is true, then the \( \mathcal{L} \)-formula \( \varphi \) is also true.
 \end{notation}
