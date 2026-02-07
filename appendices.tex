@@ -12,10 +12,17 @@
 \newcommand{\folterminterpretation}[3]{\ensuremath{#1^{#2}\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffsatisfaction}[3]{\ensuremath{ #1 \models #2\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffnonsatisfaction}[3]{\ensuremath{ #1 \not\models #2\llbracket\,#3 \,\rrbracket}}
-\newcommand{\folmodifiedvariabletranslationfunction}[3]{\ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) }}
-\newcommand{\folcompositionfactorofterm}[1]{\ensuremath{ \mathcal{C} \mleft[ #1 \mright] }}
-\newcommand{\folnumberofsyntacticoperators}[1]{\ensuremath{ \mathcal{R} \mleft[ #1 \mright] }}
+\newcommand{\folmodifiedvariableassignmentfunction}[3]{\ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) }}
+\newcommand{\folcomplexityofterm}[1]{\ensuremath{ \mathcal{C} \mleft[ #1 \mright] }}
+\newcommand{\folcomplexityofformula}[1]{\ensuremath{ \mathcal{C} \mleft[ #1 \mright] }}
 \newcommand{\folsubformula}{\ensuremath{ \sqsubset }}
+\newcommand{\folsubformulasubstitution}[3]{\ensuremath{ #1 \mleft[ #2 \mapsto #3 \mright] }}
+\newcommand{\folaugmentedlanguage}[2]{\ensuremath{ #1^{#2} }}
+\newcommand{\folaugmentedstructure}[2]{\ensuremath{#1^{#2}}}
+\newcommand{\folaugmentationfreevartofunctionsymbolmap}[1]{\ensuremath{\operatorname{vmap}_{\ast} \langle#1\rangle}}
+\newcommand{\folaugmentationfreevarsec}[1]{\ensuremath{\operatorname{vsec}_{\ast} \langle#1\rangle}}
+\newcommand{\folaugmentationinversefreevarsec}[1]{\ensuremath{\operatorname{vsec}_{\ast}^{-1} \langle#1\rangle}}
+\newcommand{\folnormalizedformula}[1]{\ensuremath{ #1^{\ast} }}
 
 \chapter{First-Order Logic}
 \section{First-Order Languages}
@@ -80,7 +87,7 @@ the symbols of \( \mathcal{L} \) can also be stringed together to form \emph{exp
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-the-set-of-all-variable-symbols-in-a-first-order-language}
-    If \( \mathcal{L} \) is a first-order language, then \( \folvars{\mathcal{L}} \) denotes the (countable) set of all \( \mathcal{L} \)-variables
+    If \( \mathcal{L} \) is a first-order language, then \( \folvars{\mathcal{L}} \) denotes the (countable and non-empty) set of all \( \mathcal{L} \)-variables
     associated with \( \mathcal{L} \).
 \end{dfn}
 
@@ -123,20 +130,20 @@ As such, any comprehensive definition of the grammar of a first-order language m
     \end{enumerate}
 \end{dfn}
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-composition-factor-of-terms}
-    If \( t \) is an \( \mathcal{L} \)-term, then the \keyword{composition factor} of \( t \) (denoted as \( \folcompositionfactorofterm{t} \))
+\begin{dfn}[Complexity]
+    \phantomsection \label{dfn:first-order-language-complexity-of-terms}
+    If \( t \) is an \( \mathcal{L} \)-term, then the \keyword{complexity} of \( t \) (denoted as \( \folcomplexityofterm{t} \))
     is the number of occurrences of function symbols with non-zero arity in \( t \).
 \end{dfn}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-every-term-has-a-finite-composition-factor}
-    Every \( \mathcal{L} \)-term has a finite composition factor.
+    \phantomsection \label{cor:first-order-language-every-term-has-finite-complexity}
+    If \( t \) is an \( \mathcal{L} \)-term, then \( \folcomplexityofterm{t} \in \naturalset \).
 \end{cor}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \folcompositionfactorofterm{t} \neq 0 \), then \( t \) must have the form
+    \phantomsection \label{cor:first-order-language-terms-with-non-zero-complexity-must-have-a-parent-function-symbol}
+    If \( t \) is an \( \mathcal{L} \)-term and \( \folcomplexityofterm{t} \neq 0 \), then \( t \) must have the form
     \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
     and \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \).
 \end{cor}
@@ -145,12 +152,12 @@ As such, any comprehensive definition of the grammar of a first-order language m
     Thus, in a first-order language \( \mathcal{L} \) with function symbols \( F \), \( G \), and \( H \) (with arities 0, 1, and 2 respectively) and variable symbols
     \( x \), \( y \), and \( z \), we have the following:
     \begin{align*}
-        \folcompositionfactorofterm{x} &= 0\\
-        \folcompositionfactorofterm{F()} &= 0\\
-        \folcompositionfactorofterm{G(x)} &= 1\\
-        \folcompositionfactorofterm{H(F(), y)} &= 1\\
-        \folcompositionfactorofterm{H(G(x), z)} &= 2\\
-        \folcompositionfactorofterm{H(H(x, F()), y)} &= 2
+        \folcomplexityofterm{x} &= 0\\
+        \folcomplexityofterm{F()} &= 0\\
+        \folcomplexityofterm{G(x)} &= 1\\
+        \folcomplexityofterm{H(F(), y)} &= 1\\
+        \folcomplexityofterm{H(G(x), z)} &= 2\\
+        \folcomplexityofterm{H(H(x, F()), y)} &= 2
     \end{align*}
 \end{eg}
 
@@ -162,15 +169,15 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-composition-factor-of-subterms-is-less}
-    If \( t \) is an \( \mathcal{L} \)-term and \( s \) is a subterm of \( t \), then \( \folcompositionfactorofterm{s} < \folcompositionfactorofterm{t} \).
+    \phantomsection \label{thm:first-order-language-the-complexity-of-a-subterm-is-less-than-the-complexity-of-the-parent-term}
+    If \( t \) is an \( \mathcal{L} \)-term and \( s \) is a subterm of \( t \), then \( \folcomplexityofterm{s} < \folcomplexityofterm{t} \).
 \end{thm}
 
 \begin{proof}
     Since \( s \) is a subterm of \( t \), it follows from \cref{dfn:first-order-language-subterms} that \( t \) must have the form \( F^{\mathcal{L}}_{i}(\tau) \)
     for some \( i \in \dom F^{\mathcal{L}} \) where \( s \in \ran \tau \).
     This means any symbol constituting \( s \) also constitutes \( t \); that is, \( \folsymbols{s} \subseteq \folsymbols{t} \).
-    If \( s \) is the only subterm of \( t \), then necessarily \( \folcompositionfactorofterm{t} = \folcompositionfactorofterm{s} + 1 \)
+    If \( s \) is the only subterm of \( t \), then necessarily \( \folcomplexityofterm{t} = \folcomplexityofterm{s} + 1 \)
     because the symbol \( F^{\mathcal{L}}_{i} \) must be counted along with all the function symbols occurring in \( s \).
     If \( t \) has other subterms aside from \( s \), the function symbols occurring in those terms have to be counted as well.
 \end{proof}
@@ -188,7 +195,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 
 \begin{dfn}[Formulas]
     \phantomsection \label{dfn:first-order-language-construction-of-formulas}
-    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula\footnote{\,Also called a \keyword{well-formed formula} or wff in the language of \( \mathcal{L} \).}
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula\footnote{\,Also called a \keyword{well-formed formula} or wff in \( \mathcal{L} \).}
     if and only if it is constructible from an atom in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
@@ -228,76 +235,93 @@ As such, any comprehensive definition of the grammar of a first-order language m
     by applying the syntactic operation \( \mathcal{R}_{\lor} \) to \( \varphi \) and \( \psi \), etc.
 \end{eg}
 
-\begin{notation}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folnumberofsyntacticoperators{\varphi} \) denotes the number of
-    syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
-\end{notation}
+\begin{dfn}[Complexity]
+    \phantomsection \label{dfn:first-order-language-complexity-of-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then the \keyword{complexity} of \( \varphi \) (denoted as \( \folcomplexityofformula{\varphi} \))
+    is the total number of syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
+    More precisely:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( \varphi \coloneq \mleft( \psi \mright) \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \mleft[ \,\psi\, \mright] \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \lnot \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} \)
+        \item If \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} \)
+        \item If \( \varphi \coloneq \forall x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \exists x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+    \end{enumerate}
+\end{dfn}
 
 \begin{eg}
     If \( \varphi \) and \( \psi \) are atoms of \( \mathcal{L} \) and \( x \) is an \( \mathcal{L} \)-variable, then we have the following:
     \begin{align*}
-        \folnumberofsyntacticoperators{\varphi} &= 0\\
-        \folnumberofsyntacticoperators{\forall x \, \varphi} &= 1\\
-        \folnumberofsyntacticoperators{\varphi \,\,{\land}\,\, \psi} &= 1\\
-        \folnumberofsyntacticoperators{\lnot \, \varphi \,\,{\land}\,\, \psi} &= 2\\
-        \folnumberofsyntacticoperators{\varphi \,\,{\lor}\,\, \psi \,\,{\land}\,\, \psi} &= 2\\
-        \folnumberofsyntacticoperators{\mleft( \varphi \,\,{\lor}\,\, \psi \mright) \,\,{\land}\,\, \psi} &= 3
+        \folcomplexityofformula{\varphi} &= 0\\
+        \folcomplexityofformula{\forall x \, \varphi} &= 1\\
+        \folcomplexityofformula{\varphi \,\,{\land}\,\, \psi} &= 1\\
+        \folcomplexityofformula{\lnot \, \varphi \,\,{\land}\,\, \psi} &= 2\\
+        \folcomplexityofformula{\varphi \,\,{\lor}\,\, \psi \,\,{\land}\,\, \psi} &= 2\\
+        \folcomplexityofformula{\mleft( \varphi \,\,{\lor}\,\, \psi \mright) \,\,{\land}\,\, \psi} &= 3
     \end{align*}
 \end{eg}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-every-formula-has-a-finite-number-of-syntactic-operations}
+    \phantomsection \label{cor:first-order-language-every-formula-has-finite-complexity}
     It follows immediately from \cref{dfn:first-order-language-construction-of-formulas} that every \( \mathcal{L} \)-formula can be constructed
     from \aref{dfn:first-order-language-atom}{atoms of \( \mathcal{L} \)} via the application of a finite number of
     \aref{dfn:first-order-language-syntactic-operations}{syntactic operations}; that is, for every \( \mathcal{L} \)-formula \( \varphi \),
-    \( \folnumberofsyntacticoperators{\varphi} \in \naturalset \).
+    \( \folcomplexityofformula{\varphi} \in \naturalset \).
 \end{cor}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-only-atoms-can-have-zero-number-of-syntactic-operations}
-    For all \( \mathcal{L} \)-formula \( \varphi \), \( \folnumberofsyntacticoperators{\varphi} = 0 \) if and only if \( \varphi \) is an atom.
+    \phantomsection \label{cor:first-order-language-only-atoms-can-have-zero-complexity}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folcomplexityofformula{\varphi} = 0 \) iff \( \varphi \) is an atom.
 \end{cor}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-every-formula-with-non-zero-syntactic-operations-can-be-decomposed}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula such that \( \folnumberofsyntacticoperators{\varphi} \neq 0 \),
-    then \( \varphi \) must have one of the following forms:
+    \phantomsection \label{cor:first-order-language-every-formula-with-non-zero-complexity-can-be-decomposed}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula such that \( \folcomplexityofformula{\varphi} \neq 0 \), then exactly one of the following must be true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \mleft( \psi \mright) \) where \( \psi \) is an \( \mathcal{L} \)-formula
-        \item \( \mleft[ \, \psi \, \mright] \) where \( \psi \) is an \( \mathcal{L} \)-formula
-        \item \( \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula
-        \item \( \psi \,\,{\land}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas
-        \item \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas
-        \item \( \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) an \( \mathcal{L} \)-variable
-        \item \( \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) an \( \mathcal{L} \)-variable
+        \item \( \varphi \coloneq \mleft( \psi \mright) \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \varphi \coloneq \mleft[ \, \psi \, \mright] \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \varphi \coloneq \lnot \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula
+        \item \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \) or \( \varphi \coloneq \phi \,\,{\land}\,\, \psi \)
+            where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas
+        \item \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \) or \( \varphi \coloneq \phi \,\,{\lor}\,\, \psi \) where \( \psi \) and \( \phi \)
+            are \( \mathcal{L} \)-formulas
+        \item \( \varphi \coloneq \forall x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) is an \( \mathcal{L} \)-variable
+        \item \( \varphi \coloneq \exists x \, \psi \) where \( \psi \) is an \( \mathcal{L} \)-formula and \( x \) is an \( \mathcal{L} \)-variable
     \end{enumerate}
 \end{cor}
 
 \begin{dfn}[Subformulas]
     \phantomsection \label{dfn:first-order-language-subformulas}
-    Let \( \varphi \), \( \psi \), and \( \phi \) denote \( \mathcal{L} \)-formulas.
-    We write \( \varphi \folsubformula \psi \) to mean ``\( \varphi \) is a subformula of \( \psi \)''.
-    The following properties hold for the \( \folsubformula \)-relation:
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then
+    we say that \( \psi \) is a \keyword{subformula} of \( \varphi \) (denoted as \( \psi \folsubformula \varphi \))
+    if and only if one of the following conditions is met:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \coloneq \mleft( \psi \mright) \), then \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \mleft[ \, \psi \, \mright] \), then \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \lnot \, \psi \), then \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \phi \,\,{\land}\,\, \psi \), then \( \phi \folsubformula \varphi \) and \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \phi \,\,{\lor}\,\, \psi \), then \( \phi \folsubformula \varphi \) and \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \forall x \, \psi \) for any \( \mathcal{L} \)-variable \( x \), then \( \psi \folsubformula \varphi \)
-        \item If \( \varphi \coloneq \exists x \, \psi \) for any \( \mathcal{L} \)-variable \( x \), then \( \psi \folsubformula \varphi \)
+        \item \( \varphi \coloneq \mleft( \psi \mright) \)
+        \item \( \varphi \coloneq \mleft[ \, \psi \, \mright] \)
+        \item \( \varphi \coloneq \lnot \, \psi \),
+        \item \( \varphi \coloneq \phi \,\,{\land}\,\, \psi \) or \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \) for some \( \mathcal{L} \)-formula \( \phi \)
+        \item \( \varphi \coloneq \phi \,\,{\lor}\,\, \psi \) or \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi\) for some \( \mathcal{L} \)-formula \( \phi \)
+        \item \( \varphi \coloneq \forall x \, \psi \) for some \( \mathcal{L} \)-variable \( x \)
+        \item \( \varphi \coloneq \exists x \, \psi \) for some \( \mathcal{L} \)-variable \( x \)
+        \item \( \psi \folsubformula \phi \) for some \( \mathcal{L} \)-formula \( \phi \) such that \( \phi \folsubformula \varphi \)
     \end{enumerate}
 \end{dfn}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas such that \( \psi \folsubformula \varphi \), then
-    \( \folnumberofsyntacticoperators{\psi} < \folnumberofsyntacticoperators{\varphi} \).
+    \phantomsection \label{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula}
+    If \( \psi \folsubformula \varphi \), then \( \folcomplexityofformula{\psi} < \folcomplexityofformula{\varphi} \).
 \end{cor}
 
 \begin{rem}
-    The converse of \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations} is obviously false.
+    The converse of \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula} is obviously false.
 \end{rem}
+
+\begin{notation}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \psi \folsubformula \varphi \), then \( \folsubformulasubstitution{\varphi}{\psi}{\phi} \)
+    denotes the \( \mathcal{L} \)-formula obtained by replacing all occurrences of \( \psi \) in \( \varphi \) with \( \phi \).
+\end{notation}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
@@ -390,180 +414,183 @@ which leads us to the following definition.
 The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-variable-translation-function}
-    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then a function \( \delta \) is a \keyword{variable translation function}
-    of \( \mathcal{L} \) under \( \mathfrak{A} \) if and only if \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
-    In other words, any function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \) is a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    \phantomsection \label{dfn:first-order-language-variable-assignment-function}
+    If \( \mathfrak{A} \) is an \( \mathcal{L} \)-structure, then a function \( \mathfrak{a} \) is a \keyword{variable assignment function}
+    of \( \mathcal{L} \) under \( \mathfrak{A} \) if and only if \( \function{\mathfrak{a}}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
+    In other words, any function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \) is a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-modified-variable-translation-function}
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable translation function of
+    \phantomsection \label{dfn:first-order-language-modified-variable-assignment-function}
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \function{\mathfrak{a}}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be a variable assignment function of
     \( \mathcal{L} \) under \( \mathfrak{A} \).
-    If \( v \) is an \( \mathcal{L} \)-variable and \( e \in \abs{\mathfrak{A}} \), then \( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \) denotes
-    the function \( \restrictedfunction{\delta}{ \folvars{\mathcal{L}} - \mleft\{ v \mright\} } \union \big\{ \orderedpair{v}{e} \big\} \).
+    If \( v \) is an \( \mathcal{L} \)-variable and \( e \in \abs{\mathfrak{A}} \), then \( \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} \) denotes
+    the function \( \restrictedfunction{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ v \mright\} } \union \big\{ \orderedpair{v}{e} \big\} \).
 \end{dfn}
 
 \begin{rem}
-    Note that \( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \) is still a variable translation function because
-    \( \dom \big( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \big) = \folvars{\mathcal{L}} \)
-    and \( \ran \big( \folmodifiedvariabletranslationfunction{\delta}{v}{e} \big) \subseteq \abs{\mathfrak{A}} \).
+    Note that \( \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} \) is still a variable assignment function because
+    \( \dom \big( \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} \big) = \folvars{\mathcal{L}} \)
+    and \( \ran \big( \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} \big) \subseteq \abs{\mathfrak{A}} \).
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-existence-of-variable-assignment-function}
+    For any first-order language \( \mathcal{L} \) and any \( \mathcal{L} \)-structure \( \mathfrak{A} \),
+    a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure.
+    Since \( \folvars{\mathcal{L}} \) and \( \abs{\mathfrak{A}} \) are non-empty sets,
+    it is easy to define a function on \( \folvars{\mathcal{L}} \) into \( \abs{\mathfrak{A}} \).
+    E.g., given an arbitrary element \( \alpha \) of \( \abs{\mathfrak{A}} \),
+    let \( \mathfrak{a} \) be a function such that \( \dom \mathfrak{a} = \folvars{\mathcal{L}} \) and \( \mathfrak{a}(x) = \alpha \) for all \( x \in \folvars{\mathcal{L}} \).
+    By \cref{dfn:first-order-language-variable-assignment-function}, \( \mathfrak{a} \) is a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+\end{proof}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-interpretation-of-terms}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \delta \) is a variable translation function of \( \mathcal{L} \) under some \( \mathcal{L} \)-structure \( \mathfrak{A} \),
-    then an \keyword{interpretation} of \( t \) in \( \mathfrak{A} \) with \( \delta \)
-    (denoted as \folterminterpretation{t}{\mathfrak{A}}{\delta}) is defined as follows:
+    If \( t \) is an \( \mathcal{L} \)-term and \( \mathfrak{a} \) is a variable assignment function of \( \mathcal{L} \) under some \( \mathcal{L} \)-structure \( \mathfrak{A} \),
+    then an \keyword{interpretation} of \( t \) in \( \mathfrak{A} \) with \( \mathfrak{a} \)
+    (denoted as \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}}) is defined as follows:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) consists of a single \( \mathcal{L} \)-variable \( x \), then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = \delta(x) \)
+        \item If \( t \) consists of a single \( \mathcal{L} \)-variable \( x \), then \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}} = \mathfrak{a}(x) \)
         \item If \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) and \( \tau \) is a tuple of \( \mathcal{L} \)-terms
             such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \),
-            then \( \folterminterpretation{t}{\mathfrak{A}}{\delta} = 
-            F^{\mathfrak{A}}_{i} \sequence{\folterminterpretation{\tau_{k}}{\mathfrak{A}}{\delta}}{k \in \dom \tau}\)
+            then \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}} = 
+            F^{\mathfrak{A}}_{i} \sequence{\folterminterpretation{\tau_{k}}{\mathfrak{A}}{\mathfrak{a}}}{k \in \dom \tau}\)
     \end{enumerate}
 \end{dfn}
 
-\begin{dfn}
-    \phantomsection \label{dfn:first-order-language-interpretation-of-formulas}
-    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \delta \) be a \aref{dfn:first-order-language-variable-translation-function}{variable translation function}
+\begin{dfn}[Satisfaction]
+    \phantomsection \label{dfn:first-order-language-satisfaction-of-formulas}
+    Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \mathfrak{a} \) be a \aref{dfn:first-order-language-variable-assignment-function}{variable assignment function}
     of \( \mathcal{L} \) under an \( \mathcal{L} \)-structure \( \mathfrak{A} \).
-    We now define precisely what it means for \( \mathfrak{A} \) to satisfy \( \varphi \) with \( \delta \)
-    (denoted as \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta}):
+    We now define precisely what it means for \( \mathfrak{A} \) to satisfy \( \varphi \) with \( \mathfrak{a} \)
+    (denoted as \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}}):
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of the form \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \( \mathcal{L} \)-terms,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if
-            \( \folterminterpretation{t_{0}}{\mathfrak{A}}{\delta} = \folterminterpretation{t_{1}}{\mathfrak{A}}{\delta} \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if
+            \( \folterminterpretation{t_{0}}{\mathfrak{A}}{\mathfrak{a}} = \folterminterpretation{t_{1}}{\mathfrak{A}}{\mathfrak{a}} \)
         \item If \( \varphi \) is an atom of the form \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \), then
-            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if
-            \( \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta} }{j \in \dom \tau} \in P^{\mathfrak{A}}_{i} \)
+            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if
+            \( \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\mathfrak{a}} }{j \in \dom \tau} \in P^{\mathfrak{A}}_{i} \)
         \item If \( \varphi \) has the form \( \mleft( \psi \mright) \) or \( \mleft[ \,\psi\, \mright] \) where \( \psi \) is another \( \mathcal{L} \)-formula,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
         \item If \( \varphi \) has the form \( \lnot \, \psi \) where \( \psi \) is another \( \mathcal{L} \)-formula, then
-            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
+            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
         \item If \( \varphi \) has the form \( \psi \,\,{\land}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
-            and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta} \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+            and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \)
         \item If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \) where \( \psi \) and \( \phi \) are \( \mathcal{L} \)-formulas,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
-            or \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta} \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+            or \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \)
         \item If \( \varphi \) has the form \( \forall v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if
-            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta}{v}{e} } \) for all \( e \in \abs{\mathfrak{A}} \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} } \) for all \( e \in \abs{\mathfrak{A}} \)
         \item If \( \varphi \) has the form \( \exists v \, \psi \) where \( v \) is an \( \mathcal{L} \)-variable and \( \psi \) is an \( \mathcal{L} \)-formula,
-            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) if and only if there exists an \( e \in \abs{\mathfrak{A}} \) such that
-            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta}{v}{e} } \)
+            then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) if and only if there exists an \( e \in \abs{\mathfrak{A}} \) such that
+            \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{v}{e} } \)
     \end{enumerate}
+    The tuple \( \tuple{\mathfrak{A}, \mathfrak{a}} \) is called an \keyword{interpretation} of \( \varphi \) since it contains all the information needed to
+    interpret \( \varphi \).
 \end{dfn}
 
 \begin{lem}
-    \phantomsection \label{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    \phantomsection \label{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
     Let \( t \) be an \( \mathcal{L} \)-term and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
-    If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions}
+    If \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \) are \aref{dfn:first-order-language-variable-assignment-function}{variable assignment functions}
     of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
-    \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \),
-    then \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folvars{t}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folvars{t}} \),
+    then \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
 \end{lem}
 
 \begin{proof}
-    Since every \( \mathcal{L} \)-term has a finite \aref{dfn:first-order-language-composition-factor-of-terms}{composition factor},
-    it suffices to prove that for all \( n \in \naturalset \), \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \)
-    is true for any \( \mathcal{L} \)-term \( t \) such that \( \folcompositionfactorofterm{t} = n \), which can be done inductively.
+    Since every \( \mathcal{L} \)-term has a finite \aref{dfn:first-order-language-complexity-of-terms}{complexity}, we can use an inductive proof.
+    We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-term \( t \) with \( \folcomplexityofterm{t} = n \),
+    \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \) holds.
+    We will now state the induction hypothesis for an arbitrary \( n \in \naturalset \).
 
     \vspace{0.3cm}
     \noindent
-    We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-term \( t \) with \( \folcompositionfactorofterm{t} = n \),
-    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) holds.
-    We will now state the inductive hypothesis for an arbitrary \( n \in \naturalset \).
-
-    \vspace{0.3cm}
-    \noindent
-    \underline{\scshape Inductive Hypothesis:}
+    \underline{\scshape Induction Hypothesis:}
     \( P(k) \) holds for all \( k < n \).
 
     \vspace{0.3cm}
     \noindent
-    Let \( t \) be any \( \mathcal{L} \)-term such that \( \folcompositionfactorofterm{t} = n \).
+    Let \( t \) be any \( \mathcal{L} \)-term such that \( \folcomplexityofterm{t} = n \).
     Since \( n \in \naturalset \), either \( n = 0 \) or \( n \neq 0 \).
-    We have to show that \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) is implied in both cases.
+    We have to show that \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \) is implied in both cases.
 
     \vspace{0.3cm}
     \noindent
     {\scshape Case} \( n = 0 \):
     Clearly \( t \) consists of either a single \( \mathcal{L} \)-variable or a 0-ary function symbol.
-    If \( t \) consists of the variable symbol \( x \), then we have \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \delta_{0}(x) \)
-    and \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} = \delta_{1}(x) \) by \cref{dfn:first-order-language-interpretation-of-terms}.
-    Since \( x \in \folvars{t} \), necessarily \( \delta_{0}(x) = \delta_{1}(x) \) by our initial assumption.
-    Thus, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    If \( t \) consists of the variable symbol \( x \), then we have \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \mathfrak{a}_{0}(x) \)
+    and \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} = \mathfrak{a}_{1}(x) \) by \cref{dfn:first-order-language-interpretation-of-terms}.
+    Since \( x \in \folvars{t} \), necessarily \( \mathfrak{a}_{0}(x) = \mathfrak{a}_{1}(x) \) by our initial assumption.
+    Thus, \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
     If \( t \) consists of a 0-ary function symbol \( F^{\mathcal{L}}_{i}() \), then \cref{dfn:first-order-language-interpretation-of-terms}
-    requires that \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = F^{\mathfrak{A}}_{i}() = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    requires that \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = F^{\mathfrak{A}}_{i}() = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
 
     \vspace{0.3cm}
     \noindent
     {\scshape Case} \( n \neq 0 \):
-    It follows from \cref{cor:first-order-language-terms-with-non-zero-finite-composition-factor-must-have-a-parent-function-symbol} that
+    It follows from \cref{cor:first-order-language-terms-with-non-zero-complexity-must-have-a-parent-function-symbol} that
     \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
     and \( \abs{\tau} = \Phi^{L}(i) \). Thus we have by \cref{dfn:first-order-language-interpretation-of-terms}
     \begin{align}
-        \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}}
-        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{0}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta0}\\
-        \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}}
-        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{1}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta1}
+        \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}}
+        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\mathfrak{a}_{0}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta0}\\
+        \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}}
+        &= F^{\mathfrak{A}}_{i} \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\mathfrak{a}_{1}} }{j \in \dom \tau} \phantomsection \label{eq:interpret-with-delta1}
     \end{align}
     Let \( m \in \dom \tau \) be arbitrary. It follows then that \( \tau_{m} \) is a \aref{dfn:first-order-language-subterms}{subterm} of \( t \); thus,
-    \cref{thm:first-order-language-composition-factor-of-subterms-is-less} guarantees that \( \folcompositionfactorofterm{\tau_{m}} < n \).
-    By the inductive hypothesis, we further deduce that
-    \( \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\delta_{1}} \).
+    \cref{thm:first-order-language-the-complexity-of-a-subterm-is-less-than-the-complexity-of-the-parent-term} guarantees that \( \folcomplexityofterm{\tau_{m}} < n \).
+    By the induction hypothesis, we further deduce that
+    \( \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{\tau_{m}}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
     This means that the tuples in \eqref{eq:interpret-with-delta0} and \eqref{eq:interpret-with-delta1} are equal and that
-    \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
+    \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
 
     \vspace{0.3cm}
     \noindent
-    Evidently, \( \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \) is true for all possible cases.
-    From this we arrive at the conclusion that \( P(n) \) is implied by the inductive hypothesis, which completes the inductive proof.
+    Evidently, \( \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \) is true in all possible cases.
+    From this we arrive at the conclusion that \( P(n) \) is implied by the induction hypothesis, which completes the inductive proof.
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}
+    \phantomsection \label{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}
     Let \( \varphi \) be an \( \mathcal{L} \)-formula and \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure.
-    If \( \delta_{0} \) and \( \delta_{1} \) are \aref{dfn:first-order-language-variable-translation-function}{variable translation functions} of \( \mathcal{L} \)
-    under \( \mathfrak{A} \) such that \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \),
-    then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    If \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \) are \aref{dfn:first-order-language-variable-assignment-function}{variable assignment functions} of \( \mathcal{L} \)
+    under \( \mathfrak{A} \) such that \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\varphi}} \),
+    then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
 \end{thm}
 
 \begin{proof}
-    Since \aref{cor:first-order-language-every-formula-has-a-finite-number-of-syntactic-operations}{every \( \mathcal{L} \)-formula is constructible
-    from atoms of \( \mathcal{L} \) via a finite number of syntactic operations},
-    it suffices to prove (inductively) that for all \( n \in \naturalset \), the statement
-    ``\( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}}\) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)'' holds for all
-    \( \mathcal{L} \)-formula \( \varphi \) such that \( \folnumberofsyntacticoperators{\varphi} = n \) and for all variable translation functions
-    \( \delta_{0} \) and \( \delta_{1} \) such that
-    \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \).
-
-    \vspace{0.3cm}
-    \noindent
+    Since \aref{cor:first-order-language-every-formula-has-finite-complexity}{every \( \mathcal{L} \)-formula has a finite complexity}, we can establish
+    the theorem inductively.
     We begin by defining the statement \( P(n) \) as follows: for all \( \mathcal{L} \)-formula \( \varphi \) such that
-    \( \folnumberofsyntacticoperators{\varphi} = n \) and for all variable translation functions (of \( \mathcal{L} \) under \( \mathfrak{A} \))
-    \( \delta_{0} \) and \( \delta_{1} \) such that
-    \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \),
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
-    We now proceed with an inductive proof of \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}.
-    First, we make the following hypothesis for some arbitrary \( n \in \naturalset \).
+    \( \folcomplexityofformula{\varphi} = n \) and for all variable assignment functions (of \( \mathcal{L} \) under \( \mathfrak{A} \))
+    \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \) such that
+    \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\varphi} } \),
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
+    Then we make the following hypothesis for some arbitrary \( n \in \naturalset \).
 
     \vspace{0.3cm}
     \noindent
-    \underline{\scshape Inductive Hypothesis:} \( P(k) \) holds for all \( k \in \naturalset \) such that \( k < n \).
+    \underline{\scshape Induction Hypothesis:} \( P(k) \) holds for all \( k \in \naturalset \) such that \( k < n \).
 
     \vspace{0.3cm}
     \noindent
-    The goal is to show that \( P(n) \) is implied by the inductive hypothesis so that we can conclude by the strong induction principle
+    The goal is to show that \( P(n) \) is implied by the induction hypothesis so that we can conclude by the strong induction principle
     that \( P(n) \) holds for all \( n \in \naturalset \) (and thus for all \( \mathcal{L} \)-formulas).
 
     \vspace{0.3cm}
     \noindent
-    Let \( \varphi \) be an arbitrary \( \mathcal{L} \)-formula such that \( \folnumberofsyntacticoperators{\varphi} = n \).
-    Let \( \delta_{0} \) and \( \delta_{1} \) be arbitrary variable translation functions of \( \mathcal{L} \) under \( \mathfrak{A} \)
-    such that \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \).
+    Let \( \varphi \) be an arbitrary \( \mathcal{L} \)-formula such that \( \folcomplexityofformula{\varphi} = n \).
+    Let \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \) be arbitrary variable assignment functions of \( \mathcal{L} \) under \( \mathfrak{A} \)
+    such that \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\varphi} } \).
     Since \( n \in \naturalset \), there are only two cases to consider: \( n = 0 \) or \( n \neq 0 \).
 
     \vspace{0.3cm}
@@ -576,75 +603,75 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     By \cref{dfn:first-order-language-recursive-definition-of-free-variables}, we have
     \( \folfreevars{\varphi} = \folvars{\varphi} = \folvars{s} \union \folvars{t}  \) and thus
     \( \folvars{s} \subseteq \folfreevars{\varphi} \) and \( \folvars{t} \subseteq \folfreevars{\varphi} \).
-    Since \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \),
-    it follows that \( \restrictedfunctionsmall{\delta_{0}}{\folvars{s}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{s}} \)
-    and \( \restrictedfunctionsmall{\delta_{0}}{\folvars{t}} = \restrictedfunctionsmall{\delta_{1}}{\folvars{t}} \).
-    In other words, \cref{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
-    is applicable to \( \delta_{0} \) and \( \delta_{1} \), from which we infer:
+    Since \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\varphi}} \),
+    it follows that \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folvars{s}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folvars{s}} \)
+    and \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folvars{t}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folvars{t}} \).
+    In other words, \cref{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    is applicable to \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \), from which we infer:
     \begin{align}
-        \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} &=
-        \folterminterpretation{s}{\mathfrak{A}}{\delta_{1}} \phantomsection \label{eq:interpreting-s-yields-the-same-entity}\\
-        \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} &=
-        \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \phantomsection \label{eq:interpreting-t-yields-the-same-entity}
+        \folterminterpretation{s}{\mathfrak{A}}{\mathfrak{a}_{0}} &=
+        \folterminterpretation{s}{\mathfrak{A}}{\mathfrak{a}_{1}} \phantomsection \label{eq:interpreting-s-yields-the-same-entity}\\
+        \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} &=
+        \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \phantomsection \label{eq:interpreting-t-yields-the-same-entity}
     \end{align}
-    From \cref{dfn:first-order-language-interpretation-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \)
-    if and only if \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} \).
+    From \cref{dfn:first-order-language-satisfaction-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \)
+    if and only if \( \folterminterpretation{s}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} \).
     But from \eqref{eq:interpreting-s-yields-the-same-entity} and \eqref{eq:interpreting-t-yields-the-same-entity}, it is clear that
-    \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{0}} \) if and only if
-    \( \folterminterpretation{s}{\mathfrak{A}}{\delta_{1}} = \folterminterpretation{t}{\mathfrak{A}}{\delta_{1}} \).
-    Applying \cref{dfn:first-order-language-interpretation-of-formulas} once again allows us to conclude that
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    \( \folterminterpretation{s}{\mathfrak{A}}{\mathfrak{a}_{0}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{0}} \) if and only if
+    \( \folterminterpretation{s}{\mathfrak{A}}{\mathfrak{a}_{1}} = \folterminterpretation{t}{\mathfrak{A}}{\mathfrak{a}_{1}} \).
+    Applying \cref{dfn:first-order-language-satisfaction-of-formulas} once again allows us to conclude that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) if and only if \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
 
     \vspace{0.3cm}
     \noindent
     Similarly, if \( \varphi \) has the form \( P^{\mathcal{L}}_{i}(\tau) \),
-    then \cref{lem:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
+    then \cref{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
     guarantees that
     \begin{equation*}
-        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{0}} }{j \in \dom \tau}
+        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\mathfrak{a}_{0}} }{j \in \dom \tau}
         =
-        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\delta_{1}} }{j \in \dom \tau}
+        \sequence{ \folterminterpretation{\tau_{j}}{\mathfrak{A}}{\mathfrak{a}_{1}} }{j \in \dom \tau}
     \end{equation*}
-    since \( \restrictedfunctionsmall{\delta_{0}}{ \folvars{\tau_{j}} } = \restrictedfunctionsmall{\delta_{1}}{ \folvars{\tau_{j}} } \) for all
-    \( j \in \dom \tau \). It should be clear from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \) holds in this case as well.
+    since \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folvars{\tau_{j}} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folvars{\tau_{j}} } \) for all
+    \( j \in \dom \tau \). It should be clear from \cref{dfn:first-order-language-satisfaction-of-formulas} that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \) holds in this case as well.
 
     \vspace{0.3cm}
     \noindent
-    {\scshape Case} \( n \neq 0 \): From \cref{cor:first-order-language-every-formula-with-non-zero-syntactic-operations-can-be-decomposed}, we know that
+    {\scshape Case} \( n \neq 0 \): From \cref{cor:first-order-language-every-formula-with-non-zero-complexity-can-be-decomposed}, we know that
     \( \varphi \) must take one of seven forms.
     Suppose that \( \varphi \coloneq \mleft( \psi \mright) \) for some \( \mathcal{L} \)-formula \( \psi \).
     Clearly, \( \psi \folsubformula \varphi \),
-    so we have \( \folnumberofsyntacticoperators{\psi} < n \) by \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}.
-    Moreover, we also have \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\psi} } \)
+    so we have \( \folcomplexityofformula{\psi} < n \) by \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula}.
+    Moreover, we also have \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\psi} } \)
     since \( \folfreevars{\psi} = \folfreevars{\varphi} \) and
-    \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \) by our initial assumption.
-    From the inductive hypothesis, it thus follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} \)
-    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{1}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\varphi}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\varphi}} \) by our initial assumption.
+    From the induction hypothesis, it thus follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}_{0}} \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}_{1}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
     Note that the proof is exactly the same if \( \varphi \) has the form \( \mleft[ \, \psi \, \mright] \) or \( \lnot \, \psi \).
 
     \vspace{0.3cm}
     \noindent
     Next, we consider the case where \( \varphi \) takes on the form \( \psi \,\,{\land}\,\, \phi \).
-    Once again, \( \folnumberofsyntacticoperators{\psi} < n \) and \( \folnumberofsyntacticoperators{\phi} < n \) are both true
-    by \cref{cor:first-order-language-every-subformula-of-a-formula-has-less-number-of-syntactic-operations}
+    Once again, \( \folcomplexityofformula{\psi} < n \) and \( \folcomplexityofformula{\phi} < n \) are both true
+    by \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula}
     because \( \psi \) and \( \phi \) are subformulas of \( \varphi \).
-    Then from \cref{dfn:first-order-language-interpretation-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \)
-    if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{0}} \) both hold.
-    Since \( \folnumberofsyntacticoperators{\psi} \) and \( \folnumberofsyntacticoperators{\phi} \) are both less than \( n \) and the variable translation functions
-    \( \delta_{0} \) and \( \delta_{1} \) overlap for all free variables of \( \varphi \), it follows from the inductive hypothesis that
+    Then from \cref{dfn:first-order-language-satisfaction-of-formulas}, we know that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \)
+    if and only if \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}_{0}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}_{0}} \) both hold.
+    Since \( \folcomplexityofformula{\psi} \) and \( \folcomplexityofformula{\phi} \) are both less than \( n \) and the variable assignment functions
+    \( \mathfrak{a}_{0} \) and \( \mathfrak{a}_{1} \) overlap for all free variables of \( \varphi \), it follows from the induction hypothesis that
     \begin{align*}
-        \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta_{1}}\\
-        \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\phi}{\delta_{1}}
+        \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}_{1}}\\
+        \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}_{0}} &\text{ iff } \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}_{1}}
     \end{align*}
-    Thus, necessarily \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \).
+    Thus, necessarily \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
     The same argument applies if \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \phi \).
 
     \vspace{0.3cm}
     \noindent
     Finally, we consider the case where \( \varphi \) is constructed by quantification (\( \mathcal{R}_{\forall} \) or \( \mathcal{R}_{\exists} \)).
-    If \( \varphi \coloneq \forall x \, \psi \), then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) if and only if
-    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \) for all \( e \in \abs{\mathfrak{A}} \).
+    If \( \varphi \coloneq \forall x \, \psi \), then \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) if and only if
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} } \) for all \( e \in \abs{\mathfrak{A}} \).
     Now let \( e \in \abs{\mathfrak{A}} \) be arbitrary.
     We know from \cref{dfn:first-order-language-recursive-definition-of-free-variables} that
     \begin{equation*}
@@ -654,98 +681,93 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
             \folfreevars{\psi} & \text{\normalfont if } x \notin \folfreevars{\psi}
         \end{cases}
     \end{equation*}
-    If \( x \notin \folfreevars{\psi} \), then obviously \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\psi} }  \) because \( \restrictedfunctionsmall{\delta_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\delta_{1}}{ \folfreevars{\varphi} } \) by our initial assumption
+    If \( x \notin \folfreevars{\psi} \), then obviously \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\psi} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\psi} }  \) because \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\varphi} } = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\varphi} } \) by our initial assumption
     and \( \folfreevars{\varphi} \) and \( \folfreevars{\psi} \) are the same set.
     We can deduce from this the fact that
     \begin{equation}
-        \phantomsection \label{eq:modified-variable-translation-function-also-agree}
-        \restrictedfunctionsmall{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} }{ \folfreevars{\psi} }
+        \phantomsection \label{eq:modified-variable-assignment-function-also-agree}
+        \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} }{ \folfreevars{\psi} }
         =
-        \restrictedfunctionsmall{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} }{ \folfreevars{\psi} }
+        \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{1}}{x}{e} }{ \folfreevars{\psi} }
     \end{equation} 
     \noindent
     On the other hand, if \( x \in \folfreevars{\psi} \), then \( \folfreevars{\psi} = \folfreevars{\varphi} \union \mleft\{ x \mright\} \).
-    If we were to construct the restricted functions \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\psi}} \)
-    and \( \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\psi}} \), we will end up with
+    If we were to construct the restricted functions \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\psi}} \)
+    and \( \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\psi}} \), we will end up with
     \begin{align*}
-        \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{0}} \big\}\\
-        \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{1}} \big\}
+        \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{0}} \big\}\\
+        \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\psi}} = \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\varphi}} \union \big\{ \orderedpair{x}{e_{1}} \big\}
     \end{align*}
-    where \( e_{0} \) and \( e_{1} \) are elements of \( \abs{\mathfrak{A}} \). But for \( \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} \) and
-    \( \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} \), the values \( e_{0} \) and \( e_{1} \) will simply be replaced with the same value \( e \)
-    regardless of what they are; and given that \( \restrictedfunctionsmall{\delta_{0}}{\folfreevars{\varphi}} =  \restrictedfunctionsmall{\delta_{1}}{\folfreevars{\varphi}} \)
-    by our initial assumption, we arrive at \eqref{eq:modified-variable-translation-function-also-agree} once again. In other words, \eqref{eq:modified-variable-translation-function-also-agree} holds for all possible cases.
+    where \( e_{0} \) and \( e_{1} \) are elements of \( \abs{\mathfrak{A}} \). But for \( \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} \) and
+    \( \folmodifiedvariableassignmentfunction{\mathfrak{a}_{1}}{x}{e} \), the values \( e_{0} \) and \( e_{1} \) will simply be replaced with the same value \( e \)
+    regardless of what they are; and given that \( \restrictedfunctionsmall{\mathfrak{a}_{0}}{\folfreevars{\varphi}} =  \restrictedfunctionsmall{\mathfrak{a}_{1}}{\folfreevars{\varphi}} \)
+    by our initial assumption, we arrive at \eqref{eq:modified-variable-assignment-function-also-agree} once again. In other words, \eqref{eq:modified-variable-assignment-function-also-agree} holds for all possible cases.
 
     \vspace{0.3cm}
     \noindent
-    Now recall that \( \folnumberofsyntacticoperators{\psi} < n \) since \( \psi \) is a subformula of \( \varphi \).
-    Together, \eqref{eq:modified-variable-translation-function-also-agree} and the inductive hypothesis implies that
-    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \)
-    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \),
+    Now recall that \( \folcomplexityofformula{\psi} < n \) since \( \psi \) is a subformula of \( \varphi \).
+    Together, \eqref{eq:modified-variable-assignment-function-also-agree} and the induction hypothesis implies that
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} } \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{1}}{x}{e} } \),
     which in turn implies that 
-    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \) 
-    for all \( e \in \abs{\mathfrak{A}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \)
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} } \) 
+    for all \( e \in \abs{\mathfrak{A}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{1}}{x}{e} } \)
     for all \( e \in \abs{\mathfrak{A}} \).
-    In other words, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)
-    by \cref{dfn:first-order-language-interpretation-of-formulas}.
+    In other words, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \)
+    by \cref{dfn:first-order-language-satisfaction-of-formulas}.
     If \( \varphi \) is existentially quantified, then the proof is exactly the same except for the conclusion drawn at the end.
-    The key is to establish that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{0}}{x}{e} } \)
-    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariabletranslationfunction{\delta_{1}}{x}{e} } \), and the rest follows readily from
-    \cref{dfn:first-order-language-interpretation-of-formulas}.
+    The key is to establish that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{0}}{x}{e} } \)
+    iff \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}_{1}}{x}{e} } \), and the rest follows readily from
+    \cref{dfn:first-order-language-satisfaction-of-formulas}.
 
     \vspace{0.3cm}
     \noindent
-    We have now established that the statement \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta_{1}} \)
-    is true regardless of the form \( \varphi \) takes. Since \( \varphi \), \( \delta_{0} \), and \( \delta_{1} \) are all arbitrary, we conclude by
+    We have now established that the statement \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \)
+    is true regardless of the form \( \varphi \) takes. Since \( \varphi \), \( \mathfrak{a}_{0} \), and \( \mathfrak{a}_{1} \) are all arbitrary, we conclude by
     \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( P(n) \) holds.
-    Therefore, \( P(n) \) is implied by the inductive hypothesis for any arbitrary \( n \in \naturalset \).
-    \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula} follows
+    Therefore, \( P(n) \) is implied by the induction hypothesis for any arbitrary \( n \in \naturalset \).
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula} follows
     readily from the strong induction principle.
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{thm:first-order-language-sentences-must-be-satisfied-by-all-variable-translation-functions}
+    \phantomsection \label{thm:first-order-language-sentences-must-be-satisfied-by-all-variable-assignment-functions}
     Let \( \varphi \) be an \( \mathcal{L} \)-sentence and \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure.
-    If \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) for some variable translation function \( \delta \),
-    then \( \mathfrak{A} \) satisfies \( \varphi \) for all variable translation functions.
+    If \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) for some variable assignment function \( \mathfrak{a} \),
+    then \( \mathfrak{A} \) satisfies \( \varphi \) for all variable assignment functions.
 \end{thm}
 
 \begin{proof}
-    Let \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
-    Let \( \varepsilon \) denote an arbitrary variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Let \( \mathfrak{a}_{0} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{0}} \).
+    Let \( \mathfrak{a}_{1} \) denote an arbitrary variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
     Since \( \varphi \) is a sentence in the language of \( \mathcal{L} \), it follows that \( \folfreevars{\varphi} = \emptyset \).
     Therefore,
     \begin{equation*}
-        \restrictedfunctionsmall{\delta}{ \folfreevars{\varphi} }
-        = \restrictedfunctionsmall{\delta}{ \emptyset }
+        \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \folfreevars{\varphi} }
+        = \restrictedfunctionsmall{\mathfrak{a}_{0}}{ \emptyset }
         = \emptyset
-        = \restrictedfunctionsmall{\varepsilon}{ \emptyset }
-        = \restrictedfunctionsmall{\varepsilon}{ \folfreevars{\varphi} }
+        = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \emptyset }
+        = \restrictedfunctionsmall{\mathfrak{a}_{1}}{ \folfreevars{\varphi} }
     \end{equation*}
-    By \cref{thm:first-order-language-different-variable-translation-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula},
-    it follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\varepsilon} \).
-    Since \( \varepsilon \) is arbitrary, it follows that \( \mathfrak{A} \) satisfies \( \varphi \) for all variable translation functions of \( \mathcal{L} \)
+    By \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula},
+    it follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}_{1}} \).
+    Since \( \mathfrak{a}_{1} \) is arbitrary, it follows that \( \mathfrak{A} \) satisfies \( \varphi \) for all variable assignment functions of \( \mathcal{L} \)
     under \( \mathfrak{A} \).
 \end{proof}
 
 \noindent
-Now that we have defined what it means for a structure to satisfy a formula with a specific translation, we move on to define what it means for a structure
-to satisfy a formula \emph{in general}.
+The notion of satisfaction can be used to define the logical relationship between formulas; specifically the notions of
+logical consequence and logical equivalence.
+Informally, if a formula \( \varphi \) is a logical consequence of another formula \( \psi \) (or a set of formulas), then \( \varphi \)
+is implied by \( \psi \) for all possible interpretations; that is, the implication holds by virtue of the logical form of the formulas alone.
 
-\begin{dfn}[Models]
-    \phantomsection \label{dfn:first-order-language-models-of-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then an \( \mathcal{L} \)-structure \( \mathfrak{A} \) is a \keyword{model} of \( \varphi \)
-    (denoted as \( \mathfrak{A} \models \varphi \)) if and only if it satisfies \( \varphi \) for all variable translation functions of \( \mathcal{L} \)
-    under \( \mathfrak{A} \); that is, \( \mathfrak{A} \models \varphi \) iff \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) for all variable translation
-    function \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \).
-\end{dfn}
-
-\begin{dfn}[Semantic Consequence]
-    \phantomsection \label{dfn:first-order-language-semantic-consequence}
+\begin{dfn}[Logical Consequence]
+    \phantomsection \label{dfn:first-order-language-logical-consequence}
     Let \( \Gamma \) be a set of \( \mathcal{L} \)-formulas and \( \varphi \) be an \( \mathcal{L} \)-formula.
-    We say that \( \varphi \) is a semantic consequence of \( \Gamma \) (denoted as \( \Gamma \models \varphi \))
-    if and only if any \( \mathcal{L} \)-structure that is a model of all the formulas in \( \Gamma \) is also a model of \( \varphi \).
+    We say that \( \varphi \) is a \keyword{logical consequence} of \( \Gamma \) (denoted as \( \Gamma \models \varphi \))
+    if and only if for all \( \mathcal{L} \)-structure \( \mathfrak{A} \) and for all variable assignment function \( \mathfrak{a} \),
+    if \( \mathfrak{A} \) satisfies every formula in \( \Gamma \) with \( \mathfrak{a} \), then \( \mathfrak{A} \) also satisfies \( \varphi \) with \( \mathfrak{a} \).
 \end{dfn}
 
 \begin{notation}
@@ -755,178 +777,185 @@ to satisfy a formula \emph{in general}.
 
 \begin{dfn}[Tautology]
     \phantomsection \label{dfn:first-order-language-tautology}
-    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} if and only if every \( \mathcal{L} \)-structure is a model of \( \varphi \).
+    An \( \mathcal{L} \)-formula \( \varphi \) is a \keyword{tautology} if and only if \( \emptyset \models \varphi \);
+    that is, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) for all \( \mathcal{L} \)-structure \( \mathfrak{A} \)
+    and variable assignment function \( \mathfrak{a} \).
+    On the other hand, we say that \( \varphi \) is a \keyword{contradiction} if and only if \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \)
+    for all structure \( \mathfrak{A} \) and all assignment function \( \mathfrak{a} \).
 \end{dfn}
 
 \begin{notation}
-    Clearly, \( \varphi \) is a tautology if and only if \( \emptyset \models \varphi \). Thus, we can simplify the notation to \( \models \varphi \).
+    We can abbreviate the notation \( \emptyset \models \varphi \) as \( \models \varphi \).
 \end{notation}
 
 \begin{dfn}[Logical Equivalence]
     \phantomsection \label{dfn:first-order-language-logical-equivalence}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, we say that \( \varphi \) and \( \psi \) are \keyword{logically equivalent}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \) and \( \psi \) are \keyword{logically equivalent}
     (denoted as \( \varphi \equiv \psi \)) if and only if \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
 \end{dfn}
 
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-equivalent-formulations-of-logical-consequence-and-logical-equivalence}
+    For all \( \mathcal{L} \)-formulas \( \varphi \) and \( \psi \), the following holds:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \varphi \models \psi \) if and only if \( \models \mleft( \varphi \,{\implies} \psi \mright) \) \phantomsection \label{enum:logical-consequence-iff-tautological-implication}
+        \item \( \varphi \,\,{\equiv}\,\, \psi \) if and only if \( \models \mleft( \varphi {\iff} \psi \mright) \) \phantomsection \label{enum:logical-equivalence-iff-tautological-biconditional}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    We begin by proving \ref{enum:logical-consequence-iff-tautological-implication}, which we can then use to prove \ref{enum:logical-equivalence-iff-tautological-biconditional}.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( \varphi \models \psi \). Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be any
+    variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    If \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \), then \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+    must follow because \( \varphi \models \psi \).
+    Therefore, \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\mathfrak{a}} \) because
+    \( \varphi {\implies} \psi \) is simply an abbreviation for \( \lnot \, \varphi \,\,{\lor}\,\, \psi \).
+    Since \( \mathfrak{A} \) and \( \mathfrak{a} \) are arbitrary, we conclude that \( \models \mleft( \varphi {\implies} \psi \mright) \).
+    To prove the converse, suppose that \( \models \mleft( \varphi {\implies} \psi \mright) \) holds.
+    This means that
+    \begin{equation}
+        \label{eq:implication-holds-for-all-structures-and-assignments}
+        \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\mathfrak{a}} \ \ \  \text{for all \( \mathfrak{A} \) and \( \mathfrak{a} \) }
+    \end{equation}
+    Let \( \mathfrak{B} \) and \( \mathfrak{b} \) be any structure and variable assignment function such that \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \).
+    But by \eqref{eq:implication-holds-for-all-structures-and-assignments}, either \( \folwffnonsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \)
+    or \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \) is true.
+    But we already know that \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \) is true by assumption; therefore,
+    \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \) follows by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}.
+    In other words, \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \) implies \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \)
+    for any \( \mathfrak{B} \) and \( \mathfrak{b} \); i.e., \( \varphi \models \psi \).
+    This suffices to prove \ref{enum:logical-consequence-iff-tautological-implication}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-transitivity-of-logical-consequence-and-equivalence}
+    The following properties hold for all \( \mathcal{L} \)-formulas \( \varphi \), \( \psi \), and \( \phi \):
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item If \( \varphi \models \psi \) and \( \psi \models \phi \), then \( \varphi \models \phi \) \phantomsection \label{enum:transitivity-of-consequence}
+        \item If \( \varphi \equiv \psi \) and \( \psi \equiv \phi \), then \( \varphi \equiv \phi \) \phantomsection \label{enum:transitivity-of-equivalence}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Suppose that \( \varphi \models \psi \) and \( \psi \models \phi \) are true.
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be any
+    variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \) such that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \).
+    Since \( \varphi \models \psi \), \aref{dfn:first-order-language-logical-consequence}{necessarily \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)}.
+    But \( \psi \models \phi \) is also true, so \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+    implies \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \). In other words, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \)
+    implies \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \) for any structure \( \mathfrak{A} \) and any variable assignment function \( \mathfrak{a} \).
+    Thus, \( \varphi \models \phi \) as stated in \ref{enum:transitivity-of-consequence}.
+
+    \vspace{0.3cm}
+    \noindent
+    We now use \ref{enum:transitivity-of-consequence} to prove \ref{enum:transitivity-of-equivalence}.
+    Suppose that \( \varphi \equiv \psi \) and \( \psi \equiv \phi \) are both true.
+    By \cref{dfn:first-order-language-logical-equivalence}, it follows that \( \varphi \models \psi \) and \( \psi \models \phi \) are both true, which
+    then implies \( \varphi \models \phi \) as shown in \ref{enum:transitivity-of-consequence}.
+    Similarly, \( \phi \models \psi \) and \( \psi \models \varphi \) are also true, which implies \( \phi \models \varphi \).
+    Since \( \varphi \models \phi \) and \( \phi \models \varphi \) are both true, necessarily \( \varphi \equiv \phi \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{logical-equivalence:parenthesized-formulas-are-logically-equivalent}
+    For any \( \mathcal{L} \)-formula \( \varphi \), \( \varphi \equiv \mleft( \varphi \mright) \) and \( \varphi \equiv \mleft[ \,\varphi\, \mright] \).
+\end{thm}
+
+\begin{proof}
+    Let \( \psi \coloneq \mleft( \varphi \mright) \). The goal is to prove that \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be any variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    If \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \), then necessarilly \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+    by \cref{dfn:first-order-language-satisfaction-of-formulas}.
+    Since \( \mathfrak{A} \) and \( \mathfrak{a} \) are arbitrary, \( \varphi \models \psi \) follows immediately from
+    \aref{dfn:first-order-language-logical-consequence}{the definition of logical consequence}.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, let \( \mathfrak{B} \) and \( \mathfrak{b} \) denote an arbitrary \( \mathcal{L} \)-structure and variable assignment function respectively.
+    Suppose that \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \). Once again, \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \)
+    follows from \cref{dfn:first-order-language-satisfaction-of-formulas}. Since \( \mathfrak{B} \) and \( \mathfrak{b} \) are arbitrary,
+    we then conclude that \( \psi \models \varphi \).
+\end{proof}
+
+\begin{rem}
+    The proof for \( \varphi \equiv \mleft[ \,\varphi\, \mright] \) is exactly the same.
+\end{rem}
+
+\begin{thm}
+    \phantomsection \label{logical-equivalence:two-formulas-are-logically-equivalent-iff-their-negations-are-logically-equivalent}
+    For any \( \mathcal{L} \)-formulas \( \varphi \) and \( \psi \), \( \varphi \equiv \psi {\iff} \lnot \, \varphi \equiv \lnot \, \psi \).
+\end{thm}
+
+\begin{proof}
+    Suppose that \( \varphi \equiv \psi \). It follows immediately from \cref{thm:first-order-language-equivalent-formulations-of-logical-consequence-and-logical-equivalence}
+    that \( \models \mleft( \varphi {\iff} \psi \mright) \) holds.
+    Therefore, for every structure \( \mathfrak{A} \) and every variable assignment function \( \mathfrak{a} \),
+    either \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \)
+    or \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) and \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \);
+    i.e., either \( \folwffnonsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \mright)}{\mathfrak{a}} \)
+    and \( \folwffnonsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \psi \mright)}{\mathfrak{a}} \) or
+    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \mright)}{\mathfrak{a}} \)
+    and \( \folwffsatisfaction{\mathfrak{A}}{\mleft(\lnot \, \psi \mright)}{\mathfrak{a}} \).
+    This means that \( \lnot \, \varphi {\iff} \lnot \, \psi \) is a tautology and thus \( \lnot \, \varphi \equiv \lnot \, \psi \)
+    by \cref{thm:first-order-language-equivalent-formulations-of-logical-consequence-and-logical-equivalence}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{logical-equivalence:replacing-logically-equivalent-conjuncts-or-disjuncts-yields-logically-equivalent-conjunctions-and-disjunctions}
+    If \( \varphi \) and \( \varphi^{\prime} \) are \( \mathcal{L} \)-formulas such that \( \varphi \equiv \varphi^{\prime} \),
+    then the following hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \varphi \,\,{\land}\,\, \psi \equiv \varphi^{\prime} \,\,{\land}\,\, \psi \) for any formula \( \psi \) \phantomsection \label{enum:conjunct1}
+        \item \( \psi \,\,{\land}\,\, \varphi \equiv \psi \,\,{\land}\,\, \varphi^{\prime} \) for any formula \( \psi \)\phantomsection \label{enum:conjunct2}
+        \item \( \varphi \,\,{\lor}\,\, \psi \equiv \varphi^{\prime} \,\,{\lor}\,\, \psi \) for any formula \( \psi \) \phantomsection \label{enum:disjunct1}
+        \item \( \psi \,\,{\lor}\,\, \varphi \equiv \psi \,\,{\lor}\,\, \varphi^{\prime} \) for any formula \( \psi \) \phantomsection \label{enum:disjunct2}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    We only show the proofs for \ref{enum:conjunct1} and \ref{enum:disjunct1} since the proofs for
+    \ref{enum:conjunct2} and \ref{enum:disjunct2} utilize similar arguments
+
+    \vspace{0.3cm}
+    \noindent
+    For \ref{enum:conjunct1}, let \( \mathfrak{A} \) be a structure and \( \mathfrak{a} \) be a variable assignment function such that
+    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi \,\,{\land}\,\, \psi \mright)}{\mathfrak{a}} \).
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, it follows that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \)
+    and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \) are both true.
+    Since \( \varphi \equiv \varphi^{\prime} \), \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \)
+    implies \( \folwffsatisfaction{\mathfrak{A}}{\varphi^{\prime}}{\mathfrak{a}} \).
+    In other words, \( \folwffsatisfaction{\mathfrak{A}}{\varphi^{\prime}}{\mathfrak{a}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \) both hold;
+    therefore, \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi^{\prime} \,\,{\land}\,\, \psi \mright)}{\mathfrak{a}} \)
+    by \cref{dfn:first-order-language-satisfaction-of-formulas}.
+    Since \( \mathfrak{A} \) and \( \mathfrak{a} \) are arbitrary, it follows that \( \varphi \,\,{\land}\,\, \psi \models \varphi^{\prime} \,\,{\land}\,\, \psi \).
+    To prove the converse, we let \( \mathfrak{B} \) be a structure and \( \mathfrak{b} \) be a variable assignment function such that
+    \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \varphi^{\prime} \,\,{\land}\,\, \psi \mright)}{\mathfrak{b}} \). Again, this means that
+    \( \folwffsatisfaction{\mathfrak{B}}{\varphi^{\prime}}{\mathfrak{b}} \) and \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \) are both true;
+    and \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \) follows immediately from \( \varphi \equiv \varphi^{\prime} \).
+    Thus \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \varphi \,\,{\land}\,\, \psi \mright)}{\mathfrak{b}} \) follows from
+    \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \varphi^{\prime} \,\,{\land}\,\, \psi \mright)}{\mathfrak{b}} \) for all \( \mathfrak{B} \) and \( \mathfrak{b} \);
+    i.e., \( \varphi^{\prime} \,\,{\land}\,\, \psi \models \varphi \,\,{\land}\,\, \psi \).
+
+    \vspace{0.3cm}
+    \noindent
+    For \ref{enum:disjunct1}, suppose that \( \folwffsatisfaction{\mathfrak{C}}{\mleft( \varphi \,\,{\lor}\,\, \psi \mright)}{\mathfrak{c}} \) for some structure
+    \( \mathfrak{C} \) and some variable assignment function \( \mathfrak{c} \).
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, it follows that either \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{\mathfrak{c}} \)
+    or \( \folwffsatisfaction{\mathfrak{C}}{\psi}{\mathfrak{c}} \) is true.
+\end{proof}
+
+\newpage
 \section{Applications}
 \noindent
 We now have enough theoretical foundation to start proving many of the familiar results from logic.
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-tautological-implication-implies-semantic-consequence}
-    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas.
-    Then \( \varphi \models \psi \) if \( \models (\varphi {\implies} \psi) \).
-\end{thm}
-
-\begin{proof}
-    Suppose that \( \models \mleft( \varphi {\implies} \psi \mright) \); that is, \( \models \mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright) \).
-    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \varphi \).
-    Let \( \delta \) be an arbitrary \aref{dfn:first-order-language-variable-translation-function}{variable translation function} of \( \mathcal{L} \)
-    under \( \mathfrak{A} \).
-    Since \( \models \mleft( \varphi {\implies} \psi \mright) \) by assumption, it follows that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \),
-    which means that \( \folwffsatisfaction{\mathfrak{A}}{(\varphi {\implies} \psi)}{\delta} \).
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that either \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) or
-    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is true.
-    But since \( \mathfrak{A} \models \varphi \), \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) cannot possibly be true.
-    Therefore, we conclude by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism} that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)
-    is necessarily true.
-    Since \( \delta \) is arbitrary, it follows that \( \mathfrak{A} \) satisfies \( \psi \) with all variable translation functions of \( \mathcal{L} \) under
-    \( \mathfrak{A} \); that is, \( \mathfrak{A} \models \psi \).
-    
-    \vspace{0.3cm}
-    \noindent
-    Having established that \( \mathfrak{A} \models \varphi \) implies \( \mathfrak{A} \models \psi \) for any arbitrary structure \( \mathfrak{A} \),
-    \( \varphi \models \psi \) follows readilly from \cref{dfn:first-order-language-semantic-consequence}.
-\end{proof}
-
-\begin{rem}
-    It is important to note that the converse of \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} can only be true if \( \varphi \) and \( \psi \)
-    are \( \mathcal{L} \)-sentences; i.e., they have no free variables.
-\end{rem}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-for-sentences-tautological-implication-iff-semantic-consequence}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-sentences, then \( \varphi \models \psi \) iff \( \models \mleft( \varphi {\implies} \psi \mright) \).
-\end{thm}
-
-\begin{proof}
-    Since \( \mathcal{L} \)-sentences are simply \( \mathcal{L} \)-formulas without free variables,
-    \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} applies and \( \models \mleft( \varphi {\implies} \psi \mright) \) implies \( \varphi \models \psi \).
-    It remains now to prove the converse.
-
-    \vspace{0.3cm}
-    \noindent
-    Suppose that \( \varphi \models \psi \).
-    Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
-    By the \aref{rule-of-inference:law-of-excluded-middle}{Law of Excluded Middle}, clearly
-    either \( \mathfrak{A} \models \psi \) or \( \mathfrak{A} \not\models \psi \).
-    If \( \mathfrak{A} \models \psi \), then obviously \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \).
-    By \cref{dfn:first-order-language-interpretation-of-formulas}, it follows that
-    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \)
-    and thus \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \).
-
-    \vspace{0.3cm}
-    \noindent
-    On the other hand, if \( \mathfrak{A} \not\models \psi \), then \( \mathfrak{A} \not\models \varphi \) by \aref{rule-of-inference:modus-tollens}{Modus Tollens}.
-    But if \( \mathfrak{A} \not\models \varphi \), then \( \mathfrak{A} \) cannot possibly satisfy \( \varphi \) with \( \delta \);
-    otherwise, \cref{thm:first-order-language-sentences-must-be-satisfied-by-all-variable-translation-functions} requires that
-    \( \mathfrak{A} \) satisfy \( \varphi \) with all variable translation functions, which would then imply \( \mathfrak{A} \models \varphi \), an obvious contradiction.
-    Thus, necessarily \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
-    We then conclude from \cref{dfn:first-order-language-interpretation-of-formulas} that
-    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \),
-    which is an abbreviation for \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \).
-    This means that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \) is true for all possible cases.
-    Since \( \delta \) is arbitrary, we conclude that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \).
-
-    \vspace{0.3cm}
-    \noindent
-    In other words, we have just proven that \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \) follows from the assumption that
-    \( \varphi \models \psi \), which establishes the converse.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-tautological-biconditional-implies-logical-equivalence}
-    Let \( \varphi \) and \( \psi \) be \( \mathcal{L} \)-formulas.
-    Then \( \varphi \equiv \psi \) if \( \models \mleft( \varphi {\iff} \psi \mright) \).
-\end{thm}
-
-\begin{proof}
-    Suppose that \( \models \mleft( \varphi {\iff} \psi \mright) \).
-    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure such that
-    \( \mathfrak{A} \models \varphi \).
-    \aref{dfn:first-order-language-tautology}{But since \( \models \mleft( \varphi {\iff} \psi \mright) \),
-    it follows that \( \mathfrak{A} \models \mleft( \varphi {\iff} \psi \mright) \)}.
-    Let \( \delta \) be a variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
-    Since \( \models \mleft( \varphi {\iff} \psi \mright) \), it follows that
-    \begin{align}
-        \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \varphi \,\,{\lor}\,\, \psi \mright)}{\delta} \phantomsection \label{eq:phi-implies-psi-is-satisfied-with-delta}\\
-        \folwffsatisfaction{\mathfrak{A}}{\mleft( \lnot \, \psi \,\,{\lor}\,\, \varphi \mright)}{\delta} \phantomsection \label{eq:psi-implies-phi-is-satisfied-with-delta}
-    \end{align}
-    are both true.
-    \aref{dfn:first-order-language-models-of-a-formula}{But \( \mathfrak{A} \models \varphi \) by our initial assumption, so necessarily
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta}\)}.
-    But \eqref{eq:phi-implies-psi-is-satisfied-with-delta} implies that either \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \)
-    and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is true.
-    But we already know that \( \folwffnonsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) is false.
-    Therefore, \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is necessarily true by \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism}.
-    Since \( \delta \) is an arbitrarilly chosen variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \),
-    it follows that \( \mathfrak{A} \) satisfies \( \psi \) with any variable translation function.
-    In other words, \( \mathfrak{A} \models \psi \). At this point, it has been established that \( \mathfrak{A} \models \psi \) follows from \( \mathfrak{A} \models \varphi \)
-    for any arbitrary structure \( \mathfrak{A} \), \aref{dfn:first-order-language-semantic-consequence}{which permits us to draw the conclusion that \( \varphi \models \psi \)}.
-
-    \vspace{0.3cm}
-    \noindent
-    The justification for \( \psi \models \varphi \) follows the exact same line of reasoning.
-    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure such that \( \mathfrak{A} \models \psi \).
-    Let \( \delta \) be an arbitrary variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
-    \aref{dfn:first-order-language-models-of-a-formula}{Since \( \mathfrak{A} \models \psi \), it follows that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\delta} \)}.
-    But \eqref{eq:psi-implies-phi-is-satisfied-with-delta} implies that either \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\delta} \) or
-    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \) is true.
-    Since \( \folwffnonsatisfaction{\mathfrak{A}}{\psi}{\delta} \) is impossible, we conclude by
-    \aref{rule-of-inference:disjunctive-syllogism}{Disjunctive Syllogism} that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\delta} \).
-    The truth of \( \psi \models \varphi \) follows readily from the fact that \( \delta \) and \( \mathfrak{A} \) are arbitrary.
-
-    \vspace{0.3cm}
-    \noindent
-    Since \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true, it follows from
-    \cref{dfn:first-order-language-logical-equivalence} that \( \varphi \equiv \psi \).
-\end{proof}
-
-\begin{rem}
-    The converse of \cref{thm:first-order-language-tautological-biconditional-implies-logical-equivalence} is not true unless \( \varphi \) and \( \psi \)
-    are \( \mathcal{L} \)-sentences.
-\end{rem}
-
-\begin{thm}
-    \phantomsection \label{thm:first-order-language-for-sentences-tautological-biconditional-iff-logically-equivalent}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-sentences, then \( \varphi \equiv \psi \) iff \( \models \mleft( \varphi {\iff} \psi \mright) \).
-\end{thm}
-
-\begin{proof}
-    Since all \( \mathcal{L} \)-sentences are \( \mathcal{L} \)-formulas, \cref{thm:first-order-language-tautological-biconditional-implies-logical-equivalence} clearly
-    applies and \( \models \mleft( \varphi {\iff} \psi \mright) \) implies \( \varphi \equiv \psi \).
-    To prove the converse, we begin with the supposition that \( \varphi \equiv \psi \);
-    that is, \aref{dfn:first-order-language-logical-equivalence}{ \( \varphi \models \psi \) and \( \psi \models \varphi \) are both true}.
-    But since \( \varphi \) and \( \psi \) are both \( \mathcal{L} \)-sentences, it follows from
-    \cref{thm:first-order-language-tautological-implication-implies-semantic-consequence} that
-    \( \models \mleft( \varphi {\implies} \psi \mright) \) and \( \models \mleft( \psi {\implies} \varphi \mright) \).
-
-    \vspace{0.3cm}
-    \noindent
-    Now let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure. Clearly, \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \)
-    and \( \mathfrak{A} \models \mleft( \psi {\implies} \varphi \mright) \) are both true since the two formulas are \aref{dfn:first-order-language-tautology}{tautologies}.
-    Let \( \function{\delta}{\folvars{\mathcal{L}}}{\abs{\mathfrak{A}}} \) be any variable translation function of \( \mathcal{L} \) under \( \mathfrak{A} \).
-    Since \( \mathfrak{A} \models \mleft( \varphi {\implies} \psi \mright) \) and \( \mathfrak{A} \models \mleft( \psi {\implies} \varphi \mright) \) are both true,
-    \aref{dfn:first-order-language-models-of-a-formula}{it follows that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \varphi {\implies} \psi \mright)}{\delta} \)
-    and \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \psi {\implies} \varphi \mright)}{\delta} \) are both true.}
-    In other words,
-    \begin{equation*}
-        \aref{dfn:first-order-language-interpretation-of-formulas}{ \folwffsatisfaction{\mathfrak{A}}{ \big(\mleft( \varphi {\implies} \psi \mright) \,\,{\land}\,\, \mleft( \psi {\implies} \varphi \mright)\big)}{\delta}}
-    \end{equation*}
-    for any variable translation function \( \delta \), which is equivalent to \( \mathfrak{A} \models \mleft( \varphi {\iff} \psi \mright) \).
-    Since \( \mathfrak{A} \) is an arbitrary \( \mathcal{L} \)-structure, it follows that \( \varphi {\iff} \psi \) can be satisfied by any \( \mathcal{L} \)-structure;
-    that is, \( \models \mleft( \varphi {\iff} \psi \mright) \).
-\end{proof}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
