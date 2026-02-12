@@ -620,7 +620,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         \iff
         \exists x \, \mleft( x \in \Union S \land \orderedpair{x}{y_{0}} \in R \mright)
     \end{equation}
-    The laws of elementary logic (\cref{tautology:grouping-conjuncts-into-existentially-quantified-formula})
+    The laws of elementary logic (\cref{logical-equivalence:grouping-conjuncts-into-quantified-formula})
     can then be applied to transform \eqref{eq:initial-statement-for-the-image-of-union-S-under-R}
     into a series of equivalent formulas:
     \begin{align}
@@ -648,7 +648,7 @@ next two theorems, which describe the sufficient conditions for the existence of
         \iff
         \exists t \, \Big( \exists z \, \big( z \in S \land t = \imageSet{R}{z} \big) \land y_{0} \in t \Big)
     \end{equation*}
-    Using \cref{tautology:grouping-conjuncts-into-existentially-quantified-formula}, the formula becomes,
+    Using \cref{logical-equivalence:grouping-conjuncts-into-quantified-formula}, the formula becomes,
     \begin{equation*}
         y_{0} \in \Union T
         \iff
@@ -1104,7 +1104,7 @@ obeys certain laws.
         \label{eq:A-cross-B-equals-empty-final-statement}
         \mleft( A \times B = \emptyset \mright) \iff \forall x,y \, \varphi(a,b) \iff \forall x,y \, \mleft( x \notin A \lor y \notin B \mright)
     \end{equation}
-    Using \cref{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}, we can simplify \eqref{eq:A-cross-B-equals-empty-final-statement}
+    Using \cref{logical-equivalence:grouping-disjuncts-into-quantified-formula}, we can simplify \eqref{eq:A-cross-B-equals-empty-final-statement}
     even further.
     \begin{align*}
         \mleft( A \times B = \emptyset \mright)

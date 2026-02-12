@@ -113,7 +113,6 @@ Fortunately, the syntax (grammar) of first-order languages is relatively straigh
 In first-order languages, the most basic unit of grammar is formulas---analogous to
 clauses in natural languages. But just as clauses are composed of existing words (verbs, nouns, etc.) in a natural language,
 formulas are also composed of smaller units called \emph{terms}.
-As such, any comprehensive definition of the grammar of a first-order language must begin with a precise definition of what a `term' means in that language.
 
 \begin{dfn}[Terms]
     \phantomsection \label{dfn:first-order-language-construction-of-terms}
@@ -134,7 +133,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \end{dfn}
 
 \begin{rem}
-    Note that the complexity of a term counts the number of \emph{occurrences} of function symbols with zero arity, not just the number of such function symbols occurring
+    Note that the complexity of a term counts the number of \emph{occurrences} of function symbols with non-zero arity, not just the number of such function symbols occurring
     in \( t \). For instance, a term \( F(G(x), G(y)) \) has a complexity of \( 3 \) not \( 2 \) even though only two function symbols occurred in it in total.
     The function symbol \( G \) needs to be counted twice.
 \end{rem}
@@ -142,6 +141,12 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \begin{cor}
     \phantomsection \label{cor:first-order-language-every-term-has-finite-complexity}
     If \( t \) is an \( \mathcal{L} \)-term, then \( \folcomplexityofterm{t} \in \naturalset \).
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-terms-with-zero-complexity-is-either-a-variable-or-0-ary-function-symbol}
+    If \( t \) is an \( \mathcal{L} \)-term and \( \folcomplexityofterm{t} = 0 \), then either \( t \) comprises of a single \( \mathcal{L} \)-variable
+    or \( t \) has the form \( F^{\mathcal{L}}_{i}() \) for some \( i \in \dom F^{\mathcal{L}} \) such that \( \Phi^{\mathcal{L}}(i) = 0 \).
 \end{cor}
 
 \begin{cor}
@@ -170,7 +175,7 @@ As such, any comprehensive definition of the grammar of a first-order language m
     Then we say that \( s \) is a \keyword{subterm} of \( t \) (denoted as \( s \folsubterm t \))
     if and only if the following conditions are met:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) and \( \tau \) is a tuple of \( \mathcal{L} \)-terms
+        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
             such that \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \neq 0 \)
         \item \( s \in \ran \tau \) or \( s \folsubterm r \) for some \( r \in \ran \tau \)
     \end{enumerate}
@@ -237,14 +242,14 @@ As such, any comprehensive definition of the grammar of a first-order language m
 \begin{dfn}[Complexity]
     \phantomsection \label{dfn:first-order-language-complexity-of-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula, then the \keyword{complexity} of \( \varphi \) (denoted as \( \folcomplexityofformula{\varphi} \))
-    is the total number of syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
+    is the total number of applications of syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
     More precisely:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \coloneq \mleft( \psi \mright) \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
         \item If \( \varphi \coloneq \mleft[ \,\psi\, \mright] \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
         \item If \( \varphi \coloneq \lnot \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
-        \item If \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} \)
-        \item If \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} \)
+        \item If \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} + 1 \)
+        \item If \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} + 1 \)
         \item If \( \varphi \coloneq \forall x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
         \item If \( \varphi \coloneq \exists x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
     \end{enumerate}
@@ -496,8 +501,6 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     The tuple \( \tuple{\mathfrak{A}, \mathfrak{a}} \) is called an \keyword{interpretation} of \( \varphi \) since it contains all the information needed to
     interpret \( \varphi \).
 \end{dfn}
-
-
 
 \begin{lem}
     \phantomsection \label{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
@@ -760,18 +763,18 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 
 \begin{thm}
     \phantomsection \label{thm:first-order-language-replacing-variable-symbols-of-term-with-new-ones-does-not-affect-interpretation-with-modified-assignment-function}
-    Let \( t \) be any \( \mathcal{L} \)-term. If \( x \) and \( y \) denote two \( \mathcal{L} \)-variables such that \( x \in \folvars{t} \)
-    and \( y \notin \folvars{t} \) and \( t_{\ast} \) denotes the \( \mathcal{L} \)-term obtained after replacing all occurrences of \( x \) in \( t \)
+    Let \( t \) be any \( \mathcal{L} \)-term. If \( x \) and \( y \) are two \( \mathcal{L} \)-variables such that \( x \in \folvars{t} \)
+    and \( y \notin \folvars{t} \) and \( t_{\ast} \) denotes the \( \mathcal{L} \)-term obtained after every occurrence of \( x \) in \( t \) has been replaced
     with \( y \), then \( \folterminterpretation{t}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e} } =
     \folterminterpretation{t_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e} } \) for all \( \mathcal{L} \)-structure \( \mathfrak{A} \),
     variable assignment function \( \mathfrak{a} \), and \( e \in \abs{\mathfrak{A}} \).
 \end{thm}
 
 \begin{proof}
-    Since every \( \mathcal{L} \)-term has finite complexity, we can prove the lemma inductively. Let \( P(n) \) be a statement about a natural number \( n \)
-    with the following definition: for all \( \mathcal{L} \)-term \( t \) such that \( \folcomplexityofterm{t} = n \) and any two \( \mathcal{L} \)-variables \( x \) and \( y \)
-    such that \( x \in \folvars{t} \) and \( y \notin \folvars{t} \), if \( t_{\ast} \) denotes the \( \mathcal{L} \)-term obtained by replacing all occurrences of \( x \)
-    in \( t \) with \( y \), then \( \folterminterpretation{t}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e} } =
+    Since every \( \mathcal{L} \)-term has finite complexity, we can prove the lemma inductively. Let \( P(n) \) be the following statement about any natural number \( n \):
+    for all \( \mathcal{L} \)-term \( t \) such that \( \folcomplexityofterm{t} = n \) and any two \( \mathcal{L} \)-variables \( x \) and \( y \)
+    such that \( x \in \folvars{t} \) and \( y \notin \folvars{t} \), if \( t_{\ast} \) denotes the \( \mathcal{L} \)-term obtained after every occurrence of \( x \)
+    in \( t \) has been replaced with \( y \), then \( \folterminterpretation{t}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e} } =
     \folterminterpretation{t_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e} } \) for all \( \mathcal{L} \)-structure \( \mathfrak{A} \),
     variable assignment function \( \mathfrak{a} \), and \( e \in \abs{\mathfrak{A}} \).
     We now state our induction hypothesis for an arbitrary \( n \in \naturalset \).
@@ -788,7 +791,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \vspace{0.3cm}
     \noindent
     {\scshape Case} \( n = 0 \):
-    Clearly, \( t \) consists solely of the variable symbol \( x \)
+    In this case, \( t \) consists solely of the variable symbol \( x \)
     (\( t \) cannot have the form \( F^{\mathcal{L}}_{i}() \) because \( x \in \folvars{t} \) by our initial assumption).
     Therefore, \( t_{\ast} \) must consist solely of the variable symbol \( y \). Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure
     and \( \mathfrak{a} \) be any variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \). Let \( e_{0} \) be any
@@ -813,7 +816,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
             (\tau_{j})_{\ast} &\text{if} \ x \in  \folvars{\tau_{j}}
         \end{cases}
     \end{equation*}
-    for all \( k \in \dom \tau \). Now let \( \mathfrak{B} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{b} \) be a variable assignment function
+    for all \( j \in \dom \tau \). Now let \( \mathfrak{B} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{b} \) be a variable assignment function
     of \( \mathcal{L} \) under \( \mathfrak{B} \). Let \( e_{1} \) be any element of \( \abs{\mathfrak{B}} \).
     By \cref{dfn:first-order-language-interpretation-of-terms}, it follows that
     \begin{align*}
@@ -831,7 +834,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     Let \( j \in \dom \tau \) be arbitrary. Since \( x \in \folvars{t} \) by our initial assumption, it follows that either \( x \in \folvars{\tau_{j}} \) or
     \( x \notin \folvars{\tau_{j}} \). If \( x \notin \folvars{\tau_{j}} \), then clearly \( \sigma_{j} = \tau_{j} \) so that
     \( \folvars{\sigma_{j}} = \folvars{\tau_{j}} \); i.e., they are literally the same term.
-    Since \( y \notin \folvars{\tau_{j}} \), it is also necessary that \( y \notin \folvars{\tau_{j}} \).
+    Since \( y \notin \folvars{t} \), it is also necessary that \( y \notin \folvars{\tau_{j}} \).
     Consequently,
     \begin{equation*}
         \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} }{ \folvars{\tau_{j}} }
@@ -839,11 +842,12 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \end{equation*}
     Since \( \sigma_{j} = \tau_{j} \), necessarily
     \( \folterminterpretation{\tau_{j}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } =
-    \folterminterpretation{\sigma_{j}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} } \).
+    \folterminterpretation{\sigma_{j}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} } \)
+    by \cref{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}.
     
     \vspace{0.3cm}
     \noindent
-    On the other hand, if \( x \in \folvars{\tau_{j}} \). Then \( \sigma_{j} = (\tau_{j})_{\ast} \).
+    On the other hand, if \( x \in \folvars{\tau_{j}} \), then \( \sigma_{j} = (\tau_{j})_{\ast} \).
     By \cref{dfn:first-order-language-subterms}, it follows that \( \tau_{j} \) is a subterm of \( t \).
     But \( \folcomplexityofterm{\tau_{j}} < n \) by \cref{cor:first-order-language-the-complexity-of-a-subterm-is-less-than-the-complexity-of-the-parent-term},
     which means that the induction hypothesis applies to \( \tau_{j} \).
@@ -854,12 +858,18 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     \vspace{0.3cm}
     \noindent
     The above analysis proves that the two sequences in \eqref{eq:two-internal-sequences-are-equal} have the same value for all \( j \in \dom \tau \).
-    This suffices to establish \eqref{eq:two-internal-sequences-are-equal}. 
+    This suffices to establish \eqref{eq:two-internal-sequences-are-equal}, which in turn guarantees that
+    \( \folterminterpretation{t}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } =
+    \folterminterpretation{t_{\ast}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} }\).
 
     \vspace{0.3cm}
     \noindent
-    We have thus proven that the induction hypothesis implies \( P(n) \).
-    Since \( n \in \naturalset \) is arbitrary, the theorem follows from strong induction.
+    We have thus proven that \( \folterminterpretation{t}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } =
+    \folterminterpretation{t_{\ast}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} }\)
+    for any \( \mathcal{L} \)-term \( t \) with a complexity of \( n \). Since \( \mathfrak{B} \), \( \mathfrak{b} \), and \( e_{1} \in \abs{\mathfrak{B}} \)
+    are arbitrary, we conclude that \( P(n) \) holds.
+    Put simply, \( P(n) \) follows from the induction hypothesis for an arbitrary \( n \in \naturalset \).
+    The theorem follows readilly from strong induction.
 \end{proof}
 
 \newpage
@@ -868,7 +878,8 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 The notion of satisfaction can be used to define the logical relationship between formulas; specifically the notions of
 logical consequence and logical equivalence.
 Informally, if a formula \( \varphi \) is a logical consequence of another formula \( \psi \) (or a set of formulas), then \( \varphi \)
-is implied by \( \psi \) for all possible interpretations; that is, the implication holds by virtue of the logical form of the formulas alone.
+is implied by \( \psi \) for all possible interpretations in all possible structures; that is, the implication holds by virtue of the logical form of the formulas alone and
+not the interpretation.
 
 \begin{dfn}[Logical Consequence]
     \phantomsection \label{dfn:first-order-language-logical-consequence}
@@ -959,7 +970,7 @@ We now prove some basic properties involving the \( \models \) and \( \equiv \) 
     and \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \).
     Thus, \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \varphi \,\,{\land}\,\, \psi \mright)}{\mathfrak{b}} \)
     by \cref{dfn:first-order-language-satisfaction-of-formulas}.
-    Since \( \mathfrak{B} \) and \( \mathfrak{a} \) are arbitrary, we conclude that \( \varphi \,\,{\land}\,\, \psi \) is a tautology.
+    Since \( \mathfrak{B} \) and \( \mathfrak{b} \) are arbitrary, we conclude that \( \varphi \,\,{\land}\,\, \psi \) is a tautology.
 \end{proof}
 
 \begin{thm}
@@ -1481,6 +1492,73 @@ We now have enough theoretical foundation to start proving many of the familiar 
     The proof for the converse is nearly identical, so we will omit it for brevity.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{logical-equivalence:quantification-of-a-formula-with-a-non-free-variable-is-equivalent-to-the-original-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folfreevars{\varphi} \),
+    then the following hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \varphi \equiv \forall x \, \varphi \)
+        \item \( \varphi \equiv \exists x \, \varphi \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) holds.
+    Let \( e_{0} \in \abs{\mathfrak{A}} \) be arbitrary.
+    Since \( x \notin \folfreevars{\varphi} \), it follows that
+    \begin{equation*}
+        \restrictedfunction{ \mathfrak{a} }{ \folfreevars{\varphi} } =
+        \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} }{ \folfreevars{\varphi} }
+    \end{equation*}
+    Since \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) holds, it follows from
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}
+    that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) also holds.
+    From this we arrive at two conclusions:
+    \begin{enumerate*}[label=(\roman*)]
+        \item since \( e_{0} \) denotes an arbitrary element of \( \abs{\mathfrak{A}} \), we conclude that
+            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e} } \) is true for all \( e \in \abs{\mathfrak{A}} \);
+        \item since \( \abs{\mathfrak{A}} \neq \emptyset \), we conclude that there exists some \( e_{0} \) such that
+            \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \).
+    \end{enumerate*}
+    In other words, \( \varphi \models \forall x \, \varphi \) and \( \varphi \models \exists x \, \varphi \) are both true.
+
+    \vspace{0.3cm}
+    \noindent
+    The converse can be proven in a similar manner.
+    Let \( \mathfrak{B} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{b} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{B} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \forall x \, \varphi \mright)}{\mathfrak{b}} \) holds.
+    Recall that mathematical structures must have non-empty universes. Therefore, it follows that \( \abs{\mathfrak{B}} \neq \emptyset \) and that
+    there exists an \( e_{1} \) such that \( e_{1} \in \abs{\mathfrak{B}} \).
+    Furthermore, since \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \forall x \, \varphi \mright)}{\mathfrak{b}} \) holds,
+    \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \) must be true
+    by \cref{dfn:first-order-language-satisfaction-of-formulas}.
+    But \( x \notin \folfreevars{\varphi} \), so necessarily
+    \begin{equation*}
+        \restrictedfunction{ \mathfrak{b} }{ \folfreevars{\varphi} } =
+        \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} }{ \folfreevars{\varphi} }
+    \end{equation*}
+    Since \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \) holds,
+    \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{\mathfrak{b}} \) is necessarily true by
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}.
+    Therefore, \( \forall x \, \varphi \models \varphi \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \mathfrak{C} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{c} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{C} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{C}}{\mleft( \exists x \, \varphi \mright)}{\mathfrak{c}} \); i.e., there exists an \( e_{2} \in \abs{\mathfrak{C}} \)
+    such that \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } \) holds.
+    Again, since \( x \notin \folfreevars{\varphi} \), we have
+    \begin{equation*}
+        \restrictedfunction{ \mathfrak{c} }{ \folfreevars{\varphi} } =
+        \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} }{ \folfreevars{\varphi} }
+    \end{equation*}
+    Since \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } \) holds,
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}
+    guarantees that \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{\mathfrak{c}} \) is also true.
+    Thus, \( \exists x \, \varphi \models \varphi \).
+\end{proof}
+
 \begin{thm}[Substitution Theorem]
     \phantomsection \label{logical-equivalence:substitution-theorem}
     Let \( \psi \), \( \psi^{\prime} \), and \( \varphi \) denote \( \mathcal{L} \)-formulas.
@@ -1704,21 +1782,22 @@ We now have enough theoretical foundation to start proving many of the familiar 
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{logical-equivalence:changing-free-variables-does-not-affect-universal-quantification}
-    If \( \varphi \) is any \( \mathcal{L} \)-formula such that \( x \in \folfreevars{\varphi} \) and \( y \notin \folfreevars{\varphi} \)
+    \phantomsection \label{logical-equivalence:changing-free-variables-does-not-affect-quantification}
+    If \( \varphi \) is any \( \mathcal{L} \)-formula such that \( x \in \folfreevars{\varphi} \) and \( y \notin \folvars{\varphi} \)
     for \( \mathcal{L} \)-variables \( x \) and \( y \) and \( \varphi^{\prime} \) is the \( \mathcal{L} \)-formula obtained by replacing all
-    free occurrences of \( x \) in \( \varphi \) with \( y \), then
-    \begin{equation*}
-        \forall x \, \varphi \equiv \forall y \, \varphi^{\prime}
-    \end{equation*}
+    free occurrences of \( x \) in \( \varphi \) with \( y \), then the following hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \forall x \, \varphi \equiv \forall y \, \varphi^{\prime} \) \phantomsection \label{enum:variable-change-for-universal-quantifier}
+        \item \( \exists x \, \varphi \equiv \exists y \, \varphi^{\prime} \) \phantomsection \label{enum:variable-change-for-existential-quantifier}
+    \end{enumerate}
 \end{thm}
 
 \begin{proof}
-    We proceed by induction on the complexity of formulas. First, we define a statement \( P(n) \) as follows:
-    for all \( \mathcal{L} \)-formula \( \varphi \) such that \( \folcomplexityofformula{\varphi} = n \)
-    and \( x \in \folfreevars{\varphi} \) for some \( \mathcal{L} \)-variable \( x \),
-    if \( y \) is an \( \mathcal{L} \)-variable such that \( y \notin \folfreevars{\varphi} \) and
-    \( \varphi^{\prime} \) is the formula obtained by replacing every free occurrence of \( x \) with \( y \),
+    We prove \ref{enum:variable-change-for-universal-quantifier} by induction on the complexity of formulas.
+    First, we define a statement \( P(n) \) as follows:
+    for all \( \mathcal{L} \)-formula \( \varphi \) such that \( \folcomplexityofformula{\varphi} = n \),
+    if \( x \) is an \( \mathcal{L} \)-variable such that \( x \in \folfreevars{\varphi} \), \( y \) is an \( \mathcal{L} \)-variable such that \( y \notin \folvars{\varphi} \),
+    and \( \varphi^{\prime} \) is the formula obtained by replacing every free occurrence of \( x \) in \( \varphi \) with \( y \),
     then \( \forall x \, \varphi \equiv \forall y \, \varphi^{\prime} \).
     Let \( n \in \naturalset \) be arbitrary. We now state the following hypothesis for \( n \).
 
@@ -1728,34 +1807,264 @@ We now have enough theoretical foundation to start proving many of the familiar 
 
     \vspace{0.3cm}
     \noindent
-    Let \( \varphi \) be any \( \mathcal{L} \)-formula with complexity \( n \) such that \( x \in \folfreevars{\varphi} \) and \( y \notin \folfreevars{\varphi} \) for
-    \( \mathcal{L} \)-variables \( x \) and \( y \).
-    Moreoever, let \( \varphi^{\prime} \) be the formula obtained after every free occurrence of \( x \) in \( \varphi \) has been replaced with \( y \).
+    Let \( \varphi \) be any \( \mathcal{L} \)-formula such that \( \folcomplexityofformula{\varphi} = n \).
+    Let \( x \) and \( y \) denote \( \mathcal{L} \)-variables such that \( x \in \folfreevars{\varphi} \) and \( y \notin \folvars{\varphi} \).
+    Moreover, let \( \varphi^{\prime} \) be the formula obtained after every free occurrence of \( x \) in \( \varphi \) has been replaced with \( y \).
+    Then we introduce the following notation.
+    \begin{equation*}
+        \begin{aligned}
+            &\phi\\
+            &\phi^{\prime}
+        \end{aligned}
+        \begin{aligned}
+            &\coloneq \forall x \, \varphi\\
+            &\coloneq \forall y \, \varphi^{\prime}
+        \end{aligned}
+    \end{equation*}
     Since \( n \in \naturalset \), there are only two cases to consider: either \( n = 0 \) or \( n \neq 0 \).
 
     \vspace{0.3cm}
     \noindent
     {\scshape Case:} \( n = 0 \).
-
-    \vspace{0.1cm}
-    \noindent
-    \aref{cor:first-order-language-only-atoms-can-have-zero-complexity}{Clearly \( \varphi \) must be an atom of \( \mathcal{L} \)}.
+    Clearly, \aref{cor:first-order-language-only-atoms-can-have-zero-complexity}{\( \varphi \) must be an atom of \( \mathcal{L} \)}.
     Therefore, either \( \varphi \coloneq s = t \) where \( s \) and \( t \) are \( \mathcal{L} \)-terms or
     \( \varphi \coloneq P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
     such that \( \dom \tau = \Pi^{\mathcal{L}}(i) \).
     If \( \varphi \) takes the first form, then \( \varphi^{\prime} \coloneq s_{\ast} = t_{\ast} \) where
-    \( s_{\ast} \) and \( t_{\ast} \) are the terms obtained after every occurrence of \( x \) in \( s \) and \( t \) respectively has been replaced with \( y \).
-    We infer from this two non-trivial facts:
+    \( s_{\ast} \) and \( t_{\ast} \) are terms defined as follows:
     \begin{equation}
-        \begin{aligned}
-            \folvars{s_{\ast}} &= \\
-            \folvars{t_{\ast}} &=
-        \end{aligned}
-        \begin{aligned}
-            &\mleft( \folvars{s} - \mleft\{ x \mright\} \mright) \union \mleft\{ y \mright\}\\
-            &\mleft( \folvars{t} - \mleft\{ x \mright\} \mright) \union \mleft\{ y \mright\}
-        \end{aligned}
+        \label{eq:definitions-of-s-star-and-t-star}
+        s_{\ast} = 
+        \begin{cases}
+            s \ &\text{if} \ x \notin \folvars{s}\\
+            s^{\prime} &\text{if} \ x \in \folvars{s}
+        \end{cases}
+        \qquad
+        t_{\ast} = 
+        \begin{cases}
+            t \ &\text{if} \ x \notin \folvars{t}\\
+            t^{\prime} &\text{if} \ x \in \folvars{t}
+        \end{cases}
     \end{equation}
+    Note that \( s^{\prime} \) and \( t^{\prime} \) are the terms obtained from \( s \) and \( t \) respectively by replacing the variable symbol \( x \)
+    (when it does occur) with \( y \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Now let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be any variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \).
+    We now verify that \( \folwffsatisfaction{\mathfrak{A}}{\phi^{\prime}}{\mathfrak{a}} \) does indeed follow from that supposition.
+    Let \( e_{0} \in \abs{\mathfrak{A}} \) be arbitrary.
+    By \eqref{eq:definitions-of-s-star-and-t-star},
+    \cref{thm:first-order-language-replacing-variable-symbols-of-term-with-new-ones-does-not-affect-interpretation-with-modified-assignment-function,lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}, we have in all possible cases
+    \begin{align*}
+        \folterminterpretation{s}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } =
+        \folterminterpretation{s_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }\\
+        \folterminterpretation{t}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } =
+        \folterminterpretation{t_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }
+    \end{align*}
+    Since \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \),
+    necessarily \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \).
+    By \cref{dfn:first-order-language-interpretation-of-terms}, it thus follows that
+    \( \folterminterpretation{s}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } =
+    \folterminterpretation{t}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) and therefore
+    \( \folterminterpretation{s_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} } =
+     \folterminterpretation{t_{\ast}}{\mathfrak{A}}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }\).
+    But the latter equality implies \( \folwffsatisfaction{\mathfrak{A}}{ \varphi^{\prime} }{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} } \),
+    and since \( e_{0} \) is arbitrary, we conclude that \( \folwffsatisfaction{\mathfrak{A}}{\phi^{\prime}}{\mathfrak{a}} \).
+    Thus, \( \phi \models \phi^{\prime} \).
+    The proof for the converse uses the same argument, only in reverse.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \varphi \) takes the second form, then clearly \( \varphi^{\prime} = P^{\mathcal{L}}_{i}(\sigma) \) where \( \sigma \) is a sequence of \( \mathcal{L} \)-terms
+    such that \( \dom \sigma = \dom \tau \) and
+    \begin{equation}
+        \phantomsection \label{eq:sigma-tuple-of-modified-terms}
+        \sigma_{j} =
+        \begin{cases}
+            \tau_{j} \ &\text{if} \ x \notin \folvars{\tau_{j}}\\
+            \tau_{j}^{\prime} \ &\text{if} \ x \in \folvars{\tau_{j}}
+        \end{cases}
+    \end{equation}
+    for all \( j \in \dom \tau \) where \( \tau_{j}^{\prime} \) is the term obtained from \( \tau_{j} \) after replacing all occurrences of \( x \)
+    (if it does occur) with \( y \).
+    Now let \( \mathfrak{B} \) be an arbitrary \( \mathcal{L} \)-structure and \( \mathfrak{b} \) be any variable assignment function of \( \mathcal{L} \)
+    under \( \mathfrak{B} \).
+    Furthermore, suppose that \( \folwffsatisfaction{\mathfrak{B}}{\phi}{\mathfrak{b}} \).
+    We now examine whether \( \folwffsatisfaction{\mathfrak{B}}{\phi^{\prime}}{\mathfrak{b}} \) also follows from that supposition.
+    Let \( e_{1} \) be an arbitrary element of \( \abs{\mathfrak{B}} \).
+    Observe that
+    \begin{equation}
+        \phantomsection \label{eq:terms-in-a-sequence-have-same-interpreted-values}
+        \folterminterpretation{\tau_{j}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } =
+        \folterminterpretation{\sigma_{j}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} }
+    \end{equation}
+    for all \( j \in \dom \tau \)
+    due to \cref{thm:first-order-language-replacing-variable-symbols-of-term-with-new-ones-does-not-affect-interpretation-with-modified-assignment-function,lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}.
+    Since \( \folwffsatisfaction{\mathfrak{B}}{\phi}{\mathfrak{b}} \), it follows that
+    \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \).
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, this implies that
+    \begin{equation}
+        \phantomsection \label{eq:sequence-belongs-to-predicate-set}
+        \sequencebig{ \folterminterpretation{\tau_{m}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } }{ m \in \dom \tau }
+        \in P^{\mathfrak{B}}_{i}
+    \end{equation}
+    Together, \eqref{eq:terms-in-a-sequence-have-same-interpreted-values} and \eqref{eq:sequence-belongs-to-predicate-set} implies
+    \begin{equation*}
+        \sequence{ \folterminterpretation{\sigma_{m}}{\mathfrak{B}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} } }{ m \in \dom \tau }
+        \in P^{\mathfrak{B}}_{i}
+    \end{equation*}
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, it follows that
+    \( \folwffsatisfaction{\mathfrak{B}}{\varphi^{\prime}}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{1}} } \) holds.
+    Since \( e_{1} \) is an arbitrary element of \( \abs{\mathfrak{B}} \), we further deduce that \( \folwffsatisfaction{\mathfrak{B}}{\phi^{\prime}}{\mathfrak{b}} \)
+    holds.
+    Given that \( \mathfrak{B} \) and \( \mathfrak{b} \) are arbitrary, we conclude that \( \phi \models \phi^{\prime} \).
+    The converse can be proven using the same argument but done in reverse.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( n \neq 0 \).
+    In this case, \( \varphi \) must have one of the forms stated in \cref{cor:first-order-language-every-formula-with-non-zero-complexity-can-be-decomposed}.
+    If \( \varphi \coloneq \mleft( \psi \mright) \) for some formula \( \psi \), then obviously \( \varphi^{\prime} \coloneq \mleft( \psi^{\prime} \mright) \)
+    with \( \psi^{\prime} \) being the formula obtained after every occurrence of \( x \) in \( \psi \) has been replaced with \( y \).
+    Next, observe that \( \folfreevars{\varphi} = \folfreevars{\psi} \).
+    Since \( x \in \folfreevars{\varphi} \) and \( y \notin \folvars{\varphi} \) by our initial assumption, it follows
+    that \( x \in \folfreevars{\psi} \) and \( y \notin \folvars{\psi} \).
+    Also, \( \psi \) is a subformula of \( \varphi \) so that \( \folcomplexityofformula{\psi} < n \).
+    Thus, the induction hypothesis applies to \( \psi \), so \( \psi \equiv \psi^{\prime} \).
+    By \cref{logical-equivalence:parenthesized-formulas-are-logically-equivalent} and
+    the \aref{thm:first-order-language-transitivity-of-logical-consequence-and-equivalence}{transitivity of \( \equiv \)},
+    we conclude that \( \varphi \equiv \mleft( \psi \mright) \equiv \psi \equiv \psi^{\prime} \equiv \mleft( \psi^{\prime} \mright) \equiv \varphi^{\prime} \).
+    If \( \varphi \coloneq \mleft[ \,\psi\, \mright] \) or \( \varphi \coloneq \lnot \, \psi \), the proof is similar.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \varphi \coloneq \psi \,\,{\land}\,\, \theta \), then \( \varphi^{\prime} \coloneq \psi^{\prime} \,\,{\land}\,\, \theta^{\prime} \)
+    where \( \psi^{\prime} \) and \( \theta^{\prime} \) are the formulas obtained after every free occurrence of \( x \) in \( \psi \) and \( \theta \)
+    (respectively) has been replaced with \( y \). Note that it is possible in this case for the \( \mathcal{L} \)-variable \( x \) to not occur
+    in either \( \psi \) or \( \theta \) (but not both!).
+    For instance, if \( x \notin \folfreevars{\psi} \), then \( \psi^{\prime} \) is simply \( \psi \).
+    Since \( \psi \) and \( \theta \) are both subformulas of \( \varphi \), it follows from \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula} that \( \folcomplexityofformula{\psi} < n \) and \( \folcomplexityofformula{\theta} < n \).
+    The induction hypothesis then guarantees that \( \psi \equiv \psi^{\prime} \) and \( \theta \equiv \theta^{\prime} \); and
+    \( \varphi \equiv \varphi^{\prime} \) follows immediately from \cref{logical-equivalence:replacing-logically-equivalent-conjuncts-or-disjuncts-yields-logically-equivalent-conjunctions-and-disjunctions}.
+    If \( \varphi \) has the form \( \psi \,\,{\lor}\,\, \theta \), then the same argument can be used to establish \( \varphi \equiv \varphi^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next we consider the case where \( \varphi \coloneq \forall z \, \psi \) for some \( \mathcal{L} \)-formula \( \psi \) and \( \mathcal{L} \)-variable \( z \).
+    Note that \( z \neq x \); otherwise, \( x \) would not be a free variable of \( \varphi \), which contradicts our initial assumption that \( x \in \folfreevars{\varphi} \).
+    Similarly, \( z \neq y \) because \( y \notin \folvars{\varphi} \) by our initial assumption;
+    i.e., \( y \) cannot even be a bound variable of \( \varphi \) and \( z \) is clearly a bound variable of \( \varphi \).
+    We can immediately infer from the syntactic form of \( \varphi \) that \( \varphi^{\prime} \coloneq \forall z \, \psi^{\prime} \) where \( \psi^{\prime} \)
+    is the formula obtained after every free occurrence of \( x \) in \( \psi \) has been replaced with \( y \).
+    Once again, we have \( \folcomplexityofformula{\psi} < n \) because \( \psi \) is a subformula of \( \varphi \).
+    Furthermore, \( x \in \folfreevars{\psi} \) and \( y \notin \folvars{\psi} \) because \( \folfreevars{\varphi} = \folfreevars{\psi} \)
+    and \( \folvars{\psi} \subseteq \folvars{\varphi} \).
+    From these conditions, we come to the conclusion that the induction hypothesis is applicable for \( \psi \).
+    Therefore, \( \psi \equiv \psi^{\prime} \).
+    By \cref{logical-equivalence:replacing-logically-equivalent-formulas-in-quantified-formulas-yields-logically-equivalent-formulas}, it follows that
+    \( \varphi \equiv \varphi^{\prime} \).
+    This argument also applies to the case where \( \varphi \coloneq \exists z \, \psi \).
+
+    \vspace{0.3cm}
+    \noindent
+    It has therefore been shown that \( \varphi \equiv \varphi^{\prime} \) is true in all possible scenarios.
+    Since \( \varphi \) denotes an arbitrary \( \mathcal{L} \)-formula with complexity \( n \), it follows that \( P(n) \) holds whenever
+    the induction hypothesis is true.
+    By the principle of strong induction, we therefore conclude that \( P(n) \) holds for all \( n \in \naturalset \), which suffices to establish \ref{enum:variable-change-for-universal-quantifier}.
+
+    \vspace{0.3cm}
+    \noindent
+    Proving \ref{enum:variable-change-for-existential-quantifier} requires a similar inductive proof.
+    Start by defining a statement \( Q(n) \) about an arbitrary \( n \in \naturalset \) as follows:
+    for all \( \mathcal{L} \)-formula \( \varphi \) such that \( \folcomplexityofformula{\varphi} = n \),
+    if \( x \) is an \( \mathcal{L} \)-variable such that \( x \in \folfreevars{\varphi} \), \( y \)
+    is an \( \mathcal{L} \)-variable such that \( y \notin \folvars{\varphi} \), and \( \varphi^{\prime} \)
+    is the formula obtained by replacing every free occurrence of \( x \) in \( \varphi \) with \( y \), then
+    \( \exists x \, \varphi \equiv \exists y \, \varphi^{\prime} \).
+    Let \( n \) be an arbitrary element of \( \naturalset \). We now state the induction hypothesis for \( n \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Induction Hypothesis}: \( Q(k) \) is true for all \( k < n \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \varphi \) denote any \( \mathcal{L} \)-formula with complexity \( n \).
+    Let \( x \) and \( y \) denote \( \mathcal{L} \)-variables such that \( x \in \folfreevars{\varphi} \) and \( y \notin \folvars{\varphi} \).
+    Let \( \varphi^{\prime} \) be the formula obtained after every free occurrence of \( x \) in \( \varphi \) has been replaced with \( y \).
+    For the remainder of the proof, we will redefine the symbols \( \phi \) and \( \phi^{\prime} \) as follows:
+    \begin{equation*}
+        \begin{aligned}
+            &\phi\\
+            &\phi^{\prime}
+        \end{aligned}
+        \begin{aligned}
+            &\coloneq \exists x \, \varphi\\
+            &\coloneq \exists y \, \varphi^{\prime}
+        \end{aligned}
+    \end{equation*}
+    Again, we must consider the only two possible scenarios.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( n = 0 \). In this case, \( \varphi \) must be an atom of \( \mathcal{L} \),
+    which means that it either has the form \( s = t \) where \( s \) and \( t \)
+    are \( \mathcal{L} \)-terms or it has the form \( P^{\mathcal{L}}_{i}(\tau) \).
+    If \( \varphi \coloneq s = t \), then clearly \( x \) can only occur in the terms \( s \) and \( t \).
+    Replacing all instances of \( x \) with \( y \) therefore entails the terms \( s \) and \( t \) to be replaced with new ones.
+    In other words, \( \varphi^{\prime} \coloneq s_{\ast} = t_{\ast} \) where \( s_{\ast} \) and \( t_{\ast} \) are defined as in
+    \eqref{eq:definitions-of-s-star-and-t-star}.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \mathfrak{C} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{c} \) be any variable assignment function of \( \mathcal{L} \) under \( \mathfrak{C} \).
+    Moreover, suppose that \( \folwffsatisfaction{\mathfrak{C}}{\phi}{\mathfrak{c}} \).
+    This means that there exists some \( e_{2} \in \abs{\mathfrak{C}} \) such that
+    \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } \) holds; that is,
+    \begin{equation*}
+        \folterminterpretation{s}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } =
+        \folterminterpretation{t}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} }
+    \end{equation*}
+    But \( \folterminterpretation{s}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } =
+        \folterminterpretation{s_{\ast}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{2}} } \)
+    and \( \folterminterpretation{t}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{2}} } =
+        \folterminterpretation{t_{\ast}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{2}} }  \)
+    by \cref{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term,thm:first-order-language-replacing-variable-symbols-of-term-with-new-ones-does-not-affect-interpretation-with-modified-assignment-function}.
+    Hence,  \( \folterminterpretation{s_{\ast}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{2}} } =
+    \folterminterpretation{t_{\ast}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{2}} }\) for some \( e_{2} \in \abs{\mathfrak{C}} \).
+    In other words, \( \folwffsatisfaction{\mathfrak{C}}{\mleft( \exists y \, \varphi^{\prime} \mright)}{\mathfrak{c}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \varphi \coloneq P^{\mathcal{L}}_{i}(\tau) \), then \( \varphi^{\prime} \coloneq P^{\mathcal{L}}_{i}(\sigma) \) where \( \sigma \) is defined
+    as in \eqref{eq:sigma-tuple-of-modified-terms}. Since \( \folwffsatisfaction{\mathfrak{C}}{\phi}{\mathfrak{c}} \) holds,
+    there must exists some \( e_{3} \in \abs{\mathfrak{C}} \) such that
+    \( \folwffsatisfaction{\mathfrak{C}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{3}} } \) is true.
+    That is to say, \( \sequence{ \folterminterpretation{\tau_{m}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{3}}}}{m \in \dom \tau} \in P^{\mathfrak{C}}_{i} \).
+    But by \cref{lem:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term,thm:first-order-language-replacing-variable-symbols-of-term-with-new-ones-does-not-affect-interpretation-with-modified-assignment-function},
+    \begin{equation*}
+        \sequence{ \folterminterpretation{\tau_{m}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{x}{e_{3}}}}{m \in \dom \tau}
+        = \sequence{ \folterminterpretation{\sigma_{m}}{\mathfrak{C}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{3}}}}{m \in \dom \tau}
+    \end{equation*}
+    Clearly, \( \folwffsatisfaction{\mathfrak{C}}{\varphi^{\prime}}{ \folmodifiedvariableassignmentfunction{\mathfrak{c}}{y}{e_{3}} } \) holds.
+    Therefore, \( \folwffsatisfaction{\mathfrak{C}}{\phi^{\prime}}{\mathfrak{c}} \). Since \( \mathfrak{C} \) and \( \mathfrak{c} \) are both arbitrary,
+    we conclude that \( \phi \models \phi^{\prime} \).
+    The converse \( \phi^{\prime} \models \phi \) can be proven using the exact same argument.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( n \neq 0 \).
+    We must verify that \( \phi \equiv \phi^{\prime} \) is true for each possible form \( \varphi \) can take according to \cref{cor:first-order-language-every-formula-with-non-zero-complexity-can-be-decomposed}.
+    If \( \varphi \coloneq \mleft( \psi \mright) \) for some formula \( \psi \), then obviously \( \folfreevars{\varphi} = \folfreevars{\psi} \),
+    which means that \( x \in \folfreevars{\psi} \) and \( y \notin \folvars{\psi} \).
+    Furthermore, \( \psi \) is a subformula of \( \varphi \), so \( \folcomplexityofformula{\psi} < n \) by \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula}. By the induction hypothesis, it follows that
+    \( \psi \equiv \psi^{\prime} \) where \( \psi^{\prime} \) is the formula obtained after every free occurrence of \( x \) in \( \psi \)
+    has been replaced with \( y \). By \cref{logical-equivalence:parenthesized-formulas-are-logically-equivalent} and the
+    \aref{thm:first-order-language-transitivity-of-logical-consequence-and-equivalence}{transitive property of the \( \equiv \) relation},
+    we conclude that \( \varphi \equiv \mleft( \psi \mright) \equiv \psi \equiv \psi^{\prime} \equiv \mleft( \psi^{\prime} \mright) \equiv \varphi^{\prime} \).
+    If \( \varphi \) has the form \( \lnot \, \psi \) or \( \mleft[ \,\psi\, \mright] \), then the proof is similar.
 \end{proof}
 
 \begin{thm}
@@ -1814,17 +2123,53 @@ We now have enough theoretical foundation to start proving many of the familiar 
 \begin{thm}
     \phantomsection \label{logical-consequence:universally-quantified-disjuncts-implies-universally-quantified-disjunction}
     If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas and \( x \) denotes any \( \mathcal{L} \)-variable, then
-    \( \forall x \, \varphi \,\,{\lor}\,\, \forall x \, \psi \models \forall x \, \mleft[ \varphi \,\,{\lor}\,\, \psi \mright] \).
+    \begin{equation*}
+        \forall x \, \varphi \,\,{\lor}\,\, \forall x \, \psi \models \forall x \, \mleft[ \varphi \,\,{\lor}\,\, \psi \mright]
+    \end{equation*}
 \end{thm}
 
 \begin{proof}
-    
+    Let \( \theta \coloneq \forall x \, \varphi \) and \( \lambda \coloneq \forall x \, \psi \). Furthermore, let \( \phi \coloneq \varphi \,\,{\lor}\,\, \psi \).
+    The goal is to prove that \( \theta \,\,{\lor}\,\, \lambda \models \forall x \, \phi \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \mathfrak{A} \) be an arbitrary \( \mathcal{L} \)-structure. Let \( \mathfrak{a} \) denote a variable assignment function of \( \mathcal{L} \)
+    under \( \mathfrak{A} \). Suppose that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \theta \,\,{\lor}\,\, \lambda \mright)}{\mathfrak{a}} \).
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, it follows that either \( \folwffsatisfaction{\mathfrak{A}}{\theta}{\mathfrak{a}} \)
+    or \( \folwffsatisfaction{\mathfrak{A}}{\lambda}{\mathfrak{a}} \) holds.
+    We must show that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \forall x \, \phi \mright)}{\mathfrak{a}} \) is implied in either case.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( \folwffsatisfaction{\mathfrak{A}}{\theta}{\mathfrak{a}} \).
+    Let \( e_{0} \in \abs{\mathfrak{A}} \) be arbitrary.
+    Clearly, \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) holds,
+    which in turn implies \( \folwffsatisfaction{\mathfrak{A}}{\phi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \).
+    Since \( e_{0} \) is arbitrary, we conclude that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \forall x \, \phi \mright)}{\mathfrak{a}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( \folwffsatisfaction{\mathfrak{A}}{\lambda}{\mathfrak{a}} \).
+    Let \( e_{1} \in \abs{\mathfrak{A}} \) be arbitrary.
+    It follows immediately that \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{1}} } \) is true.
+    But this would mean that \( \folwffsatisfaction{\mathfrak{A}}{\phi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{1}} } \) also holds.
+    Since \( e_{1} \) is arbitrary, we conclude that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \forall x \, \phi \mright)}{\mathfrak{a}} \) holds.
+
+    \vspace{0.3cm}
+    \noindent
+    We have proven that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \forall x \, \phi \mright)}{\mathfrak{a}} \) follows from
+    \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \theta \,\,{\lor}\,\, \lambda \mright)}{\mathfrak{a}} \) in all possible cases.
+    Since \( \mathfrak{A} \) and \( \mathfrak{a} \) are both arbitrary, we can validly conclude \( \theta \,\,{\lor}\,\, \lambda \models \forall x \, \phi \)
+    as required.
 \end{proof}
 
 \begin{thm}
     \phantomsection \label{logical-equivalence:existential-quantifier-distributes-over-disjunction}
     If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas and \( x \) is any \( \mathcal{L} \)-variable, then
-    \( \exists x \, \mleft[ \varphi \,\,{\lor}\,\, \psi \mright] \equiv \exists x \, \varphi \,\,{\lor}\,\, \exists x \, \psi \).
+    \begin{equation*}
+        \exists x \, \mleft[ \varphi \,\,{\lor}\,\, \psi \mright] \equiv \exists x \, \varphi \,\,{\lor}\,\, \exists x \, \psi
+    \end{equation*}
 \end{thm}
 
 \begin{proof}
@@ -1877,14 +2222,38 @@ We now have enough theoretical foundation to start proving many of the familiar 
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas.
-    Furthermore, let \( x \) be an \( \mathcal{L} \)-variable such that \( x \notin \folfreevars{\psi} \).
-    Then \( \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \)
+    \phantomsection \label{logical-consequence:existentially-quantified-conjunction-implies-existentially-quantified-conjuncts}
+    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas and \( x \) is an \( \mathcal{L} \)-variable, then
+    \begin{equation*}
+        \exists x \, \mleft[ \varphi \,\,{\land}\,\, \psi \mright] \models \exists x \, \varphi \,\,{\land}\,\, \exists x \, \psi
+    \end{equation*}
 \end{thm}
 
 \begin{proof}
-    We begin by organizing our notation.
+    Let \( \theta \coloneq \exists x \, \varphi \) and \( \lambda \coloneq \exists x \, \psi \). Let \( \phi \coloneq \varphi \,\,{\land}\,\, \psi \).
+    The goal is to prove that \( \exists x \, \phi \models \theta \,\,{\land}\,\, \lambda \). Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure
+    and \( \mathfrak{a} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Furthermore, suppose that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \exists x \, \phi \mright)}{\mathfrak{a}} \) holds.
+    By \cref{dfn:first-order-language-satisfaction-of-formulas}, it follows that there exists some \( e_{0} \in \abs{\mathfrak{A}} \)
+    such that \( \folwffsatisfaction{\mathfrak{A}}{\phi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) holds.
+    This means that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \)
+    and \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) are both true.
+    Therefore, \( \folwffsatisfaction{\mathfrak{A}}{\theta}{\mathfrak{a}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\lambda}{\mathfrak{a}} \)
+    are also both true by \cref{dfn:first-order-language-satisfaction-of-formulas}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{logical-equivalence:grouping-disjuncts-into-quantified-formula}
+    If \( \psi \) and \( \varphi \) are \( \mathcal{L} \)-formulas and \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folfreevars{\psi} \), then
+    the following hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \psi \,\,{\lor}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \) \phantomsection \label{enum:disjunct-into-all}
+        \item \( \psi \,\,{\lor}\,\, \exists x \, \varphi \equiv \exists x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \) \phantomsection \label{enum:disjunct-into-exists}
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    We begin the proof for \ref{enum:disjunct-into-all} by organizing our notation.
     Let \( \phi \coloneq \forall x \, \varphi \), \( \theta \coloneq \psi \,\,{\lor}\,\, \varphi \), and \( \lambda \coloneq \psi \,\,{\lor}\,\, \phi \).
     The goal is to show that \( \lambda \equiv \forall x \, \theta \).
     Let \( \mathfrak{A} \) be any \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be any variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
@@ -1955,13 +2324,78 @@ We now have enough theoretical foundation to start proving many of the familiar 
     \noindent
     Thus, \( \folwffsatisfaction{\mathfrak{B}}{\lambda}{\mathfrak{b}} \) follows from \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \forall x \, \theta \mright)}{\mathfrak{b}} \)
     in all possible scenarios. Since \( \mathfrak{B} \) and \( \mathfrak{b} \) are arbitrary, it follows that \( \forall x \, \theta \models \lambda \).
+
+    \vspace{0.3cm}
+    \noindent
+    The proof for \ref{enum:disjunct-into-exists} is a lot more straightforward.
+    Since \( x \notin \folfreevars{\psi} \), it follows from \cref{logical-equivalence:quantification-of-a-formula-with-a-non-free-variable-is-equivalent-to-the-original-formula}
+    that \( \psi \equiv \exists x \, \psi \).
+    By \cref{logical-equivalence:existential-quantifier-distributes-over-disjunction},
+    we also have \( \exists x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \equiv \exists x \, \psi \,\,{\lor}\,\, \exists x \, \varphi \).
+    By the \aref{logical-equivalence:substitution-theorem}{Substitution Theorem}, we infer
+    \( \psi \,\,{\lor}\,\, \exists x \, \varphi \equiv \exists x \, \mleft[ \psi \,\,{\lor}\,\, \varphi \mright] \) as required.
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{logical-equivalence:grouping-conjuncts-into-universally-quantified-formula}
-    Let \( \psi \) and \( \varphi \) be \( \mathcal{L} \)-formulas. Furthermore, let \( x \) denote any \( \mathcal{L} \)-variable such that
-    \( x \notin \folfreevars{\psi} \). Then \( \psi \,\,{\land}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright] \).
+    \phantomsection \label{logical-equivalence:grouping-conjuncts-into-quantified-formula}
+    If \( \psi \) and \( \varphi \) are \( \mathcal{L} \)-formulas and \( x \) is an \( \mathcal{L} \)-variable such that
+    \( x \notin \folfreevars{\psi} \), then the following hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \(  \psi \,\,{\land}\,\, \forall x \, \varphi \equiv \forall x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright]  \) \phantomsection \label{enum:conjuncts-into-all}
+        \item \(  \psi \,\,{\land}\,\, \exists x \, \varphi \equiv \exists x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright]  \) \phantomsection \label{enum:conjuncts-into-exists}
+    \end{enumerate}
 \end{thm}
+
+\begin{proof}
+    Since \( x \notin \folfreevars{\psi} \), we have by \cref{logical-equivalence:quantification-of-a-formula-with-a-non-free-variable-is-equivalent-to-the-original-formula}
+    \(  \psi \equiv \forall x \, \psi  \). Furthermore, \cref{logical-equivalence:universal-quantifiers-distributes-over-conjunction} implies that
+    \( \forall x \, \mleft[ \psi \,\,{\land}\,\, \varphi \mright] \equiv \forall x \, \psi \,\,{\land}\,\, \forall x \, \varphi \).
+    As such, \ref{enum:conjuncts-into-all} follows immediately from the \aref{logical-equivalence:substitution-theorem}{Substitution Theorem}.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove \ref{enum:conjuncts-into-exists}, let \( \phi \coloneq \exists x \, \varphi \) and \( \theta \coloneq \psi \,\,{\land}\,\, \varphi \).
+    Let \( \mathfrak{A} \) be an \( \mathcal{L} \)-structure and \( \mathfrak{a} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{A} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \psi \,\,{\land}\,\, \phi \mright)}{\mathfrak{a}} \) holds.
+    Thus, both \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \) and \( \folwffsatisfaction{\mathfrak{A}}{\phi}{\mathfrak{a}} \) are true.
+    In other words, there exists some \( e_{0} \in \abs{\mathfrak{A}} \) such that
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) holds.
+    Since \( x \notin \folfreevars{\psi} \), it follows that
+    \begin{equation*}
+        \restrictedfunction{\mathfrak{a}}{\folfreevars{\psi}} =
+        \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} }{\folfreevars{\psi}}
+    \end{equation*}
+    Since \( \folwffsatisfaction{\mathfrak{A}}{\psi}{\mathfrak{a}} \) holds,
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula} guarantees that
+    \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) is also true.
+    Since \( \folwffsatisfaction{\mathfrak{A}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) and 
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) are both true,
+    it follows that \( \folwffsatisfaction{\mathfrak{A}}{\theta}{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} } \) is true.
+    But this also means that \( \folwffsatisfaction{\mathfrak{A}}{\mleft( \exists x \, \theta \mright)}{\mathfrak{a}} \) is true.
+    Since \( \mathfrak{A} \) and \( \mathfrak{a} \) are arbitrary, it follows that \( \psi \,\,{\land}\,\, \phi \models \exists x \, \theta \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we proceed to establish the converse.
+    Let \( \mathfrak{B} \) be an \( \mathcal{L} \)-structure.
+    Let \( \mathfrak{b} \) be a variable assignment function of \( \mathcal{L} \) under \( \mathfrak{B} \).
+    Suppose that \( \folwffsatisfaction{\mathfrak{B}}{\mleft( \exists x \, \theta \mright)}{\mathfrak{b}} \);
+    that is, there exists some \( e_{1} \in \abs{\mathfrak{B}} \) such that
+    \( \folwffsatisfaction{\mathfrak{B}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \)
+    and \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \) both hold.
+    Since \( x \notin \folfreevars{\psi} \), it follows that,
+    \begin{equation*}
+        \restrictedfunction{\mathfrak{b}}{\folfreevars{\psi}} =
+        \restrictedfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} }{\folfreevars{\psi}}
+    \end{equation*}
+    We know that \( \folwffsatisfaction{\mathfrak{B}}{\psi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \) is true,
+    so \( \folwffsatisfaction{\mathfrak{B}}{\psi}{\mathfrak{b}} \) must also be true by
+    \cref{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-on-the-free-variables-of-a-formula}.
+    Since \( \folwffsatisfaction{\mathfrak{B}}{\varphi}{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{x}{e_{1}} } \) holds, we can further infer
+    that \( \folwffsatisfaction{\mathfrak{B}}{\phi}{\mathfrak{b}} \) is true.
+    Taking all these facts into account, we can validly infer that \( \folwffsatisfaction{\mathfrak{B}}{ \mleft( \psi \,\,{\land}\,\, \phi \mright) }{\mathfrak{b}}\)
+    holds. Since \( \mathfrak{B} \) and \( \mathfrak{b} \) are arbitrary, \( \exists x \, \theta \models \psi \,\,{\land}\,\, \phi \) follows readily.
+\end{proof}
 
 \chapter{Proof-Theoretic Concepts}
 \begin{dfn}[Proof System]
@@ -2442,273 +2876,6 @@ which prohibits the reuse of any variable, free or bound, from the original form
 
 \chapter{Logical Equivalences}
 \begin{thm}
-    \label{tautology:grouping-conjuncts-into-universally-quantified-formula}
-    Given any well-formed formulas \( \Gamma \) and \( \varphi \)
-    with free variables \( \alpha_{1}, \dots, \alpha_{n}\) and
-    \(\beta_{1}, \dots, \beta_{m} \) respectively,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \equiv
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context
-    of an arbitrary, non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and
-    \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
-
-    \vspace{0.5cm}
-    \noindent
-    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) holds.
-    Now, let \( x_{0} \in D \) be arbitrary.
-    Since \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true,
-    \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) follows by Universal Instantiation.
-    By Conjunction Introduction and Universal Generalization, it follows that,
-    \begin{equation*}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation*}
-    Using the Deduction Theorem, we derive the implication:
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation*}
-    Given that the interpretation of all the formulas is arbitrary, it follows that,
-    \begin{equation}
-        \label{eq:conjunct-into-universal-quantifier-forward-entailment}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation}
-
-    \vspace{0.5cm}
-    \noindent
-    Conversely, if \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) holds, then \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
-    must be true. Let
-    \( x_{0} \) be an arbitrary object in the domain. Again, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
-    follows directly from the initial hypothesis. Since \( x_{0} \) is arbitrary, Universal Generalization permits
-    us to conclude \( \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \). By Conjunction Introduction,
-    we have,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \forall x \big( \varphi(x, \beta_{1}, \beta_{m}) \big)
-    \end{equation*}
-    Using the Deduction Theorem, we infer,
-    \begin{equation*}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    And since the interpretation is arbitrary,
-    \begin{equation}
-        \label{eq:conjunct-into-universal-quantifier-backward-entailment}
-        \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \land
-        \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation}
-    Together, \eqref{eq:conjunct-into-universal-quantifier-forward-entailment} and \eqref{eq:conjunct-into-universal-quantifier-backward-entailment}
-    establish the logical equivalence.
-\end{proof}
-
-\begin{thm}
-    \label{tautology:grouping-disjuncts-into-existentially-quantified-formula}
-    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
-    \( \alpha_{1}, \dots \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \equiv
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty domain \( D \).
-    Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
-
-    \vspace{0.5cm}
-    \noindent
-    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
-    is true, which is only possible in three scenarios.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \neg \, \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
-
-    \vspace{0.1cm}
-    \noindent
-    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, it follows that \( \forall x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-    \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is true. Since the domain \( D \) is non-empty,
-    \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-    \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is necessarily true.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
-
-    \vspace{0.1cm}
-    \noindent
-    Let \( x_{0} \) be an object in the domain such that \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \). By Disjunction Introduction,
-    clearly \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true. And by Existential
-    Introduction, we have, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \).
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Case 3}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \)
-
-    \vspace{0.1cm}
-    \noindent
-    Since \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \) is true, this reduces to the first case.
-
-    \vspace{0.5cm}
-    \noindent
-    Evidently, \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) is implied
-    in all three cases. Using the Deduction Theorem, we conclude,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n})
-        \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    Since the implication was derived using an arbitrary interpretation, we can derive the following entailment:
-    \begin{equation}
-        \label{eq:disjunct-into-existential-quantifier-forward-entailment}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation}
-
-    \vspace{0.5cm}
-    \noindent
-    Proving the converse is also fairly straightforward. Naturally, if
-    \begin{equation*}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    is true, then there are only two possible scenarios to consider\,\footnote{Again, this is the Law of Excluded Middle at play.}.
-
-    \vspace{0.5cm}
-    \noindent
-    {\scshape Case 1}: \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
-
-    \vspace{0.1cm}
-    \noindent
-    {\scshape Case 2}: \( \neg \, \Gamma(\alpha_{1}, \dots, \alpha_{n}) \)
-
-    \vspace{0.5cm}
-    \noindent
-    In the first case, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \) follows
-    readily from Disjunction Introduction.
-    In the second case, we use Disjunctive Syllogism to conclude that,
-    \begin{equation*}
-        \exists x \big[ \varphi(x, \beta_{1}, \dots, \beta_{m}) \big]
-    \end{equation*}
-    Again, \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \exists x \mleft( \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \) follows from Disjunction
-    Introduction. Applying the Deduction Theorem, we infer,
-    \begin{equation*}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \implies
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    And since the implication is independent of implication, we have,
-    \begin{equation}
-        \label{eq:disjunct-into-existential-quantifier-backward-implication}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \lor
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation}
-    Together, \eqref{eq:disjunct-into-existential-quantifier-forward-entailment} and \eqref{eq:disjunct-into-existential-quantifier-backward-implication}
-    establish the logical equivalence.
-\end{proof}
-
-\begin{thm}
-    \label{tautology:grouping-conjuncts-into-existentially-quantified-formula}
-    For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
-    \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \equiv
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-\end{thm}
-
-\begin{proof}
-    Let \( \Gamma \) and \( \varphi \) be well-formed fomulas interpreted in the context of an
-    arbitrary, non-empty domain, \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and
-    \( \beta_{1}, \dots, \beta_{m} \) represent objects in \( D \).
-
-    \vspace{0.5cm}
-    \noindent
-    Suppose that \( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \exists x \mleft( \varphi(x, \beta_{1}, \dots, \beta_{m}) \mright) \)
-    is true. Clearly, \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \) is true for some \( x_{0} \in D \). Thus, by Conjunction Introduction,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
-    \end{equation*}
-    And by Existential Instantiation,
-    \begin{equation*}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    Thus,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-        \models
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-    \end{equation*}
-
-    \vspace{0.5cm}
-    \noindent
-    Proving the converse is trivial. If \( \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-    \varphi(x, \beta_{1}, \dots, \beta_{m})\big) \) is true, then clearly,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land \varphi(x_{0}, \beta_{1}, \dots, \beta_{m})
-    \end{equation*}
-    for some \( x_{0} \in D \). By Conjunction Elimination, obviously \( \varphi(x_{0}, \beta_{1}, \dots, \beta_{m}) \)
-    is true for some \( x_{0} \in D \). By Existential Generalization, we thus conclude,
-    \begin{equation*}
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
-    \end{equation*}
-    And therefore,
-    \begin{equation*}
-        \exists x \big( \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \varphi(x, \beta_{1}, \dots, \beta_{m})\big)
-        \models
-        \Gamma(\alpha_{1}, \dots, \alpha_{n}) \land
-        \exists x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big) \qedhere
-    \end{equation*}
-\end{proof}
-
-\begin{thm}
     \label{tautology:combining-unquantified-antecedent-and-universally-quantified-conseqeunt-into-a-single-quantified-formula}
     For any well-formed formula \( \Gamma \) and \( \varphi \) with free variables
     \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) respectively,
@@ -2724,7 +2891,7 @@ which prohibits the reuse of any variable, free or bound, from the original form
 \begin{proof}
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary, non-empty
     domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \) be objects in \( D \).
-    Using the truth table for logical implication and \cref{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula},
+    Using the truth table for logical implication and \cref{logical-equivalence:grouping-disjuncts-into-quantified-formula},
     we transform one of the statement into the other like so:
     \begin{align*}
         \Gamma(\alpha_{1}, \dots, \alpha_{n})
@@ -2766,7 +2933,7 @@ which prohibits the reuse of any variable, free or bound, from the original form
     Let \( \Gamma \) and \( \varphi \) be well-formed formulas interpreted in the context of an arbitrary,
     non-empty domain \( D \). Let \( \alpha_{1}, \dots, \alpha_{n} \) and \( \beta_{1}, \dots, \beta_{m} \)
     be objects in \( D \). Using the truth table of the logical implication and
-    \cref{logical-equivalence:grouping-disjuncts-into-universally-quantified-formula}, we can transform one statement into
+    \cref{logical-equivalence:grouping-disjuncts-into-quantified-formula}, we can transform one statement into
     another like so:
     \begin{align*}
         \forall x \big( \varphi(x, \beta_{1}, \dots, \beta_{m}) \big)
