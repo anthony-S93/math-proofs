@@ -10,9 +10,6 @@ Common notations used in set theory will also be introduced along with a rigorou
 \begin{thm}
     \label{thm:uniqueness-empty-set}
     The empty set is unique.
-    \begin{equation*}
-        \forall A,B \Big[\, \forall x \, \mleft( x \notin A \mright) \,\,{\land}\,\, \forall x \, \mleft( x \notin B \mright) \implies A = B \,\Big]
-    \end{equation*}
 \end{thm}
 
 \begin{proof}
@@ -30,17 +27,21 @@ Common notations used in set theory will also be introduced along with a rigorou
     \end{equation*}
     By the \nameref{axm:axiom-of-extensionality}, it follows that \( A = B \). Thus, the empty set is unique.
 \end{proof}
-\noindent
-Since the empty set is unique, we can denote it with a single universal symbol.
-\begin{dfn}
-    \label{dfn:empty-set}
-    \( \emptyset \) denotes the empty set; in other words, \(  \forall x \, ( x \notin \emptyset ) \).
+
+\begin{notation}
+    \label{notation:empty-set}
+    Since the empty set is unique, it is justified to denote with a unique symbol, \( \emptyset \).
+\end{notation}
+
+\begin{dfn}[Empty Set]
+    \phantomsection \label{dfn:empty-set}
+    \( \forall x \, \mleft( x \notin \emptyset \mright) \)
 \end{dfn}
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    Let \( \varphi \) be a \aref{dfn:first-order-language-construction-of-formulas}{formula} with a single free variable.
-    Then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
+    If \( \varphi(x) \) is a \aref{dfn:first-order-language-construction-of-formulas}{formula} of some first-order language of set theory,
+    then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
 \end{thm}
 
 \begin{proof}
@@ -51,11 +52,14 @@ Since the empty set is unique, we can denote it with a single universal symbol.
     \end{gather}
     Let \( x_{0} \) be arbitrary.
     Suppose that \( x_{0} \in S \).
-    Then \aref{rule-of-inference:universal-instantiation}{Instantiating} \eqref{eq:S-satisfies-phi}
-    yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi(x_{0}) \). By \eqref{eq:S-prime-satisfies-phi}, it follows that \( x_{0} \in S^{\prime} \).
-    Thus, \( x_{0} \in S {\implies} x_{0} \in S^{\prime} \) by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}. The converse
-    can be proven in a similar way, and we thus have \( x_{0} \in S {\iff} x_{0} \in S^{\prime} \). Since \( x_{0} \) is arbitrary,
-    we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization},
+    Thus, \aref{rule-of-inference:universal-instantiation}{instantiating} \eqref{eq:S-satisfies-phi} immediately
+    yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi(x_{0}) \), which in turn implies \( x_{0} \in S^{\prime} \) by \eqref{eq:S-prime-satisfies-phi}.
+    Since \( x_{0} \in S^{\prime} \) is derivable from the supposition that \( x_{0} \in S \), we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
+    \begin{equation*}
+        x_{0} \in S {\implies} x_{0} \in S^{\prime}
+    \end{equation*}
+    The converse can be proven in a similar fashion, and we thus have \( x_{0} \in S {\iff} x_{0} \in S^{\prime} \).
+    Given that \( x_{0} \) is arbitrary, we have by \aref{rule-of-inference:universal-generalization}{Universal Generalization}
     \begin{equation*}
         \forall x \, \mleft( x \in S \iff x \in S^{\prime} \mright)
     \end{equation*}
@@ -64,7 +68,7 @@ Since the empty set is unique, we can denote it with a single universal symbol.
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
-    For any formula \( \varphi \) with a single free variable,
+    If \( \varphi(x) \) is a formula of some first-order language of set theory, then
     \begin{equation*}
         \exists A \, \forall x \, \big[ \varphi(x) \implies x \in A \big]
         \implies
@@ -73,7 +77,7 @@ Since the empty set is unique, we can denote it with a single universal symbol.
 \end{thm}
 
 \begin{proof}
-    Let \( \varphi \) be any first-order formula such that,
+    Let \( \varphi(x) \) be any first-order formula such that
     \begin{equation}
         \label{eq:phi-x-implies-x-in-A}
         \forall x \, ( \varphi(x) \implies x \in A )
@@ -2481,7 +2485,7 @@ are being studied.
             &\quad \text{\cref{logical-equivalence:grouping-disjuncts-into-quantified-formula}}\\
             &\quad \text{\cref{logical-equivalence:grouping-disjuncts-into-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
-            &\quad \text{\cref{logical-equivalence:using-a-universally-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
+            &\quad \text{\cref{logical-equivalence:equivalent-quantified-forms-of-formulas-with-free-variables-replaced}}\\
             &\quad \text{\cref{dfn:difference}}\\
             &\quad \text{\( \lor \)-Distributivity}\\
             &\quad \text{Logical Equivalence}\\
@@ -2800,7 +2804,7 @@ are being studied.
             &\quad \text{Logical Equivalence}\\
             &\quad \text{\cref{logical-equivalence:grouping-disjuncts-into-quantified-formula}}\\
             &\quad \text{Definition of Conditional}\\
-            &\quad \text{\cref{logical-equivalence:using-a-universally-quantified-formula-to-express-the-fact-that-an-object-satisfies-a-formula}}\\
+            &\quad \text{\cref{logical-equivalence:equivalent-quantified-forms-of-formulas-with-free-variables-replaced}}\\
             &\quad \text{\cref{thm:union-in-terms-of-logical-or}}\\
             &\quad \text{\( \lor \)-Associativity}\\
             &\quad \text{\( \lor \)-Commutativity}\\
