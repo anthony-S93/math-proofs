@@ -23,15 +23,22 @@
 \newcommand{\folfreevariablereplacement}[3]{ \ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) } }
 
 \chapter{First-Order Logic}
-\section{Syntax}
-We now present the mathematical definition for a \keyword{first-order language} as well as its relationship
-to \aref{dfn:general-mathematical-structures}{mathematical structures}. Conceptually, a first-order language
-is simply a collection of symbols  together with a finite set of rules  that determine which
-strings of symbols from said collection are valid expressions of that language.
+\section{Formal Languages}
+Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
+on a sheet of paper.
+If we now take \( \mathcal{F} \) to be any non-empty subset of \( \finiteseq{\Sigma} \), then we say that \( \mathcal{F} \) is a \keyword{formal language} over \( \Sigma \)
+and \( \Sigma \) is the \keyword{alphabet} of \( \mathcal{F} \).
+Although it is possible (at least in principle) to pick arbitrary elements of \( \finiteseq{\Sigma} \) to include in \( \mathcal{F} \), it is more common for
+\( \mathcal{F} \) to be defined using a set of precise rules called the \keyword{syntax} of \( \mathcal{F} \).
+
+\vspace{0.3cm}
+\noindent
+A great number of formal languages have been invented throughout history, each of which requires a separate book to expound.
+Therefore, we will restrict ourselves to a class of formal languages that are designed to express human deductive thought: \keyword{first-order languages}.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language}
-    A \keyword{first-order language} \( \mathcal{L} \) is associated with the following symbols:
+    The alphabet of a first-order language \( \mathcal{L} \) consists of:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item Logical Symbols:
             \begin{enumerate}[topsep=2pt,label=\arabic*.]
@@ -44,9 +51,9 @@ strings of symbols from said collection are valid expressions of that language.
             \end{enumerate}
         \item Non-Logical Symbols:
             \begin{enumerate}[topsep=2pt,label=\arabic*.]
-                \item Predicates: A tuple \( P^{\mathcal{L}} \) of predicate symbols with an arity function
-                    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset - \mleft\{ 0 \mright\}} \) associated with it
-                \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with an arity function
+                \item Predicates: A tuple \( P^{\mathcal{L}} \) of predicate symbols with a function
+                    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset^{+} } \) associated with it
+                \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with a function
                     \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) associated with it
                     \phantomsection \label{text:first-order-language-canonical-well-ordering-for-variable-symbols}
             \end{enumerate}
@@ -54,73 +61,59 @@ strings of symbols from said collection are valid expressions of that language.
 \end{dfn}
 
 \begin{rem}
-    The traditional ``constant'' symbols are treated as \( 0 \)-ary function symbols in this approach.
+    The functions \( \Pi^{\mathcal{L}} \) and \( \Phi^{\mathcal{L}} \) are called the arity functions of \( P^{\mathcal{L}} \) and \( F^{\mathcal{L}} \) respectively.
+    Also, the traditional ``constant'' symbols are treated as \( 0 \)-ary function symbols in this approach.
     That is why \( \ran \Phi^{\mathcal{L}} \) can be the entirety of \( \naturalset \) (which includes 0) whereas \( 0 \) must
     be excluded from the range of \( \Pi^{\mathcal{L}} \).
 \end{rem}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-L-symbol}
-    A symbol associated with \( \mathcal{L} \) is called an \( \mathcal{L} \)-symbol.
+    A symbol that belongs to the alphabet of \( \mathcal{L} \) is called an \( \mathcal{L} \)-symbol.
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-L-variable}
     An \( \mathcal{L} \)-symbol that is also a variable symbol is called an \( \mathcal{L} \)-variable.
 \end{dfn}
 
-\noindent
-The symbols defined in \cref{dfn:first-order-language} are the alphabets of \( \mathcal{L} \), so to speak;
-each symbol in \( \mathcal{L} \) is analogous to an alphabet\footnote{\,Technically, the parentheses are more like punctuations.} in a natural language.
-Just as the alphabets and punctuations of a natural language can be stringed together to form expressions in that language,
-the symbols of \( \mathcal{L} \) can also be stringed together to form \emph{expressions} in the language of \( \mathcal{L} \), or
-\( \mathcal{L} \)-expressions for short.
-
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-expression}
-    An \( \mathcal{L} \)-expression is any finite sequence of \( \mathcal{L} \)-symbols.
+    \phantomsection \label{dfn:first-order-language-L-string}
+    An \( \mathcal{L} \)-string is a finite sequence of \( \mathcal{L} \)-symbols.
 \end{dfn}
 
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-the-set-of-all-symbols-constituting-an-expression}
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folsymbols{\varepsilon} \) denotes the set of all
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-L-expression}
+    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-string that belongs to \( \mathcal{L} \).
+    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folsymbols{ \varepsilon } \) denotes the set of all
     the \( \mathcal{L} \)-symbols consituting \( \varepsilon \).
-\end{notation}
+\end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-the-set-of-all-variable-symbols-in-a-first-order-language}
     If \( \mathcal{L} \) is a first-order language, then \( \folvars{\mathcal{L}} \) denotes the (countable and non-empty) set of all \( \mathcal{L} \)-variables
     associated with \( \mathcal{L} \).
+    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folvars{ \varepsilon } \) denotes the set of all \( \mathcal{L} \)-variables
+    appearing in \( \varepsilon \).
 \end{dfn}
 
-\begin{notation}
-    \phantomsection \label{notation:first-order-language-the-set-of-all-variable-symbols-in-an-expression}
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folvars{\varepsilon} \) denotes the set of all \( \mathcal{L} \)-variables
-    appearing in \( \varepsilon \).
-\end{notation}
-
 \begin{cor}
-    It follows then that for any \( \mathcal{L} \)-expression \( \varepsilon \), \( \folvars{\varepsilon} \subseteq \folsymbols{\varepsilon} \)
-    and \( \folvars{\varepsilon} \subseteq \folvars{\mathcal{L}} \).
+    It follows then that for any \( \mathcal{L} \)-expression \( \varepsilon \), \( \folvars{ \varepsilon } \subseteq \folsymbols{ \varepsilon } \)
+    and \( \folvars{ \varepsilon } \subseteq \folvars{\mathcal{L}} \).
 \end{cor}
 
-\noindent
-Of course, just having an infinite supply of expressions is not enough to fully define a language. We also need a set of rules to tell us
-which expressions are valid and which are not.
-For instance, the words `cats', `or', and `to' are all valid words of the English language; however, no native English speaker would deem the sequence
-of words `to or cats' a valid English expression for the simple reason that `to or cats' does not conform to the grammar of the English language.
-In other words, the grammar \emph{is} part of the language and should therefore be included in the language's specification.
-\begin{equation*}
-    \text{language} = \text{vocabulary} + \text{grammar}
-\end{equation*}
-\noindent
-Fortunately, the syntax (grammar) of first-order languages is relatively straightforward.
+\section{Syntax}
+The syntax of first-order languages is relatively straightforward.
 In first-order languages, the most basic unit of grammar is formulas---analogous to
-clauses in natural languages. But just as clauses are composed of existing words (verbs, nouns, etc.) in a natural language,
+clauses in natural languages. But just as clauses are composed of words (verbs, nouns, etc.) in that natural language,
 formulas are also composed of smaller units called \emph{terms}.
 
 \begin{dfn}[Terms]
     \phantomsection \label{dfn:first-order-language-construction-of-terms}
-    An \aref{dfn:first-order-language-expression}{\( \mathcal{L} \)-expression} is an \( \mathcal{L} \)-term if and only if
+    An \aref{dfn:first-order-language-L-expression}{\( \mathcal{L} \)-expression} is an \( \mathcal{L} \)-term if and only if
     it is constructible in a finite number of steps via the application of the following two rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) is an \( \mathcal{L} \)-expression such that \( \folsymbols{t} = \mleft\{ x \mright\} \) where \( x \in \folvars{\mathcal{L}} \),
+        \item If \( t \) is an \( \mathcal{L} \)-expression such that \( \folsymbols{t} = \mleft\{ x \mright\} \) and \( x \in \folvars{\mathcal{L}} \),
              then \( t \) is an \( \mathcal{L} \)-term
         \item If \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \) for some \( i \in \dom F^{\mathcal{L}} \),
              then \( F^{\mathcal{L}}_{i}(\tau) \) is also an \( \mathcal{L} \)-term
@@ -160,20 +153,18 @@ formulas are also composed of smaller units called \emph{terms}.
 \begin{eg}
     Thus, in a first-order language \( \mathcal{L} \) with function symbols \( F \), \( G \), and \( H \) (with arities 0, 1, and 2 respectively) and variable symbols
     \( x \), \( y \), and \( z \), we have the following:
-    \begin{align*}
-        \folcomplexityofterm{x} &= 0\\
-        \folcomplexityofterm{F()} &= 0\\
-        \folcomplexityofterm{G(x)} &= 1\\
-        \folcomplexityofterm{H(F(), y)} &= 1\\
-        \folcomplexityofterm{H(G(x), z)} &= 2\\
-        \folcomplexityofterm{H(H(x, F()), y)} &= 2
-    \end{align*}
+    \( \folcomplexityofterm{x} = 0 \),
+    \( \folcomplexityofterm{F()} = 0 \),
+    \( \folcomplexityofterm{G(x)} = 1 \),
+    \( \folcomplexityofterm{H(F(), y)} = 1 \),
+    \( \folcomplexityofterm{H(G(x), z)} = 2 \),
+    \( \folcomplexityofterm{H(H(x, F()), y)} = 2 \).
 \end{eg}
 
 \begin{dfn}[Subterms]
     \phantomsection \label{dfn:first-order-language-subterms}
-    Let \( s \) and \( t \) denote \( \mathcal{L} \)-terms.
-    Then we say that \( s \) is a \keyword{subterm} of \( t \) (denoted as \( s \folsubterm t \))
+    If \( s \) and \( t \) denote \( \mathcal{L} \)-terms,
+    then we say that \( s \) is a \keyword{subterm} of \( t \) (denoted as \( s \folsubterm t \))
     if and only if the following conditions are met:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
@@ -227,12 +218,9 @@ formulas are also composed of smaller units called \emph{terms}.
     If \( \mathcal{L} \) is a first-order language, then \( \mathcal{R}_{\ast} \) denotes an operation that can be applied to formulas of \( \mathcal{L} \)
     to construct a new formulas of \( \mathcal{L} \).
     The operation \( \mathcal{R}_{\ast} \) is also called a \keyword{syntactic operation} of \( \mathcal{L} \).
-\end{dfn}
-
-\begin{rem}
-    Every first-order language has the same set of syntactic operations: \( \mathcal{R}_{(} \), \( \mathcal{R}_{[} \),
+    There are exactly 7 syntactic operations in our approach:  \( \mathcal{R}_{(} \), \( \mathcal{R}_{[} \),
     \( \mathcal{R}_{\lnot} \), \( \mathcal{R}_{\land} \), \( \mathcal{R}_{\lor} \), \( \mathcal{R}_{\forall} \), and \( \mathcal{R}_{\exists} \).
-\end{rem}
+\end{dfn}
 
 \begin{eg}
     If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then \( \varphi \,\,{\land}\,\, \psi \) is the formula obtained by applying
@@ -243,30 +231,16 @@ formulas are also composed of smaller units called \emph{terms}.
 \begin{dfn}[Complexity]
     \phantomsection \label{dfn:first-order-language-complexity-of-formulas}
     If \( \varphi \) is an \( \mathcal{L} \)-formula, then the \keyword{complexity} of \( \varphi \) (denoted as \( \folcomplexityofformula{\varphi} \))
-    is the total number of applications of syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
+    is the total number of syntactic operations required to construct \( \varphi \) from atoms of \( \mathcal{L} \).
     More precisely:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( \varphi \coloneq \mleft( \psi \mright) \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
-        \item If \( \varphi \coloneq \mleft[ \,\psi\, \mright] \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
-        \item If \( \varphi \coloneq \lnot \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
-        \item If \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} + 1 \)
-        \item If \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} + 1 \)
-        \item If \( \varphi \coloneq \forall x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
-        \item If \( \varphi \coloneq \exists x \, \psi \), then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \mleft( \psi \mright) \), \( \varphi \coloneq \mleft[ \,\psi\, \mright] \), \( \varphi \coloneq \lnot \, \psi \),
+            \( \varphi \coloneq \forall x \, \psi \), or \( \varphi \coloneq \exists x \, \psi \),
+            then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + 1 \)
+        \item If \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \) or \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi \),
+            then \( \folcomplexityofformula{\varphi} = \folcomplexityofformula{\psi} + \folcomplexityofformula{\phi} + 1 \)
     \end{enumerate}
 \end{dfn}
-
-\begin{eg}
-    If \( \varphi \) and \( \psi \) are atoms of \( \mathcal{L} \) and \( x \) is an \( \mathcal{L} \)-variable, then we have the following:
-    \begin{align*}
-        \folcomplexityofformula{\varphi} &= 0\\
-        \folcomplexityofformula{\forall x \, \varphi} &= 1\\
-        \folcomplexityofformula{\varphi \,\,{\land}\,\, \psi} &= 1\\
-        \folcomplexityofformula{\lnot \, \varphi \,\,{\land}\,\, \psi} &= 2\\
-        \folcomplexityofformula{\varphi \,\,{\lor}\,\, \psi \,\,{\land}\,\, \psi} &= 2\\
-        \folcomplexityofformula{\mleft( \varphi \,\,{\lor}\,\, \psi \mright) \,\,{\land}\,\, \psi} &= 3
-    \end{align*}
-\end{eg}
 
 \begin{cor}
     \phantomsection \label{cor:first-order-language-every-formula-has-finite-complexity}
@@ -297,15 +271,23 @@ formulas are also composed of smaller units called \emph{terms}.
     \end{enumerate}
 \end{cor}
 
+\begin{eg}
+    If \( \varphi \) and \( \psi \) are atoms of \( \mathcal{L} \) and \( x \) is an \( \mathcal{L} \)-variable, then we have the following:
+    \( \folcomplexityofformula{\varphi} = 0 \), \( \folcomplexityofformula{\forall x \, \varphi} = 1\), \(  \folcomplexityofformula{\varphi \,\,{\land}\,\, \psi} = 1 \),
+    \( \folcomplexityofformula{\lnot \, \varphi \,\,{\land}\,\, \psi} = 2 \),
+    \(  \folcomplexityofformula{\varphi \,\,{\lor}\,\, \psi \,\,{\land}\,\, \psi} = 2 \),
+    \( \folcomplexityofformula{\mleft( \varphi \,\,{\lor}\,\, \psi \mright) \,\,{\land}\,\, \psi} = 3 \), etc.
+\end{eg}
+
 \begin{dfn}[Subformulas]
     \phantomsection \label{dfn:first-order-language-subformulas}
-    If \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then
-    we say that \( \psi \) is a \keyword{subformula} of \( \varphi \) (denoted as \( \psi \folsubformula \varphi \))
-    if and only if one of the following conditions is met:
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then any contiguous subsequence of \( \varphi \) that is also an \( \mathcal{L} \)-formula
+    is called a \keyword{subformula} of \( \varphi \). More precisely, if \( \varphi \) and \( \psi \) are \( \mathcal{L} \)-formulas, then
+    \( \psi \) is a subformula of \( \varphi \) (denoted as \( \psi \folsubformula \varphi \)) if and only if exactly one of the following conditions is met:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \varphi \coloneq \mleft( \psi \mright) \)
         \item \( \varphi \coloneq \mleft[ \, \psi \, \mright] \)
-        \item \( \varphi \coloneq \lnot \, \psi \),
+        \item \( \varphi \coloneq \lnot \, \psi \)
         \item \( \varphi \coloneq \phi \,\,{\land}\,\, \psi \) or \( \varphi \coloneq \psi \,\,{\land}\,\, \phi \) for some \( \mathcal{L} \)-formula \( \phi \)
         \item \( \varphi \coloneq \phi \,\,{\lor}\,\, \psi \) or \( \varphi \coloneq \psi \,\,{\lor}\,\, \phi\) for some \( \mathcal{L} \)-formula \( \phi \)
         \item \( \varphi \coloneq \forall x \, \psi \) for some \( \mathcal{L} \)-variable \( x \)
@@ -321,12 +303,21 @@ formulas are also composed of smaller units called \emph{terms}.
 
 \begin{rem}
     The converse of \cref{cor:first-order-language-the-complexity-of-a-subformula-is-less-than-the-complexity-of-the-formula} is obviously false.
+    Here is a simple counter-example with \( \varphi \coloneq \mleft( x = y \mright) \,\,{\land}\,\, \mleft( z \neq x \mright)  \) and \( \psi \coloneq \mleft( x \neq y \mright) \).
+    Clearly, \( \folcomplexityofformula{\psi} = 1 < 4 = \folcomplexityofformula{\varphi} \), but \( \psi \) is \emph{not} a subformula of \( \varphi \).
 \end{rem}
 
 \begin{notation}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \psi \folsubformula \varphi \), then \( \folsubformulasubstitution{\varphi}{\psi}{\phi} \)
-    denotes the \( \mathcal{L} \)-formula obtained by replacing all occurrences of \( \psi \) in \( \varphi \) with \( \phi \).
+    denotes the \( \mathcal{L} \)-formula obtained after every contiguous subsequence of \( \varphi \) equal to \( \psi \)
+    has been replaced with the sequence of \( \mathcal{L} \)-symbols constituting \( \phi \).
 \end{notation}
+
+\begin{eg}
+    If \( \varphi \coloneq \mleft( x = y \mright) \,\,{\land}\,\, \mleft( z \neq x \mright) \,\,{\lor}\,\, \mleft( x = y \mright) \),
+    \( \psi \coloneq \mleft( x = y \mright) \), and
+    \( \phi \coloneq x \neq y \), then \( \folsubformulasubstitution{\varphi}{\psi}{\phi} = \mleft( x \neq y \mright) \,\,{\land}\,\, \mleft( z \neq x \mright) \,\,{\lor}\,\, \mleft( x \neq y \mright) \).
+\end{eg}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-occurrence-in-formulas}
@@ -352,11 +343,6 @@ formulas are also composed of smaller units called \emph{terms}.
     If \( x \) is a free variable of \( \varphi \), we also say that \( x \) \keyword{occurs freely} or \keyword{occurs free} in \( \varphi \).
 \end{rem}
 
-\begin{notation}
-    It is also customary to use the \aref{dfn:functional-notation}{functional notation} to list out all the free variables occurring in a formula.
-    For example, \( \varphi(x, y, z) \) means that the formula \( \varphi \) has three free variables \( x \), \( y \), and \( z \).
-\end{notation}
-
 \begin{dfn}[Bound Variables]
     \phantomsection \label{dfn:first-order-language-bound-variables}
     An \( \mathcal{L} \)-variable occurring in \( \varphi \) that is not free is called a \keyword{bound variable} of \( \varphi \). 
@@ -368,21 +354,35 @@ formulas are also composed of smaller units called \emph{terms}.
     is both free and bound.
 \end{rem}
 
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-of-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables of \( \varphi \).
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:first-order-language-set-of-all-free-variables-is-a-subset-of-set-of-all-variables-the-definition-of-the-set-of-all-bound-variables}
+    Naturally, \( \folfreevars{\varphi} \subseteq \folvars{\varphi} \) for any \( \mathcal{L} \)-formula \( \varphi \)
+    and \( \folvars{\varphi} - \folfreevars{\varphi} \) is the set of all bound variables of \( \varphi \).
+\end{cor}
+
+\begin{dfn}
+    \phantomsection \label{dfn:first-order-language-free-variable-replacement-in-formulas}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula and \( x \), \( y \) are \( \mathcal{L} \)-variables,
+    then \( \folfreevariablereplacement{\varphi}{x}{y} \) denotes the formula obtained after all free occurrences of \( x \) in \( \varphi \) has been
+    replaced with \( y \).
+\end{dfn}
+
 \begin{notation}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables in \( \varphi \).
-    Furthermore, if \( x \) and \( y \) are \( \mathcal{L} \)-variables, then \( \folfreevariablereplacement{\varphi}{x}{y} \)
-    denotes the formula obtained after every free occurrence of \( x \) in \( \varphi \) has been replaced with \( y \).
-    If \( x \notin \folfreevars{\varphi} \), then obviously \( \folfreevariablereplacement{\varphi}{x}{y} = \varphi \).
+    If \( \varphi \) has only one free variable \( x \), then we can abbreviate \( \folfreevariablereplacement{\varphi}{x}{y} \) with \( \varphi(y) \).
 \end{notation}
 
-\newpage
 \section{Semantics}
 \noindent
 The syntactic rules of \( \mathcal{L} \) are fully defined in the previous section;
 that is, given any finite string of symbols in \aref{dfn:first-order-language}{\( \mathcal{L} \)}, we
 now have the information at our disposal to determine whether that string of symbols is a valid formula of \( \mathcal{L} \).
 Nevertheless, our description of \( \mathcal{L} \) is far from complete. For any language to be useful, having a bunch of symbols
-and a set of rules to construct valid formulas using those symbols is not enough; there also needs to be a set of rules that allows
+and a set of rules to construct valid formulas using those symbols is not enough; there also needs to be a systematic way for
 \emph{meaning} to be assigned to all valid formulas---just as English words like ``cats'', ``apples'', and ``oranges'' need to have meaning
 for English to have any value at all as a language.
 
@@ -392,7 +392,7 @@ The assignment of meaning to the expressions of a formal language is called the 
 associating the symbols in the language (and the valid expressions constructed using those symbols) with existing concepts or mental imageries.
 These mental imageries can be either concrete or abstract. For instance, when a native English speaker sees the word ``apple,'' their minds
 construct the image of a fruit with red skin. In other words, the semantics of a language allows the language to be \keyword{interpreted};
-it provides a connection between a string of seemingly meaningless symbols and concepts from the real world.
+it provides a connection between a string of seemingly arbitrary symbols and concepts from the real world.
 
 \vspace{0.3cm}
 \noindent
@@ -641,6 +641,18 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     The tuple \( \tuple{\mathfrak{A}, \mathfrak{a}} \) is called an \keyword{interpretation} of \( \varphi \) since it contains all the information needed to
     interpret \( \varphi \).
 \end{dfn}
+
+\begin{notation}
+    If \( \varphi \) has only one free variable \( x \) and \( e \) denotes an element of the universe of an \( \mathcal{L} \)-structure \( \mathfrak{A} \),
+    then we sometimes write \( \varphi(e) \) to express the fact that \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) for all variable assignment
+    function \( \mathfrak{a} \) such that \( \mathfrak{a}(x) = e \). If \( \varphi \) has more than one free variable, then a more elaborate notation will be used.
+    For instance, if \( \varphi \) has free variables \( x \) and \( y \), then we write \( \varphi(x = e_{0}, y = e_{1}) \) to mean
+    \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) for all variable assignment function \( \mathfrak{a} \) such that
+    \( \mathfrak{a}(x) = e_{0} \) and \( \mathfrak{a}(y) = e_{1} \).
+    If an ``order'' is implicitly associated with the free variables \( x \) and \( y \)
+    (e.g., the formula \( \varphi \) is previously specified as \( \varphi(x, y) \)), then we can abbreviate
+    \( \varphi(x = e_{0}, y = e_{1}) \) with \( \varphi(e_{0}, e_{1}) \).
+\end{notation}
 
 \begin{thm}
     \phantomsection \label{thm:first-order-language-different-variable-assignment-functions-yield-the-same-interpretation-if-they-agree-for-all-variable-symbols-in-a-term}
@@ -904,7 +916,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 \newpage
 \section{Entailment}
 \noindent
-The notion of satisfaction can be used to define the logical relationship between formulas; specifically the notions of
+The notion of satisfaction can be used to define the logical relationship between formulas; i.e., the notions of
 logical consequence and logical equivalence.
 Informally, if a formula \( \varphi \) is a logical consequence of another formula \( \psi \) (or a set of formulas), then \( \varphi \)
 is implied by \( \psi \) for all possible interpretations in all possible structures; that is, the implication holds by virtue of the logical form of the formulas alone and
@@ -3523,10 +3535,6 @@ Refer to \aref{appendices:natural-deduction}{Appendix }\ref{appendices:natural-d
         \item Lowercase letters (\( x, y, z\)) denote variables.
         \item Uppercase letters (\( A,B,C,\dots \)) and \( \varphi \) denote \( \mathcal{L} \)-formulas.
         \item Uppercase Greek letters (\( \Delta, \Gamma \)) denote \emph{sets} of \( \mathcal{L} \)-formulas.
-        \item \aref{dfn:functional-notation}{Functional notation} is used whenever there is a need to emphasize
-            that an \( \mathcal{L} \)-formula has free variables (i.e., \( \varphi(x) \)).
-        \item Ellipses are used to indicate that an \( \mathcal{L} \)-formula may contain any number of free variables other
-            than the one indicated (i.e., \( \varphi(x,\dots) \)).
         \item We write \( \varphi(x \mapsto t) \) to denote the \( \mathcal{L} \)-formula obtained by replacing every free
             occurrence of \( x \) in \( \varphi \) with \( t \).
     \end{enumerate}
@@ -3539,6 +3547,14 @@ existing \( \mathcal{L} \)-formulas.
 
 \subsection*{Rules of Inference}
 \begin{enumerate}[topsep=2pt,itemsep=10pt,label=\textup{\texttt{(\arabic*)}}]
+    \item Law of Non-contradiction: \phantomsection \label{rule-of-inference:law-of-non-contradiction}
+
+        If \( \Gamma \derives A \), then \( \Gamma \derives \lnot \, \mleft( \lnot \, A \mright) \).
+
+    \item Law of Excluded Middle: \phantomsection \label{rule-of-inference:law-of-excluded-middle}
+
+        \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \lnot \, A \mright) \).
+
     \item {Assumption}: \phantomsection \label{rule-of-inference:assumption}
 
         If \( A \in \Gamma \), then \( \Gamma \derives A \).
@@ -3546,15 +3562,6 @@ existing \( \mathcal{L} \)-formulas.
     \item Monotonicity: \phantomsection \label{rule-of-inference:monotonicity}
 
         If \( \Gamma^{\prime} \derives A \) and \( \Gamma^{\prime} \subset \Gamma \), then \( \Gamma \derives A \).
-
-    \item Substitution: \phantomsection \label{rule-of-inference:substitution}
-
-        If \( \Gamma \derives \mleft( x = y \mright) \), then \( \Gamma \derives \mleft( \varphi(x, \dots) {\iff} \varphi(y, \dots) \mright) \)
-        for any formula \( \varphi \).
-
-    \item Double Negation: \phantomsection \label{rule-of-inference:double-negation}
-
-        If \( \Gamma \derives A \), then \( \Gamma \derives \lnot \, \mleft( \lnot \, A \mright) \).
 
     \item Conjunction Introduction: \phantomsection \label{rule-of-inference:conjunction-introduction}
 
@@ -3564,9 +3571,13 @@ existing \( \mathcal{L} \)-formulas.
 
         If \( \Gamma \derives \mleft( A \,\,{\land}\,\, B \mright) \), then \( \Gamma \derives A \).
 
+        If \( \Gamma \derives \mleft( A \,\,{\land}\,\, B \mright) \), then \( \Gamma \derives B \).
+
     \item Disjunction Introduction: \phantomsection \label{rule-of-inference:disjunction-introduction}
 
         If \( \Gamma \derives A \), then \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \).
+
+        If \( \Gamma \derives A \), then \( \Gamma \derives \mleft( B \,\,{\lor}\,\, A \mright) \).
 
     \item Disjunction Elimination: \phantomsection \label{rule-of-inference:disjunction-elimination}
 
@@ -3614,6 +3625,23 @@ existing \( \mathcal{L} \)-formulas.
         If \( \Gamma \derives \mleft( \mleft( A \,\,{\lor}\,\, B \mright) \,\,{\land}\,\, \mleft( A \,\,{\lor}\,\, C \mright) \mright) \),
         then \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \mleft( B \,\,{\land}\,\, C \mright) \mright) \).
 
+    \item De Morgan's Laws: \phantomsection \label{rule-of-inference:de-morgans-laws}
+
+        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \), then
+        \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \), then
+        \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \), then
+        \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \).
+
+        \noindent
+        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \), then
+        \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \).
+
     \item Disjunction Definition: \phantomsection \label{rule-of-inference:disjunction-definition}
 
         If \( \Gamma \derives \mleft( A \,\,{\lor}\,\, B \mright) \), then
@@ -3648,27 +3676,6 @@ existing \( \mathcal{L} \)-formulas.
 
         \noindent
         If \( \Gamma \derives \mleft( A {\iff} B \mright) \), then \( \Gamma \derives \mleft( B {\implies} A \mright) \).
-
-    \item Law of Excluded Middle: \phantomsection \label{rule-of-inference:law-of-excluded-middle}
-
-        \( \Gamma \derives \mleft( A \,\,{\lor}\,\, \lnot \, A \mright) \).
-
-    \item De Morgan's Laws: \phantomsection \label{rule-of-inference:de-morgans-laws}
-
-        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \), then
-        \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \).
-
-        \noindent
-        If \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \), then
-        \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \).
-
-        \noindent
-        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\lor}\,\, \lnot \, B \mright) \), then
-        \( \Gamma \derives \lnot \, \mleft( A \,\,{\land}\,\, B \mright) \).
-
-        \noindent
-        If \( \Gamma \derives \mleft( \lnot \, A \,\,{\land}\,\, \lnot \, B \mright) \), then
-        \( \Gamma \derives \lnot \, \mleft( A \,\,{\lor}\,\, B \mright) \).
 
     \item Absorption: \phantomsection \label{rule-of-inference:absorption}
 
@@ -3715,15 +3722,19 @@ existing \( \mathcal{L} \)-formulas.
         If \( \Gamma \union \mleft\{ A \mright\} \derives B \) and \( \Gamma \union \mleft\{ A \mright\} \derives \lnot \, B \), then
         \( \Gamma \derives \lnot \, A \).
 
+    \item Substitution: \phantomsection \label{rule-of-inference:substitution}
+
+        If \( \Gamma \derives \mleft( x = y \mright) \), then \( \Gamma \derives \mleft( \varphi {\iff} \folfreevariablereplacement{\varphi}{x}{y} \mright) \).
+
     \item Universal Generalization: \phantomsection \label{rule-of-inference:universal-generalization}
 
-        If \( \Gamma \derives \varphi(t, \dots) \) and \( t \) does not appear in any of the formulas in \( \Gamma \),
-        then \( \Gamma \derives \forall x \, \varphi(t \mapsto x, \dots) \) provided that \( x \) does not appear in
-        \( \varphi(t, \dots) \).
+        If \( \Gamma \derives \folfreevariablereplacement{\varphi}{z}{t} \) where \( z \in \folfreevars{\varphi} \) and \( t \) is an \( \mathcal{L} \)-variable
+        such that \( t \notin \folvars{\psi} \) for all \( \psi \in \Gamma \), then \( \Gamma \derives \forall x \, \folfreevariablereplacement{\varphi}{z}{x} \)
+        where \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folvars{\varphi} \).
 
     \item Universal Instantiation: \phantomsection \label{rule-of-inference:universal-instantiation}
 
-        If \( \Gamma \derives \forall x \, \varphi(x,\dots) \) and \( t \) is not a bound variable in \( \varphi(x, \dots) \),
+        If \( \Gamma \derives \forall x \, \varphi(x) \) and \( t \) is not a bound variable in \( \varphi(x, \dots) \),
         then \( \Gamma \derives \varphi(x \mapsto t,\dots) \).
 
     \item Existential Generalization: \phantomsection \label{rule-of-inference:existential-generalization}
@@ -3743,152 +3754,3 @@ existing \( \mathcal{L} \)-formulas.
         \noindent
         If \( \Gamma \derives \lnot \, \forall x \, \lnot \, \varphi(x, \dots) \), then \( \Gamma \derives \exists x \, \varphi(x, \dots) \).
 \end{enumerate}
-
-\vspace{0.3cm}
-\noindent
-The validity of rules \crefrange{rule-of-inference:assumption}{rule-of-inference:reductio-ad-absurdum} is evident from basic propositional logic
-(i.e., to verify them one only has to look at the truth tables of the relevant logical operators).
-On the other hand, the restrictions imposed on the rules involving quantifiers warrant further discussion.
-
-\vspace{0.3cm}
-\noindent
-First, we have the \aref{rule-of-inference:universal-generalization}{Universal Generalization} rule, upon which the
-following restrictions are imposed:
-\begin{enumerate}[label=\textup{\texttt{(\alph*)}}]
-    \item \( t \) is not a variable in any of the formulas in \( \Gamma \). \phantomsection \label{enum:universal-generalization-restriction1}
-    \item \( x \) is not a variable in \( \varphi \). \phantomsection \label{enum:universal-generalization-restriction2}
-\end{enumerate}
-Both of these restrictions are necessary to ensure the \aref{dfn:soundness-of-proof-system}{soundness} of \( \proofsystem{P} \).
-To illustrate why, suppose that \( \Gamma = \mleft\{ \varphi, \psi, \phi \mright\} \) is a set of \( \mathcal{L} \)-formulas with the formulas
-\( \varphi \), \( \psi \), and \( \phi \) defined as follows:
-\begin{align*}
-    \varphi(t) &\coloneq \text{\( t \) is a cat}\\
-    \psi(t,x) &\coloneq \text{\( t \) is an offspring of \( x \)}\\
-    \phi &\coloneq \text{\( \forall x \, \exists t \, \psi(x,t) \)}
-\end{align*}
-Since \( \varphi(t) \in \Gamma \), we can validly infer by \aref{rule-of-inference:assumption}{Assumption} that \( \Gamma \derives \varphi(t) \).
-However, without restriction \ref{enum:universal-generalization-restriction1}, we are then permitted to fallaciously apply
-\aref{rule-of-inference:universal-generalization}{Universal Generalization} to conclude that
-\( \Gamma \derives \forall x \, \varphi(x) \), which is tantamount to the following argument:
-\begin{equation*}
-    \begin{aligned}
-        \text{\bfseries Premise:}&\\
-        \text{\bfseries Conclusion:}&
-    \end{aligned}
-    \begin{aligned}
-        &\quad\text{\( t \) is a cat.}\\
-        &\quad\text{Therefore, every animal is a cat.}
-    \end{aligned}
-\end{equation*}
-\noindent
-Absurd! Just because some animal named \( t \) is a cat does not necessarily mean that every animal in existence is a cat.
-In order to validly infer \( \forall z \, \varphi(z) \) from \( \Gamma \),
-one must be able to derive \( \varphi \) from \( \Gamma \) using \emph{any}
-variable symbol from the language of \( \mathcal{L} \), not just \( t \).
-It is easy to see how restriction \ref{enum:universal-generalization-restriction1} enforces this rule.
-Since the variable \( t \) is a free variable in at least one formula in \( \Gamma \),
-the \aref{rule-of-inference:universal-generalization}{Universal Generalization} rule is not applicable,
-so one cannot infer \( \forall z \, \varphi(z) \) from \( \varphi(t) \). Instead, one has to
-derive \( \varphi \) from \( \Gamma \) not by mere \aref{rule-of-inference:assumption}{Assumption}, but
-by showing that \( \varphi \) still holds even after replacing \( t \) with an arbitrary variable in the language of \( \mathcal{L} \).
-
-\vspace{0.3cm}
-\noindent
-Restriction \ref{enum:universal-generalization-restriction2} is equally important for the soundness of \( \proofsystem{P} \).
-If restriction \ref{enum:universal-generalization-restriction1}'s role is to prevent erroneous inferences, then restriction
-\ref{enum:universal-generalization-restriction2}'s role is to preserve the \emph{meaning} of the original formula during the
-generalization. To understand this, suppose that \( \Gamma \derives \psi(a,x) \). Since \( a \) is not mentioned in any of the
-formulas in \( \Gamma \), restriction \ref{enum:universal-generalization-restriction1} is not violated, so one concludes (albeit fallaciously)
-by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that \( \forall x \, \psi(a \mapsto x, x) \).
-Informally, this problematic inference translates to:
-\begin{equation*}
-    \begin{aligned}
-        \text{\bfseries Premise:}&\\
-        \text{\bfseries Conclusion:}&
-    \end{aligned}
-    \begin{aligned}
-        &\quad \text{\( a \) is an offspring of \( x \).}\\
-        &\quad\text{Therefore, every \( x \) is an offspring of \( x \).}
-    \end{aligned}
-\end{equation*}
-\noindent
-Again, absurd!
-The fact that an animal \( a \) is an offspring of some other animal \( x \) does not logically imply that every animal is an offspring of itself.
-There is simply no logical connection whatsoever between the conclusion and the premise. So what exactly went wrong?
-
-\vspace{0.3cm}
-\noindent
-The problem here is that the variable \( x \) is already a free variable of \( \psi \) before the universal quantifier is applied,
-and whenever we replace a free variable in a formula with another free variable in the same formula, we alter the meaning of the formula entirely.
-\begin{equation*}
-    \begin{aligned}
-        \psi(a, x):&\\
-        \psi(a \mapsto x, x):&
-    \end{aligned}
-    \begin{aligned}
-        &\quad\text{\( a \) is an offspring of \( x \).}\\
-        &\quad\text{\( x \) is an offspring of \( x \).}
-    \end{aligned}
-\end{equation*}
-\noindent
-Needless to say, \( \psi(a,x) \) and \( \psi(a \mapsto x, x) \) have completely different meanings.
-\( \psi(a, x) \) asserts that the first animal \( a \) is an offspring of
-the second animal \( x \), whereas \( \psi(a \mapsto x, x) \) asserts that an animal is an offspring of itself;
-and when the universal quantifier is applied to \( \psi(a \mapsto x, x) \), we end up with a formula that says
-\emph{every animal is an offspring of itself} instead of the intended
-\emph{every animal is an offspring of \( x \)}.
-
-\vspace{0.3cm}
-\noindent
-Of course, restriction \ref{enum:universal-generalization-restriction2} resolves this by prohibiting the reuse of variable names in the same formula;
-that is, we are no longer allowed to infer \( \forall x \, \psi(a \mapsto x, x) \) from \( \psi(a, x) \)
-because the symbol \( x \) is already a free variable in \( \psi(a, x) \).
-Instead, we must use something other than \( x \) for the bound variable---i.e., \( \forall y \, \psi(a \mapsto y, x) \).
-
-\vspace{0.3cm}
-\noindent
-To understand the restriction on \aref{rule-of-inference:universal-instantiation}{Universal Instantiation}, consider
-the invalid inference from \( \forall x \, \exists t \, \psi(x,t) \) to \( \exists t \, \psi(x \mapsto t, t) \),
-which results in the following nonsensical argument:
-\begin{equation*}
-    \begin{aligned}
-        \text{\bfseries Premise}&:\\
-        \text{\bfseries Conclusion}&:
-    \end{aligned}
-    \begin{aligned}
-        &\quad\text{Every animal has a parent.}\\
-        &\quad\text{There exists an animal that is its own parent.}
-    \end{aligned}
-\end{equation*}
-Since \( t \) is a bound variable in \( \exists t \, \psi(x,t) \)
-and the free variable \( x \) appears within the scope of the existential quantifier to which \( t \) is bound,
-replacing all occurrences of \( x \) with \( t \) will alter the meaning of the formula because the variable that used
-to be \( x \) will no longer be a free variable after the substitution.
-\begin{equation*}
-    \begin{aligned}
-        \exists t \, \psi(x,t)&:\\
-        \exists t \, \psi(x \mapsto t, t)&:
-    \end{aligned}
-    \begin{aligned}
-        &\quad \exists t \, \big[ \text{\( x \) is an offspring of \( t \)} \big]\\
-        &\quad \exists t \, \big[ \text{\( t \) is an offspring of \( t \)} \big]
-    \end{aligned}
-\end{equation*}
-The variable that used to be \( x \) is supposed to still be a free variable after the substitution; but because
-the new variable is called \( t \) and \( t \) is already bound to an existential quantifier, the resulting variable
-becomes a bound variable too. A variable with a different name has to be used to retain the intended meaning of the formula:
-\begin{equation*}
-    \begin{aligned}
-        \text{\bfseries Premise}&:\\
-        \text{\bfseries Conclusion}&:
-    \end{aligned}
-    \begin{aligned}
-        &\quad \forall x \, \exists t \, \psi(x,t)\\
-        &\quad \exists t \, \psi(y, t)
-    \end{aligned}
-\end{equation*}
-Note that the use of the variable \( t \) for \aref{rule-of-inference:universal-instantiation}{Universal Instantiation} is still allowed if \( t \) is a free variable
-in the original formula. For example, if \( \Gamma \derives \forall x \, \psi(x, t) \), then \( \Gamma \derives \psi(t, t) \) is a valid inference because \( t \)
-is a free variable in \( \psi(x,t) \) and not a bound variable. This is in contrast with restriction \ref{enum:universal-generalization-restriction2} for
-\aref{rule-of-inference:universal-generalization}{Universal Generalization} (take note!)
-which prohibits the reuse of any variable, free or bound, from the original formula.

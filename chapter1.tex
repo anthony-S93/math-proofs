@@ -18,7 +18,7 @@ Common notations used in set theory will also be introduced along with a rigorou
         \label{eq:A-B-empty}
         \forall x \mleft(x \notin A \mright) \,\,{\land}\,\, \forall x \mleft(x \notin B \mright)
     \end{equation}
-    Let \( x_{0} \) be an arbitrary object. Then by \eqref{eq:A-B-empty}, \( x_{0} \notin A \,\,{\land}\,\, x_{0} \notin B \).
+    Let \( x_{0} \) denote an arbitrary set. Then by \eqref{eq:A-B-empty}, \( x_{0} \notin A \,\,{\land}\,\, x_{0} \notin B \).
     Thus, \( x_{0} \in A {\implies} x_{0} \in B \) and \( x_{0} \in B {\implies} x_{0} \in A \) are both vacuously true.
     By \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction}, we derive \( \mleft( x_{0} \in A {\iff} x_{0} \in B \mright) \).
     Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
@@ -40,21 +40,21 @@ Common notations used in set theory will also be introduced along with a rigorou
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    If \( \varphi(x) \) is a \aref{dfn:first-order-language-construction-of-formulas}{formula} of some first-order language of set theory,
-    then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
+    If \( \varphi \) is a \aref{dfn:first-order-language-construction-of-formulas}{formula} of some first-order language of set theory,
+    then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi \mright] \) is unique.
 \end{thm}
 
 \begin{proof}
     Let \( S \) and \( S^{\prime} \) be sets such that,
     \begin{gather}
-        \forall x \, \big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-satisfies-phi} \\
-        \forall x \, \big[ x \in S^{\prime} \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-prime-satisfies-phi}
+        \forall x \, \big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi \big] \label{eq:S-satisfies-phi} \\
+        \forall x \, \big[ x \in S^{\prime} \iff x \in A \,\,{\land}\,\, \varphi \big] \label{eq:S-prime-satisfies-phi}
     \end{gather}
-    Let \( x_{0} \) be arbitrary.
-    Suppose that \( x_{0} \in S \).
+    Note that the \nameref{axm:axiom-schema-of-specification} guarantees the existence of \( S \) and \( S^{\prime} \).
+    Let \( x_{0} \) denote an arbitrary set. Suppose that \( x_{0} \in S \).
     Thus, \aref{rule-of-inference:universal-instantiation}{instantiating} \eqref{eq:S-satisfies-phi} immediately
-    yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi(x_{0}) \), which in turn implies \( x_{0} \in S^{\prime} \) by \eqref{eq:S-prime-satisfies-phi}.
-    Since \( x_{0} \in S^{\prime} \) is derivable from the supposition that \( x_{0} \in S \), we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem},
+    yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi \), which in turn implies \( x_{0} \in S^{\prime} \) by \eqref{eq:S-prime-satisfies-phi}.
+    Since \( x_{0} \in S^{\prime} \) is derivable from the supposition that \( x_{0} \in S \), we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}
     \begin{equation*}
         x_{0} \in S {\implies} x_{0} \in S^{\prime}
     \end{equation*}
@@ -68,11 +68,11 @@ Common notations used in set theory will also be introduced along with a rigorou
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
-    If \( \varphi(x) \) is a formula of some first-order language of set theory, then
+    If \( \varphi \) is a formula of some first-order language of set theory, then
     \begin{equation*}
-        \exists A \, \forall x \, \big[ \varphi(x) \implies x \in A \big]
+        \exists A \, \forall x \, \big[ \varphi \implies x \in A \big]
         \implies
-        \exists! S \, \forall x \, \big[ x \in S \iff \varphi(x) \big]
+        \exists! S \, \forall x \, \big[ x \in S \iff \varphi \big]
     \end{equation*}
 \end{thm}
 
