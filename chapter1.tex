@@ -13,13 +13,15 @@ Common notations used in set theory will also be introduced along with a rigorou
 \end{thm}
 
 \begin{proof}
-    Let \( A \) and \( B \) be arbitrary sets that do not contain any elements. That is,
-    \begin{equation}
-        \label{eq:A-B-empty}
-        \forall x \mleft(x \notin A \mright) \,\,{\land}\,\, \forall x \mleft(x \notin B \mright)
-    \end{equation}
-    Let \( x_{0} \) denote an arbitrary set. Then by \eqref{eq:A-B-empty}, \( x_{0} \notin A \,\,{\land}\,\, x_{0} \notin B \).
-    Thus, \( x_{0} \in A {\implies} x_{0} \in B \) and \( x_{0} \in B {\implies} x_{0} \in A \) are both vacuously true.
+    Let \( A \) and \( B \) be any two sets that do not contain any elements.
+    We have to show that necessarily \( A = B \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x_{0} \) be an arbitrary set.
+    Since neither \( A \) nor \( B \) contain any elements, \( x_{0} \) cannot possibly belong to either \( A \) or \( B \);
+    that is, \( x_{0} \notin A \) and \( x_{0} \notin B \) are both true.
+    Consequently, both \( x_{0} \in A {\implies} x_{0} \in B \) and \( x_{0} \in B {\implies} x_{0} \in A \) are vacuously true.
     By \aref{rule-of-inference:biconditional-introduction}{Biconditional Introduction}, we derive \( \mleft( x_{0} \in A {\iff} x_{0} \in B \mright) \).
     Since \( x_{0} \) is arbitrary, we conclude by \aref{rule-of-inference:universal-generalization}{Universal Generalization} that,
     \begin{equation*}
@@ -40,18 +42,18 @@ Common notations used in set theory will also be introduced along with a rigorou
 
 \begin{thm}[Restricted Comprehension]
     \label{thm:uniqueness-predicate-set}
-    If \( \varphi \) is a \aref{dfn:first-order-language-construction-of-formulas}{formula} of some first-order language of set theory,
-    then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi \mright] \) is unique.
+    If \( \varphi \) is a \aref{dfn:first-order-language-construction-of-formulas}{formula} with a single free variable,
+    then for any set \( A \), the set \( S \) such that \( \forall x \, \mleft[ x \in S {\iff} x \in A \,\,{\land}\,\, \varphi(x) \mright] \) is unique.
 \end{thm}
 
 \begin{proof}
     Let \( S \) and \( S^{\prime} \) be sets such that,
     \begin{gather}
-        \forall x \, \big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi \big] \label{eq:S-satisfies-phi} \\
-        \forall x \, \big[ x \in S^{\prime} \iff x \in A \,\,{\land}\,\, \varphi \big] \label{eq:S-prime-satisfies-phi}
+        \forall x \, \big[ x \in S \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-satisfies-phi} \\
+        \forall x \, \big[ x \in S^{\prime} \iff x \in A \,\,{\land}\,\, \varphi(x) \big] \label{eq:S-prime-satisfies-phi}
     \end{gather}
     Note that the \nameref{axm:axiom-schema-of-specification} guarantees the existence of \( S \) and \( S^{\prime} \).
-    Let \( x_{0} \) denote an arbitrary set. Suppose that \( x_{0} \in S \).
+    Let \( x_{0} \) denote an arbitrary set such that \( x_{0} \in S \).
     Thus, \aref{rule-of-inference:universal-instantiation}{instantiating} \eqref{eq:S-satisfies-phi} immediately
     yields \( x_{0} \,{\in}\, A \,\,{\land}\,\, \varphi \), which in turn implies \( x_{0} \in S^{\prime} \) by \eqref{eq:S-prime-satisfies-phi}.
     Since \( x_{0} \in S^{\prime} \) is derivable from the supposition that \( x_{0} \in S \), we have by the \aref{rule-of-inference:deduction-theorem}{Deduction Theorem}
@@ -68,7 +70,7 @@ Common notations used in set theory will also be introduced along with a rigorou
 
 \begin{thm}
     \label{thm:sufficient-condition-for-unrestricted-comprehension}
-    If \( \varphi \) is a formula of some first-order language of set theory, then
+    If \( \varphi \) is a formula in some first-order language of set theory, then
     \begin{equation*}
         \exists A \, \forall x \, \big[ \varphi \implies x \in A \big]
         \implies
@@ -77,20 +79,21 @@ Common notations used in set theory will also be introduced along with a rigorou
 \end{thm}
 
 \begin{proof}
-    Let \( \varphi(x) \) be any first-order formula such that
+    Let \( \varphi \) be a formula in any first-order language of set theory such that
     \begin{equation}
         \label{eq:phi-x-implies-x-in-A}
-        \forall x \, ( \varphi(x) \implies x \in A )
+        \forall x \, ( \varphi \implies x \in A )
     \end{equation}
-    for some set \( A \).
-    The \nameref{axm:axiom-schema-of-specification} and \cref{thm:uniqueness-predicate-set}
-    guarantee the existence of a set \( S \) such that,
+    holds for some set \( A \).
+    By the \nameref{axm:axiom-schema-of-specification} and \cref{thm:uniqueness-predicate-set},
+    there exists a set \( S \) such that
     \begin{equation}
         \label{eq:property-of-S}
-        \forall x \, \mleft( x \in S \iff x \in A \land \varphi(x) \mright)
+        \forall x \, \mleft( x \in S \iff x \in A \,\,{\land}\,\, \varphi \mright)
     \end{equation}
-    Let \( x_{0} \in S \) be arbitrary. Then \( x_{0} \in A \,\,{\land}\,\, \varphi(x_{0}) \) follows immediately
-    from \eqref{eq:property-of-S}. By \aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}, we can infer \( \varphi(x_{0}) \).
+    Let \( x_{0} \in S \) be arbitrary. Thus \( x_{0} \in A \,\,{\land}\,\, \varphi \) follows immediately
+    from \eqref{eq:property-of-S}.
+    By \aref{rule-of-inference:conjunction-elimination}{Conjunction Elimination}, we can then infer \( \varphi(x_{0}) \).
     \begin{equation}
         \label{eq:x-in-S-implies-phi-x}
         \therefore \, x_{0} \in S \implies \varphi(x_{0})
@@ -118,9 +121,10 @@ Common notations used in set theory will also be introduced along with a rigorou
     by the \nameref{axm:axiom-of-extensionality}.
 \end{proof}
 
-\noindent
-\cref{thm:uniqueness-predicate-set,thm:sufficient-condition-for-unrestricted-comprehension}
-serve as the rigorous foundation for the familiar set-builder notation.
+\begin{rem}
+    \cref{thm:uniqueness-predicate-set,thm:sufficient-condition-for-unrestricted-comprehension} serve as the rigorous foundation for the familiar set-builder notation.
+\end{rem}
+
 \begin{dfn}[Set-Builder Notation]
     \label{dfn:set-builder-notation}
     For any set \( A \) and any predicate \( \varphi \), the set

@@ -6,8 +6,8 @@
 \newcommand{\folvarseq}[1]{\ensuremath{\vv{\operatorname{var}}\langle#1\rangle}}
 \newcommand{\folnumvars}[1]{\ensuremath{\Vert#1\Vert}}
 \newcommand{\folfreevars}[1]{\ensuremath{\operatorname{var}_{\ast} \langle#1\rangle}}
-\newcommand{\folnumfreevars}[1]{\ensuremath{\Vert#1\Vert}}
 \newcommand{\folboundvars}[1]{\ensuremath{\operatorname{var}_{\diamond} \langle#1\rangle}}
+\newcommand{\folnumfreevars}[1]{\ensuremath{\Vert#1\Vert}}
 \newcommand{\folfreevarseq}[1]{\ensuremath{\vv{\operatorname{var}}_{\ast}\langle#1\rangle}}
 \newcommand{\folterminterpretation}[3]{\ensuremath{#1^{#2}\llbracket\, #3 \,\rrbracket}}
 \newcommand{\folwffsatisfaction}[3]{\ensuremath{ #1 \models #2\llbracket\, #3 \,\rrbracket}}
@@ -23,7 +23,196 @@
 \newcommand{\folfreevariablereplacement}[3]{ \ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) } }
 
 \chapter{First-Order Logic}
-\section{Formal Languages}
+\section{Terminology}
+A \keyword{formal system} is a generalization of deductive reasoning the same way arithmetic is a generalization of counting.
+Structurally, a formal system comprises of the following components:
+\begin{enumerate*}[label=(\arabic*)]
+    \item formal language;
+    \item rules of inference.
+\end{enumerate*}
+\begin{equation*}
+    \text{Formal System} = \text{Formal Language} + \text{Rules of Inference}
+\end{equation*}
+A formal language is a well-defined collection of symbolic strings called \keyword{formulas}.
+A rule of inference is a precise rule for deriving a new formula from a collection of formulas.
+A \keyword{formal theory} is any subcollection of formulas belonging to a formal language.
+Each formula in a formal theory is called an \keyword{axiom} of the theory.
+If \( T \) is a formal theory associated with a formal system \( \mathcal{F} \) and \( \varphi \) is a formula derived from \( T \) via recursive applications of
+the rules of inference of \( \mathcal{F} \), then we say that \( \varphi \) is a \keyword{theorem} of \( T \).
+
+\vspace{0.3cm}
+\noindent
+Most mathematical statements are expressible using a class of formal systems known as \keyword{first-order logic}.
+The formal languages associated with first-order logic are called \keyword{first-order languages}.
+The goal of this chapter is twofold:
+\begin{enumerate*}[label=(\arabic*)]
+    \item define first-order logic mathematically,
+    \item derive all the properties of first-order logic that are useable in the rest of mathematics.
+\end{enumerate*}
+
+\section{Philosophical Concerns}
+It is known that most if not all of mathematics can be formulated within the framework of axiomatic set theory (ZFC), which itself is a first-order theory\footnote{A formal
+theory associated with first-order logic.}.
+Nevertheless, sets and logic cannot exist independently; that is, ideas pertaining to sets and logic are inherently connected.
+For instance, the fundamental set-theoretic constructions (unions, intersections, negations) are really just logical operations in disguise.
+Similarly, the semantics of first-order languages cannot be fully defined without invoking some notion of sets---i.e., how do we capture the full meaning of
+universally quantified statements without explaining it in terms of sets or collections\footnote{ By making statements like ``for all \( x \), \( P(x) \) is true,'' we are alluding to the existence of a (possibly empty) universal collection containing all things.}.
+
+\vspace{0.3cm}
+\noindent
+Immediately, we are presented with a philosophical problem. If sets and logic are conceptually dependent, how do we justify the use of first-order logic
+in the formulation of axiomatic set theory (ZFC)?
+After all, the theorems of ZFC are proven using logical principles that are based on the properties of sets;
+and yet they are also sentences \emph{about} the properties of sets!
+
+\vspace{0.3cm}
+\noindent
+The solution to this problem is to develop a \keyword{metatheory} of first-order logic that exists outside of ZFC.
+Within this metatheory, the properties of sets will be restated and subsequently used to justify the properties of
+first-order logic. Since the properties of sets are now reformulated in the language of the metatheory rather than a language associated with first-order logic,
+there is no circularity in the justification.
+
+\vspace{0.3cm}
+\noindent
+The metatheory of logic could, in principle, be a formal system of its own right.
+The formal approach, however, comes with its own set of problems.
+Suppose we pick a formal system as our meta-theoretic starting point.
+Then what awaits us is a possibly endless recursion of justifications.
+For instance, we would have to justify the formal metatheory itself
+with a \emph{meta}-metatheory, and the meta-metatheory with a \emph{meta}-meta-metatheory and so on until
+we decide that a particular formal system in the recursive chain is self-evident enough to not require any further justification.
+Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English because unlike formal systems, natural languages
+require no justification at all.
+Note that our choice does not preclude the use of symbolisms. Symbolic notations will be used wherever convenient\footnote{It is more accurate to think
+of the metatheory as a semi-formal system of reasoning rather than a purely informal one.}.
+
+\section{Metatheory}
+The following terms are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
+`not', `and', `or', `if', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
+`implication', `converse', `such that', `object', `sentence', `rule', `identity', `same', `unique', `placeholder'.
+These primitives are the basic building blocks upon which all other concepts in our metatheory are built.
+
+\begin{dfn}[Statements]
+    \phantomsection \label{dfn:metatheory-statement}
+    A \keyword{statement} is any sentence in English that can be judged unambiguously
+    to be either true or false.
+\end{dfn}
+
+\begin{rem}
+    Statements are sometimes abbreviated symbolically. E.g., \( P \), \( Q \), etc.
+\end{rem}
+
+\begin{dfn}[Axioms]
+    \phantomsection \label{dfn:metatheory-axioms}
+    Self-evident statements are known as \keyword{axioms}.
+\end{dfn}
+
+\begin{dfn}[Predicates]
+    \phantomsection \label{dfn:metatheory-predicate}
+    A \keyword{predicate} is any sentence in English that contains at least one placeholder and whose truth can only be judged
+    when the placeholder(s) are replaced by actual objects.
+\end{dfn}
+
+\begin{rem}
+    A predicate whose placeholders have been replaced with objects becomes a statement.
+\end{rem}
+
+\begin{notation}
+    We use functional notation to denote predicate symbols. For example, \( P(n) \) denotes a predicate with the symbol \( n \)
+    representing its sole placeholder; \( \varphi(x, y) \) denotes a predicate with two placeholders represented by the symbols \( x \) and \( y \).
+\end{notation}
+
+\begin{dfn}[Equality]
+    \phantomsection \label{dfn:metatheory-equality}
+    Two objects are \keyword{equal} iff they have the same identity; i.e., they are the same object.
+    Two objects are \keyword{distinct} iff they are not equal.
+\end{dfn}
+
+\begin{notation}
+    We write \( x = y \) and \( x \neq y \) to abbreviate the statements ``\( x \) and \( y \) are equal'' and
+    ``\( x \) and \( y \) are distinct'' respectively.
+\end{notation}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:equality-axioms}
+    The following statements about equality are true for any two objects \( x \) and \( y \):
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( x = x \) (reflexivity)
+        \item If \( x = y \), then \( y = x \) (symmetry)
+        \item If \( x = y \) and \( y = z \), then \( x = z \) (transitivity)
+    \end{enumerate}
+\end{meta-axiom}
+
+\begin{dfn}[Sets]
+    \phantomsection \label{dfn:metatheory-sets}
+    A \keyword{set} is an object formed by collecting or grouping together single objects into an aggregate.
+    Constituents of a set are called the \keyword{elements} or \keyword{members} of the set.
+    If an object is an element of a set, then it \keyword{belongs to} that set.
+\end{dfn}
+
+\begin{notation}
+    We write \( x \in A \) to abbreviate the statements ``\( x \) is an element of the set \( A \),''
+    ``\( x \) is a member of \( A \),'' or ``\( x \) belongs to \( A \).''
+\end{notation}
+
+\begin{dfn}[Subsets]
+    \phantomsection \label{dfn:metatheory-subsets-and-proper-subsets}
+    For any two sets \( A \) and \( B \), we say that \( A \) is a \keyword{subset} of \( B \) iff
+    every element of \( A \) is an element of \( B \).
+    Furthermore, we say that \( A \) is a \keyword{proper subset} of \( B \) iff:
+    \begin{enumerate*}[label=(\arabic*)]
+        \item \( A \) is a subset of \( B \),
+        \item there exists an element in \( B \) that is not an element of \( A \).
+    \end{enumerate*}
+\end{dfn}
+
+\begin{notation}
+    We write \( A \subseteq B \) and \( A \subset B \) to abbreviate the statements ``\( A \) is a subset of \( B \)'' and
+    ``\( A \) is a proper subset of \( B \)'' respectively.
+\end{notation}
+
+\begin{dfn}[Family of Sets]
+    \phantomsection \label{dfn:metatheory-family-of-sets}
+    A \keyword{family} of sets is a set whose elements are also sets.
+\end{dfn}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:existence-of-empty-set}
+    There exists a set that does not contain any elements.
+\end{meta-axiom}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:extensionality}
+    For any two sets \( A \) and \( B \), \( A = B \) iff every element of \( A \) is an element of \( B \) and every element of \( B \) is an element of \( A \).
+\end{meta-axiom}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:pairing}
+    For any two sets \( A \) and \( B \), there exists a set whose elements are exactly \( A \) and \( B \).
+\end{meta-axiom}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:union}
+    For any family of sets \( S \), there exists a set whose elements are exactly the object(s) belonging to some element of \( S \).
+\end{meta-axiom}
+
+\begin{meta-rule}[Non-Contradiction]
+    \phantomsection \label{meta-rule:law-of-non-contradiction}
+    For any statement \( P \), \( P \) is a true statement iff not \( P \) is a false statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Excluded Middle]
+    \phantomsection \label{meta-rule:law-of-excluded-middle}
+    For any statement \( P \), the statement ``\( P \) or not \( P \)'' is true.
+\end{meta-rule}
+
+\begin{meta-rule}[Modus Ponens]
+    \phantomsection \label{meta-rule:modus-ponens}
+    If \( P \) and ``if \( P \) then \( Q \)'' are both true statements, then \( Q \) must also be a true statement.
+\end{meta-rule}
+
+
+\section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
 on a sheet of paper.
 If we now take \( \mathcal{F} \) to be any non-empty subset of \( \finiteseq{\Sigma} \), then we say that \( \mathcal{F} \) is a \keyword{formal language} over \( \Sigma \)
@@ -34,7 +223,7 @@ Although it is possible (at least in principle) to pick arbitrary elements of \(
 \vspace{0.3cm}
 \noindent
 A great number of formal languages have been invented throughout history, each of which requires a separate book to expound.
-Therefore, we will restrict ourselves to a class of formal languages that are designed to express human deductive thought: \keyword{first-order languages}.
+Therefore, we will restrict ourselves to a class of formal languages that are particularly suited to express mathematical statements: \keyword{first-order languages}.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language}
@@ -102,7 +291,7 @@ Therefore, we will restrict ourselves to a class of formal languages that are de
     and \( \folvars{ \varepsilon } \subseteq \folvars{\mathcal{L}} \).
 \end{cor}
 
-\section{Syntax}
+\subsection{Syntax}
 The syntax of first-order languages is relatively straightforward.
 In first-order languages, the most basic unit of grammar is formulas---analogous to
 clauses in natural languages. But just as clauses are composed of words (verbs, nouns, etc.) in that natural language,
@@ -181,9 +370,9 @@ formulas are also composed of smaller units called \emph{terms}.
 \begin{dfn}[Atoms]
     \phantomsection \label{dfn:first-order-language-atom}
     An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
-    \( \varphi \) is of either one of the following forms:
+    \( \varphi \) has either one of the following forms:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t_{0} = t_{1} \) where \( t_{0} \) and \( t_{1} \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
+        \item \( s = t \) where \( s \) and \( t \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
         \item \( P^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom P^{\mathcal{L}} \) where
             \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \abs{\tau} = \Pi^{\mathcal{L}}(i) \)
     \end{enumerate}
@@ -192,7 +381,7 @@ formulas are also composed of smaller units called \emph{terms}.
 \begin{dfn}[Formulas]
     \phantomsection \label{dfn:first-order-language-construction-of-formulas}
     An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-formula\footnote{\,Also called a \keyword{well-formed formula} or wff in \( \mathcal{L} \).}
-    if and only if it is constructible from an atom in a finite number of steps via the application of the following rules:
+    if and only if it is constructible from atoms of \( \mathcal{L} \) in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item If \( \varphi \) is an atom of \( \mathcal{L} \), then \( \varphi \) is an \( \mathcal{L} \)-formula
         \item If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \mleft( \varphi \mright) \) is also an \( \mathcal{L} \)-formula
@@ -309,8 +498,8 @@ formulas are also composed of smaller units called \emph{terms}.
 
 \begin{notation}
     If \( \varphi \) is an \( \mathcal{L} \)-formula and \( \psi \folsubformula \varphi \), then \( \folsubformulasubstitution{\varphi}{\psi}{\phi} \)
-    denotes the \( \mathcal{L} \)-formula obtained after every contiguous subsequence of \( \varphi \) equal to \( \psi \)
-    has been replaced with the sequence of \( \mathcal{L} \)-symbols constituting \( \phi \).
+    denotes the \( \mathcal{L} \)-formula obtained after every occurrence of \( \psi \) in \( \varphi \)
+    has been replaced with \( \phi \).
 \end{notation}
 
 \begin{eg}
@@ -355,14 +544,15 @@ formulas are also composed of smaller units called \emph{terms}.
 \end{rem}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-of-a-formula}
-    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables of \( \varphi \).
+    \phantomsection \label{dfn:first-order-language-the-set-of-all-free-variables-bound-variables-of-a-formula}
+    If \( \varphi \) is an \( \mathcal{L} \)-formula, then \( \folfreevars{\varphi} \) denotes the set of all free variables of \( \varphi \) and
+    \( \folboundvars{\varphi} \) denotes the set of all bound variables of \( \varphi \).
 \end{dfn}
 
 \begin{cor}
     \phantomsection \label{cor:first-order-language-set-of-all-free-variables-is-a-subset-of-set-of-all-variables-the-definition-of-the-set-of-all-bound-variables}
-    Naturally, \( \folfreevars{\varphi} \subseteq \folvars{\varphi} \) for any \( \mathcal{L} \)-formula \( \varphi \)
-    and \( \folvars{\varphi} - \folfreevars{\varphi} \) is the set of all bound variables of \( \varphi \).
+    Naturally, \( \folfreevars{\varphi} \subseteq \folvars{\varphi} \) and \( \folboundvars{\varphi} = \folvars{\varphi} - \folfreevars{\varphi} \)
+    for any \( \mathcal{L} \)-formula \( \varphi \).
 \end{cor}
 
 \begin{dfn}
@@ -376,7 +566,7 @@ formulas are also composed of smaller units called \emph{terms}.
     If \( \varphi \) has only one free variable \( x \), then we can abbreviate \( \folfreevariablereplacement{\varphi}{x}{y} \) with \( \varphi(y) \).
 \end{notation}
 
-\section{Semantics}
+\subsection{Semantics}
 \noindent
 The syntactic rules of \( \mathcal{L} \) are fully defined in the previous section;
 that is, given any finite string of symbols in \aref{dfn:first-order-language}{\( \mathcal{L} \)}, we
@@ -428,9 +618,6 @@ which leads us to the following definition.
     In other words, there exist one-to-one correspondences between the function symbols of \( \mathcal{L} \) and the n-ary operations of \( \mathfrak{A} \)
     as well as between the predicate symbols of \( \mathcal{L} \) and the n-ary relation of \( \mathfrak{A} \).
 \end{rem}
-
-\noindent
-The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-variable-assignment-function}
@@ -649,8 +836,7 @@ The stage is now set for the semantics of \( \mathcal{L} \) to be defined.
     For instance, if \( \varphi \) has free variables \( x \) and \( y \), then we write \( \varphi(x = e_{0}, y = e_{1}) \) to mean
     \( \folwffsatisfaction{\mathfrak{A}}{\varphi}{\mathfrak{a}} \) for all variable assignment function \( \mathfrak{a} \) such that
     \( \mathfrak{a}(x) = e_{0} \) and \( \mathfrak{a}(y) = e_{1} \).
-    If an ``order'' is implicitly associated with the free variables \( x \) and \( y \)
-    (e.g., the formula \( \varphi \) is previously specified as \( \varphi(x, y) \)), then we can abbreviate
+    If an ``order'' is implicitly associated with the free variables \( x \) and \( y \), then we can abbreviate
     \( \varphi(x = e_{0}, y = e_{1}) \) with \( \varphi(e_{0}, e_{1}) \).
 \end{notation}
 
@@ -3722,20 +3908,16 @@ existing \( \mathcal{L} \)-formulas.
         If \( \Gamma \union \mleft\{ A \mright\} \derives B \) and \( \Gamma \union \mleft\{ A \mright\} \derives \lnot \, B \), then
         \( \Gamma \derives \lnot \, A \).
 
-    \item Substitution: \phantomsection \label{rule-of-inference:substitution}
-
-        If \( \Gamma \derives \mleft( x = y \mright) \), then \( \Gamma \derives \mleft( \varphi {\iff} \folfreevariablereplacement{\varphi}{x}{y} \mright) \).
-
     \item Universal Generalization: \phantomsection \label{rule-of-inference:universal-generalization}
 
         If \( \Gamma \derives \folfreevariablereplacement{\varphi}{z}{t} \) where \( z \in \folfreevars{\varphi} \) and \( t \) is an \( \mathcal{L} \)-variable
-        such that \( t \notin \folvars{\psi} \) for all \( \psi \in \Gamma \), then \( \Gamma \derives \forall x \, \folfreevariablereplacement{\varphi}{z}{x} \)
-        where \( x \) is an \( \mathcal{L} \)-variable such that \( x \notin \folvars{\varphi} \).
+        such that \( t \notin \folvars{\varphi} \) and \( t \notin \folvars{\psi} \) for all \( \psi \in \Gamma \),
+        then \( \Gamma \derives \forall x \, \folfreevariablereplacement{\varphi}{z}{x} \) for any \( \mathcal{L} \)-variable \( x \) such that \( x \notin \folvars{\varphi} \).
 
     \item Universal Instantiation: \phantomsection \label{rule-of-inference:universal-instantiation}
 
-        If \( \Gamma \derives \forall x \, \varphi(x) \) and \( t \) is not a bound variable in \( \varphi(x, \dots) \),
-        then \( \Gamma \derives \varphi(x \mapsto t,\dots) \).
+        If \( \Gamma \derives \forall x \, \folfreevariablereplacement{\varphi}{z}{x} \) where \( z \in \folfreevars{\varphi} \) and \( t \notin \folboundvars{\varphi} \),
+        then \( \Gamma \derives \folfreevariablereplacement{\varphi}{z}{t} \).
 
     \item Existential Generalization: \phantomsection \label{rule-of-inference:existential-generalization}
 

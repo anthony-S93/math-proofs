@@ -56,7 +56,15 @@
   {\scshape}
   {:}
   {5pt plus 1pt minus 1pt}{}
-
+\newtheoremstyle{meta-axm}
+  {\topsep}
+  {\topsep}
+  {\normalfont}
+  {0pt}
+  {\bfseries}
+  {}
+  {5pt plus 1pt minus 1pt}
+  {}
 
 % Theorem-Like Environments
 \theoremstyle{thm}
@@ -72,6 +80,9 @@
 \newtheorem*{notation}{Notation}
 \theoremstyle{prop}
 \newtheorem{prop}{Proposition}[chapter]
+\theoremstyle{meta-axm}
+\newtheorem{meta-axiom}{Axiom}[chapter]
+\newtheorem{meta-rule}{Inference Rule}
 % Define plural form
 \crefname{thm}{Theorem}{Theorems}
 \crefname{axm}{Axiom}{Axioms}
