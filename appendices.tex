@@ -24,7 +24,7 @@
 
 \chapter{First-Order Logic}
 \section{Terminology}
-A \keyword{formal system} is a generalization of deductive reasoning the same way arithmetic is a generalization of counting.
+A \keyword{formal system} is an abstraction of deductive reasoning the same way arithmetic is an abstraction of counting.
 Structurally, a formal system comprises of the following components:
 \begin{enumerate*}[label=(\arabic*)]
     \item formal language;
@@ -55,7 +55,7 @@ It is known that most if not all of mathematics can be formulated within the fra
 theory associated with first-order logic.}.
 Nevertheless, sets and logic cannot exist independently; that is, ideas pertaining to sets and logic are inherently connected.
 For instance, the fundamental set-theoretic constructions (unions, intersections, negations) are really just logical operations in disguise.
-Similarly, the semantics of first-order languages cannot be fully defined without invoking some notion of sets---i.e., how do we capture the full meaning of
+Similarly, the semantics of first-order languages cannot be fully defined without invoking some notion of sets---i.e., it is not possible to capture the full meaning of
 universally quantified statements without explaining it in terms of sets or collections\footnote{ By making statements like ``for all \( x \), \( P(x) \) is true,'' we are alluding to the existence of a (possibly empty) universal collection containing all things.}.
 
 \vspace{0.3cm}
@@ -81,15 +81,18 @@ Then what awaits us is a possibly endless recursion of justifications.
 For instance, we would have to justify the formal metatheory itself
 with a \emph{meta}-metatheory, and the meta-metatheory with a \emph{meta}-meta-metatheory and so on until
 we decide that a particular formal system in the recursive chain is self-evident enough to not require any further justification.
-Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English because unlike formal systems, natural languages
-require no justification at all.
+
+\vspace{0.3cm}
+\noindent
+Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English instead of another formal system since English
+is a natural language and natural languages require no justification at all.
 Note that our choice does not preclude the use of symbolisms. Symbolic notations will be used wherever convenient\footnote{It is more accurate to think
 of the metatheory as a semi-formal system of reasoning rather than a purely informal one.}.
 
 \section{Metatheory}
 The following terms are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
-`not', `and', `or', `if', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
-`implication', `converse', `such that', `object', `sentence', `rule', `identity', `same', `unique', `placeholder'.
+`not', `and', `or', `if', `imply', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
+`implication', `converse', `object', `collection', `aggregate', `symbol', `sentence', `rule', `identity', `same', `unique', `arbitrary', `universe'.
 These primitives are the basic building blocks upon which all other concepts in our metatheory are built.
 
 \begin{dfn}[Statements]
@@ -107,24 +110,39 @@ These primitives are the basic building blocks upon which all other concepts in 
     Self-evident statements are known as \keyword{axioms}.
 \end{dfn}
 
+\begin{dfn}[Placeholders]
+    \phantomsection \label{dfn:metatheory-placeholders}
+    A \keyword{placeholder} is a symbol that appears in an English sentence in place of a noun.
+\end{dfn}
+
 \begin{dfn}[Predicates]
     \phantomsection \label{dfn:metatheory-predicate}
-    A \keyword{predicate} is any sentence in English that contains at least one placeholder and whose truth can only be judged
-    when the placeholder(s) are replaced by actual objects.
+    A \keyword{predicate} is any sentence in English that contains at least one placeholder and whose truth can be unambiguously determined
+    by replacing the placeholder(s) with objects in the universe.
 \end{dfn}
+
+\begin{notation}
+    We use functional notation to denote predicates. For example, \( P(n) \) denotes a predicate with the symbol \( n \)
+    representing its placeholder.
+\end{notation}
 
 \begin{rem}
     A predicate whose placeholders have been replaced with objects becomes a statement.
 \end{rem}
 
 \begin{notation}
-    We use functional notation to denote predicate symbols. For example, \( P(n) \) denotes a predicate with the symbol \( n \)
-    representing its sole placeholder; \( \varphi(x, y) \) denotes a predicate with two placeholders represented by the symbols \( x \) and \( y \).
+    If \( A \) denote an object in the universe and \( \varphi(x) \) denotes a predicate, then
+    \( \varphi(A) \) denotes the statement obtained from \( \varphi(x) \) by replacing \( x \) with \( A \).
 \end{notation}
+
+\begin{dfn}[Satisfaction]
+    \phantomsection \label{dfn:metatheory-satisfaction}
+    An object \( A \) \keyword{satisfies} a predicate \( \varphi(x) \) iff \( \varphi(A) \) is a true statement.
+\end{dfn}
 
 \begin{dfn}[Equality]
     \phantomsection \label{dfn:metatheory-equality}
-    Two objects are \keyword{equal} iff they have the same identity; i.e., they are the same object.
+    Two objects are \keyword{equal} iff they have the same identity; i.e., they are the same object and are indistinguishable from each other.
     Two objects are \keyword{distinct} iff they are not equal.
 \end{dfn}
 
@@ -135,13 +153,18 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:equality-axioms}
-    The following statements about equality are true for any two objects \( x \) and \( y \):
+    The following statements about equality are true for any two objects \( A \) and \( B \) in the universe:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( x = x \) (reflexivity)
-        \item If \( x = y \), then \( y = x \) (symmetry)
-        \item If \( x = y \) and \( y = z \), then \( x = z \) (transitivity)
+        \item \( A = A \) (reflexivity)
+        \item If \( A = B \), then \( B = A \) (symmetry)
+        \item If \( A = B \) and \( B = C \), then \( A = C \) (transitivity)
     \end{enumerate}
 \end{meta-axiom}
+
+\begin{dfn}[Uniqueness]
+    \phantomsection \label{dfn:metatheory-unique-satisfaction}
+    An object \( A \) \keyword{uniquely} satisfies a predicate \( \varphi(x) \) iff for all \( x \),  \( \varphi(x) \) implies \( x = A \).
+\end{dfn}
 
 \begin{dfn}[Sets]
     \phantomsection \label{dfn:metatheory-sets}
@@ -158,7 +181,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 \begin{dfn}[Subsets]
     \phantomsection \label{dfn:metatheory-subsets-and-proper-subsets}
     For any two sets \( A \) and \( B \), we say that \( A \) is a \keyword{subset} of \( B \) iff
-    every element of \( A \) is an element of \( B \).
+    the predicate ``if \( x \in A \), then \( x \in B \)'' is true for all \( x \).
     Furthermore, we say that \( A \) is a \keyword{proper subset} of \( B \) iff:
     \begin{enumerate*}[label=(\arabic*)]
         \item \( A \) is a subset of \( B \),
@@ -171,19 +194,25 @@ These primitives are the basic building blocks upon which all other concepts in 
     ``\( A \) is a proper subset of \( B \)'' respectively.
 \end{notation}
 
+\begin{dfn}[Singleton]
+    \phantomsection \label{dfn:singleton}
+    A \keyword{singleton} is any set that contains only a single element.
+\end{dfn}
+
 \begin{dfn}[Family of Sets]
     \phantomsection \label{dfn:metatheory-family-of-sets}
     A \keyword{family} of sets is a set whose elements are also sets.
-\end{dfn}
+\end{dfn} 
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:extensionality}
+    For any two sets \( A \) and \( B \), \( A = B \) iff
+    the predicate ``\( x \in A \) iff \( x \in B \)'' is true for all \( x \).
+\end{meta-axiom}
 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:existence-of-empty-set}
     There exists a set that does not contain any elements.
-\end{meta-axiom}
-
-\begin{meta-axiom}
-    \phantomsection \label{meta-axiom:extensionality}
-    For any two sets \( A \) and \( B \), \( A = B \) iff every element of \( A \) is an element of \( B \) and every element of \( B \) is an element of \( A \).
 \end{meta-axiom}
 
 \begin{meta-axiom}
@@ -196,6 +225,21 @@ These primitives are the basic building blocks upon which all other concepts in 
     For any family of sets \( S \), there exists a set whose elements are exactly the object(s) belonging to some element of \( S \).
 \end{meta-axiom}
 
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:power-set}
+    For any set \( S \), there exists a set whose elements are exactly the subsets of \( S \).
+\end{meta-axiom}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:specification}
+    For any set \( S \) and any predicate \( \varphi(x) \), there exists a set whose elements are exactly the elements of \( S \) that satisfy \( \varphi(x) \).
+\end{meta-axiom}
+
+\begin{rem}
+    Notice that in \crefrange{meta-axiom:extensionality}{meta-axiom:specification}, we have simply restated the axioms of set theory in our metalanguage
+    so that we can use and reference sets in our metatheory without circularity.
+\end{rem}
+
 \begin{meta-rule}[Non-Contradiction]
     \phantomsection \label{meta-rule:law-of-non-contradiction}
     For any statement \( P \), \( P \) is a true statement iff not \( P \) is a false statement.
@@ -206,9 +250,70 @@ These primitives are the basic building blocks upon which all other concepts in 
     For any statement \( P \), the statement ``\( P \) or not \( P \)'' is true.
 \end{meta-rule}
 
+\begin{meta-rule}[Conjunction Introduction]
+    \phantomsection \label{meta-rule:conjunction-introduction}
+    If \( P \) and \( Q \) are both true statements, then ``\( P \) and \( Q \)'' is also a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Conjunction Elimination]
+    \phantomsection \label{meta-rule:conjunction-elimination}
+    If ``\( P \) and \( Q \)'' is a true statement, then both \( P \) and \( Q \) are true statements.
+\end{meta-rule}
+
+\begin{meta-rule}[Disjunction Introduction]
+    \phantomsection \label{meta-rule:disjunction-introduction}
+    If \( P \) is a true statement, then ``\( P \) or \( Q \)'' is also a true statement for any statement \( Q \).
+\end{meta-rule}
+
+\begin{meta-rule}[Disjunction Elimination]
+    \phantomsection \label{meta-rule:disjunction-elimination}
+    If ``if \( P \) then \( Q \)'', ``if \( R \) then \( Q \)'', and ``\( P \) or \( R \)'' are all true statements, then \( Q \) must also be true statement.
+\end{meta-rule}
+
 \begin{meta-rule}[Modus Ponens]
     \phantomsection \label{meta-rule:modus-ponens}
     If \( P \) and ``if \( P \) then \( Q \)'' are both true statements, then \( Q \) must also be a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Modus Tollens]
+    \phantomsection \label{meta-rule:modus-tollens}
+    If \( Q \) is a false statement and ``if \( P \) then \( Q \)'' is a true statement, then \( P \) must be false statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Disjunctive Syllogism]
+    \phantomsection \label{meta-rule:disjunctive-syllogism}
+    For any two statements \( P \) and \( Q \), if ``\( P \) or \( Q \)'' is a true statement,
+    then ``not \( P \) implies \( Q \)'' and ``not \( Q \) implies \( P \)'' are both true statements.
+\end{meta-rule}
+
+\begin{meta-rule}[Hypothetical Syllogism]
+    \phantomsection \label{meta-rule:hypothetical-syllogism}
+    For any statements \( P \), \( Q \), and \( R \), if ``\( P \) implies \( Q \)'' and ``\( Q \) implies \( R \)'' are both true statements, then
+    ``\( P \) implies \( R \)'' must be a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Constructive Dilemma]
+    \phantomsection \label{meta-rule:constructive-dilemma}
+    If ``\( P \) implies \( Q \)'', ``\( R \) implies \( S \)'', ``\( P \) or \( R \)'' are all true statements, then ``\( Q \) or \( S \)'' is also
+    a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Universal Generalization]
+    \phantomsection \label{meta-rule:universal-generalization}
+    Let \( \alpha \) denote an \emph{arbitrary} object in the universe and \( \varphi(x) \) denote a predicate.
+    If \( \varphi(\alpha) \) is a true statement, then ``for all \( x \), \( \varphi(x) \)'' is also a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Universal Instantiation]
+    \phantomsection \label{meta-rule:universal-instantiation}
+    Let \( \alpha \) denote an \emph{arbitrary} object in the universe and \( \varphi(x) \) denote a predicate.
+    If ``for all \( x \), \( \varphi(x) \)'' is a true statement, then \( \varphi(\alpha) \) is also a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Existential Generalization]
+    \phantomsection \label{meta-rule:existential-generalization}
+    Let \( \varphi(x) \) denote a predicate. If \( A \) denotes an object in the universe and \( \varphi(A) \) is a true statement,
+    then ``there exists an \( x \) such that \( \varphi(x) \)'' is also a true statement.
 \end{meta-rule}
 
 
