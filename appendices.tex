@@ -84,13 +84,14 @@ we decide that a particular formal system in the recursive chain is self-evident
 
 \vspace{0.3cm}
 \noindent
-Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English instead of another formal system since English
-is a natural language and natural languages require no justification at all.
-Note that our choice does not preclude the use of symbolisms. Symbolic notations will be used wherever convenient\footnote{It is more accurate to think
+Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English
+and to do it in such a way that the resulting metatheory is self-evident.
+Note that our choice in using natural language as the metalanguage does not preclude the use of symbolisms in the metatheory.
+Symbolic notations will be used wherever convenient\footnote{It is more accurate to think
 of the metatheory as a semi-formal system of reasoning rather than a purely informal one.}.
 
 \section{Metatheory}
-The following terms are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
+The following are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
 `not', `and', `or', `if', `imply', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
 `implication', `converse', `object', `collection', `aggregate', `symbol', `sentence', `rule', `identity', `same', `unique', `arbitrary', `universe'.
 These primitives are the basic building blocks upon which all other concepts in our metatheory are built.
@@ -102,7 +103,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 \end{dfn}
 
 \begin{rem}
-    Statements are sometimes abbreviated symbolically. E.g., \( P \), \( Q \), etc.
+    Statements are sometimes abbreviated symbolically for brevity and convenience. E.g., \( P \), \( Q \), \( R \), \( \dots \) etc.
 \end{rem}
 
 \begin{dfn}[Axioms]
@@ -131,7 +132,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 \end{rem}
 
 \begin{notation}
-    If \( A \) denote an object in the universe and \( \varphi(x) \) denotes a predicate, then
+    If \( A \) denotes an object in the universe and \( \varphi(x) \) denotes a predicate, then
     \( \varphi(A) \) denotes the statement obtained from \( \varphi(x) \) by replacing \( x \) with \( A \).
 \end{notation}
 
@@ -163,7 +164,8 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{dfn}[Uniqueness]
     \phantomsection \label{dfn:metatheory-unique-satisfaction}
-    An object \( A \) \keyword{uniquely} satisfies a predicate \( \varphi(x) \) iff for all \( x \),  \( \varphi(x) \) implies \( x = A \).
+    An object \( A \) is said to \keyword{uniquely} satisfy a predicate \( \varphi(x) \) iff the statement
+    ``for all \( x \),  \( \varphi(x) \) implies \( x = A \)'' is true.
 \end{dfn}
 
 \begin{dfn}[Sets]
@@ -178,10 +180,17 @@ These primitives are the basic building blocks upon which all other concepts in 
     ``\( x \) is a member of \( A \),'' or ``\( x \) belongs to \( A \).''
 \end{notation}
 
+\begin{dfn}[Set-builder]
+    \phantomsection \label{dfn:metatheory-setbuilder}
+    If \( \varphi(x) \) is a predicate, then we write \( \setbuilder{x}{\varphi(x)} \) to denote the set (if it exists)
+    whose elements are exactly those objects that \aref{dfn:metatheory-satisfaction}{satisfy} \( \varphi(x) \); that is,
+    for all \( y \), \( y \in \setbuilder{x}{\varphi(x)} \) iff \( \varphi(y) \) is true.
+\end{dfn}
+
 \begin{dfn}[Subsets]
     \phantomsection \label{dfn:metatheory-subsets-and-proper-subsets}
     For any two sets \( A \) and \( B \), we say that \( A \) is a \keyword{subset} of \( B \) iff
-    the predicate ``if \( x \in A \), then \( x \in B \)'' is true for all \( x \).
+    the statement ``for all \( x \), if \( x \in A \), then \( x \in B \)'' is true.
     Furthermore, we say that \( A \) is a \keyword{proper subset} of \( B \) iff:
     \begin{enumerate*}[label=(\arabic*)]
         \item \( A \) is a subset of \( B \),
@@ -207,7 +216,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:extensionality}
     For any two sets \( A \) and \( B \), \( A = B \) iff
-    the predicate ``\( x \in A \) iff \( x \in B \)'' is true for all \( x \).
+    ``for all \( x \), \( x \in A \) iff \( x \in B \)'' is a true statement.
 \end{meta-axiom}
 
 \begin{meta-axiom}
@@ -217,17 +226,20 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:pairing}
-    For any two sets \( A \) and \( B \), there exists a set whose elements are exactly \( A \) and \( B \).
+    For any two objects \( A \) and \( B \) in the universe, there exists a set whose elements are exactly \( A \) and \( B \).
+    We call such a set an \keyword{unordered pair} containing \( A \) and \( B \).
 \end{meta-axiom}
 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:union}
     For any family of sets \( S \), there exists a set whose elements are exactly the object(s) belonging to some element of \( S \).
+    We call such a set the \keyword{union} of \( S \).
 \end{meta-axiom}
 
 \begin{meta-axiom}
     \phantomsection \label{meta-axiom:power-set}
     For any set \( S \), there exists a set whose elements are exactly the subsets of \( S \).
+    We call such a set the \keyword{power set} of \( S \).
 \end{meta-axiom}
 
 \begin{meta-axiom}
@@ -236,7 +248,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 \end{meta-axiom}
 
 \begin{rem}
-    Notice that in \crefrange{meta-axiom:extensionality}{meta-axiom:specification}, we have simply restated the axioms of set theory in our metalanguage
+    Notice that in \crefrange{meta-axiom:extensionality}{meta-axiom:specification}, we have simply restated the axioms of ZFC using our metalanguage (plain English)
     so that we can use and reference sets in our metatheory without circularity.
 \end{rem}
 
@@ -247,12 +259,12 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{meta-rule}[Excluded Middle]
     \phantomsection \label{meta-rule:law-of-excluded-middle}
-    For any statement \( P \), the statement ``\( P \) or not \( P \)'' is true.
+    For any statement \( P \), the statements ``\( P \) or not \( P \)'' and ``not \( P \) or \( P \)'' are true.
 \end{meta-rule}
 
 \begin{meta-rule}[Conjunction Introduction]
     \phantomsection \label{meta-rule:conjunction-introduction}
-    If \( P \) and \( Q \) are both true statements, then ``\( P \) and \( Q \)'' is also a true statement.
+    If \( P \) and \( Q \) are both true statements, then ``\( P \) and \( Q \)'' and ``\( Q \) and \( P \)'' are both true statements.
 \end{meta-rule}
 
 \begin{meta-rule}[Conjunction Elimination]
@@ -262,12 +274,26 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{meta-rule}[Disjunction Introduction]
     \phantomsection \label{meta-rule:disjunction-introduction}
-    If \( P \) is a true statement, then ``\( P \) or \( Q \)'' is also a true statement for any statement \( Q \).
+    If \( P \) is a true statement, then ``\( P \) or \( Q \)'' and ``\( Q \) or \( P \)'' are both true statements for any statement \( Q \).
 \end{meta-rule}
 
 \begin{meta-rule}[Disjunction Elimination]
     \phantomsection \label{meta-rule:disjunction-elimination}
     If ``if \( P \) then \( Q \)'', ``if \( R \) then \( Q \)'', and ``\( P \) or \( R \)'' are all true statements, then \( Q \) must also be true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[De Morgan's Laws]
+    \phantomsection \label{meta-rule:de-morgans-laws}
+    For any statements \( P \) and \( Q \):
+    \begin{enumerate*}[label=(\roman*)]
+        \item ``\( P \) and \( Q \)'' is false iff ``not \( P \) or not \( Q \)'' is true;
+        \item ``\( P \) or \( Q \)'' is false iff ``not \( P \) and not \( Q \)'' is true.
+    \end{enumerate*}
+\end{meta-rule}
+
+\begin{meta-rule}[Material Implication]
+    \phantomsection \label{meta-rule:material-implication}
+    For any two statements \( P \) and \( Q \), the statement ``if \( P \) then \( Q \)'' is true iff ``not \( P \) or \( Q \)'' is true.
 \end{meta-rule}
 
 \begin{meta-rule}[Modus Ponens]
@@ -282,8 +308,8 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{meta-rule}[Disjunctive Syllogism]
     \phantomsection \label{meta-rule:disjunctive-syllogism}
-    For any two statements \( P \) and \( Q \), if ``\( P \) or \( Q \)'' is a true statement,
-    then ``not \( P \) implies \( Q \)'' and ``not \( Q \) implies \( P \)'' are both true statements.
+    If ``\( P \) or \( Q \)'' is a true statement and \( P \) is a false statement, then \( Q \) must be a true statement.
+    Similarly, if ``\( P \) or \( Q \)'' is a true statement and \( Q \) is a false statement, then \( P \) must be a true statement.
 \end{meta-rule}
 
 \begin{meta-rule}[Hypothetical Syllogism]
@@ -296,6 +322,11 @@ These primitives are the basic building blocks upon which all other concepts in 
     \phantomsection \label{meta-rule:constructive-dilemma}
     If ``\( P \) implies \( Q \)'', ``\( R \) implies \( S \)'', ``\( P \) or \( R \)'' are all true statements, then ``\( Q \) or \( S \)'' is also
     a true statement.
+\end{meta-rule}
+
+\begin{meta-rule}[Reductio ad Absurdum]
+    \phantomsection \label{meta-rule:reductio-ad-absurdum}
+    If \( P \) and ``if \( Q \) then not \( P \)'' are both true statements, then \( Q \) must be a false statement.
 \end{meta-rule}
 
 \begin{meta-rule}[Universal Generalization]
@@ -316,6 +347,391 @@ These primitives are the basic building blocks upon which all other concepts in 
     then ``there exists an \( x \) such that \( \varphi(x) \)'' is also a true statement.
 \end{meta-rule}
 
+\noindent
+The aforementioned axioms and inference rules are accepted as valid without justification.
+In more philosophical terms, we say that they are a form of \keyword{a priori} knowledge---known by virtue of our rational faculties as opposed to our experience.
+Indeed, any person capable of cognition should have no difficulty convincing himself of the validity of \crefrange{meta-axiom:equality-axioms}{meta-axiom:specification}
+and \crefrange{meta-rule:law-of-non-contradiction}{meta-rule:existential-generalization}.
+
+\vspace{0.3cm}
+\noindent
+We now proceed to utilize \crefrange{meta-axiom:equality-axioms}{meta-axiom:specification}
+and \crefrange{meta-rule:law-of-non-contradiction}{meta-rule:existential-generalization}
+to derive some basic results of our metatheory.
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-equality-in-terms-of-subsets}
+    Two sets are equal iff they are subsets of each other.
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be any two sets.
+    Suppose that \( A = B \).
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    If \( \alpha \in A \), then necessarily \( \alpha \in B \) by \cref{meta-axiom:extensionality,meta-rule:universal-instantiation}.
+    Since \( \alpha \) is arbitrary, we have for all \( x \), \( x \in A \) implies \( x \in B \) by \cref{meta-rule:universal-generalization}.
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \subseteq B \) is true.
+    Similarly, let \( \beta \) denote an arbitary object in the univese.
+    If \( \beta \in B \), then necessarily \( \beta \in A \) by \cref{meta-axiom:extensionality,meta-rule:universal-instantiation}.
+    Again, since \( \beta \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that for all \( x \), \( x \in B \) implies \( x \in A \),
+    which is synonymous to \( B \subseteq A \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
+    In other words, we have shown that if \( A = B \) is true, then \( A \subseteq B \) and \( B \subseteq A \) must both be true.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that \( A \subseteq B \) and \( B \subseteq A \) are both true.
+    Now let \( \gamma \) denote an arbitrary object in the universe.
+    Suppose that \( \gamma \in A \). Since \( A \subseteq B \), it follows from \cref{dfn:metatheory-subsets-and-proper-subsets,meta-rule:universal-instantiation}
+    that \( \gamma \in B \). In other words, \( \gamma \in A \) implies \( \gamma \in B \).
+    Conversely, if \( \gamma \in B \), then \( \gamma \in A \) is necessarily true by virtue of \( B \subseteq A \) and \cref{meta-rule:universal-instantiation}.
+    Thus, \( \gamma \in B \) implies \( \gamma \in A \).
+    Since \( \gamma \in A \) and \( \gamma \in B \) imply each other, we conclude that \( \gamma \in A \) iff \( \gamma \in B \).
+    With \( \gamma \) being arbitrary, \cref{meta-rule:universal-generalization} allows us to draw the conclusion that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in A \) iff \( x \in B \)}
+    \end{equation*}
+    By \cref{meta-axiom:extensionality}, this is synonymous to \( A = B \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-specification-subset}
+    Let \( \varphi(x) \) be any predicate and \( S \) be any set.
+    Then the set containing all the elements of \( S \) that satisfy \( \varphi(x) \) is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( T \) and \( T^{\prime} \) be sets containing the elements of \( S \) that satisfy \( \varphi(x) \).
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \alpha \in T \).
+    Then \( \alpha \in S \) and \( \varphi(\alpha) \) are necessarily true statements by definition.
+    But \( T^{\prime} \) is also a set containing all the elements of \( S \) that satisfy \( \varphi(x) \).
+    This means that \( \alpha \in T^{\prime} \) is also true.
+    In other words, \( \alpha \in T \) implies \( \alpha \in T^{\prime} \).
+    The converse can be demonstrated to be true by the same argument.
+    Thus, we conclude that \( \alpha \in T \) iff \( \alpha \in T^{\prime} \).
+    With \( \alpha \) being arbitrary, we conclude that \( T = T^{\prime} \) by \cref{meta-rule:universal-generalization} and
+    \cref{meta-axiom:extensionality}.
+\end{proof}
+
+\begin{notation}
+    For any given set \( S \) and any predicate \( \varphi(x) \), we write \( \setbuilder{x \in S}{\varphi(x)} \) to denote the unique set
+    containing all the elements of \( S \) that satisfy \( \varphi(x) \). In other words,
+    for all \( y \), \( y \in \setbuilder{x \in S}{\varphi(x)} \) iff \( y \in S \) and \( \varphi(y) \) are both true statements.
+\end{notation}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-unrestricted-comprehension-set}
+    For any predicate \( \varphi(x) \), if there exists a set \( S \) such that the statement ``for all \( x \), \( \varphi(x) \) implies \( x \in S \)'' is true,
+    then the set \( \setbuilder{x}{\varphi(x)} \) exists and \( \setbuilder{x}{\varphi(x)} = \setbuilder{x \in S}{\varphi(x)} \).
+\end{thm}
+
+\begin{proof}
+    Suppose there exists a set \( S \) such that \( \varphi(x) \) implies \( x \in S \) for all \( x \).
+    By \cref{meta-axiom:specification}, we know that the set \( \setbuilder{x \in S}{\varphi(x)} \) exists.
+    We now prove that \( x \in \setbuilder{x \in S}{\varphi(x)} \) iff \( \varphi(x) \) for all \( x \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \alpha \in \setbuilder{x \in S}{ \varphi(x) } \).
+    By definition, it follows that \( \alpha \in S \) and \( \varphi(\alpha) \) are both true.
+    In other words, \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \) implies \( \varphi(\alpha) \).
+    To prove the converse, suppose that \( \varphi(\alpha) \) is a true statement.
+    Since ``for all \( x \), \( \varphi(x) \) implies \( x \in S \)'' is a true statement, it follows from
+    \cref{meta-rule:universal-instantiation,meta-rule:modus-ponens} that \( \alpha \in S \).
+    With \( \varphi(\alpha) \) and \( \alpha \in S \) both being true, necessarily \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \).
+    This means that \( \varphi(\alpha) \) implies \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have thus shown that the statements \( \varphi(\alpha) \) and \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \) imply each other.
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    for all \( x \), \( x \in \setbuilder{x \in S}{\varphi(x)} \) iff \( \varphi(x) \).
+    In other words, \( \setbuilder{x}{\varphi(x)} = \setbuilder{x \in S}{\varphi(x)} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-empty-set}
+    The set without any elements is unique.
+\end{thm}
+
+\begin{proof}
+    Suppose that \( A \) and \( B \) are sets that do no contain any elements.
+    Consider the following predicate,
+    \begin{equation*}
+        \varphi(x) \coloneq x \in A \ \text{iff}\  x \in B
+    \end{equation*}
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Since \( A \) and \( B \) are empty sets, it follows that
+    \( \alpha \notin A \) and \( \alpha \notin B \) are both true statements.
+    In other words, \( \varphi(\alpha) \) is true for any arbitrary object \( \alpha \) in the universe.
+    Thus, we infer from \cref{meta-rule:universal-generalization} that the statement ``for all \( x \), \( \varphi(x) \)'' is a true statement.
+    It follows from \cref{meta-axiom:extensionality} that \( A = B \).
+    By \cref{dfn:metatheory-unique-satisfaction}, the empty set is indeed unique.
+\end{proof}
+
+\begin{notation}
+    Since there exists only one empty set in the universe, we can denote it with a unique symbol \( \emptyset \).
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-empty-set}
+    The set \( \emptyset \) is the unique set that does not contain any element;
+    that is, the statement ``for all \( x \), \( x \notin \emptyset \)'' is true.
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-unordered-pair}
+    Let \( A \) and \( B \) be objects in the universe. Then the unordered pair containing \( A \) and \( B \) is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( S \) and \( T \) be unordered pairs containing \( A \) and \( B \).
+    Let \( \alpha \) denote an arbitrary object in the universe such that \( \alpha \in S \).
+    Since \( S \) contains exactly \( A \) and \( B \), the statement ``\( \alpha = A \) or \( \alpha = B \)'' must be true.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \alpha = A \), then \( \alpha \in T \) is true because \( T \) is also an unordered pair containing \( A \) and \( B \).
+    Similarly, if \( \alpha = B \), then \( \alpha \in T \) is also true for the same reason.
+    We now conclude by \cref{meta-rule:disjunction-elimination} that \( \alpha \in T \) must be a true statement.
+    In other words, the implication ``if \( x \in S \), then \( x \in T \)'' is true.
+    The converse can be established with a similar argument.
+    Thus,
+    \begin{equation*}
+        \alpha \in S \ \text{iff} \ \alpha \in T
+    \end{equation*}
+    where \( \alpha \) denotes an arbitrary object in the universe.
+    Finally, we conclude \( S = T \) by \cref{meta-rule:universal-generalization} and \cref{meta-axiom:extensionality}.
+\end{proof}
+
+\begin{notation}
+    We will write \( \mleft\{ A, B \mright\} \) or \( \mleft\{ B, A \mright\} \) to denote the unordered pair containing exactly \( A \) and \( B \).
+    Note that if \( A \) and \( B \) are the same set, the unordered pair is really just the singleton \( \mleft\{ A \mright\} \) (or \( \mleft\{ B \mright\} \)).
+\end{notation}
+
+\begin{dfn}[Unordered Pair]
+    \phantomsection \label{dfn:metatheory-unordered-pair}
+    For any two sets \( A \) and \( B \), the \keyword{unordered pair} containing \( A \) and \( B \) is the set given by
+    \begin{equation*}
+        \mleft\{ A, B \mright\} = \mleft\{ B, A \mright\} = \setbuilder{x}{x = A \ \text{or} \ x = B}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-union}
+    Let \( S \) be any family of sets. Then the union of \( S \) is unqiue.
+\end{thm}
+
+\begin{proof}
+    Let \( U \) and \( V \) be the unions of \( S \). We must show that \( U = V \). Consider the predicate
+    \begin{equation*}
+        \varphi(x) \coloneq \ \text{\( x \in E \) for some \( E \in S \)}
+    \end{equation*}
+    Let \( \alpha \) denote an arbitrary object in the universe. Suppose that \( \alpha \in U \).
+    By \cref{meta-axiom:union}, it follows that \( \varphi(\alpha) \) is a true statement.
+    Let \( E^{\prime} \) denote the element of \( S \) such that \( \alpha \in E^{\prime} \).
+    But \( V \) is also a union of \( S \), so necessarily \( \alpha \in V \) by \cref{meta-axiom:union}.
+    In other words, \( \alpha \in U \) implies \( \alpha \in V \).
+    The converse can be proven with a similar argument, and we thus have \( \alpha \in U \) iff \( \alpha \in V \).
+    Since \( \alpha \) is arbitrary, the statement ``for all \( x \), \( x \in U \) iff \( x \in V \)'' is true by
+    \cref{meta-rule:universal-generalization}.
+    Therefore, \( U = V \) by \cref{meta-axiom:extensionality}.
+\end{proof}
+
+\begin{notation}
+    For any family of sets \( S \), we write \( \Union S \) to denote the union of \( S \). 
+    If \( S \) is the unordered pair \( \mleft\{ A \union B \mright\} \), then we also use the notation
+    \( A \union B \) to denote \( \Union S \).
+\end{notation}
+
+\begin{dfn}[Union]
+    \phantomsection \label{dfn:metatheory-the-union-of-sets}
+    For every family of sets \( S \), the \keyword{union} of \( S \) is the set given by
+    \begin{equation*}
+        \Union S = \setbuilderBig{x}{\text{there exists an \( E \in S \) such that \( x \in E \)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-power-set}
+    For any set \( S \), the power set of \( S \) is unique.
+\end{thm}
+
+\begin{proof}
+    Let \( P \) and \( P^{\prime} \) be the power sets of \( S \).
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \alpha \in P \). By \cref{meta-axiom:power-set}, it follows that \( \alpha \subseteq S \).
+    Since \( P^{\prime} \) is also a power set of \( S \), \( \alpha \in P^{\prime} \) must also be true by
+    \cref{meta-axiom:power-set}. The converse can also be established by a similar line of reasoning.
+    Thus, \( \alpha \in P \) iff \( \alpha \in P^{\prime} \).
+    Since \( \alpha \) denotes an arbitrary object in the universe, \( P = P^{\prime} \) by
+    \cref{meta-rule:universal-generalization} and \cref{meta-axiom:extensionality}.
+\end{proof}
+
+\begin{notation}
+    For any given set \( S \), the unique power set of \( S \) will be denoted as \( \powerset{S} \).
+\end{notation}
+
+\begin{dfn}[Power Set]
+    \phantomsection \label{dfn:metatheory-power-set}
+    For any set \( S \), the \keyword{power set} of \( S \) is the set given by
+    \begin{equation*}
+        \powerset{S} = \setbuilder{x}{x \subseteq S}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-intersection-of-a-family-of-sets}
+    For any non-empty family of sets \( S \), there exists a unique set whose elements are exactly those objects that belong to all elements of \( S \).
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be a non-empty family of sets.
+    Now consider the predicate
+    \begin{equation*}
+        \varphi(x) \coloneq \ \text{for all \( y \), \( y \in S \) implies \( x \in y \)}
+    \end{equation*}
+    Since \( S \) is a non-empty family of sets, there must exists a set \( E \) such that \( E \in S \).
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \varphi(\alpha) \) is a true statement; that is,
+    \begin{equation*}
+        \text{for all \( y \), \( y \in S \) implies \( \alpha \in y \)}
+    \end{equation*}
+    Since \( E \) denotes an object in the universe, it follows immediately from \cref{meta-rule:universal-instantiation} that \( E \in S \) implies \( \alpha \in E \).
+    But \( E \in S \) is true, so \( \alpha \in E \) must also be true by \cref{meta-rule:modus-ponens}.
+    Therefore, we can validly conclude that \( \varphi(\alpha) \) implies \( \alpha \in E \) where \( E \) is an existing set.
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set \( \setbuilder{x}{\varphi(x)} \) exists and is unique.
+\end{proof}
+
+\begin{notation}
+    For any given non-empty system of sets \( S \), we write \( \Intersect S \) to denote the unique set whose elements are exactly those objects that belong to all
+    elements of \( S \).
+    If \( S \) is the unordered pair \( \mleft\{ A, B \mright\} \) where \( A \) and \( B \) are sets, then we also write \( A \intersect B \) to denote
+    \( \Intersect S \).
+\end{notation}
+
+\begin{dfn}[Intersection]
+    \phantomsection \label{dfn:metatheory-the-intersection-of-a-non-empty-family-of-sets}
+    For every non-empty family of sets \( S \), the \keyword{intersection} of \( S \) is the unique set given by
+    \begin{equation*}
+        \Intersect S = \setbuilderBig{x}{\text{for all \( y \), \( y \in S \) implies \( x \in y \)}}
+    \end{equation*}
+\end{dfn}
+
+\subsection{The Counting Numbers}
+Our metatheory is now sophisticated enough that we can build the counting numbers with it.
+But first, we preface their construction with the following definition and axiom.
+
+\begin{dfn}[Inductive Set]
+    \phantomsection \label{dfn:metatheory-inductive-set}
+    A set \( I \) is \keyword{inductive} iff the following statements are true:
+    \begin{enumerate}[topsep=2pt, label=\textup{\texttt{(\alph*)}}]
+        \item \( \emptyset \in I \)
+        \item for all \( x \), \( x \in I \) implies \( x \union \mleft\{ x \mright\} \in I \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:existence-of-inductive-set}
+    An inductive set exists in the universe.
+\end{meta-axiom}
+
+\begin{dfn}[Von Neumann Ordinals]
+    \phantomsection \label{dfn:metatheory-von-neumann-ordinals}
+    We now designate the familiar symbols for the counting numbers to the following sets:
+    \begin{align*}
+        0 &\coloneq \emptyset = \mleft\{ \mright\} \\
+        1 &\coloneq 0 \union \mleft\{ 0 \mright\} = \{0\} \\
+        2 &\coloneq 1 \union \mleft\{ 1 \mright\} = \{0\} \union \{1\} = \{0,1\}\\
+        3 &\coloneq 2 \union \mleft\{ 2 \mright\} = \{0,1\} \union \{2\} = \{0,1,2\}\\
+        \vdots
+    \end{align*}
+\end{dfn}
+
+\begin{rem}
+    The von Neumann ordinals are in essence the set-theoretic rendition of the Peano Axioms.
+    As long as we interpret the set \( x \union \mleft\{ x \mright\} \) as the \keyword{successor} of \( x \), then
+    the properties of the von Neumann can be translated into the Peano Axioms as follows:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \emptyset \) is a von Neumann ordinal
+        \item The successor of any von Neumann ordinal is also a von Neumann ordinal
+        \item \( \emptyset \) is not the successor of any von Neumann ordinal (because the successor cannot possibly be the empty set)
+        \item If two von Neumann ordinals \( x \) and \( y \) have equal successors, then \( x = y \)
+    \end{enumerate}
+    %It is not difficult to see that an inductive set must contain the von Neumann ordinals.
+    %We will state this fact as an axiom due to its self-evident nature.
+\end{rem}
+
+%\begin{meta-axiom}
+%    \phantomsection \label{meta-axiom:inductive-sets-contain-the-von-neumann-ordinals}
+%    If \( I \) is an inductive set and \( n \) is a von Neumann ordinal, then \( n \in I \).
+%\end{meta-axiom}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-the-set-of-natural-numbers}
+    The set \( \setbuilder{x}{\text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}} \) exists.
+\end{thm}
+
+\begin{proof}
+    We start by defining the following predicate.
+    \begin{equation*}
+        \varphi(x) \coloneq \ \text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}
+    \end{equation*}
+    \cref{meta-axiom:existence-of-inductive-set} guarantees that there exists at least one inductive set, which we will denote with \( \mathcal{I} \).
+    Let \( \alpha \) be an arbitrary object such that \( \varphi(\alpha) \) is a true statement; that is,
+    \begin{equation*}
+        \text{for all \( I \), if \( I \) is an inductive set, then \( \alpha \in I \)}
+    \end{equation*}
+    Since the set \( \mathcal{I} \) is inductive, it follows that \( \alpha \in \mathcal{I} \).
+    In other words, \( \varphi(\alpha) \) implies \( \alpha \in \mathcal{I} \).
+    But \( \alpha \) is arbitrary, so we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \mathcal{I} \)}
+    \end{equation*}
+    Since \( \mathcal{I} \) is an existing set, it follows readilly from \cref{thm:metatheory-existence-of-unrestricted-comprehension-set} that the set
+    \( \setbuilder{x}{\varphi(x)} \) exists and is unique.
+\end{proof}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-the-set-of-all-natural-numbers}
+    \( \naturalset = \setbuilder{x}{\text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}} \)
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-set-of-all-natural-numbers-is-inductive}
+    \( \naturalset \) is an inductive set.
+\end{thm}
+
+\begin{proof}
+    Let \( I \) denote an arbitrary set.
+    Suppose that \( I \) is \aref{dfn:metatheory-inductive-set}{inductive}.
+    By \cref{dfn:metatheory-inductive-set}, necessarily \( \emptyset \in I \).
+    In other words, the implication ``if \( I \) is inductive, then \( \emptyset \in I \)'' is true.
+    Since \( I \) is arbitrary, it follows from \cref{meta-rule:universal-generalization,dfn:metatheory-the-set-of-all-natural-numbers}
+    that \( \emptyset \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, let \( \alpha \) denote an arbitrary object. Suppose that \( \alpha \in \naturalset \); that is,
+    \begin{equation*}
+        \text{for all \( I \), if \( I \) is inductive, then \( \alpha \in I \)}
+    \end{equation*}
+    Let \( I^{\prime} \) denote an arbitary inductive set. By \cref{meta-rule:universal-instantiation}, it follows that
+    \( \alpha \in I^{\prime} \). Since \( I^{\prime} \) is inductive and \( \alpha \in I^{\prime} \),
+    \cref{dfn:metatheory-inductive-set} guarantees that \( \alpha \union \mleft\{ \alpha \mright\} \in I^{\prime} \).
+    Since \( I^{\prime} \) is arbitrary, we apply \cref{meta-rule:universal-generalization} to infer
+    \begin{equation*}
+        \text{for all \( I \), if \( I \) is inductive, then \( \alpha \union \mleft\{ \alpha \mright\} \in I \)}
+    \end{equation*}
+    But by \cref{dfn:metatheory-the-set-of-all-natural-numbers}, this implies \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \).
+    In other words, \( \alpha \in \naturalset \) implies \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} once again that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \naturalset \) implies \( x \union \mleft\{ x \mright\} \in \naturalset \)}
+    \end{equation*}
+    Given that \( \emptyset \in \naturalset \), \( \naturalset \) is necessarily inductive by \cref{dfn:metatheory-inductive-set}.
+\end{proof}
 
 \section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
