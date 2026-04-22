@@ -111,6 +111,12 @@ These primitives are the basic building blocks upon which all other concepts in 
     Self-evident statements are known as \keyword{axioms}.
 \end{dfn}
 
+\begin{dfn}[Vacuous Truth]
+    \phantomsection \label{dfn:metatheory-vacuous-truth}
+    A statement of the form ``if \( P \), then \( Q \)'', ``\( Q \) if \( Q \)'', or ``\( P \) implies \( Q \)''
+    is \keyword{vacuously true} iff \( P \) is a false statement.
+\end{dfn}
+
 \begin{dfn}[Placeholders]
     \phantomsection \label{dfn:metatheory-placeholders}
     A \keyword{placeholder} is a symbol that appears in an English sentence in place of a noun.
@@ -394,6 +400,26 @@ to derive some basic results of our metatheory.
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-empty-set-is-the-subset-of-every-set}
+    For all \( X \), if \( X \) is a set, then \( \emptyset \subseteq X \)
+\end{thm}
+
+\begin{proof}
+    Let \( S \) denote an arbitrary object.
+    Suppose that \( S \) is a set.
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Since \( \emptyset \) has no elements, if follows that \( \alpha \notin \emptyset \).
+    Thus, the statement ``if \( \alpha \in \emptyset \), then \( \alpha \in S \)'' is \aref{dfn:metatheory-vacuous-truth}{vacuously true}.
+    Given that \( \alpha \) denotes an arbitrary object in the universe, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \emptyset \) implies \( x \in S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, necessarily \( \emptyset \in S \).
+    In other words, \( S \) is a set implies \( \emptyset \subseteq S \).
+    Since \( S \) is arbitrary, the theorem follows readilly from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-specification-subset}
     Let \( \varphi(x) \) be any predicate and \( S \) be any set.
     Then the set containing all the elements of \( S \) that satisfy \( \varphi(x) \) is unique.
@@ -418,6 +444,22 @@ to derive some basic results of our metatheory.
     containing all the elements of \( S \) that satisfy \( \varphi(x) \). In other words,
     for all \( y \), \( y \in \setbuilder{x \in S}{\varphi(x)} \) iff \( y \in S \) and \( \varphi(y) \) are both true statements.
 \end{notation}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-restricted-comprehension-set-is-the-subset-of-an-existing-set}
+    For any given set \( S \) and any given predicate \( \varphi(x) \), \( \setbuilder{x \in S}{\varphi(x)} \subseteq S \).
+\end{thm}
+
+\begin{proof}
+    Let \( \alpha \) be an arbitrary object. Suppose that \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \).
+    By definition, \( \alpha \in S \) and \( \varphi(\alpha) \) are both true statements.
+    In other words, \( \alpha \in \setbuilder{x \in S}{\varphi(x)} \) implies \( \alpha \in S \).
+    Since \( \alpha \) is arbitrary, \cref{meta-rule:universal-generalization} yields
+    \begin{equation*}
+        \text{for all \( y \), \( y \in \setbuilder{x \in S}{\varphi(x)} \) implies \( y \in S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, clearly \( \setbuilder{x \in S}{\varphi(x)} \subseteq S \).
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-unrestricted-comprehension-set}
@@ -637,36 +679,10 @@ But first, we preface their construction with the following definition and axiom
     An inductive set exists in the universe.
 \end{meta-axiom}
 
-\begin{dfn}[Von Neumann Ordinals]
-    \phantomsection \label{dfn:metatheory-von-neumann-ordinals}
-    We now designate the familiar symbols for the counting numbers to the following sets:
-    \begin{align*}
-        0 &\coloneq \emptyset = \mleft\{ \mright\} \\
-        1 &\coloneq 0 \union \mleft\{ 0 \mright\} = \{0\} \\
-        2 &\coloneq 1 \union \mleft\{ 1 \mright\} = \{0\} \union \{1\} = \{0,1\}\\
-        3 &\coloneq 2 \union \mleft\{ 2 \mright\} = \{0,1\} \union \{2\} = \{0,1,2\}\\
-        \vdots
-    \end{align*}
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-successor}
+    For any set \( x \), the set \( x \union \mleft\{ x \mright\} \) is called the \keyword{successor} of \( x \).
 \end{dfn}
-
-\begin{rem}
-    The von Neumann ordinals are in essence the set-theoretic rendition of the Peano Axioms.
-    As long as we interpret the set \( x \union \mleft\{ x \mright\} \) as the \keyword{successor} of \( x \), then
-    the properties of the von Neumann can be translated into the Peano Axioms as follows:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \emptyset \) is a von Neumann ordinal
-        \item The successor of any von Neumann ordinal is also a von Neumann ordinal
-        \item \( \emptyset \) is not the successor of any von Neumann ordinal (because the successor cannot possibly be the empty set)
-        \item If two von Neumann ordinals \( x \) and \( y \) have equal successors, then \( x = y \)
-    \end{enumerate}
-    %It is not difficult to see that an inductive set must contain the von Neumann ordinals.
-    %We will state this fact as an axiom due to its self-evident nature.
-\end{rem}
-
-%\begin{meta-axiom}
-%    \phantomsection \label{meta-axiom:inductive-sets-contain-the-von-neumann-ordinals}
-%    If \( I \) is an inductive set and \( n \) is a von Neumann ordinal, then \( n \in I \).
-%\end{meta-axiom}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-the-set-of-natural-numbers}
@@ -697,6 +713,45 @@ But first, we preface their construction with the following definition and axiom
     \phantomsection \label{dfn:metatheory-the-set-of-all-natural-numbers}
     \( \naturalset = \setbuilder{x}{\text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}} \)
 \end{dfn}
+
+\begin{rem}
+    It is not difficult to see that the set \( \naturalset \) contains exactly the symbols for the counting numbers
+    as long as we interpret the symbols using the following scheme:
+    \begin{align*}
+        0 &\coloneq \emptyset = \mleft\{ \mright\} \\
+        1 &\coloneq 0 \union \mleft\{ 0 \mright\} = \{0\} \\
+        2 &\coloneq 1 \union \mleft\{ 1 \mright\} = \{0\} \union \{1\} = \{0,1\}\\
+        3 &\coloneq 2 \union \mleft\{ 2 \mright\} = \{0,1\} \union \{2\} = \{0,1,2\}\\
+        \vdots
+    \end{align*}
+\end{rem}
+
+\begin{notation}
+    If \( n \in \naturalset \), then we denote the successor of \( n \) as \( n + 1 \).
+\end{notation}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}
+    If \( I \) is an inductive set, then \( \naturalset \subseteq I \)
+\end{thm}
+
+\begin{proof}
+    Let \( I \) be any inductive set.
+    Let \( \alpha \) denote an arbitrary object.
+    Suppose that \( \alpha \in \naturalset \). By \cref{dfn:metatheory-the-set-of-all-natural-numbers}, the following statement is true:
+    \begin{equation*}
+        \text{for all \( y \), if \( y \) is an inductive set, then \( \alpha \in y \) }
+    \end{equation*}
+    Since \( I \) is an object in the universe, \cref{meta-rule:universal-instantiation} yields
+    \begin{equation*}
+        \text{if \( I \) is inductive, then \( \alpha \in I \)}
+    \end{equation*}
+    But \( I \) is indeed inductive, so necessarily \( \alpha \in I \) by \cref{meta-rule:modus-ponens}.
+    In other words, we have proven that \( \alpha \in \naturalset \) implies \( \alpha \in I \).
+    Since \( \alpha \) is arbitary, we conclude by \cref{meta-rule:universal-generalization} that
+    for all \( x \), \( x \in \naturalset \) implies \( x \in I \).
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( \naturalset \subseteq I \).
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-the-set-of-all-natural-numbers-is-inductive}
@@ -732,6 +787,82 @@ But first, we preface their construction with the following definition and axiom
     \end{equation*}
     Given that \( \emptyset \in \naturalset \), \( \naturalset \) is necessarily inductive by \cref{dfn:metatheory-inductive-set}.
 \end{proof}
+
+\begin{thm}[Weak Induction]
+    \phantomsection \label{thm:metatheory-weak-induction}
+    Let \( \varphi(n) \) be a predicate where the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \varphi(\emptyset) \) is a true statement
+        \item for all \( n \), if \( \varphi(n) \) is a true statement, then \( \varphi(n \union \mleft\{ n \mright\}) \) is also a true statement
+    \end{enumerate}
+    Then \( \naturalset = \setbuilder{ n \in \naturalset }{\varphi(n)} \).
+\end{thm}
+
+\begin{proof}
+    Let \( S \) denote the set \( \setbuilder{n \in \naturalset}{\varphi(n)} \) whose existence is guaranteed by \cref{meta-axiom:specification}.
+    We begin by proving that \( S \) is an inductive set.
+    Note that \( \varphi(\emptyset) \) is necessarily a true statement by the definition of \( \varphi(n) \) itself.
+    Furthermore, we know from \cref{thm:metatheory-the-set-of-all-natural-numbers-is-inductive} that \( \naturalset \) is inductive,
+    which means that \( \emptyset \in \naturalset \) by \cref{dfn:metatheory-inductive-set}.
+    In other words, \( \varphi(\emptyset) \) and \( \emptyset \in \naturalset \) are both true statements.
+    Therefore, \( \emptyset \in S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now let \( \alpha \) denote an arbitrary object.
+    Suppose that \( \alpha \in S \); that is, \( \alpha \in \naturalset \) and \( \varphi(\alpha) \) are both true.
+    But if \( \varphi(\alpha) \) is true, \( \varphi(\alpha \union \mleft\{ \alpha \mright\}) \) must also be a true statement
+    by the definition of \( \varphi(n) \).
+    Furthermore, \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \) is also true by \cref{dfn:metatheory-inductive-set}
+    since \( \naturalset \) is inductive.
+    In other words, \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \) and \( \varphi(\alpha \union \mleft\{ \alpha \mright\}) \) are both
+    true statements.
+    Therefore, \( \alpha \union \mleft\{ \alpha \mright\} \in S \).
+    This means that \( \alpha \in S \) implies \( \alpha \union \mleft\{ \alpha \mright\} \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in S \) implies \( x \union \mleft\{ x \mright\} \in S \)}
+    \end{equation*}
+    Since \( \emptyset \in S \) is also true, it follows from \cref{dfn:metatheory-inductive-set} that \( S \) is an inductive set.
+
+    \vspace{0.3cm}
+    \noindent
+    We already know from \cref{thm:metatheory-restricted-comprehension-set-is-the-subset-of-an-existing-set} that \( S \subseteq \naturalset \).
+    It remains to show that \( \naturalset \subseteq S \).
+    Let \( \beta \) denote an arbitrary object.
+    Suppose that \( \beta \in \naturalset \).
+    Now consider the definition of \( \naturalset \) as stated in \cref{dfn:metatheory-the-set-of-all-natural-numbers}.
+    Since \( \beta \in \naturalset \), it follows that
+    \begin{equation*}
+        \text{for all \( I \), if \( I \) is inductive, then \( \beta \in I \)}
+    \end{equation*}
+    By \cref{meta-rule:universal-instantiation}, we further infer that if \( S \) is inductive, then \( \beta \in S \).
+    But we have already shown that \( S \) is inductive. Thus, by \cref{meta-rule:modus-ponens}, \( \beta \in S \) is necessarily true.
+    In other words, \( \beta \in \naturalset \) implies \( \beta \in S \).
+    Since \( \beta \) denotes an arbitrary object, \cref{meta-rule:universal-generalization} is applicable and we have
+    \begin{equation*}
+        \text{for all \( x \), if \( x \in \naturalset \), then \( x \in S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( \naturalset \subseteq S \).
+    Since \( \naturalset \) and \( S \) are subsets of each other, \cref{thm:metatheory-equality-in-terms-of-subsets} guarantees that
+    \( \naturalset = S = \setbuilder{n \in \naturalset}{\varphi(n)} \).
+\end{proof}
+
+\begin{rem}
+    The Principle of Weak Induction as stated in \cref{thm:metatheory-weak-induction} essentially says that if we have a
+    predicate about the natural numbers such that \( P(0) \) is true and that \( P(n) \) implies \( P(n + 1) \),
+    then \( P(n) \) can be satisfied by all elements of \( \naturalset \).
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-base-case-and-inductive-step}
+    In any application of the \aref{thm:metatheory-weak-induction}{Principle of Weak Induction} on a predicate \( P(n) \),
+    the statement \( P(\emptyset) \) is known as the \keyword{base case} whereas
+    the statement ``for all \( n \), if \( n \in \naturalset \), then \( P(n) \) implies \( P(n + 1) \)''
+    is known as the \keyword{inductive step}.
+\end{dfn}
+
+
 
 \section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
