@@ -106,6 +106,11 @@ These primitives are the basic building blocks upon which all other concepts in 
     Statements are sometimes abbreviated symbolically for brevity and convenience. E.g., \( P \), \( Q \), \( R \), \( \dots \) etc.
 \end{rem}
 
+\begin{dfn}[Expressions]
+    \phantomsection \label{dfn:metatheory-expressions}
+    An \keyword{expression} is any linguistic construct that, when interpreted, refers to a unique object in the universe.
+\end{dfn}
+
 \begin{dfn}[Axioms]
     \phantomsection \label{dfn:metatheory-axioms}
     Self-evident statements are known as \keyword{axioms}.
@@ -113,7 +118,7 @@ These primitives are the basic building blocks upon which all other concepts in 
 
 \begin{dfn}[Vacuous Truth]
     \phantomsection \label{dfn:metatheory-vacuous-truth}
-    A statement of the form ``if \( P \), then \( Q \)'', ``\( Q \) if \( Q \)'', or ``\( P \) implies \( Q \)''
+    A statement of the form ``if \( P \), then \( Q \)'', ``\( Q \) if \( P \)'', or ``\( P \) implies \( Q \)''
     is \keyword{vacuously true} iff \( P \) is a false statement.
 \end{dfn}
 
@@ -129,8 +134,8 @@ These primitives are the basic building blocks upon which all other concepts in 
 \end{dfn}
 
 \begin{notation}
-    We use functional notation to denote predicates. For example, \( P(n) \) denotes a predicate with the symbol \( n \)
-    representing its placeholder.
+    We use functional notation to denote predicates as well as expressions containing placeholders.
+    For example, \( P(n) \) denotes a predicate with the symbol \( n \) representing its placeholder.
 \end{notation}
 
 \begin{rem}
@@ -186,12 +191,17 @@ These primitives are the basic building blocks upon which all other concepts in 
     ``\( x \) is a member of \( A \),'' or ``\( x \) belongs to \( A \).''
 \end{notation}
 
-\begin{dfn}[Set-builder]
-    \phantomsection \label{dfn:metatheory-setbuilder}
-    If \( \varphi(x) \) is a predicate, then we write \( \setbuilder{x}{\varphi(x)} \) to denote the set (if it exists)
-    whose elements are exactly those objects that \aref{dfn:metatheory-satisfaction}{satisfy} \( \varphi(x) \); that is,
-    for all \( y \), \( y \in \setbuilder{x}{\varphi(x)} \) iff \( \varphi(y) \) is true.
+\begin{dfn}[Set-builder Notation]
+    \phantomsection \label{dfn:metatheory-setbuilder-notation}
+    If \( \varphi(x) \) is a predicate, then we write \( \setbuilder{x}{\varphi(x)} \) to denote the set
+    whose elements are exactly those objects that \aref{dfn:metatheory-satisfaction}{satisfy} \( \varphi(x) \);
+    more specifically, we read \( \setbuilder{x}{\varphi(x)} \) as ``the set of all \( x \) such that \( \varphi(x) \) is satisfied.''
 \end{dfn}
+
+\begin{rem}
+    The notation \( \setbuilder{x}{\varphi(x)} \) can only be used if we can \emph{prove} the existence of the set it denotes.
+    There certainly are predicates in which \( \setbuilder{x}{\varphi(x)} \) do not exist\footnote{Russell's Paradox.}.
+\end{rem}
 
 \begin{dfn}[Subsets]
     \phantomsection \label{dfn:metatheory-subsets-and-proper-subsets}
@@ -440,10 +450,21 @@ to derive some basic results of our metatheory.
 \end{proof}
 
 \begin{notation}
-    For any given set \( S \) and any predicate \( \varphi(x) \), we write \( \setbuilder{x \in S}{\varphi(x)} \) to denote the unique set
-    containing all the elements of \( S \) that satisfy \( \varphi(x) \). In other words,
-    for all \( y \), \( y \in \setbuilder{x \in S}{\varphi(x)} \) iff \( y \in S \) and \( \varphi(y) \) are both true statements.
+    If we wish to impose an additonal condition upon the placeholder when using set-builder notation,
+    then we can write the predicate (through which the desired condition is imposed) on the left side of the ``\( \vert \)'' symbol.
+    We call this variant of the set-builder notation the \keyword{conditional} set-builder notation.
 \end{notation}
+
+\begin{dfn}[Conditional Set-builder]
+    \phantomsection \label{dfn:metatheory-conditional-set-builder-notation}
+    Let \( \varphi(x) \) and \( \psi(x) \) be two predicates. Then \( \setbuilder{\phi(x)}{\varphi(x)} \)
+    denotes the set \( \setbuilder{x}{\text{\( \phi(x) \) and \( \varphi(x) \)}} \).
+\end{dfn}
+
+\begin{eg}
+    The set whose uniqueness we have just proven in \cref{thm:metatheory-uniqueness-of-specification-subset} can then be denoted as
+    \( \setbuilder{x \in S}{\varphi(x)} \) with \( \phi(x) \) being the predicate ``\( x \in S \).''
+\end{eg}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-restricted-comprehension-set-is-the-subset-of-an-existing-set}
@@ -646,13 +667,6 @@ to derive some basic results of our metatheory.
     By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set \( \setbuilder{x}{\varphi(x)} \) exists and is unique.
 \end{proof}
 
-\begin{notation}
-    For any given non-empty system of sets \( S \), we write \( \Intersect S \) to denote the unique set whose elements are exactly those objects that belong to all
-    elements of \( S \).
-    If \( S \) is the unordered pair \( \mleft\{ A, B \mright\} \) where \( A \) and \( B \) are sets, then we also write \( A \intersect B \) to denote
-    \( \Intersect S \).
-\end{notation}
-
 \begin{dfn}[Intersection]
     \phantomsection \label{dfn:metatheory-the-intersection-of-a-non-empty-family-of-sets}
     For every non-empty family of sets \( S \), the \keyword{intersection} of \( S \) is the unique set given by
@@ -660,6 +674,455 @@ to derive some basic results of our metatheory.
         \Intersect S = \setbuilderBig{x}{\text{for all \( y \), \( y \in S \) implies \( x \in y \)}}
     \end{equation*}
 \end{dfn}
+
+\begin{notation}
+    For any given non-empty system of sets \( S \), we write \( \Intersect S \) to denote the unique set whose elements are exactly those objects that belong to all
+    elements of \( S \).
+    If \( S \) is the unordered pair \( \mleft\{ A, B \mright\} \) where \( A \) and \( B \) are sets, then we also write \( A \intersect B \) to denote
+    \( \Intersect S \).
+\end{notation}
+
+\begin{dfn}[Difference]
+    \phantomsection \label{dfn:metatheory-the-difference-of-two-sets}
+    For any two sets \( A \) and \( B \), the \keyword{set difference} between \( A \) and \( B \) (also called the \keyword{relative complement} of \( B \) in \( A \))
+    is the set given by:
+    \begin{equation*}
+        A - B = \setbuilder{x \in A}{\text{\(x \notin B\)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Note that the existence of the relative complement follows immediately from \cref{meta-axiom:specification}.
+\end{rem}
+
+\subsection{Functions}
+We now define the notion of functions and then derive many of their familiar properties within our metatheory.
+
+\begin{dfn}[Ordered Pair]
+    \phantomsection \label{dfn:metatheory-ordered-pair-kuratowski}
+    Let \( a \) and \( b \) be any two objects in the universe.
+    The \keyword{ordered pair} \( \orderedpair{a}{b} \) is defined as the set
+    \( \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \).
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-equality-of-ordered-pairs}
+    For any two ordered pairs \( \orderedpair{a}{b} \) and \( \orderedpair{c}{d} \),
+    \( \orderedpair{a}{b} = \orderedpair{c}{d} \) iff \( a = c \) and \( b = d \).
+\end{thm}
+
+\begin{proof}
+    Suppose that \( \orderedpair{a}{b} = \orderedpair{c}{d} \).
+    By \cref{meta-axiom:extensionality}, it follows that
+    \begin{equation}
+        \label{eq:a-b-pair-equals-c-d-pair}
+        \text{for all \( x \), \( x \in \orderedpair{a}{b} \) iff \( x \in \orderedpair{c}{d} \)}
+    \end{equation}
+    Clearly, both \( \mleft\{ a \mright\} \) and \( \mleft\{ a, b \mright\} \) are elements of \( \orderedpair{a}{b} \) according
+    to \cref{dfn:metatheory-ordered-pair-kuratowski}.
+    There are only two cases to consider.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( a = b \)
+
+    \vspace{0.1cm}
+    \noindent
+    In this case, clearly \( \orderedpair{a}{b} = \mleft\{ \mleft\{ a \mright\} \mright\} = \mleft\{ \mleft\{ b \mright\} \mright\} \) because
+    \( \mleft\{ a \mright\} = \mleft\{ a, a \mright\} = \mleft\{ a, b \mright\} = \mleft\{ b, b \mright\} = \mleft\{ b \mright\}  \).
+    By \eqref{eq:a-b-pair-equals-c-d-pair}, it follows that \( \mleft\{ a \mright\} \in \orderedpair{c}{d} \).
+    By \cref{meta-axiom:extensionality}, necessarily \( \mleft\{ c \mright\} = \mleft\{ a \mright\} \) and \( \mleft\{ c, d \mright\} = \mleft\{ a \mright\} \).
+    From this, we draw two conclusions:
+    \begin{enumerate*}[label=(\arabic*)]
+        \item \( a = c \),
+        \item \( a = b = d\).
+    \end{enumerate*}
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( a \neq b \)
+
+    \vspace{0.1cm}
+    \noindent
+    Once again, \( \mleft\{ a, b \mright\} \in \orderedpair{a}{b} \), which implies \( \mleft\{ a, b \mright\} \in \orderedpair{c}{d} \) by \eqref{eq:a-b-pair-equals-c-d-pair}.
+    This means that either \( \mleft\{ a, b \mright\} = \mleft\{ c \mright\} \) or \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \) is true.
+    Suppose that \( \mleft\{ a, b \mright\} = \mleft\{ c \mright\} \) is true. Then necessarily \( a = b = c \) by \cref{meta-axiom:extensionality}.
+    But this contradicts the fact that \( a \neq b \); therefore, \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \) must be true by
+    \cref{meta-rule:disjunctive-syllogism}.
+    From this, we further deduce that \( c \neq d \); otherwise, \( a = b \), a contradiction.
+    But \( \mleft\{ a \mright\} \) is also an element of \( \orderedpair{c}{d} \), so either \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \) or
+    \( \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \) is true. Note that \( \mleft\{ a \mright\} = \mleft\{ c, d \mright\} \) is impossible;
+    otherwise, \( c = a \) and \( d = a \) are both true, which contradicts the fact that \( c \neq d \).
+    Since \( \mleft\{ a \mright\} \neq \mleft\{ c, d \mright\} \), the other remaining possibility \( \mleft\{ a \mright\} = \mleft\{ c \mright\} \) must be true.
+    Therefore, \( a = c \).
+    Note that either \( b = c \) or \( b = d \) is true because \( b \in \mleft\{ a, b \mright\} \) and \( \mleft\{ a, b \mright\} = \mleft\{ c, d \mright\} \).
+    Since \( a = c \) and \( a \neq b \), necessarily \( b \neq c \) and thus \( b = d \).
+
+    \vspace{0.3cm}
+    \noindent
+    Thus, \( a = c \) and \( b = d \) are both true in all possible cases. In other words,
+    \begin{equation*}
+        \text{if \( \orderedpair{a}{b} = \orderedpair{c}{d} \), then \( a = c \) and \( b = d \) are both true}
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that \( a = c \) and \( b = d \) are both true.
+    Let \( e \) be an arbitrary object.
+    Suppose that \( e \in \orderedpair{a}{b} \); that is, either \( e = \mleft\{ a \mright\} \) or \( e = \mleft\{ a, b \mright\} \).
+    If \( e = \mleft\{ a \mright\} \), then clearly \( e = \mleft\{ c \mright\} \) and thus \( e \in \orderedpair{c}{d} \) by \cref{dfn:metatheory-ordered-pair-kuratowski}.
+    If \( e = \mleft\{ a, b \mright\} \), then \( e \in \orderedpair{c}{d} \) is also true because \( a = c \), \( b = d \),
+    and \( \mleft\{ c, d \mright\} \in \orderedpair{c}{d} \).
+    Thus, \( e \in \orderedpair{a}{b} \) implies \( e \in \orderedpair{c}{d} \).
+    Conversely, suppose that \( e \in \orderedpair{c}{d} \); that is, either \( e = \mleft\{ c \mright\} \) or \( e = \mleft\{ c, d \mright\} \).
+    If \( e = \mleft\{ c \mright\} \), then clearly \( e \in \orderedpair{a}{b} \) because \( a = c \) and \( \mleft\{ a \mright\} \in \orderedpair{a}{b} \).
+    Similarly, if \( e = \mleft\{ c, d \mright\} \), then \( e \in \orderedpair{a}{b} \) is also true because \( a = c \), \( b = d \),
+    and \( \mleft\{ a, b \mright\} \in \orderedpair{a}{b} \).
+    Clearly, \( e \in \orderedpair{a}{b} \) and \( e \in \orderedpair{c}{d} \) imply each other.
+    Since \( e \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} and \cref{meta-axiom:extensionality} that
+    \( \orderedpair{a}{b} = \orderedpair{c}{d} \).
+    In other words,
+    \begin{equation*}
+        \text{if \( a = c \) and \( b = d \) are both true, then \( \orderedpair{a}{b} = \orderedpair{c}{d} \)}
+    \end{equation*}
+    Having established the implication in both directions, we conclude that
+    \begin{equation*}
+        \text{\( \orderedpair{a}{b} = \orderedpair{c}{d} \) iff \( a = c \) and \( b = d \)}
+        \qedhere
+    \end{equation*}
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-ordered-pair-must-belong-to-power-set-of-power-set-of-a-set}
+    If \( \orderedpair{a}{b} \) is an ordered pair such that \( a, b \in S \) for some existing set \( S \),
+    then \( \orderedpair{a}{b} \in \powerset{\powerset{S}} \).
+\end{thm}
+
+\begin{proof}
+    Clearly, \( \mleft\{ a \mright\} \) and \( \mleft\{ a, b \mright\} \) are subsets of \( S \) since \( a, b \in S\).
+    By \cref{dfn:metatheory-power-set}, it follows that \( \mleft\{ a \mright\} \in \powerset{S} \) and \( \mleft\{ a, b \mright\} \in \powerset{S} \).
+    But this means that \( \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \subseteq \powerset{S} \) and thus
+    \( \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \in \powerset{\powerset{S}} \) as required.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set}
+    If \( \orderedpair{a}{b} \in S \) where \( S \) and \( \Union S \) are families of sets, then \( a \in \Union \mleft( \Union S \mright) \)
+    and \( b \in \Union \mleft( \Union S \mright) \).
+\end{thm}
+
+\begin{proof}
+    We begin our line of reasoning with the assumption that \( \orderedpair{a}{b} \in S \).
+    But \( \mleft\{ a, b \mright\} \in \orderedpair{a}{b} \) by \cref{dfn:metatheory-ordered-pair-kuratowski},
+    which means that there exist elements of \( S \) containing \( \mleft\{ a, b \mright\} \) as an element.
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that \( \mleft\{ a, b \mright\} \in \Union S \).
+    But \( a \) and \( b \) are both elements of \( \mleft\{ a, b \mright\} \) by \cref{dfn:metatheory-unordered-pair}.
+    Since \( \Union S \) is a family of sets and \( \mleft\{ a, b \mright\} \) is a set, it follows that there exists a set in \( \Union S \)
+    containing both \( a \) and \( b \) are elements. In other words, \( a, b \in \Union \mleft( \Union S \mright) \) as required.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-cartesian-products}
+    Let \( A \) and \( B \) be any two sets.
+    Let the following predicates be defined:
+    \begin{align*}
+        \phi(a, b)    &\coloneq \text{\( a \in A \) and \( b \in B \)}\\
+        \psi(x, a)    &\coloneq \text{there exists a \( b \) such that \( x = \orderedpair{a}{b} \) and \( \phi(a, b) \)}\\
+        \varphi(x)    &\coloneq \text{there exists an \( a \) such that \( \psi(x, a) \)}
+    \end{align*}
+    Then the set \( \setbuilder{x}{\varphi(x)} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \( p \) be an arbitrary object in the universe.
+    Suppose that \( \varphi(p) \) is a true statement;
+    that is, \( \psi(p, a) \) is a true statement for some \( a \).
+    \begin{equation*}
+        \therefore \, p = \orderedpair{a}{b} \ \text{and} \ \phi(a, b) \ \text{for some \( b \)}
+    \end{equation*}
+    But for \( \phi(a, b) \) to be a true statement, \( a \in A \) and \( b \in B \) must both be true.
+    Thus, \( a \in A \union B \) and \( b \in A \union B \).
+    By \cref{thm:metatheory-ordered-pair-must-belong-to-power-set-of-power-set-of-a-set}, it follows that
+    \( \orderedpair{a}{b} \in \powerset{\powerset{A \union B}} \).
+    In other words,
+    \begin{equation*}
+        \varphi(p) \ \text{implies} \ p \in \powerset{\powerset{A \union B}}
+    \end{equation*}
+    Since \( p \) denotes an arbitrary object, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \powerset{\powerset{A \union B}} \) }
+    \end{equation*}
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set},
+    \( \setbuilder{x}{\varphi(x)} \) exists.
+\end{proof}
+
+\begin{notation}
+    Oftentimes, the standard set-builder notation becomes too clunky and unwieldy
+    as seen in \cref{thm:metatheory-existence-of-cartesian-products} where the predicate \( \varphi(x) \)
+    is complex.
+    In such cases, we adopt a more compact form of set-builder notation for readability.
+    The idea is to replace the placeholder on the left side of the ``\( \vert \)'' symbol with an \aref{dfn:metatheory-expressions}{expression}
+    constructed from a placeholder or multiple placeholders.
+    For instance, the set \( \setbuilder{x}{\varphi(x)} \) in \cref{thm:metatheory-existence-of-cartesian-products} can be denoted as
+    \begin{equation*}
+        \setbuilderbig{\orderedpair{a}{b}}{a \in A \ \text{and} \ b \in B}
+    \end{equation*}
+    where the expression ``\( \orderedpair{a}{b} \)'' refers to the set \( \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \).
+    In general, the number of placeholders in the expression on the left of the ``\( \vert \)'' symbol corresponds to the number of placeholders
+    in the predicate on the right.
+\end{notation}
+
+\begin{dfn}[Expressional Set-builder]
+    \phantomsection \label{dfn:metatheory-expressional-set-builder-notation}
+    Let \( \varepsilon(x) \) be an expression and \( \varphi(x) \) be a predicate.
+    Then \( \setbuilder{\varepsilon(x)}{\varphi(x)} \) denotes the set
+    \( \setbuilder{x}{\text{there exists a \( y \) such that \( x = \varepsilon(y) \) and \( \varphi(y) \)}} \).
+\end{dfn}
+
+\begin{rem}
+    The expression used in expressional set-builder notation can have as many placeholders as required.
+    The expression used to denote the set in \cref{thm:metatheory-existence-of-cartesian-products} has two placeholders.
+\end{rem}
+
+\begin{dfn}[Cartesian Product]
+    \phantomsection \label{dfn:metatheory-cartesian-product}
+    For any two sets \( A \) and \( B \), the \keyword{cartesian product} of \( A \) and \( B \) is the set given by
+    \begin{equation*}
+        A \times B = \setbuilderbig{\orderedpair{a}{b}}{a \in A \ \text{and} \ b \in B}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Function]
+    \phantomsection \label{dfn:metatheory-functions}
+    A set \( f \) is a function iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item for all \( x \), \( x \in f \) iff \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
+        \item for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{y} \in f \) and \( \orderedpair{x}{z} \in f \) implies \( y = z \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Domain]
+    \phantomsection \label{dfn:metatheory-domain-of-a-function}
+    If \( f \) is a function, then the \keyword{domain} of \( f \) is the set given by
+    \begin{equation*}
+        \dom f = \setbuilderbig{x}{\text{there exists a \( y \) such that \( \orderedpair{x}{y} \in f \)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Range]
+    \phantomsection \label{dfn:metatheory-range-of-a-function}
+    If \( f \) is a function, then the \keyword{range} of \( f \) is the set given by
+    \begin{equation*}
+        \ran f = \setbuilderbig{y}{\text{there exists an \( x \) such that \( \orderedpair{x}{y} \in f \)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-domain-and-range-of-function}
+    The domain and range of a function exist.
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an arbitrary function. Let \( \varphi(x) \) and \( \psi(y) \) denote the following predicates:
+    \begin{align*}
+        \varphi(x) &\coloneq \text{there exists a \( y \) such that \( \orderedpair{x}{y} \in f \)}\\
+        \psi(y)    &\coloneq \text{there exists a \( z \) such that \( \orderedpair{z}{y} \in f \) }
+    \end{align*}
+    Let \( p \) be an arbitrary object. Suppose that \( p \in f \).
+    Thus, \( p \) must be an ordered pair by \cref{dfn:metatheory-functions}; that is, \( p = \orderedpair{a}{b} \)
+    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, \( p = \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \), which means
+    that \( p \) is a set.
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in f \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( f \) is a family of sets. By \cref{meta-axiom:union}, \( \Union f \) exists.
+    We must show that \( \Union f \) is also a family of sets. Let \( q \) be an arbitrary element of \( \Union f \).
+    By \cref{meta-axiom:union}, \( q \in p \) for some \( p \in f \).
+    Since \( f \) is a function, necessarily \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \) where \( a \) and \( b \)
+    denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, either \( q = \mleft\{ a \mright\} \) or \( q = \mleft\{ a, b \mright\} \).
+    In either case, \( q \) is a set. Thus,
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \Union f \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( \Union f \) is indeed a family of sets.
+
+    \vspace{0.3cm}
+    \noindent
+    Now let \( \alpha \) denote an arbitrary object such that \( \varphi(\alpha) \) is a true statement; that is, there exists some \( \beta \) in the universe
+    such that \( \orderedpair{\alpha}{\beta} \in f \).
+    Since \( f \) and \( \Union f \) are both families of sets as previously shown,
+    \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies and we have
+    \( \alpha \in \Union \mleft( \Union f \mright) \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation}
+        \label{eq:varphi-x-implies-union-union-of-f}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \Union \mleft( \Union f \mright) \)}
+    \end{equation}
+    Similarly, let \( \theta \) denote an arbitrary object such that \( \psi(\theta) \) is a true statement.
+    Thus, there exists some \( \delta \) in the universe such that \( \orderedpair{\delta}{\theta} \in f \).
+    Again, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} guarantees that
+    \( \theta \in \Union \mleft( \Union f \mright) \).
+    By \cref{meta-rule:universal-generalization}, we have
+    \begin{equation}
+        \label{eq:psi-x-implies-union-union-of-f}
+        \text{for all \( x \), \( \psi(x) \) implies \( x \in \Union \mleft( \Union f \mright) \)}
+    \end{equation}
+    We can now apply \cref{thm:metatheory-existence-of-unrestricted-comprehension-set} to \eqref{eq:varphi-x-implies-union-union-of-f} and
+    \eqref{eq:psi-x-implies-union-union-of-f} to infer the existences of
+    \( \setbuilder{x}{\varphi(x)} \) and \( \setbuilder{x}{\psi(x)} \), which are \( \dom f \) and \( \ran f \) respectively.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-function-with-empty-range-must-have-empty-domain}
+    If \( f \) is a function and \( \ran f = \emptyset \), then \( \dom f = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( \alpha \) be an arbitrary object.
+    Suppose that \( \alpha \in \dom f \).
+    Then by \cref{dfn:metatheory-domain-of-a-function}, \( \orderedpair{\alpha}{\beta} \in f \) for some \( \beta \) in the universe.
+    But this would mean that \( \beta \in \ran f \), contradicting the fact that \( \ran f = \emptyset \).
+    Therefore, the supposition that \( \alpha \in \dom f \) must be false.
+    In other words, \( \alpha \notin \dom f \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \notin \dom f \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-empty-set}, it follows that \( \dom f = \emptyset \).
+\end{proof}
+
+\begin{rem}
+    In fact, if \( \dom f = \emptyset \) or \( \ran f = \emptyset \), then \( f \) itself is necessarily the empty set.
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-functions-in-terms-of-two-sets}
+    If \( A \) and \( B \) are sets, then a set \( f \) is a \keyword{function} on \( A \) into \( B \) iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f \subseteq A \times B \)
+        \item for all \( x \in A \), there exists a unique \( y \in B \) such that \( \orderedpair{x}{y} \in f \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    Essentially, \( \function{f}{A}{B} \) iff \( \dom f = A \) and \( \ran f \subseteq  B \).
+\end{rem}
+
+\begin{notation}
+    We write \( \function{f}{A}{B} \) to abbreviate the statement ``\( f \) is a function on \( A \) into \( B \).''
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metateory-value-of-a-function}
+    Let \( f \) be a function and \( x \) be an object in the universe such that \( x \in \dom f \).
+    Then an object \( y \) is the \keyword{value} of \( f \) at \( x \) iff \( \orderedpair{x}{y} \in f \).
+\end{dfn}
+
+\begin{notation}
+    We write \( f(x) \) to denote the value of a function \( f \) at \( x \).
+    The expression ``\( f(x) \)'' can be read as ``\( f \) of \( x \).''
+\end{notation}
+
+\begin{dfn}[Image]
+    \phantomsection \label{dfn:metatheory-image-of-a-set-under-a-function}
+    If \( f \) is a function and \( A \) is a set, then the \keyword{image} of \( A \) under \( f \) is the set given by
+    \begin{equation*}
+        \imageSet{f}{A} \coloneq \setbuilderbig{f(x)}{x \in A}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Note that the \aref{dfn:metatheory-expressional-set-builder-notation}{expressional set-builder notation}
+    was used in \cref{dfn:metatheory-image-of-a-set-under-a-function}.
+    It is also possible to denote \( \imageSet{f}{A} \) using the standard set-builder notation if desired.
+    \begin{equation*}
+        \imageSet{f}{A} \coloneq \setbuilderbig{y}{\text{there exists an \( x \) such that \( x \in A \) and \( \orderedpair{x}{y} \in f \) }}
+    \end{equation*}
+\end{rem}
+
+\begin{dfn}[Injection]
+    \phantomsection \label{dfn:metatheory-injection}
+    A set \( f \) is an \keyword{injection} or \keyword{injective function} iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f \) is a function
+        \item for all \( x, y \in \dom f \), \( f(x) = f(y) \) implies \( x = y \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    In other words, a function \( f \) is injective iff every element of \( \ran f \) corresponds to a unique element in \( \dom f \).
+    This is why injective functions are sometimes called \keyword{one-to-one} functions.
+\end{rem}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-injections-in-terms-of-two-sets}
+    If \( A \) and \( B \) are sets, then a set \( f \) is an injection (or injective function) on \( A \) into \( B \) iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \function{f}{A}{B} \)
+        \item \( f \) is an injection
+    \end{enumerate}
+\end{dfn}
+
+\begin{notation}
+    We write \( \injection{f}{A}{B} \) to abbreviate the statement ``\( f \) is an injection on \( A \) into \( B \).''
+\end{notation}
+
+\begin{dfn}[Surjection]
+    \phantomsection \label{dfn:metatheory-surjection}
+    A set \( f \) is a \keyword{surjection} or \keyword{surjective function} iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f \) is a function
+        \item for all \( y \in \ran f \), there exists an \( x \in \dom f \) such that \( \orderedpair{x}{y} \in f \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-surjections-in-terms-of-two-sets}
+    If \( A \) and \( B \) are sets, then a set \( f \) is a surjection or surjective function on \( A \) into \( B \) iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \function{f}{A}{B} \)
+        \item \( \ran f = B \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{notation}
+    We write \( \surjection{f}{A}{B} \) to abbreviate the statement ``\( f \) is a surjection on \( A \) into \( B \).''
+\end{notation}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-every-function-is-a-surjection-on-its-domain-into-its-range}
+    For every function \( f \), \( \surjection{f}{\dom f}{\ran f} \).
+\end{cor}
+
+\begin{dfn}[Bijection]
+    \phantomsection \label{dfn:metatheory-bijection}
+    A set \( f \) is a \keyword{bijection} or \keyword{bijective function} iff \( f \) is both an injection and a surjection.
+\end{dfn}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-bijections-in-terms-of-two-sets}
+    If \( A \) and \( B \) are sets, then a set \( f \) is a bijection between \( A \) and \( B \) iff
+    \( \injection{f}{A}{B} \) and \( \surjection{f}{A}{B} \).
+\end{dfn}
+
+\begin{notation}
+    We write \( \bijection{f}{A}{B} \) to abbreviate the statement ``\( f \) is a bijection between \( A \) and \( B \).''
+\end{notation}
+
+\begin{dfn}[Inverse]
+    \phantomsection \label{dfn:metatheory-inverse-of-a-function}
+    If \( f \) is a function, then the \keyword{inverse} of \( f \) is the set given by
+    \begin{equation*}
+        f^{-1} = \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Note that \( f^{-1} \) is not necessarily a function.
+\end{rem}
 
 \subsection{The Counting Numbers}
 Our metatheory is now sophisticated enough that we can build the counting numbers with it.
@@ -714,9 +1177,19 @@ But first, we preface their construction with the following definition and axiom
     \( \naturalset = \setbuilder{x}{\text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}} \)
 \end{dfn}
 
+\begin{notation}
+    If \( n \in \naturalset \), then we denote the successor of \( n \) as \( n + 1 \).
+\end{notation}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-ordering-of-natural-numbers}
+    For any two natural numbers \( m \) and \( n \), we say that \( m \) is \keyword{less than} \( n \) (denoted as \( m < n \))
+    iff \( m \in n \).
+\end{dfn}
+
 \begin{rem}
-    It is not difficult to see that the set \( \naturalset \) contains exactly the symbols for the counting numbers
-    as long as we interpret the symbols using the following scheme:
+    It is not difficult to see that the set \( \naturalset \) contains exactly the counting numbers
+    as long as we interpret the symbols for the counting numbers with the following scheme:
     \begin{align*}
         0 &\coloneq \emptyset = \mleft\{ \mright\} \\
         1 &\coloneq 0 \union \mleft\{ 0 \mright\} = \{0\} \\
@@ -724,11 +1197,8 @@ But first, we preface their construction with the following definition and axiom
         3 &\coloneq 2 \union \mleft\{ 2 \mright\} = \{0,1\} \union \{2\} = \{0,1,2\}\\
         \vdots
     \end{align*}
+    This scheme (courtesy of John von Neumann) essentially defines a natural number as a set that contains every other natural number less than it.
 \end{rem}
-
-\begin{notation}
-    If \( n \in \naturalset \), then we denote the successor of \( n \) as \( n + 1 \).
-\end{notation}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}
@@ -790,32 +1260,32 @@ But first, we preface their construction with the following definition and axiom
 
 \begin{thm}[Weak Induction]
     \phantomsection \label{thm:metatheory-weak-induction}
-    Let \( \varphi(n) \) be a predicate where the following conditions hold:
+    Let \( P(n) \) be a predicate where the following conditions hold:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( \varphi(\emptyset) \) is a true statement
-        \item for all \( n \), if \( \varphi(n) \) is a true statement, then \( \varphi(n \union \mleft\{ n \mright\}) \) is also a true statement
+        \item \( P(\emptyset) \) is a true statement
+        \item for all \( n \), if \( P(n) \) is a true statement, then \( P(n \union \mleft\{ n \mright\}) \) is also a true statement
     \end{enumerate}
-    Then \( \naturalset = \setbuilder{ n \in \naturalset }{\varphi(n)} \).
+    Then \( \naturalset = \setbuilder{ n \in \naturalset }{P(n)} \).
 \end{thm}
 
 \begin{proof}
-    Let \( S \) denote the set \( \setbuilder{n \in \naturalset}{\varphi(n)} \) whose existence is guaranteed by \cref{meta-axiom:specification}.
+    Let \( S \) denote the set \( \setbuilder{n \in \naturalset}{P(n)} \) whose existence is guaranteed by \cref{meta-axiom:specification}.
     We begin by proving that \( S \) is an inductive set.
-    Note that \( \varphi(\emptyset) \) is necessarily a true statement by the definition of \( \varphi(n) \) itself.
+    Note that \( P(\emptyset) \) is necessarily a true statement by the definition of \( P(n) \) itself.
     Furthermore, we know from \cref{thm:metatheory-the-set-of-all-natural-numbers-is-inductive} that \( \naturalset \) is inductive,
     which means that \( \emptyset \in \naturalset \) by \cref{dfn:metatheory-inductive-set}.
-    In other words, \( \varphi(\emptyset) \) and \( \emptyset \in \naturalset \) are both true statements.
+    In other words, \( P(\emptyset) \) and \( \emptyset \in \naturalset \) are both true statements.
     Therefore, \( \emptyset \in S \).
 
     \vspace{0.3cm}
     \noindent
     Now let \( \alpha \) denote an arbitrary object.
-    Suppose that \( \alpha \in S \); that is, \( \alpha \in \naturalset \) and \( \varphi(\alpha) \) are both true.
-    But if \( \varphi(\alpha) \) is true, \( \varphi(\alpha \union \mleft\{ \alpha \mright\}) \) must also be a true statement
-    by the definition of \( \varphi(n) \).
+    Suppose that \( \alpha \in S \); that is, \( \alpha \in \naturalset \) and \( P(\alpha) \) are both true.
+    But if \( P(\alpha) \) is true, \( P(\alpha \union \mleft\{ \alpha \mright\}) \) must also be a true statement
+    by the definition of \( P(n) \).
     Furthermore, \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \) is also true by \cref{dfn:metatheory-inductive-set}
     since \( \naturalset \) is inductive.
-    In other words, \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \) and \( \varphi(\alpha \union \mleft\{ \alpha \mright\}) \) are both
+    In other words, \( \alpha \union \mleft\{ \alpha \mright\} \in \naturalset \) and \( P(\alpha \union \mleft\{ \alpha \mright\}) \) are both
     true statements.
     Therefore, \( \alpha \union \mleft\{ \alpha \mright\} \in S \).
     This means that \( \alpha \in S \) implies \( \alpha \union \mleft\{ \alpha \mright\} \).
@@ -845,7 +1315,7 @@ But first, we preface their construction with the following definition and axiom
     \end{equation*}
     By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( \naturalset \subseteq S \).
     Since \( \naturalset \) and \( S \) are subsets of each other, \cref{thm:metatheory-equality-in-terms-of-subsets} guarantees that
-    \( \naturalset = S = \setbuilder{n \in \naturalset}{\varphi(n)} \).
+    \( \naturalset = S = \setbuilder{n \in \naturalset}{P(n)} \).
 \end{proof}
 
 \begin{rem}
@@ -862,13 +1332,62 @@ But first, we preface their construction with the following definition and axiom
     is known as the \keyword{inductive step}.
 \end{dfn}
 
+\begin{thm}[Strong Induction]
+    \phantomsection \label{thm:metatheory-strong-induction}
+    Let \( P(n) \) be any predicate such that
+    \begin{equation*}
+        \text{for all \( n \in \naturalset \), \( Q(n) \) implies \( P(n) \) }
+    \end{equation*}
+    where \( Q(n) \) is the statement ``for all \( m < n \), \( P(m) \)''.
+    Then \( \naturalset = \setbuilder{n \in \naturalset}{P(n)} \).
+\end{thm}
 
+\begin{proof}
+    By assumption, we know that
+    \begin{equation}
+        \label{eq:Q-n-initial-assumption}
+        \text{for all \( n \in \naturalset \), \( Q(n) \) implies \( P(n) \) }
+    \end{equation}
+    The statement \( Q(\emptyset) \) can be translated as
+    \begin{equation*}
+        \text{for all \( m < \emptyset \), \( P(m) \)}
+    \end{equation*}
+    But \( \emptyset \) is empty, so this statement is \aref{dfn:metatheory-vacuous-truth}{vacuously true}.
+    This means that \( Q(\emptyset) \) is true, thus establishing the base case.
+    To establish the inductive step, let \( n^{\prime} \) denote an arbitrary element of \( \naturalset \).
+    Suppose that \( Q(n^{\prime}) \) is a true statement; that is,
+    \begin{equation}
+        \phantomsection \label{eq:Q-n-prime-statement}
+        \text{for all \( m < n^{\prime} \), \( P(m) \)}
+    \end{equation}
+    Let \( e \) denote an arbitrary element of \( n^{\prime} + 1 \).
+    Since \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \), it follows that either \( e = n^{\prime} \) or \( e \in n^{\prime} \).
+    If \( e = n^{\prime} \), then \( P(e) \) must be true because \( P(n^{\prime}) \) is true as a result of applying
+    \cref{meta-rule:universal-instantiation} to \eqref{eq:Q-n-initial-assumption}.
+    If \( e \in n^{\prime} \), then \( P(e) \) is also true by \eqref{eq:Q-n-prime-statement}.
+    Since \( e \) is an arbitrary element of \( n^{\prime} + 1 \), we conclude from \cref{meta-rule:universal-generalization}
+    that \( P(m) \) is true for all \( m < n^{\prime} + 1 \).
+    In other words, \( Q(n^{\prime} + 1) \) must be true whenever \( Q(n^{\prime}) \) is true, which establishes the inductive step.
+    Having established the base case and the inductive step, we can validly conclude by \aref{thm:metatheory-weak-induction}{Weak Induction} that
+    \begin{equation}
+        \label{eq:Q-n-true-for-all-natural-numbers}
+        \text{for all \( n \in \naturalset \), \( Q(n) \)}
+    \end{equation}
+    Now let \( \alpha \) denote an arbitrary element of \( \naturalset \). From \eqref{eq:Q-n-initial-assumption} and \eqref{eq:Q-n-true-for-all-natural-numbers},
+    it follows that \( P(\alpha) \) must be true.
+    Since \( \alpha \) is arbitrary, we conclude that \( P(n) \) is true for all \( n \in \naturalset \). In other words,
+    \( \naturalset \subseteq \setbuilder{n \in \naturalset}{P(n)} \).
+    Furthermore, \( \setbuilder{n \in \naturalset}{P(n)} \subseteq \naturalset \) is also true
+    by \cref{thm:metatheory-restricted-comprehension-set-is-the-subset-of-an-existing-set}.
+    Since \( \naturalset \) and \( \setbuilder{n \in \naturalset}{P(n)} \) are subsets of each other, it follows from
+    \cref{thm:metatheory-equality-in-terms-of-subsets} that \( \naturalset = \setbuilder{n \in \naturalset}{P(n)} \).
+\end{proof}
 
 \section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
 on a sheet of paper.
 If we now take \( \mathcal{F} \) to be any non-empty subset of \( \finiteseq{\Sigma} \), then we say that \( \mathcal{F} \) is a \keyword{formal language} over \( \Sigma \)
-and \( \Sigma \) is the \keyword{alphabet} of \( \mathcal{F} \).
+and that \( \Sigma \) is the \keyword{alphabet} of \( \mathcal{F} \).
 Although it is possible (at least in principle) to pick arbitrary elements of \( \finiteseq{\Sigma} \) to include in \( \mathcal{F} \), it is more common for
 \( \mathcal{F} \) to be defined using a set of precise rules called the \keyword{syntax} of \( \mathcal{F} \).
 
