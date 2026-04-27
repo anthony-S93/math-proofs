@@ -1619,14 +1619,6 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \end{equation*}
 \end{dfn}
 
-\begin{cor}
-    \label{thm:compatibility-of-two-functions}
-    Two functions \( f \) and \( g \) are compatible if and only if,
-    \begin{equation*}
-        \forall x \, \Big[ x \in \mleft( \dom f \intersect \dom g \mright) \implies f(x) = g(x) \Big]
-    \end{equation*}
-\end{cor}
-
 \subsection{Properties of Functions}
 \begin{thm}
     \label{thm:a-function-is-a-subset-of-the-cartesian-product-between-its-domain-and-range}
@@ -2495,7 +2487,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
         \end{aligned}
     \end{equation*}
     Since \( \Union F \) is a compatible system of functions, \( f \) and \( g \) must be compatible with each other.
-    Thus, by \cref{thm:compatibility-of-two-functions}, we have,
+    Thus, we have,
     \begin{equation}
         \label{eq:f-and-g-have-the-same-values-where-their-domains-intersect}
         \forall x \, \Big( x \in \mleft( \dom f \intersect \dom g \mright) \implies f(x) = g(x) \Big)

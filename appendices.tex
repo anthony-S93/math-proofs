@@ -881,7 +881,11 @@ We now define the notion of functions and then derive many of their familiar pro
 
 \begin{rem}
     The expression used in expressional set-builder notation can have as many placeholders as required.
-    The expression used to denote the set in \cref{thm:metatheory-existence-of-cartesian-products} has two placeholders.
+    The expression used to denote the set in \cref{thm:metatheory-existence-of-cartesian-products} has two placeholders;
+    i.e., \( \varepsilon(a, b) \coloneq \orderedpair{a}{b} \) and \(  \setbuilderbig{\varepsilon(a, b)}{a \in A \ \text{and} \ b \in B} \) denotes
+    \begin{equation*}
+        \setbuilderbig{x}{\text{there exist objects \( a \) and \( b \) such that \( x = \orderedpair{a}{b} \) and \( a \in A \) and \( b \in B \)}}
+    \end{equation*}
 \end{rem}
 
 \begin{dfn}[Cartesian Product]
@@ -896,10 +900,45 @@ We now define the notion of functions and then derive many of their familiar pro
     \phantomsection \label{dfn:metatheory-functions}
     A set \( f \) is a function iff the following statements are true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item for all \( x \), \( x \in f \) iff \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
+        \item for all \( x \), \( x \in f \) implies \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
         \item for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{y} \in f \) and \( \orderedpair{x}{z} \in f \) implies \( y = z \)
     \end{enumerate}
 \end{dfn}
+
+\begin{lem}
+    \phantomsection \label{lem:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}
+    If \( S \) is a set of ordered pairs, then \( S \) and \( \Union S \) are families of sets.
+\end{lem}
+
+\begin{proof}
+    Let \( p \) be an arbitrary object. Suppose that \( p \in S \).
+    Thus, \( p \) must be an ordered pair by assumption; that is, \( p = \orderedpair{a}{b} \)
+    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, \( p \) is the set \(  \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \).
+    Clearly, \( p \) must be a set.
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in S \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( S \) is a family of sets.
+    By \cref{meta-axiom:union}, \( \Union S \) exists.
+    We must show that \( \Union S \) is also a family of sets.
+    Let \( q \) be an arbitrary element of \( \Union S \).
+    By \cref{dfn:metatheory-the-union-of-sets}, \( q \in p \) for some \( p \in S \).
+    Since \( S \) is a set of ordered pairs, necessarily \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \) where \( a \) and \( b \)
+    denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, either \( q = \mleft\{ a \mright\} \) or \( q = \mleft\{ a, b \mright\} \).
+    In either case, \( q \) is a set. Thus,
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \Union S \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( \Union S \) is indeed a family of sets.
+\end{proof}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-every-function-and-its-union-are-families-of-sets}
+    If \( f \) is a function, then \( f \) and \( \Union f \) are families of sets since \( f \) is a set of ordered pairs.
+\end{cor}
 
 \begin{dfn}[Domain]
     \phantomsection \label{dfn:metatheory-domain-of-a-function}
@@ -928,33 +967,10 @@ We now define the notion of functions and then derive many of their familiar pro
         \varphi(x) &\coloneq \text{there exists a \( y \) such that \( \orderedpair{x}{y} \in f \)}\\
         \psi(y)    &\coloneq \text{there exists a \( z \) such that \( \orderedpair{z}{y} \in f \) }
     \end{align*}
-    Let \( p \) be an arbitrary object. Suppose that \( p \in f \).
-    Thus, \( p \) must be an ordered pair by \cref{dfn:metatheory-functions}; that is, \( p = \orderedpair{a}{b} \)
-    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
-    By \cref{dfn:metatheory-ordered-pair-kuratowski}, \( p = \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \), which means
-    that \( p \) is a set.
-    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
-    \begin{equation*}
-        \text{for all \( x \), \( x \in f \) implies \( x \) is a set}
-    \end{equation*}
-    In other words, \( f \) is a family of sets. By \cref{meta-axiom:union}, \( \Union f \) exists.
-    We must show that \( \Union f \) is also a family of sets. Let \( q \) be an arbitrary element of \( \Union f \).
-    By \cref{meta-axiom:union}, \( q \in p \) for some \( p \in f \).
-    Since \( f \) is a function, necessarily \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \) where \( a \) and \( b \)
-    denote objects in the universe.
-    By \cref{dfn:metatheory-ordered-pair-kuratowski}, either \( q = \mleft\{ a \mright\} \) or \( q = \mleft\{ a, b \mright\} \).
-    In either case, \( q \) is a set. Thus,
-    \begin{equation*}
-        \text{for all \( x \), \( x \in \Union f \) implies \( x \) is a set}
-    \end{equation*}
-    In other words, \( \Union f \) is indeed a family of sets.
-
-    \vspace{0.3cm}
-    \noindent
     Now let \( \alpha \) denote an arbitrary object such that \( \varphi(\alpha) \) is a true statement; that is, there exists some \( \beta \) in the universe
     such that \( \orderedpair{\alpha}{\beta} \in f \).
-    Since \( f \) and \( \Union f \) are both families of sets as previously shown,
-    \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies and we have
+    Since \( f \) is a function, \( f \) and \( \Union f \) are both families of sets by \cref{cor:metatheory-every-function-and-its-union-are-families-of-sets}.
+    Thus, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies and we have
     \( \alpha \in \Union \mleft( \Union f \mright) \).
     Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
     \begin{equation}
@@ -1025,6 +1041,12 @@ We now define the notion of functions and then derive many of their familiar pro
     We write \( f(x) \) to denote the value of a function \( f \) at \( x \).
     The expression ``\( f(x) \)'' can be read as ``\( f \) of \( x \).''
 \end{notation}
+
+\begin{dfn}[Compatibility]
+    \phantomsection \label{dfn:metatheory-compatibility-of-two-functions}
+    If \( f \) and \( g \) are functions, then \( f \) and \( g \) are \keyword{compatible} iff for all \( x \in \dom f \intersect \dom g \),
+    \( f(x) = g(x) \).
+\end{dfn}
 
 \begin{dfn}[Image]
     \phantomsection \label{dfn:metatheory-image-of-a-set-under-a-function}
@@ -1112,6 +1134,122 @@ We now define the notion of functions and then derive many of their familiar pro
     We write \( \bijection{f}{A}{B} \) to abbreviate the statement ``\( f \) is a bijection between \( A \) and \( B \).''
 \end{notation}
 
+\begin{dfn}[Family of Functions]
+    \phantomsection \label{dfn:metatheory-family-of-functions}
+    A set \( F \) is a \keyword{family of functions} iff for all \( f \in F \), \( f \) is a function.
+\end{dfn}
+
+\begin{lem}
+    \phantomsection \label{lem:metatheory-intersection-of-all-domains-in-family-of-functions}
+    For any family of functions \( F \), the set \( \setbuilder{\dom f}{f \in F} \) exists.
+\end{lem}
+
+\begin{proof}
+    Let \( G = \Union F \).
+    Let \( \varphi(x) \) be a predicate defined as follows:
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( f \in F \) such that \( x = \dom f \)}
+    \end{equation*}
+    Let \( \delta \) denote an arbitrary object in the universe.
+    Suppose that \( \varphi(\delta) \) is a true statement;
+    that is, there exists some \( f \in F \) such that \( \delta = \dom f \).
+    Let \( \alpha \) be an arbitrary element of \( \delta \).
+    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( \beta \)
+    such that \( \orderedpair{\alpha}{\beta} \in f \).
+    Since \( f \in F \) and \( \orderedpair{\alpha}{\beta} \in f \), it follows from
+    \cref{dfn:metatheory-the-union-of-sets} such that \( \orderedpair{\alpha}{\beta} \in G \).
+    But \( G \) is a set of ordered pairs, so both \( G \) and \( \Union G \) must be families of sets by
+    \cref{lem:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets};
+    therefore, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies
+    and we have \( \alpha \in \Union \mleft( \Union G \mright) \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \delta \) implies \( x \in \Union \mleft( \Union G \mright) \)}
+    \end{equation*}
+    where \( \Union \mleft( \Union G \mright) \) is an existing set.
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( \delta \subseteq \Union \mleft( \Union G \mright) \) and thus
+    \( \delta \in \powerset{\Union \mleft( \Union G \mright)} \) by \cref{dfn:metatheory-power-set}.
+    In other words,
+    \begin{equation*}
+        \text{if \( \varphi(\delta) \), then \( \delta \in \powerset{\Union \mleft( \Union G \mright)} \)}
+    \end{equation*}
+    Since \( \delta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \powerset{\Union \mleft( \Union G \mright)} \)}
+    \end{equation*}
+    where \( \powerset{\Union \mleft( \Union G \mright)} \) is an existing set.
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set
+    \( \setbuilder{x}{\varphi(x)} = \setbuilder{\dom f}{f \in F} \) exists.
+\end{proof}
+
+\begin{dfn}[Compatibility]
+    \phantomsection \label{dfn:metatheory-compatibility-of-functions}
+    A family of functions \( F \) is compatible iff any two functions in \( F \)
+    are \aref{dfn:metatheory-compatibility-of-two-functions}{compatible}.
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-a-family-of-functions-is-compatible-iff-its-union-is-a-function}
+    A family of functions \( F \) is compatible iff \( \Union F \) is a function.
+\end{thm}
+
+\begin{proof}
+    Suppose that \( F \) is compatible.
+    Let \( p \) be an arbitrary element of \( \Union F \).
+    By \cref{dfn:metatheory-the-union-of-sets}, there exists a function \( f \in F \) such that \( p \in f \).
+    Since \( f \) is a function, it follows from \cref{dfn:metatheory-functions} that \( p = \orderedpair{a}{b} \)
+    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
+    Since \( p \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation}
+        \label{eq:first-condition-for-a-set-to-be-a-function}
+        \text{for all \( x \), \( x \in \Union F \) implies \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)}
+    \end{equation}
+    Now let \( \alpha \) and \( \beta \) be any two objects such that \( \orderedpair{\alpha}{\beta} \in \Union F \).
+    By \cref{dfn:metatheory-the-union-of-sets}, there must exist some function \( f \in F \) such that \( \orderedpair{\alpha}{\beta} \in f \).
+    Suppose that \( \gamma \) is an object in the universe such that \( \orderedpair{\alpha}{\gamma} \in \Union F \).
+    Again, we infer from \cref{dfn:metatheory-the-union-of-sets} that there exists some function \( g \in F \) such that
+    \( \orderedpair{\alpha}{\gamma} \in g \). Clearly, either \( f = g \) or \( f \neq g \).
+    If \( f = g \), then obviously \( \beta = \gamma \) because \( f \) is a function.
+    If \( f \neq g \), then \( \beta = \gamma \) is also true because \( f \) and \( g \) is compatible by
+    \cref{dfn:metatheory-compatibility-of-functions} and \( \alpha \in \dom f \intersect \dom g \).
+    In other words,
+    \begin{equation}
+        \label{eq:second-condition-for-a-set-to-be-a-function}
+        \text{for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{z} \in \Union F \) and \( \orderedpair{y}{z} \in \Union F \) implies \( x = y \)}
+    \end{equation}
+    From \eqref{eq:first-condition-for-a-set-to-be-a-function} and \eqref{eq:second-condition-for-a-set-to-be-a-function}, it is clear that
+    the two conditions stated in \cref{dfn:metatheory-functions} are met. Therefore, \( \Union F \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that \( \Union F \) is a function.
+    Now let \( f \) and \( g \) be arbitrary elements of \( F \).
+    Let \( \alpha \) be an arbitrary element of \( \dom f \,{\intersect}\, \dom g \).
+    Clearly, \( \orderedpair{\alpha}{\beta} \in f \) and \( \orderedpair{\alpha}{\gamma} \in g \) for some \( \beta \) and \( \gamma \)
+    because \( \alpha \in \dom f \) and \( \alpha \in \dom g \).
+    Since \( f \in F \) and \( g \in G \), it follows from \cref{dfn:metatheory-the-union-of-sets} that
+    \( \orderedpair{\alpha}{\beta} \in \Union F \) and \( \orderedpair{\alpha}{\gamma} \in \Union F \).
+    But \( \Union F \) is a function, so necessarily \( f(\alpha) = \beta = \gamma = g(\alpha) \) by \cref{dfn:metatheory-functions}.
+    Since \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \dom f \intersect \dom g \) implies \( f(x) = g(x) \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-compatibility-of-two-functions}, it follows that \( f \) and \( g \) are compatible.
+    Again, given that \( f \) and \( g \) represent arbitrary elements of \( F \), we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( f \) and \( g \), \( f \in F \) and \( g \in F \) implies \( f \) and \( g \) are compatible}
+    \end{equation*}
+    By \cref{dfn:metatheory-compatibility-of-functions}, necessarily \( F \) is compatible.
+\end{proof}
+
+\begin{dfn}[Restriction]
+    \phantomsection \label{dfn:metatheory-restricted-function}
+    If \( f \) is a function and \( A \) is a set, then the \keyword{restriction} of \( f \) to \( A \) is the set given by
+    \begin{equation*}
+        \restrictedfunction{f}{A} = \setbuilderbig{\orderedpair{x}{y}}{x \in A \ \text{and} \ \orderedpair{x}{y} \in f}
+    \end{equation*}
+\end{dfn}
+
 \begin{dfn}[Inverse]
     \phantomsection \label{dfn:metatheory-inverse-of-a-function}
     If \( f \) is a function, then the \keyword{inverse} of \( f \) is the set given by
@@ -1123,6 +1261,15 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{rem}
     Note that \( f^{-1} \) is not necessarily a function.
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-inverse-of-a-function}
+    For any function \( f \), \( f^{-1} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi(x) \) be the predicate
+\end{proof}
 
 \subsection{The Counting Numbers}
 Our metatheory is now sophisticated enough that we can build the counting numbers with it.
