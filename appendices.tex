@@ -897,7 +897,7 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{dfn}
 
 \begin{dfn}[Function]
-    \phantomsection \label{dfn:metatheory-functions}
+    \phantomsection \label{dfn:metatheory-function}
     A set \( f \) is a function iff the following statements are true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item for all \( x \), \( x \in f \) implies \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
@@ -1139,49 +1139,6 @@ We now define the notion of functions and then derive many of their familiar pro
     A set \( F \) is a \keyword{family of functions} iff for all \( f \in F \), \( f \) is a function.
 \end{dfn}
 
-\begin{lem}
-    \phantomsection \label{lem:metatheory-intersection-of-all-domains-in-family-of-functions}
-    For any family of functions \( F \), the set \( \setbuilder{\dom f}{f \in F} \) exists.
-\end{lem}
-
-\begin{proof}
-    Let \( G = \Union F \).
-    Let \( \varphi(x) \) be a predicate defined as follows:
-    \begin{equation*}
-        \varphi(x) \coloneq \text{there exists an \( f \in F \) such that \( x = \dom f \)}
-    \end{equation*}
-    Let \( \delta \) denote an arbitrary object in the universe.
-    Suppose that \( \varphi(\delta) \) is a true statement;
-    that is, there exists some \( f \in F \) such that \( \delta = \dom f \).
-    Let \( \alpha \) be an arbitrary element of \( \delta \).
-    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( \beta \)
-    such that \( \orderedpair{\alpha}{\beta} \in f \).
-    Since \( f \in F \) and \( \orderedpair{\alpha}{\beta} \in f \), it follows from
-    \cref{dfn:metatheory-the-union-of-sets} such that \( \orderedpair{\alpha}{\beta} \in G \).
-    But \( G \) is a set of ordered pairs, so both \( G \) and \( \Union G \) must be families of sets by
-    \cref{lem:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets};
-    therefore, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies
-    and we have \( \alpha \in \Union \mleft( \Union G \mright) \).
-    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
-    \begin{equation*}
-        \text{for all \( x \), \( x \in \delta \) implies \( x \in \Union \mleft( \Union G \mright) \)}
-    \end{equation*}
-    where \( \Union \mleft( \Union G \mright) \) is an existing set.
-    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( \delta \subseteq \Union \mleft( \Union G \mright) \) and thus
-    \( \delta \in \powerset{\Union \mleft( \Union G \mright)} \) by \cref{dfn:metatheory-power-set}.
-    In other words,
-    \begin{equation*}
-        \text{if \( \varphi(\delta) \), then \( \delta \in \powerset{\Union \mleft( \Union G \mright)} \)}
-    \end{equation*}
-    Since \( \delta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
-    \begin{equation*}
-        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \powerset{\Union \mleft( \Union G \mright)} \)}
-    \end{equation*}
-    where \( \powerset{\Union \mleft( \Union G \mright)} \) is an existing set.
-    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set
-    \( \setbuilder{x}{\varphi(x)} = \setbuilder{\dom f}{f \in F} \) exists.
-\end{proof}
-
 \begin{dfn}[Compatibility]
     \phantomsection \label{dfn:metatheory-compatibility-of-functions}
     A family of functions \( F \) is compatible iff any two functions in \( F \)
@@ -1197,7 +1154,7 @@ We now define the notion of functions and then derive many of their familiar pro
     Suppose that \( F \) is compatible.
     Let \( p \) be an arbitrary element of \( \Union F \).
     By \cref{dfn:metatheory-the-union-of-sets}, there exists a function \( f \in F \) such that \( p \in f \).
-    Since \( f \) is a function, it follows from \cref{dfn:metatheory-functions} that \( p = \orderedpair{a}{b} \)
+    Since \( f \) is a function, it follows from \cref{dfn:metatheory-function} that \( p = \orderedpair{a}{b} \)
     for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
     Since \( p \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
     \begin{equation}
@@ -1218,7 +1175,7 @@ We now define the notion of functions and then derive many of their familiar pro
         \text{for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{z} \in \Union F \) and \( \orderedpair{y}{z} \in \Union F \) implies \( x = y \)}
     \end{equation}
     From \eqref{eq:first-condition-for-a-set-to-be-a-function} and \eqref{eq:second-condition-for-a-set-to-be-a-function}, it is clear that
-    the two conditions stated in \cref{dfn:metatheory-functions} are met. Therefore, \( \Union F \) is a function.
+    the two conditions stated in \cref{dfn:metatheory-function} are met. Therefore, \( \Union F \) is a function.
 
     \vspace{0.3cm}
     \noindent
@@ -1229,7 +1186,7 @@ We now define the notion of functions and then derive many of their familiar pro
     because \( \alpha \in \dom f \) and \( \alpha \in \dom g \).
     Since \( f \in F \) and \( g \in G \), it follows from \cref{dfn:metatheory-the-union-of-sets} that
     \( \orderedpair{\alpha}{\beta} \in \Union F \) and \( \orderedpair{\alpha}{\gamma} \in \Union F \).
-    But \( \Union F \) is a function, so necessarily \( f(\alpha) = \beta = \gamma = g(\alpha) \) by \cref{dfn:metatheory-functions}.
+    But \( \Union F \) is a function, so necessarily \( f(\alpha) = \beta = \gamma = g(\alpha) \) by \cref{dfn:metatheory-function}.
     Since \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
     \begin{equation*}
         \text{for all \( x \), \( x \in \dom f \intersect \dom g \) implies \( f(x) = g(x) \)}
@@ -1250,6 +1207,199 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
 \end{dfn}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-restriction-is-a-function}
+    If \( f \) is a function and \( A \) is a set, then \( \restrictedfunctionsmall{f}{A} \) is also a function.
+\end{thm}
+
+\begin{proof}
+    We must prove that \( \restrictedfunctionsmall{f}{A} \) satisfies the two conditions stated in \cref{dfn:metatheory-function}.
+    Let \( p \) denote an arbitrary object in the universe. Suppose that \( p \in \restrictedfunctionsmall{f}{A} \).
+    By \cref{dfn:metatheory-restricted-function}, there must exist an \( \alpha \in A \) and a \( \beta \) such that
+    \( p = \orderedpair{\alpha}{\beta} \). In other words, every element of \( \restrictedfunctionsmall{f}{A} \) is an ordered pair.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \alpha \), \( \beta \), and \( \gamma \) be objects such that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \)
+    and \( \orderedpair{\alpha}{\gamma} \in \restrictedfunctionsmall{f}{A} \).
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \alpha \in A \) and that \( \orderedpair{\alpha}{\beta} \in f \)
+    and \( \orderedpair{\alpha}{\gamma} \in f\).
+    But \( f \) is a function, so \( \beta \) and \( \gamma \) must be equal by \cref{dfn:metatheory-function}.
+    In other words,
+    \begin{equation*}
+        \orderedpair{\alpha}{\beta} \in \restrictedfunction{f}{A} \ \text{and} \ \orderedpair{\alpha}{\gamma} \in \restrictedfunction{f}{A} \ \text{implies} \ \beta = \gamma
+    \end{equation*}
+    for all \( \alpha \), \( \beta \), and \( \gamma \), which is the second condition in \cref{dfn:metatheory-function}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection}
+    If \( f \) is a function and \( A \) and \( B \) are sets, then
+    \begin{equation*}
+        \restrictedfunction{ \mleft(\restrictedfunctionsmall{f}{A} \mright) }{B} = \restrictedfunction{f}{A \,{\intersect}\, B}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( g \coloneq \restrictedfunctionsmall{f}{A} \).
+    We must show that \( \restrictedfunctionsmall{g}{B} \) and \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \) are subsets of each other; that is,
+    \( \restrictedfunctionsmall{g}{B} \subseteq \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \)
+    and \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \subseteq \restrictedfunctionsmall{g}{B} \) are both true.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( p \) be an arbitrary object in the universe. Suppose that \( p \in \restrictedfunctionsmall{g}{B} \).
+    Since \( f \) is a function, it follows from \cref{thm:metatheory-restriction-is-a-function} that both
+    \( g \) and \( \restrictedfunctionsmall{g}B \) are functions.
+    By \cref{dfn:metatheory-function}, \( p \) must be an ordered pair.
+    Let \( \alpha \) and \( \beta \) be objects in the universe such that \( p = \orderedpair{\alpha}{\beta} \).
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \alpha \in B \) and \( \orderedpair{\alpha}{\beta} \in g \),
+    the latter of which further implies \( \alpha \in A \) and \( \orderedpair{\alpha}{\beta} \in f \) because \( g = \restrictedfunctionsmall{f}{A} \).
+    Since \( \alpha \in A \) and \( \alpha \in B \) are both true, necessarily \( \alpha \in A \,{\intersect}\, B \).
+    Thus, \( \alpha \in A \,{\intersect}\, B \) and \( \orderedpair{\alpha}{\beta} \in f \) are true.
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
+    In other words,
+    \begin{equation*}
+        \text{if \( p \in \restrictedfunction{g}{B} \), then \( p \in \restrictedfunction{f}{A \,{\intersect}\, B} \)}
+    \end{equation*}
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \restrictedfunctionsmall{g}{B} \subseteq \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( q \) be an arbitrary object in the universe.
+    Suppose that \( q \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
+    Since \( f \) is a function, it follows from \cref{thm:metatheory-restriction-is-a-function} that
+    \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \) is also a function.
+    Since \( q \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \), it follows from
+    \cref{dfn:metatheory-function} that \( q \) an ordered pair.
+    Let \( \gamma \) and \( \delta \) be objects in the universe such that \( q = \orderedpair{\gamma}{\delta} \).
+    Since \( q \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \), it follows that \( \gamma \in A \,{\intersect}\, B \)
+    and \( \orderedpair{\gamma}{\delta} \in f \) are both true.
+    But if \( \gamma \in A \,{\intersect}\, B \), then necessarily \( \gamma \in A \) and \( \gamma \in B \) are both true.
+    Thus, we have \( \gamma \in A \) and \( \orderedpair{\gamma}{\delta} \in f \).
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \orderedpair{\gamma}{\delta} \in \restrictedfunctionsmall{f}{A} \) and thus
+    \( \orderedpair{\gamma}{\delta} \in g \) by definition.
+    But if \( \gamma \in B \) and \( \orderedpair{\gamma}{\delta} \in g \) are both true, then \( \orderedpair{\gamma}{\delta} \in \restrictedfunctionsmall{g}{B} \)
+    by \cref{dfn:metatheory-restricted-function}.
+    In other words,
+    \begin{equation*}
+        \text{if \( q \in \restrictedfunction{f}{A \,{\intersect}\, B} \), then \( q \in \restrictedfunction{g}{B} \)}
+    \end{equation*}
+    Since \( q \) is arbitrary, we concludefrom \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \subseteq \restrictedfunctionsmall{g}{B} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-restriction-of-union-of-compatible-functions-equals-the-union-of-restrictions}
+    If \( f \) and \( g \) are \aref{dfn:metatheory-compatibility-of-two-functions}{compatible} functions and \( A \) is any set, then
+    \begin{equation*}
+        \restrictedfunction{\mleft(f \,{\union}\, g\mright)}{A} = \restrictedfunction{f}{A} \,{\union}\,\, \restrictedfunction{g}{A}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Let \( h \coloneq \Union \mleft\{ f, g \mright\} \).
+    We must show that \( \restrictedfunctionsmall{h}{A} \) and \( \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \) are subsets of each other.
+    We begin by noting that \( h \) is a function because \( f \) and \( g \) are compatible.
+    Since \( h \) is a function, \( \restrictedfunctionsmall{h}{A} \) must also be a function by \cref{thm:metatheory-restriction-is-a-function}.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( p \) denote an arbitrary object in the universe.
+    Suppose that \( p \in \restrictedfunctionsmall{h}{A} \).
+    Since \( \restrictedfunctionsmall{h}{A} \) is a function, it follows that \( p \) must be an ordered pair.
+    Let \( \alpha \) and \( \beta \) denote objects in the universe such that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{h}{A} \).
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \alpha \in A \) and \( \orderedpair{\alpha}{\beta} \in h \) are both true.
+    But if the latter is true, then either \( \orderedpair{\alpha}{\beta} \in f \) or \( \orderedpair{\alpha}{\beta} \in g \) by
+    \cref{dfn:metatheory-the-union-of-sets}.
+    We look at each case in turn.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( \orderedpair{\alpha}{\beta} \in f \)
+
+    \vspace{0.1cm}
+    \noindent
+    Clearly \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \) since \( \alpha \in A \) and \( \orderedpair{\alpha}{\beta} \in f \) are both true.
+    Thus, there exists an element in \( \mleft\{ \restrictedfunctionsmall{f}{A}, \restrictedfunctionsmall{g}{A} \mright\} \) that contains \( \orderedpair{\alpha}{\beta} \).
+    In other words, \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( \orderedpair{\alpha}{\beta} \in g \)
+
+    \vspace{0.1cm}
+    \noindent
+    Once again, we conclude that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{g}{A} \) because \( \alpha \in A \) and \( \orderedpair{\alpha}{\beta} \in g \)
+    are both true.
+    This means that there exists an element in \( \mleft\{ \restrictedfunctionsmall{f}{A}, \restrictedfunctionsmall{g}{A} \mright\} \)
+    that contains \( \orderedpair{\alpha}{\beta} \).
+    Thus, \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    It is clear that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \) is true in either case.
+    In other words,
+    \begin{equation*}
+        \text{if \( p \in \restrictedfunction{h}{A} \), then \( p \in \restrictedfunction{f}{A} \union \, \restrictedfunction{g}{A} \)}
+    \end{equation*}
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \restrictedfunctionsmall{h}{A} \subseteq \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    It remains to prove that \( \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \subseteq \restrictedfunctionsmall{h}{A} \) is also true.
+    Let \( q \) be an arbitrary object in the universe.
+    Suppose that \( q \in \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that \( q \in \restrictedfunctionsmall{f}{A} \) or \( q \in \restrictedfunctionsmall{g}{A} \)
+    is true.
+    Again, we consider each case separately and see what they imply.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( q \in \restrictedfunctionsmall{f}{A} \)
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( f \) is a function, \( \restrictedfunctionsmall{f}{A} \) must also be a function by \cref{thm:metatheory-restriction-is-a-function}.
+    By \cref{dfn:metatheory-function}, it follows that \( q \) is an ordered pair.
+    Let \( \gamma \) and \( \delta \) be objects in the universe such that \( q = \orderedpair{\gamma}{\delta} \).
+    Moreover, necessarily \( \gamma \in A \) and \( \orderedpair{\gamma}{\delta} \in f \) by \cref{dfn:metatheory-restricted-function}.
+    Clearly, \( f \in h \).
+    Therefore, there exists an element of \( h \) that contains \( \orderedpair{\gamma}{\delta} \).
+    Given that \( \gamma \in A \) is also true, it should be obvious from \cref{dfn:metatheory-restricted-function} that
+    \( \orderedpair{\gamma}{\delta} \in \restrictedfunctionsmall{h}{A} \) and thus \( q \in \restrictedfunctionsmall{h}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( q \in \restrictedfunctionsmall{g}{A} \)
+
+    \vspace{0.1cm}
+    \noindent
+    \( \restrictedfunctionsmall{g}{A} \) must be a function because \( g \) is a function.
+    Functions only contain ordered pairs, so \( q \) must be an ordered pair.
+    Let \( \epsilon \) and \( \zeta \) be objects in the universe such that \( q = \orderedpair{\epsilon}{\zeta} \).
+    Given that \( q \in \restrictedfunction{g}{A} \), it follows readily from \cref{dfn:metatheory-restricted-function}
+    that \( \epsilon \in A \) and \( \orderedpair{\epsilon}{\zeta} \in g \) are both true.
+    Since \( g \in \mleft\{ f, g \mright\} \), it follows that \( \orderedpair{\epsilon}{\zeta} \in h \).
+    In other words, \( \epsilon \in A \) and \( \orderedpair{\epsilon}{\zeta} \in h \) are necessarily true.
+    By \cref{dfn:metatheory-restricted-function}, we conclude that \( \orderedpair{\epsilon}{\zeta} \in \restrictedfunctionsmall{h}{A} \)
+    and equivalently \( q \in \restrictedfunctionsmall{h}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    It is clear that \( q \in \restrictedfunctionsmall{h}{A} \) is implied in both cases. From this, we conclude that
+    \begin{equation*}
+        \text{if \( q \in \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \), then \( q \in \restrictedfunctionsmall{h}{A} \)}
+    \end{equation*}
+    Since \( q \) is arbitrary, we deduce from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \subseteq \restrictedfunctionsmall{h}{A} \).
+    Having shown that \( \restrictedfunctionsmall{h}{A} \) and \( \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \) are subsets of each
+    other, we conclude from \cref{thm:metatheory-equality-in-terms-of-subsets} that
+    \( \restrictedfunctionsmall{h}{A} = \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \) as required.
+\end{proof}
+
 \begin{dfn}[Inverse]
     \phantomsection \label{dfn:metatheory-inverse-of-a-function}
     If \( f \) is a function, then the \keyword{inverse} of \( f \) is the set given by
@@ -1268,7 +1418,25 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{thm}
 
 \begin{proof}
-    Let \( \varphi(x) \) be the predicate
+    Since \( f \) is a function, \cref{thm:metatheory-existence-of-domain-and-range-of-function} guarantees the existence of \( \dom f \) and \( \ran f \).
+    Furthermore, \cref{thm:metatheory-existence-of-cartesian-products} guarantees the existence of sets \( \dom f \times \ran f \) and \( \ran f \times \dom f \).
+    Now let \( \varphi(x) \) be the predicate defined as follows:
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( a \) and a \( b \) such that \( x = \orderedpair{b}{a} \) and \( \orderedpair{a}{b} \in f \)}
+    \end{equation*}
+    Let \( p \) be an arbitrary object.
+    Suppose that \( \varphi(p) \) is a true statement;
+    that is, there exists an \( \alpha \) and a \( \beta \) such that \( p = \orderedpair{\beta}{\alpha} \) and \( \orderedpair{\alpha}{\beta} \in f \).
+    Since \( \orderedpair{\alpha}{\beta} \in f \), it follows from \cref{dfn:metatheory-domain-of-a-function,dfn:metatheory-range-of-a-function} that
+    \( \alpha \in \dom f \) and \( \beta \in \ran f \).
+    Clearly, \( \orderedpair{\beta}{\alpha} \in \ran f \times \dom f \) by \cref{dfn:metatheory-cartesian-product}.
+    Thus, \( p \in \ran f \times \dom f \).
+    Since \( p \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \ran f \times \dom f \)}
+    \end{equation*}
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set},
+    the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f} \) exists.
 \end{proof}
 
 \subsection{The Counting Numbers}
@@ -2000,7 +2168,7 @@ which leads us to the following definition.
         \restrictedfunctionsmall{ \mleft(  \restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } \,{\union}\, \mleft\{ \orderedpair{x}{e_{0}} \mright\} \mright) }{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} }
     \end{equation}
     Since \(  \restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} }  \) and \( \mleft\{ \orderedpair{x}{e_{0}} \mright\} \) are
-    \aref{thm:the-union-of-a-compatible-system-of-functions-is-a-function}{compatible functions}, \cref{thm:restricted-function-of-the-union-of-two-compatible-functions}
+    \aref{thm:the-union-of-a-compatible-system-of-functions-is-a-function}{compatible functions}, \cref{thm:metatheory-restriction-of-union-of-compatible-functions-equals-the-union-of-restrictions}
     applies and \eqref{eq:definition-of-a-modified-x-e0-restricted-to-var-L-minus-x} becomes
     \begin{align*}
         \label{eq:definition-of-a-modified-x-e0-restricted-to-var-L-minus-x-2}
@@ -2012,7 +2180,7 @@ which leads us to the following definition.
         &= \restrictedfunctionsmall{ \mleft(\restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} }\mright) }{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} }
     \end{align*}
     But \( \restrictedfunctionsmall{ \mleft(\restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} }\mright) }{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } = \restrictedfunctionsmall{\mathfrak{a}}{ \mleft( \folvars{\mathcal{L}} - \mleft\{ x \mright\} \mright) \,{\intersect}\, \mleft( \folvars{\mathcal{L}} - \mleft\{ x \mright\} \mright) } = \restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } \) by
-    \cref{thm:restricted-restricted-function-is-equal-to-the-original-function-restricted-to-the-intersection}.
+    \cref{thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection}.
     Thus, we have
     \begin{equation}
         \label{eq:a-modified-x-e0-restricted-to-var-L-minus-x-simplified-form}
@@ -2053,7 +2221,7 @@ which leads us to the following definition.
         \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} }{\folvars{\mathcal{L}} - \mleft\{ y \mright\}} =
         \restrictedfunctionsmall{ \mleft( \restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } \union \mleft\{ \orderedpair{x}{e_{0}} \mright\} \mright) }{\folvars{\mathcal{L}} - \mleft\{ y \mright\}}
     \end{equation}
-    Since \( \restrictedfunctionsmall{\mathfrak{a}}{\folvars{\mathcal{L}} - \mleft\{ x \mright\}} \) and \( \mleft\{ \orderedpair{x}{e_{0}} \mright\} \) are \aref{dfn:compatibility-of-a-system-of-functions}{compatible functions}, \cref{thm:restricted-function-of-the-union-of-two-compatible-functions} applies and \eqref{eq:definition-of-a-modified-x-e0-restricted-to-var-L-minus-y} becomes
+    Since \( \restrictedfunctionsmall{\mathfrak{a}}{\folvars{\mathcal{L}} - \mleft\{ x \mright\}} \) and \( \mleft\{ \orderedpair{x}{e_{0}} \mright\} \) are \aref{dfn:compatibility-of-a-system-of-functions}{compatible functions}, \cref{thm:metatheory-restriction-of-union-of-compatible-functions-equals-the-union-of-restrictions} applies and \eqref{eq:definition-of-a-modified-x-e0-restricted-to-var-L-minus-y} becomes
     \begin{equation}
         \label{eq:definition-of-a-modified-x-e0-restricted-to-var-L-minus-y-2}
         \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{x}{e_{0}} }{\folvars{\mathcal{L}} - \mleft\{ y \mright\}} =
@@ -2066,7 +2234,7 @@ which leads us to the following definition.
         \label{eq:restricted-restricted-a}
         \restrictedfunctionsmall{ \mleft( \restrictedfunctionsmall{\mathfrak{a}}{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } \mright) }{ \folvars{\mathcal{L}} - \mleft\{ y \mright\} } = \restrictedfunctionsmall{\mathfrak{a}}{ \mleft( \folvars{\mathcal{L}} - \mleft\{ x \mright\} \mright) \,\,{\intersect}\,\,  \mleft( \folvars{\mathcal{L}} - \mleft\{ y \mright\} \mright) }
     \end{equation}
-    by \cref{thm:restricted-restricted-function-is-equal-to-the-original-function-restricted-to-the-intersection}.
+    by \cref{thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection}.
     Since \( \mleft( \folvars{\mathcal{L}} - \mleft\{ x \mright\} \mright) \,\,{\intersect}\,\, \mleft( \folvars{\mathcal{L}} - \mleft\{ y \mright\} \mright) = \folvars{\mathcal{L}} - \mleft( \mleft\{ x \mright\} \union \mleft\{ y \mright\} \mright) \) and \( \mleft\{ x \mright\} \union \mleft\{ y \mright\} = \mleft\{ x, y \mright\} \) because
     \( x \) and \( y \) are distinct, \eqref{eq:restricted-restricted-a} becomes
     \begin{equation}
@@ -4701,7 +4869,7 @@ We now have enough theoretical foundation to start proving many of the familiar 
     \end{equation*}
     Note that \( \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }{\folvars{\mathcal{L}} - \mleft\{ x \mright\}} \)
     and \( \mleft\{ \orderedpair{x}{e_{0}} \mright\} \) are compatible functions, so we have by
-    \cref{thm:restricted-function-of-the-union-of-two-compatible-functions,thm:restricted-restricted-function-is-equal-to-the-original-function-restricted-to-the-intersection}
+    \cref{thm:metatheory-restriction-of-union-of-compatible-functions-equals-the-union-of-restrictions,thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection}
     \begin{equation*}
         \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }{x}{e_{0}}  }{ \folfreevars{ \folfreevariablereplacement{\varphi}{x}{y} } } =
         \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{a}}{y}{e_{0}} }{ \folfreevars{ \folfreevariablereplacement{\varphi}{x}{y} } \,{\intersect}\, \mleft( \folvars{\mathcal{L}} - \mleft\{ x \mright\} \mright) } \,{\union}\, \restrictedfunctionsmall{ \mleft\{ \orderedpair{x}{e_{0}} \mright\} }{ \folfreevars{ \folfreevariablereplacement{\varphi}{x}{y} } }
@@ -4771,7 +4939,7 @@ We now have enough theoretical foundation to start proving many of the familiar 
     \end{equation*}
     Clearly \( \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{0}} }{ \folvars{\mathcal{L}} - \mleft\{ x \mright\} } \)
     and \( \mleft\{ \orderedpair{x}{e_{0}} \mright\} \) are compatible functions.
-    We now apply \cref{thm:restricted-restricted-function-is-equal-to-the-original-function-restricted-to-the-intersection,thm:restricted-function-of-the-union-of-two-compatible-functions} to obtain the restriction of \( \folmodifiedvariableassignmentfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{0}} }{x}{e_{0}} \)
+    We now apply \cref{thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection,thm:metatheory-restriction-of-union-of-compatible-functions-equals-the-union-of-restrictions} to obtain the restriction of \( \folmodifiedvariableassignmentfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{0}} }{x}{e_{0}} \)
     on \( \folfreevars{ \folfreevariablereplacement{\varphi}{x}{y} } \):
     \begin{equation*}
         \restrictedfunctionsmall{ \folmodifiedvariableassignmentfunction{ \folmodifiedvariableassignmentfunction{\mathfrak{b}}{y}{e_{0}} }{x}{e_{0}} }{ \folfreevars{ \folfreevariablereplacement{\varphi}{x}{y} } }

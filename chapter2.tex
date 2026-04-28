@@ -1524,7 +1524,7 @@ obeys certain laws.
 \end{rem}
 
 \begin{dfn}[Restriction]
-    \label{dfn:restricted-functions}
+    \label{dfn:restricted-function}
     If \( f \) is a function and \( A \) is a set, then the \keyword{restriction} of \( f \) to \( A \)
     is the set given by,
     \begin{equation*}
@@ -2647,10 +2647,10 @@ Partial functions can also be surjections, injections, or bijections, which lead
     Let \( g \coloneq  \restrictedfunction{ ( \restrictedfunctionsmall{f}{A} ) }{B} \). The goal is to show that \( g \) and \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \)
     are subsets of each other.
     Let \( x_{0} \in g \). Since \( g \) is a function, it follows that \( x_{0} \) must be an ordered pair; i.e., \( x_{0} = \orderedpair{\alpha}{\beta} \) for some
-    \( \alpha \) and \( \beta \). If \( \orderedpair{\alpha}{\beta} \in g \), then \cref{dfn:restricted-functions} requires that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \) and \( \alpha \in B \). Since \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \), \cref{dfn:restricted-functions} once again
+    \( \alpha \) and \( \beta \). If \( \orderedpair{\alpha}{\beta} \in g \), then \cref{dfn:restricted-function} requires that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \) and \( \alpha \in B \). Since \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \), \cref{dfn:restricted-function} once again
     implies that \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \).
     This means that \( \alpha \) must be an element of both \( A \) and \( B \); i.e., \( \alpha \in A \,{\intersect}\, B \).
-    Since \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \,{\intersect}\, B\), we can apply \cref{dfn:restricted-functions} once again to conclude
+    Since \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \,{\intersect}\, B\), we can apply \cref{dfn:restricted-function} once again to conclude
     \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
     In other words, \( g \subseteq \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
 
@@ -2658,9 +2658,9 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \noindent
     We can prove that \( \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \subseteq g \) with a similar argument.
     Let \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A \,{\intersect}\, B} \).
-    By \cref{dfn:restricted-functions}, it follows that \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \,{\intersect}\, B \).
+    By \cref{dfn:restricted-function}, it follows that \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \,{\intersect}\, B \).
     Clearly, \( \alpha \in A \) and \( \alpha \in B \) are both true.
-    Since \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \), it follows immediately from \cref{dfn:restricted-functions}
+    Since \( \orderedpair{\alpha}{\beta} \in f \) and \( \alpha \in A \), it follows immediately from \cref{dfn:restricted-function}
     that \( \orderedpair{\alpha}{\beta} \in \restrictedfunctionsmall{f}{A} \). But \( \alpha \in B \) is also true, so necessarily
     \( \orderedpair{\alpha}{\beta} \in g \).
 \end{proof}
@@ -2680,7 +2680,7 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \vspace{0.3cm}
     \noindent
     Let \( x_{0} \in F \) be arbitrary. Note that \( F \) must be a function because \( f \) and \( g \) are compatible. Thus, \( x_{0} = \orderedpair{a}{b} \)
-    for some \( a \) and \( b \). Moreover, \cref{dfn:restricted-functions} also requires that \( a \in A \) and \( \orderedpair{a}{b} \in \mleft( f \union g \mright) \).
+    for some \( a \) and \( b \). Moreover, \cref{dfn:restricted-function} also requires that \( a \in A \) and \( \orderedpair{a}{b} \in \mleft( f \union g \mright) \).
     In other words, either \( \orderedpair{a}{b} \in f \) or \( \orderedpair{a}{b} \in g \).
     If \( \orderedpair{a}{b} \in f \), then \( \orderedpair{a}{b} \) must also belong to \( \restrictedfunctionsmall{f}{A} \) since \( a \in A \).
     Similarly, if \( \orderedpair{a}{b} \in g \), then \( \orderedpair{a}{b} \in \restrictedfunctionsmall{g}{A} \).
@@ -2694,11 +2694,11 @@ Partial functions can also be surjections, injections, or bijections, which lead
     \cref{thm:the-union-of-a-compatible-system-of-functions-is-a-function} that \( G \) is a function.
     Since \( G \) is a function, \( x_{1} \) must be an ordered pair; that is, \( x_{1} = \orderedpair{c}{d} \) for some \( c \) and \( d \).
     Furthermore, either \( \orderedpair{c}{d} \in \restrictedfunctionsmall{f}{A} \) or \( \orderedpair{c}{d} \in \restrictedfunctionsmall{g}{A} \) is true.
-    If \( \orderedpair{c}{d} \in \restrictedfunctionsmall{f}{A} \), then clearly \( \orderedpair{c}{d} \in f \) and \( c \in A \) by \cref{dfn:restricted-functions}.
+    If \( \orderedpair{c}{d} \in \restrictedfunctionsmall{f}{A} \), then clearly \( \orderedpair{c}{d} \in f \) and \( c \in A \) by \cref{dfn:restricted-function}.
     But if \( \orderedpair{c}{d} \in f \), then \( \orderedpair{c}{d} \) must also belong to \( f \union g \). Since \( c \in A \), it follows readily
     that \( \orderedpair{c}{d} \in F \).
     Similarly, if \( \orderedpair{c}{d} \in \restrictedfunctionsmall{g}{A} \), then necessarily \( \orderedpair{c}{d} \in g \) and \( c \in A \).
-    But \( \orderedpair{c}{d} \in g \) implies \( \orderedpair{c}{d} \in f \union g \). Since \( c \in A \), it follows from \cref{dfn:restricted-functions}
+    But \( \orderedpair{c}{d} \in g \) implies \( \orderedpair{c}{d} \in f \union g \). Since \( c \in A \), it follows from \cref{dfn:restricted-function}
     that \( \orderedpair{c}{d} \in \restrictedfunctionsmall{\mleft( f \union g \mright)}{A} \).
     In other words, \( G \subseteq F \).
 
