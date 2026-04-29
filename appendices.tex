@@ -876,7 +876,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \phantomsection \label{dfn:metatheory-expressional-set-builder-notation}
     Let \( \varepsilon(x) \) be an expression and \( \varphi(x) \) be a predicate.
     Then \( \setbuilder{\varepsilon(x)}{\varphi(x)} \) denotes the set
-    \( \setbuilder{x}{\text{there exists a \( y \) such that \( x = \varepsilon(y) \) and \( \varphi(y) \)}} \).
+    \( \setbuilder{y}{\text{there exists an \( x \) such that \( y = \varepsilon(x) \) and \( \varphi(x) \)}} \).
 \end{dfn}
 
 \begin{rem}
@@ -939,6 +939,44 @@ We now define the notion of functions and then derive many of their familiar pro
     \phantomsection \label{cor:metatheory-every-function-and-its-union-are-families-of-sets}
     If \( f \) is a function, then \( f \) and \( \Union f \) are families of sets since \( f \) is a set of ordered pairs.
 \end{cor}
+
+\begin{dfn}[Composition]
+    \phantomsection \label{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}
+    If \( R \) and \( S \) are sets of ordered pairs, then the \keyword{composition} of \( R \) and \( S \)
+    is the set given by
+    \begin{equation*}
+        \composition{S}{R} \coloneq \setbuilderbig{\orderedpair{x}{y}}{\text{there exists a \( z \) such that \( \orderedpair{x}{z} \in R \) and \( \orderedpair{z}{y} \in S \) }}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-composition-of-two-sets-of-ordered-pairs}
+    If \( R \) and \( S \) are sets of ordered pairs, then \( \composition{S}{R} \) exists.
+\end{thm}
+
+\begin{proof}
+    We begin by defining the \( \varphi(x) \) as follows.
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( a \) and \( b \) such that \( \orderedpair{a}{c} \in R \) and \( \orderedpair{c}{b} \in S \) for some \( c \)}
+    \end{equation*}
+    Note that the set \( \setbuilder{x}{\varphi(x)} \) is simply \( \composition{S}{R} \) written in standard set-builder notation.
+    Thus, it suffices to prove the existence of \( \setbuilder{x}{\varphi(x)} \) on the basis of \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \varphi(\alpha) \) is a true statement.
+    Thus, \( \alpha = \orderedpair{a}{b} \) such that
+    \( \orderedpair{a}{c} \in R \) and \( \orderedpair{c}{b} \in S \) for some \( a \), \( b \), and \( c \).
+    By \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set},
+    necessarily \( a \in \Union \mleft( \Union R \mright) \) and \( b \in \Union \mleft( \Union S \mright) \).
+    By \cref{dfn:metatheory-cartesian-product}, \( \alpha \in \Union \mleft( \Union R \mright) \times \Union \mleft( \Union S \mright) \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \Union \mleft( \Union R \mright) \times \Union \mleft( \Union S \mright) \)}
+    \end{equation*}
+    Therefore, the set \( \composition{S}{R} = \setbuilder{x}{\varphi(x)} \) exists by \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}.
+\end{proof}
 
 \begin{dfn}[Domain]
     \phantomsection \label{dfn:metatheory-domain-of-a-function}
@@ -1065,26 +1103,50 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
 \end{rem}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-a-set-under-a-function-subset-of-the-range-of-the-function}
+    If \( f \) is a function and \( A \) is a set, then \( \imageSet{f}{A} \subseteq \ran f \).
+\end{thm}
+
+\begin{proof}
+    Let \( \beta \) be an arbitrary object in the universe.
+    Suppose that \( \beta \in \imageSet{f}{A} \).
+    Thus, there must exists an \( \alpha \in A \) such that \( \orderedpair{\alpha}{\beta} \in f \).
+    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( \beta \in \ran f \).
+    In other words, \( \beta \in \imageSet{f}{A} \) implies \( \beta \in \ran f \).
+    Since \( \beta \) is arbitrary, we have \( \imageSet{f}{A} \subseteq \ran f \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-the-domain-of-a-function-under-the-function-equals-the-range-of-the-function}
+    If \( f \) is a function, then \( \imageSet{f}{\dom f} = \ran f \)
+\end{thm}
+
+\begin{proof}
+    Let \( \beta \) be an arbitrary object in the universe.
+    Suppose that \( \beta \in \imageSet{f}{\dom f} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there exists
+    an \( \alpha \in \dom f \) such that \( \orderedpair{\alpha}{\beta} \in f \).
+    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( \beta \in \ran f \).
+    Conversely, suppose that \( \beta \in \ran f \).
+    Then by \cref{dfn:metatheory-range-of-a-function}, there exists a \( \gamma \) such that
+    \( \orderedpair{\gamma}{\beta} \in \ran f \).
+    But by \cref{dfn:metatheory-domain-of-a-function}, \( \gamma \in \dom f \).
+    This means that there exists a \( \gamma \in \dom f \) such that \( \orderedpair{\gamma}{\beta} \in f \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, \( \beta \in \imageSet{f}{\dom f} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have shown that \( \beta \in \imageSet{f}{\dom f} \) and \( \beta \in \ran f \) imply each other for any arbitrary \( \beta \).
+    By \cref{meta-axiom:extensionality}, it follows that \( \imageSet{f}{\dom f} = \ran f \).
+\end{proof}
+
 \begin{dfn}[Injection]
     \phantomsection \label{dfn:metatheory-injection}
-    A set \( f \) is an \keyword{injection} or \keyword{injective function} iff the following statements are true:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( f \) is a function
-        \item for all \( x, y \in \dom f \), \( f(x) = f(y) \) implies \( x = y \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{rem}
-    In other words, a function \( f \) is injective iff every element of \( \ran f \) corresponds to a unique element in \( \dom f \).
-    This is why injective functions are sometimes called \keyword{one-to-one} functions.
-\end{rem}
-
-\begin{dfn}
-    \phantomsection \label{dfn:metatheory-injections-in-terms-of-two-sets}
     If \( A \) and \( B \) are sets, then a set \( f \) is an injection (or injective function) on \( A \) into \( B \) iff the following statements are true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \function{f}{A}{B} \)
-        \item \( f \) is an injection
+        \item for all \( x \in A \) and \( y \in A \), \( f(x) = f(y) \) implies \( x = y \)
     \end{enumerate}
 \end{dfn}
 
@@ -1094,16 +1156,7 @@ We now define the notion of functions and then derive many of their familiar pro
 
 \begin{dfn}[Surjection]
     \phantomsection \label{dfn:metatheory-surjection}
-    A set \( f \) is a \keyword{surjection} or \keyword{surjective function} iff the following statements are true:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( f \) is a function
-        \item for all \( y \in \ran f \), there exists an \( x \in \dom f \) such that \( \orderedpair{x}{y} \in f \)
-    \end{enumerate}
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:metatheory-surjections-in-terms-of-two-sets}
-    If \( A \) and \( B \) are sets, then a set \( f \) is a surjection or surjective function on \( A \) into \( B \) iff the following statements are true:
+    If \( A \) and \( B \) are sets, then a set \( f \) is a \keyword{surjection} or \keyword{surjective function} on \( A \) into \( B \) iff the following statements are true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( \function{f}{A}{B} \)
         \item \( \ran f = B \)
@@ -1121,11 +1174,6 @@ We now define the notion of functions and then derive many of their familiar pro
 
 \begin{dfn}[Bijection]
     \phantomsection \label{dfn:metatheory-bijection}
-    A set \( f \) is a \keyword{bijection} or \keyword{bijective function} iff \( f \) is both an injection and a surjection.
-\end{dfn}
-
-\begin{dfn}
-    \phantomsection \label{dfn:metatheory-bijections-in-terms-of-two-sets}
     If \( A \) and \( B \) are sets, then a set \( f \) is a bijection between \( A \) and \( B \) iff
     \( \injection{f}{A}{B} \) and \( \surjection{f}{A}{B} \).
 \end{dfn}
@@ -1436,12 +1484,152 @@ We now define the notion of functions and then derive many of their familiar pro
         \text{for all \( x \), \( \varphi(x) \) implies \( x \in \ran f \times \dom f \)}
     \end{equation*}
     By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set},
-    the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f} \) exists.
+    the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f} = f^{-1} \) exists.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-if-a-function-is-injective-then-inverse-is-a-function}
+    Let \( A \), \( B \), and \( f \) be sets.
+    If \( \injection{f}{A}{B} \), then \( \bijection{f^{-1}}{\imageSet{f}{A}}{A} \)
+\end{thm}
+
+\begin{proof}
+    To prove that \( \bijection{f^{-1}}{\imageSet{f}{A}}{A} \), we must establish the following claims:
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( \function{f^{-1}}{\imageSet{f}{A}}{A} \), \phantomsection \label{enum:metatheory-inverse-of-a-function-claim1}
+        \item \( f^{-1} \) is injective, \phantomsection \label{enum:metatheory-inverse-of-a-function-claim2}
+        \item \( \ran f^{-1} = A \). \phantomsection \label{enum:metatheory-inverse-of-a-function-claim3}
+    \end{enumerate*}
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim1}:
+    We must show that \( f^{-1} \) satisfies the two conditions given in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
+    Let \( p \) denote an arbitrary object.
+    Suppose that \( p \in f^{-1} \).
+    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( p = \orderedpair{b}{a} \) for some \( a \) and \( b \)
+    and that \( \orderedpair{a}{b} \in f \).
+    Furthermore, \cref{dfn:metatheory-injection} also requires that \( \function{f}{A}{B} \).
+    By \cref{dfn:metatheory-functions-in-terms-of-two-sets}, it follows that \( f \subseteq A \times B \).
+    Since \( \orderedpair{a}{b} \in f \), \( a \in A \) must be true by \cref{dfn:metatheory-cartesian-product}.
+    Also, \( b = f(a) \) by \cref{dfn:metateory-value-of-a-function}.
+    Since \( b = f(a) \) and \( a \in A \), it follows from \cref{dfn:metatheory-image-of-a-set-under-a-function}
+    that \( b \in \imageSet{f}{A} \).
+    Since \( b \in \imageSet{f}{A} \), \( a \in A \), and \( \orderedpair{b}{a} \in f^{-1} \) are all true,
+    it follows from \cref{dfn:metatheory-cartesian-product} that \( \orderedpair{b}{a} \in \imageSet{f}{A} \times A \).
+    In other words, \( p \in f^{-1} \) implies \( p \in \imageSet{f}{A} \times A \) for any arbitrary \( p \).
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, we have
+    \begin{equation}
+        \label{eq:f-inverse-satisfies-first-condition}
+        f^{-1} \subseteq \imageSet{f}{A} \times A
+    \end{equation}
+    Now let \( c \) be an arbitrary object.
+    Suppose that \( c \in \imageSet{f}{A} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there must exist some \( d \in A \)
+    such that \( \orderedpair{d}{c} \in f \).
+    But if \( \orderedpair{d}{c} \in f \), then necessarily \( \orderedpair{c}{d} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
+    We must now prove that this \( d \) is \aref{dfn:metatheory-unique-satisfaction}{unique}.
+    Suppose that \( e \) is another element of \( A \) such that \( \orderedpair{e}{c} \in f \).
+    This would mean that \( f(d) = c = f(e) \).
+    But \( f \) is injective, so \( d \) and \( e \) must be equal by \cref{dfn:metatheory-injection}.
+    Since \( c \) is arbitrary, we infer from \cref{meta-rule:universal-generalization} that
+    \begin{equation}
+        \phantomsection \label{eq:f-inverse-satisfies-second-condition}
+        \text{for all \( x \in \imageSet{f}{A} \), there exists a unique \( y \in A \) such that \( \orderedpair{x}{y} \in f^{-1} \)}
+    \end{equation}
+    It should be obvious from \eqref{eq:f-inverse-satisfies-first-condition} and \eqref{eq:f-inverse-satisfies-second-condition} that
+    \( f^{-1} \) meets the two conditions stated in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
+    Therefore, \( \function{f^{-1}}{\imageSet{f}{A}}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim2}:
+    Suppose that \( f^{-1}(a) = f^{-1}{b} \) for some arbitrary \( a \) and \( b \);
+    that is, there exists some \( c \) such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
+    are both true.
+    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \)
+    are both true.
+    But \( f \) is a function, so \( a \) and \( b \) must be equal by \cref{dfn:metatheory-function}.
+    In other words,
+    \begin{equation*}
+        \text{if \( f^{-1}(a) = f^{-1}(b) \), then \( a = b \)}
+    \end{equation*}
+    Thus, \( f^{-1} \) must be injective by \cref{dfn:metatheory-injection}.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim3}:
+    The first claim itself already implies that \( \ran f^{-1} \subseteq A \).
+    It remains to prove that \( A \subseteq \ran f^{-1} \).
+    Let \( a \in A \) be arbitrary.
+    Since \( \function{f}{A}{B} \), it follows that \( \dom f = A \).
+    Thus, \( a \in \dom f \).
+    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( b \) such that
+    \( \orderedpair{a}{b} \in f \), which in turn implies that \( \orderedpair{b}{a} \in f^{-1} \).
+    In other words,
+    \begin{equation*}
+        \text{if \( a \in A \), then there exists a \( b \) such that \( \orderedpair{b}{a} \in f^{-1} \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( a \in \ran f^{-1} \).
+    Therefore,
+    \begin{equation*}
+        \text{if \( a \in A \), then \( a \in \ran f^{-1} \)}
+    \end{equation*}
+    Since \( a \) denotes an arbitrary element of \( A \), we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \in A \) implies \( x \in \ran f^{-1} \) }
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, \( A \subseteq \ran f^{-1} \) as required.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-inverse-of-bijection-is-another-bijection}
+    Let \( A \), \( B \), and \( f \) be sets.
+    If \( \bijection{f}{A}{B} \), then \( \bijection{f^{-1}}{B}{A} \)
+\end{thm}
+
+\begin{proof}
+    Since \( \bijection{f}{A}{B} \), it follows that \aref{dfn:metatheory-bijection}{\( \injection{f}{A}{B} \) and \( \surjection{f}{A}{B} \) are both true}.
+    Since \( \injection{f}{A}{B} \), it follows from \cref{thm:metatheory-if-a-function-is-injective-then-inverse-is-a-function} that
+    \( \function{f^{-1}}{\imageSet{f}{A}}{A} \).
+    Also, given that \( \surjection{f}{A}{B} \), it follows that \( \ran f = B \).
+    But \( \dom f = A \), so by \cref{thm:metatheory-image-of-the-domain-of-a-function-under-the-function-equals-the-range-of-the-function},
+    \( \imageSet{f}{A} = \imageSet{f}{\dom f} = \ran f = B \).
+    \begin{equation*}
+        \therefore \, \function{f^{-1}}{B}{A}
+    \end{equation*}
+    It remains to prove that \( f^{-1} \) is injective and that \( \ran f^{-1} = A \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( a \), \( b \), and \( c \) be objects in the universe such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
+    are both true.
+    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \).
+    Since \( f \) is a function, necessarily \( a \) and \( b \) are equal.
+    \begin{equation*}
+        \therefore \, \injection{f^{-1}}{B}{A}
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    Finally, we prove that \( \ran f^{-1} = A \) by showing that \( A \subseteq \ran f^{-1} \) because \( \ran f^{-1} \subseteq A \) is already implied by
+    \( \function{f^{-1}}{B}{A} \).
+    Let \( \alpha \) be an arbitrary element of \( A \). Since \( A = \dom f \), it follows that \( \alpha \in \dom f \).
+    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( \beta \) such that \( \orderedpair{\alpha}{\beta} \in f \).
+    But if \( \orderedpair{\alpha}{\beta} \in f \) is true, then necessarily \( \orderedpair{\beta}{\alpha} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
+    Since \( \orderedpair{\beta}{\alpha} \in f^{-1} \) and \( \beta \) is an existing object, necessarily \( \alpha \in \ran f^{-1} \) by
+    \cref{dfn:metatheory-range-of-a-function}.
+    Thus, \( A \subseteq \ran f^{-1} \) as required.
 \end{proof}
 
 \subsection{The Counting Numbers}
 Our metatheory is now sophisticated enough that we can build the counting numbers with it.
-But first, we preface their construction with the following definition and axiom.
+We will preface the construction of the counting numbers with the following definitions and axiom.
+
+\begin{dfn}[Successor]
+    \phantomsection \label{dfn:metatheory-successor}
+    For any set \( x \), the set \( x \union \mleft\{ x \mright\} \) is called the \keyword{successor} of \( x \).
+\end{dfn}
 
 \begin{dfn}[Inductive Set]
     \phantomsection \label{dfn:metatheory-inductive-set}
@@ -1456,11 +1644,6 @@ But first, we preface their construction with the following definition and axiom
     \phantomsection \label{meta-axiom:existence-of-inductive-set}
     An inductive set exists in the universe.
 \end{meta-axiom}
-
-\begin{dfn}
-    \phantomsection \label{dfn:metatheory-successor}
-    For any set \( x \), the set \( x \union \mleft\{ x \mright\} \) is called the \keyword{successor} of \( x \).
-\end{dfn}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-the-set-of-natural-numbers}
