@@ -51,8 +51,8 @@ The goal of this chapter is twofold:
 \end{enumerate*}
 
 \section{Philosophical Concerns}
-It is known that most if not all of mathematics can be formulated within the framework of axiomatic set theory (ZFC), which itself is a first-order theory\footnote{A formal
-theory associated with first-order logic.}.
+It is known that most if not all of mathematics can be formulated within the framework of axiomatic set theory (ZFC), which itself is formulated as a
+first-order theory\footnote{A formal theory associated with first-order logic.}.
 Nevertheless, sets and logic cannot exist independently; that is, ideas pertaining to sets and logic are inherently connected.
 For instance, the fundamental set-theoretic constructions (unions, intersections, negations) are really just logical operations in disguise.
 Similarly, the semantics of first-order languages cannot be fully defined without invoking some notion of sets---i.e., it is not possible to capture the full meaning of
@@ -68,7 +68,7 @@ and yet they are also sentences \emph{about} the properties of sets!
 \vspace{0.3cm}
 \noindent
 The solution to this problem is to develop a \keyword{metatheory} of first-order logic that exists outside of ZFC.
-Within this metatheory, the properties of sets will be restated and subsequently used to justify the properties of
+Within this metatheory, the intuitive properties of sets will be restated and subsequently used to justify the properties of
 first-order logic. Since the properties of sets are now reformulated in the language of the metatheory rather than a language associated with first-order logic,
 there is no circularity in the justification.
 
@@ -94,7 +94,8 @@ of the metatheory as a semi-formal system of reasoning rather than a purely info
 The following are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
 `not', `and', `or', `if', `imply', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
 `implication', `converse', `object', `collection', `aggregate', `symbol', `sentence', `rule', `identity', `same', `unique', `arbitrary', `universe'.
-These primitives are the basic building blocks upon which all other concepts in our metatheory are built.
+By this, we mean that these terms are assumed to be understood a priori and hence will not be explicitly defined.
+The primitives are the basic building blocks upon which all other concepts in our metatheory are built.
 
 \begin{dfn}[Statements]
     \phantomsection \label{dfn:metatheory-statement}
@@ -409,25 +410,7 @@ to derive some basic results of our metatheory.
     By \cref{meta-axiom:extensionality}, this is synonymous to \( A = B \).
 \end{proof}
 
-\begin{thm}
-    \phantomsection \label{thm:metatheory-empty-set-is-the-subset-of-every-set}
-    For all \( X \), if \( X \) is a set, then \( \emptyset \subseteq X \)
-\end{thm}
 
-\begin{proof}
-    Let \( S \) denote an arbitrary object.
-    Suppose that \( S \) is a set.
-    Let \( \alpha \) denote an arbitrary object in the universe.
-    Since \( \emptyset \) has no elements, if follows that \( \alpha \notin \emptyset \).
-    Thus, the statement ``if \( \alpha \in \emptyset \), then \( \alpha \in S \)'' is \aref{dfn:metatheory-vacuous-truth}{vacuously true}.
-    Given that \( \alpha \) denotes an arbitrary object in the universe, we conclude from \cref{meta-rule:universal-generalization} that
-    \begin{equation*}
-        \text{for all \( x \), \( x \in \emptyset \) implies \( x \in S \)}
-    \end{equation*}
-    By \cref{dfn:metatheory-subsets-and-proper-subsets}, necessarily \( \emptyset \in S \).
-    In other words, \( S \) is a set implies \( \emptyset \subseteq S \).
-    Since \( S \) is arbitrary, the theorem follows readilly from \cref{meta-rule:universal-generalization}.
-\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-specification-subset}
@@ -539,9 +522,55 @@ to derive some basic results of our metatheory.
 
 \begin{dfn}
     \phantomsection \label{dfn:metatheory-empty-set}
-    The set \( \emptyset \) is the unique set that does not contain any element;
-    that is, the statement ``for all \( x \), \( x \notin \emptyset \)'' is true.
+    The set \( \emptyset \) is the unique set that does not contain any element.
+    In other words, if \( S \) is a set, then
+    \begin{equation*}
+        \text{\( S = \emptyset \) iff for all \( x \), \( x \notin S \)}
+    \end{equation*}
 \end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-empty-set-is-the-subset-of-every-set}
+    For any set \( S \), \( \emptyset \subseteq S \)
+\end{thm}
+
+\begin{proof}
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Since \( \emptyset \) has no elements, if follows that \( \alpha \notin \emptyset \).
+    Thus, the statement ``if \( \alpha \in \emptyset \), then \( \alpha \in S \)'' is \aref{dfn:metatheory-vacuous-truth}{vacuously true}.
+    Given that \( \alpha \) denotes an arbitrary object in the universe, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation}
+        \phantomsection \label{eq:S-is-subset-of-empty-set}
+        \text{for all \( x \), \( x \in \emptyset \) implies \( x \in S \)}
+    \end{equation}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, necessarily \( \emptyset \subseteq S \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-subset-of-an-empty-set-must-be-empty}
+    For any set \( S \), if \( S \subseteq \emptyset \), then \( S = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \alpha \in S \) is true.
+    Since \( S \subseteq \emptyset \), it follows from \cref{dfn:metatheory-subsets-and-proper-subsets} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in S \) implies \( x \in \emptyset \)}
+    \end{equation*}
+    Applying \cref{meta-rule:universal-instantiation} to \eqref{eq:S-is-subset-of-empty-set} then yields
+    \begin{equation*}
+        \alpha \in S \ \text{implies} \ \alpha \in \emptyset
+    \end{equation*}
+    Since \( \alpha \in S \), it follows from \cref{meta-rule:modus-ponens} that \( \alpha \in \emptyset \), which
+    contradicts \cref{dfn:metatheory-empty-set}.
+    Therefore, the supposition that \( \alpha \in S \) must be false; that is, \( \alpha \notin S \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \notin S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-empty-set}, necessarily \( S = \emptyset \).
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-unordered-pair}
@@ -896,6 +925,115 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
 \end{dfn}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-cartesian-product-is-empty-iff-at-least-one-of-the-sets-is-empty}
+    For any two sets \( A \) and \( B \), \( A \times B = \emptyset \) iff \( A = \emptyset \) or \( B = \emptyset \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) denote two arbitrary sets.
+    Suppose that \( A \times B = \emptyset \).
+    Now suppose that the statement
+    \begin{equation*}
+        A = \emptyset \ \text{or} \ B = \emptyset
+    \end{equation*}
+    is false. By \cref{meta-rule:de-morgans-laws}, it follows that \( A \neq \emptyset \) and \( B \neq \emptyset \) are both true.
+    Since neither \( A \) nor \( B \) is empty, there exist objects \( a \) and \( b \) such that \( a \in A \) and \( b \in B \).
+    Let \( p \) be the ordered pair formed using \( a \) and \( b \).
+    \begin{equation*}
+        p = \orderedpair{a}{b}
+    \end{equation*}
+    By \cref{dfn:metatheory-cartesian-product}, it follows that \( p \in A \times B \).
+    Since \( A \times B \) contains an element, it cannot be empty.
+    The supposition that ``\( A = \emptyset \) or \( B = \emptyset \)'' is false leads to a contradiction.
+    Therefore, the statement ``\( A = \emptyset \) or \( B = \emptyset \)'' has to be true if ``\( A \times B = \emptyset \)'' is true.
+    \begin{equation}
+        \label{eq:metatheory-empty-cartesian-product-implies-at-least-one-empty-set}
+        \text{if \( A \times B = \emptyset \), then \( A = \emptyset \) or \( B = \emptyset \)}
+    \end{equation}
+    To prove the converse, suppose that \( A = \emptyset \) or \( B = \emptyset \) is true.
+    We consider each case separately.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( A = \emptyset \)
+
+    \vspace{0.1cm}
+    \noindent
+    Suppose that \( A \times B \) is not empty; that is, \( A \times B \) has an element.
+    Let \( p \) denote said element.
+    By \cref{dfn:metatheory-cartesian-product}, there exist objects \( a \) and \( b \) such that
+    \( p = \orderedpair{a}{b} \), \( a \in A \), \( b \in B \).
+    But \( a \in A \) contradicts the fact that \( A = \emptyset \).
+    By \cref{meta-rule:reductio-ad-absurdum}, the supposition ``\( A \times B \neq \emptyset \)'' must be false.
+    Thus, \( A \times B = \emptyset \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case:} \( B = \emptyset \)
+
+    \vspace{0.1cm}
+    \noindent
+    Suppose, for the sake of contradiction, that \( A \times B \) is not empty.
+    Let \( q = \orderedpair{c}{d} \) denote an element of \( A \times B \).
+    By \cref{dfn:metatheory-cartesian-product}, necessarily \( c \in A \) and \( d \in B \), which contradicts \( B = \emptyset \).
+    By \cref{meta-rule:reductio-ad-absurdum}, \( A \times B = \emptyset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( A \times B = \emptyset \) follows in both cases, we have
+    \begin{equation}
+        \phantomsection \label{eq:metatheory-empty-set-implies-empty-cartesian-product}
+        \text{if \( A = \emptyset \) or \( B = \emptyset \), then \( A \times B = \emptyset \)}
+    \end{equation}
+
+    \noindent
+    From \eqref{eq:metatheory-empty-cartesian-product-implies-at-least-one-empty-set} and \eqref{eq:metatheory-empty-set-implies-empty-cartesian-product},
+    it is clear that \( A \times B = \emptyset \) and \( A = \emptyset \) or \( B = \emptyset \) imply each other.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-subsets-form-cartesian-product-subsets}
+    If \( S \) is a non-empty set, then the following statement is true for any two sets \( A \) and \( B \):
+    \begin{equation*}
+        \text{\( A \subseteq B \) iff \( A \times S \subseteq B \times S \)}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    Suppose that \( A \subseteq B \) is true.
+    Let \( p \) be an arbitrary object in the universe.
+    If \( p \in A \times S \), then \( p = \orderedpair{a}{b} \) for some \( a \in A \) and \( b \in S \) by \cref{dfn:metatheory-cartesian-product}.
+    Since \( A \subseteq B \), \( a \in A \) must imply \( a \in B \).
+    This means that \( p \in B \times S \) is true.
+    Since \( p \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in A \times S \) implies \( B \times S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \times S \subseteq B \times S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( A \times S \subseteq B \times S \) is true.
+    Since \( S \neq \emptyset \), it must contain at least one element, which we will denote as \( s \).
+    Now let \( \alpha \) be an arbitrary object in the universe.
+    Suppose that \( \alpha \in A \).
+    Since \( \alpha \) and \( s \) are objects, the sets \( \mleft\{ \alpha \mright\} \) and \( \mleft\{ \alpha, s \mright\} \) exists
+    by \cref{meta-axiom:pairing}.
+    Since sets are themselves objects, we invoke \cref{meta-axiom:pairing} once again to conclude that the set
+    \( \orderedpair{\alpha}{s} = \mleft\{ \mleft\{ \alpha \mright\}, \mleft\{ \alpha, s \mright\}  \mright\} \) exists.
+    Since \( \alpha \in A \) and \( s \in S \), it follows from \cref{dfn:metatheory-cartesian-product} that
+    \( \orderedpair{\alpha}{s} \in A \times S \).
+    But \( A \times S \) is a subset of \( B \times S \), so \( \orderedpair{\alpha}{s} \) must also be an element of \( B \times S \).
+    By \cref{dfn:metatheory-cartesian-product}, necessarily \( \alpha \in B \).
+    In other words, \( \alpha \in A \) implies \( \alpha \in B \).
+    Since \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in A \) implies \( x \in B \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \subseteq B \).
+\end{proof}
+
 \begin{dfn}[Function]
     \phantomsection \label{dfn:metatheory-function}
     A set \( f \) is a function iff the following statements are true:
@@ -1055,15 +1193,12 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{dfn}
     \phantomsection \label{dfn:metatheory-functions-in-terms-of-two-sets}
     If \( A \) and \( B \) are sets, then a set \( f \) is a \keyword{function} on \( A \) into \( B \) iff the following statements are true:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( f \subseteq A \times B \)
-        \item for all \( x \in A \), there exists a unique \( y \in B \) such that \( \orderedpair{x}{y} \in f \)
-    \end{enumerate}
+    \begin{enumerate*}[label=(\roman*)]
+        \item \( f \) is a function,
+        \item \( \dom f = A \),
+        \item \( \ran f \subseteq B \).
+    \end{enumerate*}
 \end{dfn}
-
-\begin{rem}
-    Essentially, \( \function{f}{A}{B} \) iff \( \dom f = A \) and \( \ran f \subseteq  B \).
-\end{rem}
 
 \begin{notation}
     We write \( \function{f}{A}{B} \) to abbreviate the statement ``\( f \) is a function on \( A \) into \( B \).''
@@ -1102,6 +1237,27 @@ We now define the notion of functions and then derive many of their familiar pro
         \imageSet{f}{A} \coloneq \setbuilderbig{y}{\text{there exists an \( x \) such that \( x \in A \) and \( \orderedpair{x}{y} \in f \) }}
     \end{equation*}
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-function-is-subset-of-cartesian-product}
+    If \( \function{f}{A}{B} \), then \( f \subseteq A \times B \)
+\end{thm}
+
+\begin{proof}
+    Let \( p \) denote an arbitrary object in the universe.
+    Suppose that \( p \in f \).
+    By \cref{dfn:metatheory-function}, it follows that \( p = \orderedpair{a}{b} \) where \( a \) and \( b \) are objects in the universe.
+    By \cref{dfn:metatheory-domain-of-a-function}, it follows that \( a \in \dom f \) and thus \( a \in A \) because \( \dom f = A \)
+    by \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
+    Additionally, we have \( b \in \ran f \) by \cref{dfn:metatheory-range-of-a-function}.
+    Since \( \ran f \subseteq B \) by \cref{dfn:metatheory-functions-in-terms-of-two-sets}, it follows that \( b \in B \).
+    In other words, \( p \in A \times B \).
+    Since \( p \) is arbitrary, \cref{meta-rule:universal-generalization} permits us to conclude that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in f \) implies \( x \in A \times B \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, we conclude \( f \subseteq A \times B \).
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-image-of-a-set-under-a-function-subset-of-the-range-of-the-function}
@@ -1215,12 +1371,11 @@ We now define the notion of functions and then derive many of their familiar pro
     Again, we infer from \cref{dfn:metatheory-the-union-of-sets} that there exists some function \( g \in F \) such that
     \( \orderedpair{\alpha}{\gamma} \in g \). Clearly, either \( f = g \) or \( f \neq g \).
     If \( f = g \), then obviously \( \beta = \gamma \) because \( f \) is a function.
-    If \( f \neq g \), then \( \beta = \gamma \) is also true because \( f \) and \( g \) is compatible by
-    \cref{dfn:metatheory-compatibility-of-functions} and \( \alpha \in \dom f \intersect \dom g \).
+    If \( f \neq g \), then \( \beta = \gamma \) is also true because \( f \) and \( g \) are compatible and \( \alpha \in \dom f \intersect \dom g \).
     In other words,
     \begin{equation}
         \label{eq:second-condition-for-a-set-to-be-a-function}
-        \text{for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{z} \in \Union F \) and \( \orderedpair{y}{z} \in \Union F \) implies \( x = y \)}
+        \text{for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{y} \in \Union F \) and \( \orderedpair{x}{z} \in \Union F \) implies \( y = z \)}
     \end{equation}
     From \eqref{eq:first-condition-for-a-set-to-be-a-function} and \eqref{eq:second-condition-for-a-set-to-be-a-function}, it is clear that
     the two conditions stated in \cref{dfn:metatheory-function} are met. Therefore, \( \Union F \) is a function.
@@ -1504,47 +1659,57 @@ We now define the notion of functions and then derive many of their familiar pro
     \vspace{0.3cm}
     \noindent
     {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim1}:
-    We must show that \( f^{-1} \) satisfies the two conditions given in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
-    Let \( p \) denote an arbitrary object.
+    We must show that \( f^{-1} \) satisfies the conditions stated in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
+    We begin by showing that \( f^{-1} \) is indeed a function.
+    Let \( p \) be an arbitrary object in the universe.
     Suppose that \( p \in f^{-1} \).
-    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( p = \orderedpair{b}{a} \) for some \( a \) and \( b \)
-    and that \( \orderedpair{a}{b} \in f \).
-    Furthermore, \cref{dfn:metatheory-injection} also requires that \( \function{f}{A}{B} \).
-    By \cref{dfn:metatheory-functions-in-terms-of-two-sets}, it follows that \( f \subseteq A \times B \).
-    Since \( \orderedpair{a}{b} \in f \), \( a \in A \) must be true by \cref{dfn:metatheory-cartesian-product}.
-    Also, \( b = f(a) \) by \cref{dfn:metateory-value-of-a-function}.
-    Since \( b = f(a) \) and \( a \in A \), it follows from \cref{dfn:metatheory-image-of-a-set-under-a-function}
-    that \( b \in \imageSet{f}{A} \).
-    Since \( b \in \imageSet{f}{A} \), \( a \in A \), and \( \orderedpair{b}{a} \in f^{-1} \) are all true,
-    it follows from \cref{dfn:metatheory-cartesian-product} that \( \orderedpair{b}{a} \in \imageSet{f}{A} \times A \).
-    In other words, \( p \in f^{-1} \) implies \( p \in \imageSet{f}{A} \times A \) for any arbitrary \( p \).
-    By \cref{dfn:metatheory-subsets-and-proper-subsets}, we have
-    \begin{equation}
-        \label{eq:f-inverse-satisfies-first-condition}
-        f^{-1} \subseteq \imageSet{f}{A} \times A
-    \end{equation}
-    Now let \( c \) be an arbitrary object.
-    Suppose that \( c \in \imageSet{f}{A} \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there must exist some \( d \in A \)
-    such that \( \orderedpair{d}{c} \in f \).
-    But if \( \orderedpair{d}{c} \in f \), then necessarily \( \orderedpair{c}{d} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
-    We must now prove that this \( d \) is \aref{dfn:metatheory-unique-satisfaction}{unique}.
-    Suppose that \( e \) is another element of \( A \) such that \( \orderedpair{e}{c} \in f \).
-    This would mean that \( f(d) = c = f(e) \).
-    But \( f \) is injective, so \( d \) and \( e \) must be equal by \cref{dfn:metatheory-injection}.
-    Since \( c \) is arbitrary, we infer from \cref{meta-rule:universal-generalization} that
-    \begin{equation}
-        \phantomsection \label{eq:f-inverse-satisfies-second-condition}
-        \text{for all \( x \in \imageSet{f}{A} \), there exists a unique \( y \in A \) such that \( \orderedpair{x}{y} \in f^{-1} \)}
-    \end{equation}
-    It should be obvious from \eqref{eq:f-inverse-satisfies-first-condition} and \eqref{eq:f-inverse-satisfies-second-condition} that
-    \( f^{-1} \) meets the two conditions stated in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
-    Therefore, \( \function{f^{-1}}{\imageSet{f}{A}}{A} \).
+    By \cref{dfn:metatheory-inverse-of-a-function}, there exist objects \( \alpha \) and \( \beta \)
+    such that \( p = \orderedpair{\beta}{\alpha} \) and \( \orderedpair{\alpha}{\beta} \in f \).
+    Thus,
+    \begin{equation*}
+        \text{for all \( x \), \( x \in f^{-1} \) implies there exist objects \( a \) and \( b \) such that \( x = \orderedpair{a}{b} \) }
+    \end{equation*}
+    Let \( \gamma \), \( \delta \), and \( \epsilon \) denote arbitrary objects.
+    Suppose that \( \orderedpair{\gamma}{\delta} \in f^{-1} \) and \( \orderedpair{\gamma}{\epsilon} \in f^{-1} \).
+    By \cref{dfn:metatheory-inverse-of-a-function}, necessarily \( \orderedpair{\delta}{\gamma} \in f \) and \( \orderedpair{\epsilon}{\gamma} \in f \).
+    Since \( f \) is injective, necessarily \( \delta = \epsilon \) by \cref{dfn:metatheory-injection}.
+    Thus, \( f^{-1} \) is a function by \cref{dfn:metatheory-function}.
+
+    \vspace{0.3cm}
+    \noindent
+    We now prove that \( \dom f^{-1} = \imageSet{f}{A} \).
+    Let \( \beta \) denote an arbitrary object in the universe.
+    Suppose that \( \beta \in \dom f^{-1} \).
+    By \cref{dfn:metatheory-domain-of-a-function}, there exists some \( \alpha \) such that \( \orderedpair{\beta}{\alpha} \in f^{-1} \).
+    In other words, \( \orderedpair{\alpha}{\beta} \in f \). Since \( \function{f}{A}{B} \), we infer \( \alpha \in A \) and subsequently
+    \( \beta \in \imageSet{f}{A} \).
+    Conversely, suppose that \( \beta \in \imageSet{f}{A} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there exists a \( \gamma \in A \) such that \( \orderedpair{\gamma}{\beta} \in f \).
+    But if \( \orderedpair{\gamma}{\beta} \in f \), then necessarily \( \beta \in \dom f^{-1} \) since
+    \( \orderedpair{\beta}{\gamma} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
+    Since \( \beta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{ for all \( x \),  \( x \in \dom f^{-1} \) iff \( x \in \imageSet{f}{A} \)}
+    \end{equation*}
+    By \cref{meta-axiom:extensionality}, \( \dom f^{-1} = \imageSet{f}{A} \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Finally, we prove that \( \ran f^{-1} \subseteq A \).
+    Let \( \delta \) denote an arbitrary element of \( \ran f^{-1} \).
+    By \cref{dfn:metatheory-range-of-a-function}, there exists some \( \xi \) such that \( \orderedpair{\xi}{\delta} \in f^{-1} \)
+    and thus \( \orderedpair{\delta}{\xi} \in f \).
+    But this would mean that \( \delta \in \dom f \), and since \( \dom f = A \), necessarily \( \delta \in A \).
+    In other words,
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \ran f^{-1} \) implies \( x \in A \)}
+    \end{equation*}
+    Thus, \( \ran f^{-1} \subseteq A \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
 
     \vspace{0.3cm}
     \noindent
     {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim2}:
-    Suppose that \( f^{-1}(a) = f^{-1}{b} \) for some arbitrary \( a \) and \( b \);
+    Suppose that \( f^{-1}(a) = f^{-1}(b) \) for some arbitrary \( a \) and \( b \);
     that is, there exists some \( c \) such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
     are both true.
     By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \)
@@ -1575,7 +1740,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \begin{equation*}
         \text{if \( a \in A \), then \( a \in \ran f^{-1} \)}
     \end{equation*}
-    Since \( a \) denotes an arbitrary element of \( A \), we have by \cref{meta-rule:universal-generalization}
+    Since \( a \) denotes an arbitrary object, we have by \cref{meta-rule:universal-generalization}
     \begin{equation*}
         \text{for all \( x \), \( x \in A \) implies \( x \in \ran f^{-1} \) }
     \end{equation*}
@@ -1620,6 +1785,140 @@ We now define the notion of functions and then derive many of their familiar pro
     Since \( \orderedpair{\beta}{\alpha} \in f^{-1} \) and \( \beta \) is an existing object, necessarily \( \alpha \in \ran f^{-1} \) by
     \cref{dfn:metatheory-range-of-a-function}.
     Thus, \( A \subseteq \ran f^{-1} \) as required.
+\end{proof}
+
+\begin{dfn}[Indexed Family of Sets]
+    \phantomsection \label{dfn:metatheory-indexed-family-of-sets}
+    A set \( S \) is an \keyword{indexed family of sets} iff \( S \) is a function and \( \ran S \) is a family of sets.
+    If \( S \) is an indexed family of sets, then we refer to \( \dom S \) as the \keyword{index} or \keyword{index set} of \( S \).
+\end{dfn}
+
+\begin{dfn}[Union]
+    \phantomsection \label{dfn:metatheory-union-of-indexed-family-of-sets}
+    If \( S \) is an indexed family of sets, then the union of \( S \) is the set given by
+    \begin{equation*}
+        \Union S  = \setbuilderbig{x}{\text{there exists an \( i \in \dom S \) such that \( x \in S_{i} \) }}
+    \end{equation*}
+    In other words, \( \Union S = \Union \ran S \).
+\end{dfn}
+
+\begin{dfn}[Intersection]
+    \phantomsection \label{dfn:metatheory-intersection-of-indexed-family-of-sets}
+    If \( S \) is an indexed family of sets, then the intersection of \( S \) is the set given by
+    \begin{equation*}
+        \Intersect S = \setbuilderbig{x}{\text{for all \( i \), \( i \in \dom S \) implies \( x \in S_{i} \)}}
+    \end{equation*}
+    That is, \( \Intersect S = \Intersect \ran S \).
+\end{dfn}
+
+\begin{notation}
+    If \( S \) is an indexed family of sets and \( I = \dom S \),
+    we also use the notations \( \Union_{i \,\in\, I}  S_{i} \) and \( \Intersect_{i \,\in\, I} S_{i} \) to denote \( \Union S \) and \( \Intersect S \) respectively.
+\end{notation}
+
+\begin{dfn}[Exponentiation]
+    \phantomsection \label{dfn:metatheory-set-exponentiation}
+    If \( A \) and \( B \) are sets, the set \( B^{A} \) is defined as the set of all functions on \( A \) into \( B \). That is,
+    \begin{equation*}
+        B^{A} \coloneq \setbuilderbig{f}{\function{f}{A}{B}}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-set-exponentiation}
+    For any two sets \( A \) and \( B \), \( B^{A} \) exists and is unique.
+\end{thm}
+
+\begin{proof}
+    Since \( A \) and \( B \) are sets, the cartesian product \( A \times B \) exists by \cref{thm:metatheory-existence-of-cartesian-products}.
+    Let \( \varphi(f) \) be a predicate defined as follows:
+    \begin{equation*}
+        \varphi(f) \coloneq \function{f}{A}{B}
+    \end{equation*}
+    Let \( f^{\prime} \) denote an arbitrary object in the universe.
+    Suppose that \( \varphi(f^{\prime}) \) is a true statement; i.e., \( \function{f^{\prime}}{A}{B} \).
+    Let \( p \) denote an arbitrary object in the universe.
+    Suppose that \( p \in f^{\prime} \).
+    Since \( f^{\prime} \) is a function, \( p \) must be an ordered pair;
+    that is, there exists objects \( a \) and \( b \) such that \( p = \orderedpair{a}{b} \).
+    By \cref{dfn:metatheory-domain-of-a-function,dfn:metatheory-range-of-a-function}, it follows that
+    \( a \in \dom f^{\prime} \) and \( b \in \ran f^{\prime} \).
+    Since \( \dom f^{\prime} = A \) and \( \ran f^{\prime} \), necessarily \( a \in A \) and \( b \in B \).
+    By \cref{dfn:metatheory-cartesian-product}, necessarily \( p \in A \times B \).
+    Since \( f^{\prime} \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in A \times B \)}
+    \end{equation*}
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set \( \setbuilder{f}{\varphi(f)} = B^{A} \) exists.
+    The uniqueness of \( B^{A} \) follows readily from \cref{thm:metatheory-uniqueness-of-specification-subset}.
+\end{proof}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-set-exponentiation-is-the-subset-of-cartesian-product-and-element-of-power-set-of-cartesian-product}
+    For any two sets \( A \) and \( B \), \( B^{A} \subseteq A \times B \) and thus \( B^{A} \in \powerset{A \times B} \).
+\end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-exponentiation-with-empty-exponent}
+    For any set \( A \), \( A^{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an arbitrary object.
+    Suppose that \( f \in A^{\emptyset} \).
+    By \cref{dfn:metatheory-set-exponentiation}, it follows that \( \function{f}{\emptyset}{A} \).
+    Suppose that \( f \neq \emptyset \). Then there exists some \( p \) such that \( p \in f \).
+    Since \( f \) is a function, it follows that \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \).
+    But by \cref{dfn:metatheory-domain-of-a-function}, this would imply that \( a \in \dom f \), which contradicts the fact
+    that \( \dom f = \emptyset \).
+    By \cref{meta-rule:reductio-ad-absurdum}, the supposition that \( f \neq \emptyset \) must be false.
+    In other words, \( f = \emptyset \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Conversely, if \( f = \emptyset \), then the two conditions stated in \cref{dfn:metatheory-function} are vacuously true.
+    Moreover, \( \dom f = \emptyset \) and \( \ran f = \emptyset \).
+    Since \( \emptyset \) is a subset of every set, it follows that \( \ran f \subseteq A \).
+    In other words, \( \function{f}{\emptyset}{A} \).
+    \begin{equation*}
+        \therefore \, f \in A^{\emptyset} \ \text{iff} \ f = \emptyset
+    \end{equation*}
+    Since \( f \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization,meta-axiom:extensionality,meta-axiom:pairing}
+    that \( A^{\emptyset} = \mleft\{ \emptyset \mright\} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-exponentiation-with-empty-base}
+    For any set \( A \),
+    \begin{equation*}
+        \emptyset^{A} =
+        \begin{cases}
+            \ \emptyset \ &\text{if} \ A \neq \emptyset\\            
+            \mleft\{ \emptyset \mright\} \ &\text{if} \ A = \emptyset
+        \end{cases}
+    \end{equation*}
+\end{thm}
+
+\begin{proof}
+    If \( A = \emptyset \), the theorem follows from \cref{thm:metatheory-exponentiation-with-empty-exponent}.
+    It remains to prove that \( \emptyset^{A} = \emptyset \) if \( A \neq \emptyset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( A \neq \emptyset \).
+    Let \( f \) denote an arbitrary object in the universe.
+    Suppose that \( f \in \emptyset^{A} \).
+    By \cref{dfn:metatheory-set-exponentiation}, necessarily \( \function{f}{A}{\emptyset} \);
+    that is, \( f \) is a function with \( \dom f = A \) and \( \ran f \subseteq \emptyset \).
+    By \cref{thm:metatheory-subset-of-an-empty-set-must-be-empty}, it follows that \( \ran f = \emptyset \).
+    But if \( \ran f = \emptyset \), then necessarily \( \dom f = \emptyset \) by \cref{thm:metatheory-function-with-empty-range-must-have-empty-domain}.
+    But this would mean that \( A = \dom f = \emptyset \), which contradicts our initial supposition that \( A \neq \emptyset \).
+    Since \( f \in \emptyset^{A} \) leads to a contradiction, it must be false. In other words, \( f \notin \emptyset^{A} \).
+    Since \( f \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \notin \emptyset^{A} \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-empty-set}, necessarily \( \emptyset^{A} = \emptyset \).
 \end{proof}
 
 \subsection{The Counting Numbers}
@@ -1677,6 +1976,8 @@ We will preface the construction of the counting numbers with the following defi
 
 \begin{notation}
     If \( n \in \naturalset \), then we denote the successor of \( n \) as \( n + 1 \).
+    Additionally, we also write \( \naturalset^{+} \) to refer to the set \( \naturalset - \mleft\{ \emptyset \mright\} \); i.e., the set of all
+    non-zero (non-empty) natural numbers.
 \end{notation}
 
 \begin{dfn}
@@ -1823,11 +2124,12 @@ We will preface the construction of the counting numbers with the following defi
 \end{rem}
 
 \begin{dfn}
-    \phantomsection \label{dfn:metatheory-base-case-and-inductive-step}
+    \phantomsection \label{dfn:metatheory-base-case-and-inductive-step-induction-hypothesis}
     In any application of the \aref{thm:metatheory-weak-induction}{Principle of Weak Induction} on a predicate \( P(n) \),
     the statement \( P(\emptyset) \) is known as the \keyword{base case} whereas
     the statement ``for all \( n \), if \( n \in \naturalset \), then \( P(n) \) implies \( P(n + 1) \)''
     is known as the \keyword{inductive step}.
+    The statement \( P(n) \) in the implication ``\( P(n) \) implies \( P(n + 1)\)'' is also known as the \keyword{induction hypothesis}.
 \end{dfn}
 
 \begin{thm}[Strong Induction]
@@ -1881,6 +2183,231 @@ We will preface the construction of the counting numbers with the following defi
     \cref{thm:metatheory-equality-in-terms-of-subsets} that \( \naturalset = \setbuilder{n \in \naturalset}{P(n)} \).
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-natural-number-is-a-subset-of-N}
+    For all \( n \in \naturalset \), \( n \subseteq \naturalset \).
+\end{thm}
+
+\begin{proof}
+    We begin by defining the following predicate.
+    \begin{equation}
+        \label{eq:induction-predicate}
+        P(n) \coloneq \text{\( n \) is a set and \( n \subseteq \naturalset \)}
+    \end{equation}
+    Now we will show by \aref{thm:metatheory-weak-induction}{Weak Induction} that \( \setbuilder{n \in \naturalset}{P(n)} = \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}:
+    Clearly, \( 0 = \emptyset \) is a set. Furthermore, \( \emptyset \) is a subset of any set by \cref{thm:metatheory-empty-set-is-the-subset-of-every-set}.
+    Therefore, \( P(0) \) is a true statement.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: Let \( k \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( P(k) \) is a true statement; that is, \( k \) is a set and \( k \subseteq \naturalset \).
+    Since \( k \) is a set, \( k + 1 = k \union \mleft\{ k \mright\} \) must also be a set by definition.
+    Now let \( e \) be an arbitrary element of \( k + 1 \); that is, either \( e \in k \) or \( e = k \).
+    Since \( k \in \naturalset \), \( e \) obviously belongs to \( \naturalset \) if \( e = k \).
+    On the other hand, if \( e \in k \), then \( e \in \naturalset \) must also be true because \( k \subseteq \naturalset \) is true by the
+    \aref{dfn:metatheory-base-case-and-inductive-step-induction-hypothesis}{induction hypothesis}.
+    In other words, \( e \in \naturalset \) is true in either possibility.
+    By \cref{meta-rule:disjunction-elimination}, we reason that
+    \begin{equation*}
+        e \in k + 1 \ \text{implies} \ e \in \naturalset
+    \end{equation*}
+    Since \( e \) is arbitrary, we can further conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in k + 1 \) implies \( x \in \naturalset \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, necessarily \( k + 1 \subseteq \naturalset \).
+    Since \( k + 1 \) is a set and \( k + 1 \subseteq \naturalset \), it follows from \eqref{eq:induction-predicate} that
+    \( P(k + 1) \) is a true statement.
+    Since \( k \) denotes an arbitrary element of \( \naturalset \), the inductive step follows readilly from \cref{meta-rule:universal-generalization}.
+
+    \vspace{0.3cm}
+    \noindent
+    Having established both the base case and the inductive step, the theorem follows from \aref{thm:metatheory-weak-induction}{Weak Induction}.
+\end{proof}
+
+\begin{dfn}[Finite Set]
+    \phantomsection \label{dfn:metatheory-finite-set}
+    A set \( S \) is \keyword{finite} iff there exists an \( n \in \naturalset \) such that a \keyword{bijection} exists
+    between \( n \) and \( S \).
+\end{dfn}
+
+\begin{dfn}[Countable Set]
+    \phantomsection \label{dfn:metatheory-countable-set}
+    A set \( S \) is \keyword{countable} iff \( S \) is finite or a bijection exists between \( \naturalset \) and \( S \).
+\end{dfn}
+
+\begin{dfn}[Sequence]
+    \phantomsection \label{dfn:metatheory-sequence}
+    A set \( f \) is a \keyword{sequence} iff it is a function such that \( \dom f \in \naturalset \) or \( \dom f = \naturalset \).
+    A sequence is \keyword{finite} iff it is a finite set; i.e., \( \dom f \in \naturalset \).
+    A sequence is \keyword{infinite} iff it is not finite.
+\end{dfn}
+
+\begin{notation}[Sequence Notation]
+    If \( S \) is a sequence, then \( \sequence{\epsilon_{n}}{n \in \dom S} \) denotes the sequence obtained from \( S \)
+    via an \aref{dfn:metatheory-expressions}{expression} built using \( S_{n} \).
+\end{notation}
+
+\begin{eg}
+    Obviously, \( \sequence{S_{n}}{n \in \dom S} \) is merely an alias for \( S \) itself.
+    We can build more complicated sequences using this notational scheme, of course.
+    For instance, if \( A \) and \( B \) are \aref{dfn:metatheory-indexed-family-of-sets}{indexed families of sets} such that
+    \( \dom A = \dom B = n \) where \( n \in \naturalset \), then
+    \( \sequence{A_{i} \,{\union}\, B_{i}}{i \in n} \) denotes the finite sequence of the unions of the sets from each family.
+\end{eg}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-empty-set-is-the-zero-tuple-and-empty-sequence}
+    An empty tuple or sequence is the empty set.
+\end{thm}
+
+\begin{proof}
+    Let \( T \) be a finite sequence of length \( 0 \).
+    Since \( 0 = \emptyset \), it follows that \( \dom T = \emptyset \) and thus \( T = \emptyset \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-set-of-all-n-ary-products}
+    Given any set \( A \), the set \( \setbuilder{A^{n}}{n \in \naturalset} \) exists and is unique and non-empty.
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( \varphi(x) \) be defined as follows.
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( n \) such that \( n \in \naturalset \) and \( x = A^{n} \)}
+    \end{equation*}
+    There are two cases to consider.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case} \( A = \emptyset \):
+    Let \( \alpha \) be an arbitrary object in the universe such that \( \varphi(\alpha) \) is a true statement; that is,
+    \( \alpha = A^{k} \) for some \( k \in \naturalset \). Since \( A = \emptyset \) and \( k \in \naturalset \), it follows from
+    \cref{thm:metatheory-exponentiation-with-empty-base} that either \( \alpha = \emptyset \) or \( \alpha = \mleft\{ \emptyset \mright\} \).
+    In other words, \( \alpha \in \mleft\{ \emptyset, \mleft\{ \emptyset \mright\} \mright\} \). Since \( \alpha \) is arbitrary
+    and \( \mleft\{ \emptyset, \mleft\{ \emptyset \mright\} \mright\} \) is an existing set, it follows from
+    \cref{thm:metatheory-existence-of-unrestricted-comprehension-set} that the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{A^{n}}{n \in \naturalset} \) exists
+    and is unique by \cref{thm:metatheory-uniqueness-of-specification-subset}.
+    To prove that \( \setbuilder{A^{n}}{n \in \naturalset} \neq \emptyset \), it suffices to show that \( \mleft\{ \emptyset \mright\} \in \setbuilder{A^{n}}{n \in \naturalset} \).
+    We know from \cref{thm:metatheory-exponentiation-with-empty-exponent} that \( \emptyset^{\emptyset} = \mleft\{ \emptyset \mright\} \).
+    Since \( \emptyset \in \naturalset \) and \( \mleft\{ \emptyset \mright\} = \emptyset^{\emptyset} = A^{\emptyset} \),
+    it follows that \( \varphi(\mleft\{ \emptyset \mright\}) \) is a true statement.
+    Thus, \( \mleft\{ \emptyset \mright\} \in \setbuilder{A^{n}}{n \in \naturalset} \).
+    Since \( \setbuilder{A^{n}}{n \in \naturalset} \) contains at least one element, it must be non-empty.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case} \( A \neq \emptyset \):
+    Let \( \beta \) be an arbitrary object in the universe such that \( \varphi(\beta) \) is a true statement;
+    that is, \( \beta = A^{j} \) for some \( j \in \naturalset \).
+    By \cref{dfn:metatheory-set-exponentiation}, it follows that
+    \begin{equation*}
+        \beta = \setbuilderbig{f}{\function{f}{j}{A}}
+    \end{equation*}
+    Let \( f^{\prime} \) denote an arbitrary element of \( \beta \); i.e., \( \function{f^{\prime}}{j}{A} \).
+    By \cref{thm:metatheory-function-is-subset-of-cartesian-product}, it follows that \( f^{\prime} \subseteq j \times A \).
+    Since \( j \in \naturalset \), \cref{thm:metatheory-every-natural-number-is-a-subset-of-N} requires that \( j \subseteq \naturalset \).
+    The fact that \( A \) is not empty means that \cref{thm:metatheory-subsets-form-cartesian-product-subsets} is applicable and we thus have
+    \begin{equation*}
+        f^{\prime} \subseteq j \times A \subseteq \naturalset \times A
+    \end{equation*}
+    In other words, \( f^{\prime} \in \powerset{\naturalset \times A} \). Since \( f^{\prime} \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization}
+    that
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \powerset{\naturalset \times A} \)}
+    \end{equation*}
+    where \( \powerset{\naturalset \times A} \) is an existing set.
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{A^{n}}{n \in \naturalset} \) exists
+    and is unique by \cref{thm:metatheory-uniqueness-of-specification-subset}.
+    Finally, we have \( A^{\emptyset} = \mleft\{ \emptyset \mright\} \) by \cref{thm:metatheory-exponentiation-with-empty-exponent} so that
+    \( \mleft\{ \emptyset \mright\} \in \setbuilder{A^{n}}{n \in \naturalset} \).
+    In other words, \( \setbuilder{A^{n}}{n \in \naturalset} \) is non-empty.
+\end{proof}
+
+
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-set-of-all-finite-sequence}
+    If \( A \) is a set, then \( \finiteseq{A} \) denotes the set \( \Union \sequence{A^{n}}{n \in \naturalset} \).
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-the-set-of-all-finite-sequences}
+    For any set \( A \), \( \finiteseq{A} \) exists.
+\end{thm}
+
+\begin{proof}
+    Let \( A^{\prime} \) denote the set \( \setbuilder{A^{n}}{n \in \naturalset} \), which exists and is non-empty as implied by 
+    \cref{thm:metatheory-existence-of-set-of-all-n-ary-products}.
+    Let \( \varphi(x) \) be a predicate with the following definition.
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( n \in \naturalset \) such that \( x = \orderedpair{n}{A^{n}} \) }
+    \end{equation*}
+    Let \( \alpha \) be an arbitrary object in the universe such that \( \varphi(\alpha) \) is a true statement.
+    Thus, there exists some \( k \in \naturalset \) such that \( \alpha = \orderedpair{k}{A^{k}} \).
+    From \cref{dfn:metatheory-cartesian-product}, we infer that \( \alpha \in k \times A^{\prime} \).
+    Since \( k \in \naturalset \), it follows from \cref{thm:metatheory-every-natural-number-is-a-subset-of-N} that \( k \subseteq \naturalset \).
+    Given that \( A^{\prime} \) is non-empty, we infer from \cref{thm:metatheory-subsets-form-cartesian-product-subsets} that
+    \( k \times A^{\prime} \subseteq \naturalset \times A^{\prime} \).
+    Since \( \alpha \in k \times A^{\prime} \), it thus follows that \( \alpha \in \naturalset \times A^{\prime} \).
+    In other words,
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \naturalset \times A^{\prime} \)}
+    \end{equation*}
+    where \( \naturalset \times A^{\prime} \) is an existing set.
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set,thm:metatheory-uniqueness-of-specification-subset},
+    the set \( \setbuilder{x}{\varphi(x)} \) exists and is unique.
+    We now show that the set \( \setbuilder{x}{\varphi(x)} \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( S \coloneq \setbuilder{x}{\varphi(x)} \).
+    If \( \beta \) is an arbitrary element of \( S \), then clearly \( \beta \) is an ordered pair of the form \( \orderedpair{k}{A^{k}} \) where \( k \in \naturalset \).
+    Additionally, \cref{thm:metatheory-existence-of-set-exponentiation} guarantees the uniqueness of \( A^{k} \).
+    Therefore, \( S \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    We now prove that \( \dom S = \naturalset \).
+    Let \( \gamma \) denote an arbitrary object in the universe.
+    Suppose that \( \gamma \in \dom S \).
+    By \cref{dfn:metatheory-domain-of-a-function}, there exists a \( \Delta \) such that \( \orderedpair{\gamma}{\Delta} \in S \).
+    In other words, \( \varphi(\orderedpair{\gamma}{\Delta}) \) is a true statement, so we have
+    \begin{equation*}
+        \gamma \in \naturalset \ \text{and} \ \Delta = A^{\gamma}
+    \end{equation*}
+    More importantly, we have shown that \( \gamma \in \dom S \) implies \( \gamma \in \naturalset \). Since \( \gamma \) denotes
+    an arbitrary object, \cref{meta-rule:universal-generalization} yields the statement
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \dom S \) implies \( x \in \naturalset \)}
+    \end{equation*}
+    This allows us to conclude \( \dom S \subseteq \naturalset \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
+    The converse relation is straightforward to prove. Let \( n \) denote any element of \( \naturalset \).
+    Since \( n \) and \( A \) are both sets, \cref{thm:existence-of-set-exponentiation} guarantees the existence and uniqueness of the set
+    \( A^{n} \).
+    By definition, the ordered pair \( \orderedpair{n}{A^{n}} \) must satisfy \( \varphi(x) \) and be an element of \( S \), which then implies that
+    \( n \in \dom S \).
+    Given that \( \dom S \) and \( \naturalset \) are subsets of each other, they are necessarily equal sets.
+
+    \vspace{0.3cm}
+    \noindent
+    The next task would be to prove that \( \ran S \) is a family of sets; that is,
+    \begin{equation}
+        \label{eq:range-of-S-is-a-family-of-sets}
+        \text{for all \( x \), \( x \in \ran S \) implies \( x \) is a set}
+    \end{equation}
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in \ran S \); i.e., \( x^{\prime} = A^{m} \) for some \( m \in \naturalset \).
+    Clearly, \( x^{\prime} \) is a set, so \eqref{eq:range-of-S-is-a-family-of-sets} is indeed a true statement.
+    The existence of \( \finiteseq{A} = \Union_{n \,\in\, \naturalset} S_{n} = \Union \ran S \) follows from
+    \cref{meta-axiom:union,dfn:metatheory-union-of-indexed-family-of-sets}.
+\end{proof}
+
 \section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
 on a sheet of paper.
@@ -1892,7 +2419,7 @@ Although it is possible (at least in principle) to pick arbitrary elements of \(
 \vspace{0.3cm}
 \noindent
 A great number of formal languages have been invented throughout history, each of which requires a separate book to expound.
-Therefore, we will restrict ourselves to a class of formal languages that are particularly suited to express mathematical statements: \keyword{first-order languages}.
+Here, we will restrict ourselves to a class of formal languages that are particularly suited to express mathematical statements: \keyword{first-order languages}.
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language}
@@ -1909,18 +2436,21 @@ Therefore, we will restrict ourselves to a class of formal languages that are pa
             \end{enumerate}
         \item Non-Logical Symbols:
             \begin{enumerate}[topsep=2pt,label=\arabic*.]
-                \item Predicates: A tuple \( P^{\mathcal{L}} \) of predicate symbols with a function
-                    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset^{+} } \) associated with it
-                \item Functions: A tuple \( F^{\mathcal{L}} \) of function symbols with a function
-                    \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) associated with it
-                    \phantomsection \label{text:first-order-language-canonical-well-ordering-for-variable-symbols}
+                \item Predicates: the elements of \( \ran P^{\mathcal{L}} \) where \( P^{\mathcal{L}} \) is a tuple of predicate symbols
+                \item Functions: the elements of \( \ran F^{\mathcal{L}} \) where \( F^{\mathcal{L}} \) is a tuple of function symbols
             \end{enumerate}
     \end{enumerate}
 \end{dfn}
 
+\begin{dfn}[Arity Functions]
+    \phantomsection \label{dfn:first-order-language-arity-functions}
+    The tuples \( P^{\mathcal{L}} \) and \( F^{\mathcal{L}} \) are associated with the functions
+    \( \function{\Pi^{\mathcal{L}}}{\dom P^{\mathcal{L}}}{\naturalset^{+} } \) and
+    \( \function{\Phi^{\mathcal{L}}}{\dom F^{\mathcal{L}}}{\naturalset} \) respectively.
+\end{dfn}
+
 \begin{rem}
-    The functions \( \Pi^{\mathcal{L}} \) and \( \Phi^{\mathcal{L}} \) are called the arity functions of \( P^{\mathcal{L}} \) and \( F^{\mathcal{L}} \) respectively.
-    Also, the traditional ``constant'' symbols are treated as \( 0 \)-ary function symbols in this approach.
+    The traditional ``constant'' symbols are treated as \( 0 \)-ary function symbols in this approach.
     That is why \( \ran \Phi^{\mathcal{L}} \) can be the entirety of \( \naturalset \) (which includes 0) whereas \( 0 \) must
     be excluded from the range of \( \Pi^{\mathcal{L}} \).
 \end{rem}
@@ -1944,7 +2474,7 @@ Therefore, we will restrict ourselves to a class of formal languages that are pa
     \phantomsection \label{dfn:first-order-language-L-expression}
     An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-string that belongs to \( \mathcal{L} \).
     If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folsymbols{ \varepsilon } \) denotes the set of all
-    the \( \mathcal{L} \)-symbols consituting \( \varepsilon \).
+    the \( \mathcal{L} \)-symbols consituting \( \varepsilon \). Essentially, \( \folsymbols{ \varepsilon } = \ran \varepsilon \).
 \end{dfn}
 
 \begin{dfn}
@@ -1952,7 +2482,10 @@ Therefore, we will restrict ourselves to a class of formal languages that are pa
     If \( \mathcal{L} \) is a first-order language, then \( \folvars{\mathcal{L}} \) denotes the (countable and non-empty) set of all \( \mathcal{L} \)-variables
     associated with \( \mathcal{L} \).
     If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folvars{ \varepsilon } \) denotes the set of all \( \mathcal{L} \)-variables
-    appearing in \( \varepsilon \).
+    appearing in \( \varepsilon \). 
+    \begin{equation*}
+        \folvars{ \varepsilon } = \folsymbols{ \varepsilon } \,{\intersect}\, \folvars{\mathcal{L}}
+    \end{equation*}
 \end{dfn}
 
 \begin{cor}
