@@ -21,6 +21,8 @@
 \newcommand{\folnotsubformula}{\ensuremath{ \not\sqsubset }}
 \newcommand{\folsubformulasubstitution}[3]{\ensuremath{ #1 \mleft[ #2 \mapsto #3 \mright] }}
 \newcommand{\folfreevariablereplacement}[3]{ \ensuremath{ #1 \mleft( #2 \mapsto #3 \mright) } }
+\newcommand{\conjunction}[1]{ \ensuremath{ \operatorname{Conj}\mleft( #1 \mright) } }
+\newcommand{\disjunction}[1]{ \ensuremath{ \operatorname{Disj}\mleft( #1 \mright) } }
 
 \chapter{First-Order Logic}
 \section{Terminology}
@@ -168,9 +170,10 @@ The primitives are the basic building blocks upon which all other concepts in ou
     \phantomsection \label{meta-axiom:equality-axioms}
     The following statements about equality are true for any two objects \( A \) and \( B \) in the universe:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( A = A \) (reflexivity)
-        \item If \( A = B \), then \( B = A \) (symmetry)
-        \item If \( A = B \) and \( B = C \), then \( A = C \) (transitivity)
+        \item \( A = A \)
+        \item If \( A = B \), then \( B = A \)
+        \item If \( A = B \) and \( B = C \), then \( A = C \)
+        \item If \( A = B \) and \( \varphi(x) \) is a predicate, then \( \varphi(A) \) iff \( \varphi(B) \)
     \end{enumerate}
 \end{meta-axiom}
 
@@ -191,6 +194,11 @@ The primitives are the basic building blocks upon which all other concepts in ou
     We write \( x \in A \) to abbreviate the statements ``\( x \) is an element of the set \( A \),''
     ``\( x \) is a member of \( A \),'' or ``\( x \) belongs to \( A \).''
 \end{notation}
+
+\begin{rem}
+    For most purposes, it suffices to treat sets as abstract containers that are constructible
+    from the empty set by ``filling up'' the empty set with well-defined objects.
+\end{rem}
 
 \begin{dfn}[Set-builder Notation]
     \phantomsection \label{dfn:metatheory-setbuilder-notation}
@@ -221,7 +229,7 @@ The primitives are the basic building blocks upon which all other concepts in ou
 \end{notation}
 
 \begin{dfn}[Singleton]
-    \phantomsection \label{dfn:singleton}
+    \phantomsection \label{dfn:metatheory-singleton}
     A \keyword{singleton} is any set that contains only a single element.
 \end{dfn}
 
@@ -264,9 +272,13 @@ The primitives are the basic building blocks upon which all other concepts in ou
     For any set \( S \) and any predicate \( \varphi(x) \), there exists a set whose elements are exactly the elements of \( S \) that satisfy \( \varphi(x) \).
 \end{meta-axiom}
 
+\begin{meta-axiom}
+    \phantomsection \label{meta-axiom:regularity}
+    For any non-empty family of sets \( S \), there exists a \( y \in S \) such that for all \( x \), \( x \notin S \) or \( x \notin y \).
+\end{meta-axiom}
+
 \begin{rem}
-    Notice that in \crefrange{meta-axiom:extensionality}{meta-axiom:specification}, we have simply restated the axioms of ZFC using our metalanguage (plain English)
-    so that we can use and reference sets in our metatheory without circularity.
+    Note that we have simply restated the axioms of \( ZFC \) in our metalanguage (plain English) so that we can reference them in the metatheory without circularity.
 \end{rem}
 
 \begin{meta-rule}[Non-Contradiction]
@@ -364,15 +376,14 @@ The primitives are the basic building blocks upon which all other concepts in ou
     then ``there exists an \( x \) such that \( \varphi(x) \)'' is also a true statement.
 \end{meta-rule}
 
-\noindent
-The aforementioned axioms and inference rules are accepted as valid without justification.
-In more philosophical terms, we say that they are a form of \keyword{a priori} knowledge---known by virtue of our rational faculties as opposed to our experience.
-Indeed, any person capable of cognition should have no difficulty convincing himself of the validity of \crefrange{meta-axiom:equality-axioms}{meta-axiom:specification}
-and \crefrange{meta-rule:law-of-non-contradiction}{meta-rule:existential-generalization}.
+\begin{rem}
+    These inference rules are accepted as valid without justification.
+    In more philosophical terms, we say that they are a form of \keyword{a priori} knowledge---known by virtue of our rational faculties as opposed to our experience.
+    The reader should have no difficulty convincing himself of their validity.
+\end{rem}
 
-\vspace{0.3cm}
 \noindent
-We now proceed to utilize \crefrange{meta-axiom:equality-axioms}{meta-axiom:specification}
+We now utilize \crefrange{meta-axiom:equality-axioms}{meta-axiom:regularity}
 and \crefrange{meta-rule:law-of-non-contradiction}{meta-rule:existential-generalization}
 to derive some basic results of our metatheory.
 
@@ -409,8 +420,6 @@ to derive some basic results of our metatheory.
     \end{equation*}
     By \cref{meta-axiom:extensionality}, this is synonymous to \( A = B \).
 \end{proof}
-
-
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-specification-subset}
@@ -611,6 +620,31 @@ to derive some basic results of our metatheory.
 \end{dfn}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-sufficient-conditions-for-singleton}
+    Let \( S \) be a non-empty set and \( A \) be an object in the universe.
+    If \( x \in S \) implies \( x = A \) for all \( x \), then \( S = \mleft\{ A \mright\} \).
+\end{thm}
+
+\begin{proof}
+    It should be obvious that \( S \subseteq \mleft\{ A \mright\} \).
+    Since \( S \) is non-empty, there must exists an \( \alpha \) such that \( \alpha \in S \).
+    Applying \cref{meta-rule:universal-instantiation} to the statement ``for all \( x \), \( x \in S \) implies \( x = A \)''
+    yields the statement ``\( \alpha \in S \) implies \( \alpha = A \)''.
+    We thus conclude from \cref{meta-rule:modus-ponens} that \( \alpha = A \).
+    Now let \( \beta \) be an arbitrary object such that \( \beta \in \mleft\{ A \mright\} \).
+    By \cref{dfn:metatheory-unordered-pair}, it follows that \( \beta = A \).
+    By \cref{meta-axiom:equality-axioms}, we conclude that \( \alpha = \beta = A \).
+    Since \( \alpha \in S \) and \( \alpha = \beta \), it follows from \cref{meta-axiom:equality-axioms} once again that \( \beta \in S \).
+    In other words, \( \beta \in \mleft\{ A \mright\} \) implies \( \beta \in S \).
+    Since \( \beta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \mleft\{ A \mright\} \) implies \( x \in S \)}
+    \end{equation*}
+    Therefore, \( \mleft\{ A \mright\} \subseteq S \).
+    Since \( S \) and \( \mleft\{ A \mright\} \) are subsets of each other, they must be equal by \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-union}
     Let \( S \) be any family of sets. Then the union of \( S \) is unqiue.
 \end{thm}
@@ -723,6 +757,62 @@ to derive some basic results of our metatheory.
 \begin{rem}
     Note that the existence of the relative complement follows immediately from \cref{meta-axiom:specification}.
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-no-set-is-an-element-of-itself}
+    For any set \( A \), \( A \notin A \).
+\end{thm}
+
+\begin{proof}
+    Since \( A \) is a set, the \aref{dfn:metatheory-singleton}{singleton} \( \mleft\{ A \mright\} \) exists by \cref{meta-axiom:pairing}.
+    Clearly, \( \mleft\{ A \mright\} \) is a non-empty family of sets.
+    Thus, it follows from \cref{meta-axiom:regularity} that there exists a set \( S \in \mleft\{ A \mright\} \) such that
+    \begin{equation*}
+        \text{for all \( x \), \( x \notin S \) or \( x \notin \mleft\{ A \mright\} \)}
+    \end{equation*}
+    Since \( S \in \mleft\{ A \mright\} \), it follows that \( S = A \).
+    By \cref{meta-rule:universal-instantiation}, we conclude that either \( A \notin A \) or \( A \notin \mleft\{ A \mright\} \) is true.
+    The statement \( A \notin \mleft\{ A \mright\} \) is clearly false. Therefore, \( A \notin A \) by \cref{meta-rule:disjunctive-syllogism}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-asymmetry-of-membership-relation}
+    For any two sets \( A \) and \( B \), if \( A \in B \), then \( B \notin A \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be two arbitrary sets such that \( A \in B \).
+    Since \( A \) and \( B \) are sets, the unordered pair \( \mleft\{ A, B \mright\} \) exists and is a non-empty
+    \aref{dfn:metatheory-family-of-sets}{family of sets}.
+    Therefore, \cref{meta-axiom:regularity} applies and there must exist a set \( S \in \mleft\{ A, B \mright\} \) such that
+    \begin{equation}
+        \phantomsection \label{eq:x-not-in-S-or-x-not-in-unordered-pair}
+        \text{for all \( x \), \( x \notin S \) or \( x \notin \mleft\{ A, B \mright\} \)}
+    \end{equation}
+    Applying \cref{meta-rule:universal-instantiation} to \eqref{eq:x-not-in-S-or-x-not-in-unordered-pair} then yields
+    \begin{equation*}
+        A \notin S \ \text{or} \ A \notin \mleft\{ A, B \mright\}
+    \end{equation*}
+    But \( A \notin \mleft\{ A, B \mright\} \) cannot be true by \cref{dfn:metatheory-unordered-pair}.
+    Therefore, \( A \notin S \) must be true by \cref{meta-rule:disjunctive-syllogism}.
+    Since \( S \notin \mleft\{ A, B \mright\} \), it follows from \cref{dfn:metatheory-unordered-pair} once again that
+    \( S = A \) or \( S = B \).
+    But \( S = B \) cannot possibly be true because it contradicts our initial assumption that \( A \notin B \)---i.e., since
+    \( A \notin S \), then \( S = B \) must imply \( A \notin B \), a contradiction.
+    Therefore, necessarily \( S = A \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now apply \cref{meta-rule:universal-instantiation} to \eqref{eq:x-not-in-S-or-x-not-in-unordered-pair} once again, but using \( B \) this time.
+    That is,
+    \begin{equation*}
+        B \notin S \ \text{or} \ B \notin \mleft\{ A, B \mright\}
+    \end{equation*}
+    Since \( B \notin \mleft\{ A, B \mright\} \) is impossible, we infer that \( B \notin S \).
+    Suppose that \( B \in A \) were true. Then \( B \in S \) must also be true by \cref{meta-axiom:extensionality} because \( S = A \) as previously shown.
+    But it has already been established that \( B \notin S \), so our supposition that \( B \in A \) must be false.
+    Thus, \( B \notin A \).
+\end{proof}
 
 \subsection{Functions}
 We now define the notion of functions and then derive many of their familiar properties within our metatheory.
@@ -926,6 +1016,32 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{dfn}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-ordered-pairs-satisfying-binary-predicates}
+    Let \( \varphi(x, y) \) be any predicate with two placeholders \( x \) and \( y \).
+    If \( A \) and \( B \) are sets and \( \varphi(x, y) \) implies \( x \in A \) and \( y \in B \) for all \( x \) and \( y \),
+    then the set \( \setbuilder{\orderedpair{x}{y}}{\varphi(x, y)} \) exists.
+\end{thm}
+
+\begin{proof}
+    We begin by defining the following predicate:
+    \begin{equation*}
+        \psi(x) \coloneq \text{there exist objects \( a \) and \( b \) such that \( x = \orderedpair{a}{b} \) and \( \varphi(a, b) \) is satisfied}
+    \end{equation*}
+    Let \( \alpha \) denote an arbitrary object in the universe.
+    Suppose that \( \psi(\alpha) \) is a true statement.
+    Thus, there exist objects \( a \) and \( b \) in the universe such that \( \alpha = \orderedpair{a}{b} \) and \( \varphi(a, b) \) is satisfied.
+    Since \( \varphi(a, b) \) is satisfied, we have \( a \in A \) and \( b \in B \) by our initial assumption.
+    By \cref{dfn:metatheory-cartesian-product}, \( \orderedpair{a}{b} \in A \times B \) and thus \( \alpha \in A \times B \).
+    Since \( \alpha \) is arbitrary, we apply \cref{meta-rule:universal-generalization} to conclude that
+    \begin{equation*}
+        \text{for all \( x \), \( \psi(x) \) implies \( x \in A \times B \)}
+    \end{equation*}
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}, the set \( \setbuilder{x}{\psi(x)} \) exists.
+    Using \aref{dfn:metatheory-expressional-set-builder-notation}{expressional set-builder notation}, we can then re-express
+    \( \setbuilder{x}{\psi(x)} \) as \( \setbuilder{\orderedpair{x}{y}}{\varphi(x, y)} \).
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-cartesian-product-is-empty-iff-at-least-one-of-the-sets-is-empty}
     For any two sets \( A \) and \( B \), \( A \times B = \emptyset \) iff \( A = \emptyset \) or \( B = \emptyset \).
 \end{thm}
@@ -1043,10 +1159,10 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{enumerate}
 \end{dfn}
 
-\begin{lem}
-    \phantomsection \label{lem:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}
+\begin{thm}
+    \phantomsection \label{thm:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}
     If \( S \) is a set of ordered pairs, then \( S \) and \( \Union S \) are families of sets.
-\end{lem}
+\end{thm}
 
 \begin{proof}
     Let \( p \) be an arbitrary object. Suppose that \( p \in S \).
@@ -1189,6 +1305,39 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{rem}
     In fact, if \( \dom f = \emptyset \) or \( \ran f = \emptyset \), then \( f \) itself is necessarily the empty set.
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-function-equality}
+    If \( f \) and \( g \) are functions, then \( f = g \) iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \dom f = \dom g \)
+        \item for all \( x \in \dom f \), \( f(x) = g(x) \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be functions with the aforementioned properties.
+    The goal is to prove that \( f \) and \( g \) are subsets of each other.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( p \) be an arbitrary object such that \( p \in f \).
+    Since \( f \) is a function, \( p \) must be an ordered pair.
+    Let \( p = \orderedpair{a}{b} \) where \( a \) and \( b \) are objects in the universe.
+    By \cref{dfn:metatheory-domain-of-a-function}, \( a \in \dom f \).
+    Since \( \dom f \) and \( \dom g \) are equal, this means that \( a \in \dom g \) is also true.
+    Once again, we infer from \cref{dfn:metatheory-domain-of-a-function} that there exists some \( b^{\prime} \)
+    such that \( \orderedpair{a}{b^{\prime}} \in g \); i.e., \( g(a) = b^{\prime} \).
+    But \( f(a) = b = g(a) = b^{\prime} \), which means that \( b = b^{\prime} \).
+    By \cref{thm:metatheory-equality-of-ordered-pairs}, it follows that \( p = \orderedpair{a}{b} = \orderedpair{a}{b^{\prime}} \).
+    Since \( \orderedpair{a}{b^{\prime}} \in g \), it follows that \( p \) must also belong to \( g \).
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in f \) implies \( x \in g \)}
+    \end{equation*}
+    In other words, \( f \subseteq g \). The converse relation \( g \subseteq f \) can be proven with a similar argument with the roles of \( f \) and \( g \)
+    swapped.
+\end{proof}
 
 \begin{dfn}
     \phantomsection \label{dfn:metatheory-functions-in-terms-of-two-sets}
@@ -1945,6 +2094,60 @@ We will preface the construction of the counting numbers with the following defi
 \end{meta-axiom}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-successor}
+    For any two sets \( A \) and \( B \), \( A \union \mleft\{ A \mright\} = B \union \mleft\{ B \mright\} \) iff \( A = B \)
+\end{thm}
+
+\begin{proof}
+    Suppose that \( A = B \).
+    Let \( \alpha \) be an arbitrary element of \( A \union \mleft\{ A \mright\} \).
+    Thus, either \( \alpha \in A \) or \( \alpha = A \).
+    If \( \alpha \in A \), then \( \alpha \in B \) must also be true since \( A = B \).
+    On the other hand, if \( \alpha = A \), then \( \alpha = B \) by \cref{meta-axiom:equality-axioms}.
+    By \cref{meta-rule:constructive-dilemma}, it follows that
+    \begin{equation*}
+        \text{if \( \alpha \in A \union \mleft\{ A \mright\}\), then either \( \alpha \in B \) or \( \alpha = B \)}
+    \end{equation*}
+    In other words, \( \alpha \in A \union \mleft\{ A \mright\} \) implies \( \alpha \in B \union \mleft\{ B \mright\} \).
+    Since \( \alpha \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( A \union \mleft\{ A \mright\} \subseteq B \union \mleft\{ B \mright\} \).
+    We can prove the converse relation with a similar argument.
+    Let \( \beta \) denote an arbitrary element of \( B \union \mleft\{ B \mright\} \).
+    Again, we are left with only two possibilities: \( \beta \in B \) or \( \beta = B \).
+    If \( \beta \in B \), then \( \beta \) is also an element of \( A \) since \( A = B \).
+    If \( \beta = B \), then \( \beta = A \) by the transitive property of the equality relation as stated in \cref{meta-axiom:equality-axioms}.
+    Thus, \( \beta \in B \union \mleft\{ B \mright\} \) implies \( \beta \in A \union \mleft\{ A \mright\} \) for any arbitrary \( \beta \).
+    In other words, \( B \union \mleft\{ B \mright\} \subseteq A \union \mleft\{ A \mright\} \).
+    Since \( A \union \mleft\{ A \mright\} \) and \( B \union \mleft\{ B \mright\} \) are subsets of each other, they must be equal sets.
+    \begin{equation*}
+        \therefore \, \text{\( A = B \) implies \( A \union \mleft\{ A \mright\} = B \union \mleft\{ B \mright\} \)}
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    To prove the converse, suppose that \( A \union \mleft\{ A \mright\} = B \union \mleft\{ B \mright\} \).
+    We know that \( A \in A \union \mleft\{ A \mright\} \), which means that \( A \in B \union \mleft\{ B \mright\} \).
+    In other words, either \( A = B \) or \( A \in B \). We consider each possibility in turn.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( A \in B \), then \( B \notin A \) by \cref{thm:metatheory-asymmetry-of-membership-relation}.
+    But \( B \in B \union \mleft\{ B \mright\} \) by \cref{meta-axiom:union,dfn:metatheory-singleton}.
+    Thus, it follows that \( B \in A \union \mleft\{ A \mright\} \) since \( A \union \mleft\{ A \mright\} \) and \( B \union \mleft\{ B \mright\} \) are equal sets;
+    that is, either \( B \in A \) or \( B = A \).
+    It has already been established that \( B \notin A \), so necessarily \( B = A \) by \cref{meta-rule:disjunctive-syllogism}.
+    By \cref{meta-axiom:equality-axioms}, it follows that \( A = B \).
+
+    \vspace{0.3cm}
+    \noindent
+    Clearly, \( A = B \) is true in both cases.
+    \begin{equation*}
+        \therefore \, A \union \mleft\{ A \mright\} = B \union \mleft\{ B \mright\} \ \text{implies} \ A = B
+    \end{equation*}
+    In other words, the statements \( A = B \) and \( A \union \mleft\{ A \mright\} = B \union \mleft\{ B \mright\} \) imply each other.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-the-set-of-natural-numbers}
     The set \( \setbuilder{x}{\text{for all \( I \), if \( I \) is an inductive set, then \( x \in I \)}} \) exists.
 \end{thm}
@@ -2061,8 +2264,8 @@ We will preface the construction of the counting numbers with the following defi
     \phantomsection \label{thm:metatheory-weak-induction}
     Let \( P(n) \) be a predicate where the following conditions hold:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( P(\emptyset) \) is a true statement
-        \item for all \( n \), if \( P(n) \) is a true statement, then \( P(n \union \mleft\{ n \mright\}) \) is also a true statement
+        \item \( P(0) \) is a true statement
+        \item for all \( n \in \naturalset \), \( P(n) \) implies \( P(n + 1) \)
     \end{enumerate}
     Then \( \naturalset = \setbuilder{ n \in \naturalset }{P(n)} \).
 \end{thm}
@@ -2138,7 +2341,7 @@ We will preface the construction of the counting numbers with the following defi
     \begin{equation*}
         \text{for all \( n \in \naturalset \), \( Q(n) \) implies \( P(n) \) }
     \end{equation*}
-    where \( Q(n) \) is the statement ``for all \( m < n \), \( P(m) \)''.
+    where \( Q(n) \) is the predicate ``for all \( m < n \), \( P(m) \)''.
     Then \( \naturalset = \setbuilder{n \in \naturalset}{P(n)} \).
 \end{thm}
 
@@ -2230,6 +2433,156 @@ We will preface the construction of the counting numbers with the following defi
     Having established both the base case and the inductive step, the theorem follows from \aref{thm:metatheory-weak-induction}{Weak Induction}.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-nonzero-natural-number-is-a-successor-of-another-natural-number}
+    For all \( n \in \naturalset \), if \( n \neq 0 \), then there exists an \( s \in \naturalset \) such that \( n = s + 1 \).
+    In other words, every non-zero natural number is a successor of a natural number.
+\end{thm}
+
+\begin{proof}
+    We begin by defining the predicate \( P(n) \) as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{if \( n \neq 0 \), then there exists an \( s \in \naturalset \) such that \( n = s \union \mleft\{ s \mright\} \) }
+    \end{equation*}
+    The goal is to prove by \aref{thm:metatheory-weak-induction}{Weak Induction} that \( P(n) \) is true for all \( n \in \naturalset \);
+    that is, \( \setbuilder{n \in \naturalset}{P(n)} = \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}: \( P(0) \) is vacuously true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be some arbitrary object such that \( n^{\prime} \in \naturalset \) and that \( P(n^{\prime}) \) is true.
+    By definition, \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \).
+    Since \( n^{\prime} \in \naturalset \) and \( n^{\prime} + 1 \neq \emptyset \), it follows that \( P(n^{\prime} + 1) \) is true, which establishes the inductive step.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}
+    For all \( n \in \naturalset \), \( n \neq \emptyset \) implies \( \emptyset \in n \).
+\end{thm}
+
+\begin{proof}
+    Let \( P(n) \) be a predicate with the following definition.
+    \begin{equation*}
+        P(n) \coloneq  \text{\( n \in \naturalset \) and if \( n \neq \emptyset \), then \( \emptyset \in n \)}
+    \end{equation*}
+    We will show by \aref{thm:metatheory-weak-induction}{Weak induction} that \( P(n) \) is true for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}: \( P(\emptyset) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Clearly \( \emptyset \in \naturalset \) because \aref{thm:metatheory-the-set-of-all-natural-numbers-is-inductive}{\( \naturalset \) is inductive}.
+    Furthermore, the implication ``if \( \emptyset \neq \emptyset \), then \( \emptyset \in \emptyset \)'' is vacuously true because \( \emptyset = \emptyset \).
+    Thus, \( P(\emptyset) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    If \( n^{\prime} = \emptyset \), then clearly \( \emptyset \in n^{\prime} + 1 \) because \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \).
+    If \( n^{\prime} \neq \emptyset \), then \( \emptyset \in n^{\prime} \) since \( P(n^{\prime}) \) is true by assumption.
+    But if \( \emptyset \in n^{\prime} \), then necessarily \( \emptyset \in n^{\prime} + 1 \).
+    In either case, \( \emptyset \in n^{\prime} + 1 \) follows.
+    Thus, \( P(n^{\prime} + 1) \) holds.
+    Since \( n^{\prime} \) is arbitrary, the inductive step follows from \cref{meta-rule:universal-generalization}.
+
+    \vspace{0.3cm}
+    \noindent
+    Having established both the base case and inductive step, we conclude the theorem with \aref{thm:metatheory-weak-induction}{Weak Induction}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}
+    For all \( n, m \in \naturalset \), \( m \in n \) implies either \( n = m + 1 \) or \( m + 1 \in n \).
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( P(n) \) be defined as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{for all \( m \in \naturalset \), \( m \in n \) implies either \( n = m + 1\) or \( m + 1 \in n \)}
+    \end{equation*}
+    We will prove by \aref{thm:metatheory-weak-induction}{Weak Induction} that \( P(n) \) is true for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Establishing the base case is trivial since \( P(\emptyset) \) is vacuously true; i.e., \( \emptyset \) does not contain any element.
+    Now let \( n^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    Let \( m^{\prime} \) be an arbitrary natural number such that \( m^{\prime} \in n^{\prime} + 1 \); that is, either \( m^{\prime} \in n^{\prime} \)
+    or \( m^{\prime} = n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase} \( m^{\prime} \in n^{\prime} \):
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( P(n^{\prime}) \) is true and \( m^{\prime} \in n^{\prime} \), it follows that either \( n^{\prime} = m^{\prime} + 1 \) or \( m^{\prime} + 1 \in n^{\prime} \).
+    Since \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \), it is clear that \( m^{\prime} + 1 \in n^{\prime} + 1 \) is true in both possibilities.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase} \( m^{\prime} = n^{\prime} \):
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( m^{\prime} \) and \( n^{\prime} \) are equal sets, their successors must equal due to the uniqueness of unions.
+    Therefore, \( m^{\prime} + 1 = n^{\prime} + 1 \).
+
+    \vspace{0.3cm}
+    \noindent
+    By \cref{meta-rule:constructive-dilemma}, we conclude that either \( m^{\prime} + 1 = n^{\prime} + 1 \) or \( m^{\prime} + 1 \in n^{\prime} + 1 \) is true
+    for all arbitrary \( m^{\prime} \in n^{\prime} + 1 \).
+    In other words, \( P(n^{\prime} + 1) \) is true, thus completing the inductive step.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-linear-ordering-of-natural-numbers}
+    For all \( n, m \in \naturalset \), if \( n \neq m \), then either \( n \in m \) or \( m \in n \).
+\end{thm}
+
+\begin{proof}
+    Let the predicate \( P(n) \) be defined as follows.
+    \begin{equation*}
+        P(n) \coloneq n \in \naturalset \text{ and for all \( m \in \naturalset \), \( n \neq m \) implies either \( n \in m \) or \( m \in n \)}
+    \end{equation*}
+    We will prove by \aref{thm:metatheory-weak-induction}{Weak Induction} that \( P(n) \) is true for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}: \( P(\emptyset) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( m^{\prime} \) be an arbitrary natural number such that \( \emptyset \neq m^{\prime} \).
+    By \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}, it follows that \( \emptyset \in m^{\prime} \).
+    Thus, \( P(\emptyset) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    Obviously, \( n^{\prime} + 1 \in \naturalset \) since \( \naturalset \) is \aref{dfn:metatheory-inductive-set}{inductive}.
+    Let \( m^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( m^{\prime} \neq n^{\prime} + 1 \).
+    Since \( P(n^{\prime}) \) is true, there are three possibilities: \( m^{\prime} \in n^{\prime} \), \( m^{\prime} = n^{\prime} \), or \( n^{\prime} \in m^{\prime} \).
+    If \( m^{\prime} \in n^{\prime} \) or \( m^{\prime} = n^{\prime} \), then necessarily
+    \( m^{\prime} \in n^{\prime} + 1 \) since \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \).
+\end{proof}
+
 \begin{dfn}[Finite Set]
     \phantomsection \label{dfn:metatheory-finite-set}
     A set \( S \) is \keyword{finite} iff there exists an \( n \in \naturalset \) such that a \keyword{bijection} exists
@@ -2248,9 +2601,10 @@ We will preface the construction of the counting numbers with the following defi
     A sequence is \keyword{infinite} iff it is not finite.
 \end{dfn}
 
-\begin{notation}[Sequence Notation]
-    If \( S \) is a sequence, then \( \sequence{\epsilon_{n}}{n \in \dom S} \) denotes the sequence obtained from \( S \)
-    via an \aref{dfn:metatheory-expressions}{expression} built using \( S_{n} \).
+\begin{notation}
+    If \( S \) is a sequence, then it is customary to denote the value of \( S \) at \( i \) as \( S_{i} \).
+    To construct a new sequence from \( S \), we write \( \sequence{\epsilon_{n}}{n \in \dom S} \) where \( \epsilon_{n} \)
+    is an \aref{dfn:metatheory-expressions}{expression} built using \( S_{n} \).
 \end{notation}
 
 \begin{eg}
@@ -2408,6 +2762,349 @@ We will preface the construction of the counting numbers with the following defi
     \cref{meta-axiom:union,dfn:metatheory-union-of-indexed-family-of-sets}.
 \end{proof}
 
+\noindent
+The counting numbers can now be used to generalize the notion of conjunction and disjunction.
+
+\begin{dfn}[Generalized Conjunction]
+    \phantomsection \label{dfn:metatheory-generalized-conjunction}
+    If \( \Phi \) is a finite sequence of statements, then the \keyword{conjunction} of \( \Phi \)
+    is the statement:
+    \begin{equation*}
+        \text{for all \( i \in \dom \Phi \), \( \Phi_{i} \) is a true statement}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Generalized Disjunction]
+    \phantomsection \label{dfn:metatheory-generalized-disjunction}
+    If \( \Phi \) is a finite sequence of statements, then the \keyword{disjunction} of \( \Phi \)
+    is the statement:
+    \begin{equation*}
+        \text{there exists an \( i \in \dom \Phi \) such that \( \Phi_{i} \) is a true statement}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    \( \Phi \) can also be predicates.
+\end{rem}
+
+\begin{notation}
+    If \( \Phi \) is a finite sequence of statements, then we denote the conjunction and disjunction of \( \Phi \)
+    as \( \conjunction{\Phi} \) and \( \disjunction{\Phi} \) respectively.
+\end{notation}
+
+\subsection{Recursion}
+\begin{thm}
+    \phantomsection \label{thm:metatheory-recursion-theorem}
+    Let \( S \) be a non-empty set.
+    If \( g \) is a function such that \( \function{g}{S \times \naturalset}{S} \) and \( \sigma \) is an element of \( S \),
+    then there exists a unique infinite sequence \( \function{f}{\naturalset}{S} \) such that:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f(0) = \sigma \)
+        \item for all \( n \in \naturalset \), \( f(n + 1) = g(f(n), n) \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( \omega(i, j, y) \), \( \theta(i, y) \), and \( \psi(n, y) \) be sequences of two predicates such that:
+    \begin{alignat*}{2}
+        &\omega_{0}(i, j) &&\coloneq i = j \union \mleft\{ j \mright\}\\
+        &\omega_{1}(i, j, y) &&\coloneq \text{there exists a \( z \in S \) such that \( \orderedpair{j}{z} \in y \) and
+        \( \orderedpair{i}{g(z, j)} \in y \)}\\
+        &\theta_{0}(i, y) &&\coloneq i = 0 \ \text{and} \ \orderedpair{i}{\sigma} \in y\\
+        &\theta_{1}(i, y) &&\coloneq \text{there exists a \( j \in \naturalset \) such that \( \conjunction{\omega(i, j, y)} \) is a true statement}\\
+        &\psi_{0}(n, y) &&\coloneq n \in \naturalset \ \text{and} \ \function{y}{n}{S}\\
+        &\psi_{1}(n, y) &&\coloneq \text{for all \( i \in n \), \( \disjunction{\theta(i, y)} \) is a true statement}
+    \end{alignat*}
+    Our first task is to show that the set \( T = \setbuilder{\orderedpair{n}{y}}{\conjunction{\psi(n, y)}} \) exists.
+    Let \( n^{\prime} \) and \( y^{\prime} \) denote arbitrary objects in the universe.
+    Suppose that \( \conjunction{\psi(n^{\prime}, y^{\prime})} \) is a true statement.
+    Thus, \( \psi_{0}(n^{\prime}, y^{\prime}) \) is necessarily true; that is, \( n^{\prime} \in \naturalset \) and \( \function{y^{\prime}}{n}{S} \).
+    By \cref{thm:metatheory-function-is-subset-of-cartesian-product}, it follows that \( y^{\prime} \subseteq n \times S \);
+    and since \( n \subseteq \naturalset \) by \cref{thm:metatheory-every-natural-number-is-a-subset-of-N} and \( S \) is a non-empty set,
+    necessarily \( y^{\prime} \subseteq  n \times S \subseteq \naturalset \times S \) by \cref{thm:metatheory-subsets-form-cartesian-product-subsets}.
+    By \cref{meta-axiom:power-set}, \( y^{\prime} \in \powerset{\naturalset \times S} \).
+    Since \( n^{\prime} \) and \( y^{\prime} \) are arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( n \) and \( y \), \( \conjunction{\psi(n, y)} \) implies \( n \in \naturalset \) and \( y \in \powerset{\naturalset \times S} \)}
+    \end{equation*}
+    Thus, \( T = \setbuilder{\orderedpair{n}{y}}{\conjunction{\psi(n, y)}} \) exists by \cref{thm:metatheory-existence-of-ordered-pairs-satisfying-binary-predicates}.
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we prove that \( \function{T}{\naturalset}{\finiteseq{S}} \).
+    To accomplish this, we first define the predicate \( P(n) \) as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{there exists a unique \( y \in \finiteseq{S} \) such that \( \orderedpair{n}{y} \in T \)}
+    \end{equation*}
+    If we can prove by induction that \( P(n) \) is true for all \( n \in \naturalset \), then we would've proven that \( \function{T}{\naturalset}{\finiteseq{S}} \).
+    Let \( n^{\prime} \) denote an arbitrary element of \( \naturalset \).
+    We now state the following hypothesis.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Induction Hypothesis}: for all \( i < n^{\prime} \), \( P(i) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    The goal, then, is to prove that the induction hypothesis implies \( P(n^{\prime}) \).
+    Since \( n^{\prime} \in \naturalset \), it follows that either \( n^{\prime} = \emptyset \) or \( n^{\prime} \neq \emptyset \).
+    We must show that \( P(n^{\prime}) \) is true in either case.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( n^{\prime} = \emptyset \).
+    Let \( y^{\prime} = \emptyset \).
+    It should be obvious that \( \psi_{0}(\emptyset, \emptyset) \) is true because \( \emptyset \in \naturalset \) and
+    \( \function{\emptyset}{\emptyset}{S} \) are both true.
+    Moreover, \( \psi_{1}(\emptyset, \emptyset) \) is also vacuously true because \( \emptyset \) has no elements.
+    In other words, \( \conjunction{\psi(\emptyset, \emptyset)} \) is true and thus \( \orderedpair{\emptyset}{\emptyset} \in T \).
+    Next, we show that \( y^{\prime} \) is unique; that is, if \( \orderedpair{\emptyset}{y^{\prime}} \) and \( \orderedpair{\emptyset}{z^{\prime}} \)
+    are both elements of \( T \), then necessarily \( y^{\prime} = z^{\prime} \).
+    This is fairly obvious because both \( y^{\prime} \) and \( z^{\prime} \) must be empty for \( \function{y^{\prime}}{\emptyset}{S} \)
+    and \( \function{z^{\prime}}{\emptyset}{S} \) to be true.
+    We have thus showed that if \( n^{\prime} = \emptyset \), then there exists a unique \( y \in \finiteseq{S} \) such that
+    \( \orderedpair{n^{\prime}}{y} \in T \).
+    In other words, \( P(n^{\prime}) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( n^{\prime} \neq \emptyset \).
+    Since \( n^{\prime} \in \naturalset \) and is non-empty, it follows from \cref{thm:metatheory-every-nonzero-natural-number-is-a-successor-of-another-natural-number}
+    that there exists some \( k \in \naturalset \) such that \( n^{\prime} = k + 1 = k \union \mleft\{ k \mright\} \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that \( k \in n^{\prime} \) and thus \( k < n^{\prime} \).
+    Therefore, \( P(k) \) is a true by the induction hypothesis.
+    This means that there exists a unique \( y^{k} \in \finiteseq{S} \) such that \( \orderedpair{k}{y^{k}} \in T \).
+    Since \( k \in \naturalset \), either \( k = \emptyset \) or \( k \neq \emptyset \).
+    Now let \( y^{\prime} = y^{k} \union \mleft\{ \orderedpair{k}{v} \mright\} \) where
+    \begin{equation}
+        \label{eq:possible-options-for-v}
+        v =
+        \begin{cases}
+            \sigma &\text{if} \ k = \emptyset\\
+            g(y^{k}(j), j) &\text{if} \ k \neq \emptyset \ \text{and} \ k = j + 1
+        \end{cases}
+    \end{equation}
+    We must then show that \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase:} \( k = \emptyset \)
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( \orderedpair{k}{y^{k}} \in T \), \( \psi_{0}(k, y^{k}) \) must be a true statement.
+    Thus, \( y^{k} \) is necessarily \( \emptyset \).
+    By \eqref{eq:possible-options-for-v}, it follows that \( y^{\prime} = \emptyset \union \mleft\{ \orderedpair{k}{\sigma} \mright\} \).
+    We will now show that \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \) by demonstrating that \( \psi_{0}(n^{\prime}, y^{\prime}) \)
+    and \( \psi_{1}(n^{\prime}, y^{\prime}) \) are both true.
+    Since \( \sigma \in S \) and
+    \( n^{\prime} = k \,{\union}\, \mleft\{ k \mright\} = \emptyset \,{\union}\, \mleft\{ \emptyset \mright\} = \mleft\{ \emptyset \mright\} = \mleft\{ k \mright\} \),
+    it is obvious that \( \function{y^{\prime}}{n^{\prime}}{S} \).
+    Thus, \( \psi_{0}(n^{\prime}, y^{\prime}) \) is indeed true.
+    Let \( i^{\prime} \) be an arbitrary object such that \( i^{\prime} \in n^{\prime} \).
+    Since \( n^{\prime} \) is the singleton \( \mleft\{ k \mright\} \), it follows that \( i^{\prime} = k = \emptyset \).
+    Since \( \orderedpair{i^{\prime}}{\sigma} = \orderedpair{k}{\sigma} \in y^{\prime} \), it follows that \( \theta_{0}(i^{\prime}, y^{\prime}) \) is true.
+    This means that \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) is true.
+    Given that \( i^{\prime} \) is arbitrary, we can infer the truth of \( \psi_{1}(n^{\prime}, y^{\prime}) \) from \cref{meta-rule:universal-generalization}.
+    Therefore, \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \).
+    To prove uniquness, we must show that for all \( z \), \( \orderedpair{n^{\prime}}{z} \in T \) implies \( z = \mleft\{ \orderedpair{k}{\sigma} \mright\} \).
+    Let \( z^{\prime} \) be an arbitrary object such that \( \orderedpair{n^{\prime}}{z^{\prime}} \in T \).
+    This means that \( \psi_{0}(n^{\prime}, z^{\prime}) \) is true and thus \( \function{z^{\prime}}{n^{\prime}}{S} \).
+    Let \( p \) be an arbitrary object such that \( p \in z^{\prime} \).
+    Since \( z^{\prime} \) is a function, \( p \) must be an ordered pair.
+    Let \( p = \orderedpair{a}{b} \).
+    Clearly, \( a \in \dom z^{\prime} \).
+    Since \( \dom z^{\prime} = n^{\prime} = \mleft\{ k \mright\} \), necessarily \( a = k = \emptyset = 0 \).
+    Moreover, \( \disjunction{\theta(\emptyset, z^{\prime})} \) must be true since \( \emptyset \in n^{\prime} \).
+    But \( \theta_{1}(\emptyset, z^{\prime}) \) can never be true because \( \emptyset \) is not the successor of any element of \( \naturalset \).
+    For \( \disjunction{\theta(\emptyset, z^{\prime})} \) to still be true, \( \theta_{0}(\emptyset, z^{\prime}) \) must therefore be true.
+    In other words, \( \orderedpair{0}{\sigma} \in z^{\prime} \).
+    Since \( z^{\prime} \) is a function with \( \orderedpair{0}{b} \in z^{\prime} \) and \( \orderedpair{0}{\sigma} \in z^{\prime} \) both being true,
+    \( b \) and \( \sigma \) must be equal.
+    Thus, \( p = \orderedpair{0}{\sigma} \).
+    Since \( p \) is arbitrary, we have by \cref{meta-rule:universal-generalization}.
+    \begin{equation*}
+        \text{for all \( x \), \( x \in z^{\prime} \) implies \( x = \orderedpair{0}{\sigma} \)}
+    \end{equation*}
+    Since \( z^{\prime} \neq \emptyset \), \cref{thm:metatheory-sufficient-conditions-for-singleton} applies and we conclude that
+    \( z^{\prime} = \mleft\{ \orderedpair{0}{\sigma} \mright\} \), which completes the proof for uniqueness.
+    Thus, \( P(n^{\prime}) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase:} \( k \neq \emptyset \)
+
+    \vspace{0.1cm}
+    \noindent
+    Since \( k \in \naturalset \) and \( k \neq \emptyset \), there must exists a \( j \in \naturalset \) such that \( k = j + 1 \).
+    By \eqref{eq:possible-options-for-v}, we thus have \( y^{\prime} = y^{k} \,{\union}\, \mleft\{ \orderedpair{k}{g(y^{k}(j), j)} \mright\} \).
+    Again, we must show that \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \).
+    We begin by proving that \( y^{\prime} \) is a function.
+    Let \( p \) be an arbitrary element of \( y^{\prime} \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that either \( p \in y^{k} \) or \( p = \orderedpair{k}{g(y^{k}(j), j)} \).
+    If \( p \in y^{k} \), then \( p \) must be an ordered pair because \( \orderedpair{k}{y^{k}} \in T \) due to the induction hypothesis
+    and thus \( \function{y^{k}}{k}{S} \).
+    If \( p \in \mleft\{ \orderedpair{k}{g(y^{k}(j), j)} \mright\} \), then \( p = \orderedpair{k}{g(y^{k}(j), j)}\), obviously an ordered pair.
+    We have thus proven that \( y^{\prime} \) is a set of ordered pairs.
+    Now suppose that \( \orderedpair{a}{b} \in y^{\prime} \) and \( \orderedpair{a}{c} \in y{\prime} \) for any objects \( a \), \( b \), and \( c \).
+    Once again, either \( \orderedpair{a}{b} \in y^{k} \) or \( \orderedpair{a}{b} = \orderedpair{k}{g(y^{k}(j), j)} \) is true.
+    If \( \orderedpair{a}{b} \in y^{k} \), then \( a \neq k \) since \( a \in \dom y^{k} \) and \( k \notin \dom y^{k} \).
+    Since \( a \neq k \), it follows that \( \orderedpair{a}{c} \in y^{k} \) is also true.
+    Since \( y^{k} \) is a function, necessarily \( b = c \).
+    On the other hand, if \( \orderedpair{a}{b} = \orderedpair{k}{g(y^{k}(j), j)} \), then necessarily by
+    \cref{thm:metatheory-equality-of-ordered-pairs}.
+    But if \( a = k \), then it is impossible for \( \orderedpair{a}{c} \) to belong to \( y^{k} \) because \( k \notin \dom y^{k} \).
+    In other words, \( \orderedpair{a}{b} = \orderedpair{k}{g(y^{k}(j), j)} = \orderedpair{a}{c} \).
+    By \cref{thm:metatheory-equality-of-ordered-pairs}, \( a \) and \( c \) must be the same object.
+    \begin{equation*}
+        \therefore \, \text{for all \( a \), \( b \), and \( c \): \( \orderedpair{a}{b} \in y^{\prime} \) and \( \orderedpair{a}{c} \in y^{\prime} \) implies \( b = c \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-function}, \( y^{\prime} \) must be a function.
+    Furthermore, \( \dom y^{\prime} = \dom y^{k} \union \mleft\{ k \mright\} = k \union \mleft\{ k \mright\} = n^{\prime} \).
+    Also, \( \ran y^{\prime} \subseteq S \) because \( \ran g \subseteq S \).
+    In other words, \( \function{y^{\prime}}{n^{\prime}}{S} \) and thus \( \psi_{0}(n^{\prime}, y^{\prime}) \) is true.
+    
+    \vspace{0.3cm}
+    \noindent
+    Next, we proceed to prove that \( \psi_{1}(n^{\prime}, y^{\prime}) \) is also true.
+    Let \( \orderedpair{i^{\prime}}{a} \) be an arbitrary ordered pair in \( y^{\prime} \).
+    Since \( i^{\prime} = \dom y^{\prime} = n^{\prime} = k \union \mleft\{ k \mright\} \), it follows that either \( i^{\prime} \in k \) or \( i^{\prime} = k \).
+    Observe also that
+    \begin{equation}
+        \phantomsection \label{eq:overlap-in-y-prime-and-y-k}
+        y^{\prime}(i^{\prime}) =
+        \begin{cases}
+            y^{k}(i^{\prime}) \ &\text{if} \ i^{\prime} \in k\\
+            g(y^{k}(j), j)  \ &\text{if} \ i^{\prime} = k
+        \end{cases}
+    \end{equation}
+    If \( i^{\prime} \in k \), then it follows from the induction hypothesis that \( \disjunction{\theta(i^{\prime}, y^{k})} \) is true, which means that
+    either \( \theta_{0}(i^{\prime}, y^{k}) \) or \( \theta_{1}(i^{\prime}, y^{k}) \).
+    If \( \theta_{0}(i^{\prime}, y^{k}) \), then necessarily \( i^{\prime} = 0 \), \( a = \sigma \), and \( \orderedpair{0}{\sigma} \in y^{k} \).
+    By the definition of \( y^{\prime} \), it follows that \( \orderedpair{i^{\prime}}{\sigma} \in y^{\prime} \) and thus \( \theta_{0}(i^{\prime}, y^{\prime}) \)
+    and \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) are both true.
+    If \( \theta_{1}(i^{\prime}, y^{k}) \), then \( i^{\prime} = j^{\prime} + 1 \) for some \( j^{\prime} \) and \( \orderedpair{j^{\prime}}{z^{\prime}} \in y^{k} \)
+    and \( \orderedpair{i^{\prime}}{g(z^{\prime}, j^{\prime})} \in y^{k} \) for some \( z^{\prime} \).
+    But if \( \orderedpair{j^{\prime}}{z^{\prime}} \in y^{k} \) and \( \orderedpair{i^{\prime}}{g(z^{\prime}, j^{\prime})} \in y^{k} \)
+    then \( \orderedpair{j^{\prime}}{z^{\prime}} \) and \( \orderedpair{i^{\prime}}{g(z^{\prime}, j^{\prime})} \) must both also belong to \( y^{\prime} \) by the definition
+    of \( y^{\prime} \).
+    This means that \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( i^{\prime} = k \), then we know that \( \orderedpair{i^{\prime}}{g(y^{k}(j), j)} \in y^{\prime} \).
+    Since \( k = j + 1 \), it follows that \( j \in k \). Thus, \( y^{k}(j) = y^{\prime}(j) \) by \eqref{eq:overlap-in-y-prime-and-y-k}.
+    Moreover, \( \orderedpair{j}{y^{k}(j)} \in y^{k} \) and thus \( \orderedpair{j}{y^{k}(j)} \in y^{\prime} \) because \( j \in k \).
+    In other words, \( \omega_{0}(i^{\prime}, j) \) and \( \omega_{1}(i^{\prime}, j) \) are both true.
+    Once again, this implies that \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) is implied in all possible cases and \( i^{\prime} \) is an arbitrary element of \( n^{\prime} \),
+    it follows that \( \psi_{1}(n^{\prime}, y^{\prime}) \) is true. Since both \( \psi_{0}(n^{\prime}, y^{\prime}) \) and \( \psi_{1}(n^{\prime}, y^{\prime}) \)
+    are true, it follows that \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \).
+    In other words, for the subcase where \( k \neq \emptyset \), there exists a \( y \in \finiteseq{S} \) such that \( \orderedpair{n^{\prime}}{y} \in T \).
+    Now we must show that such a \( y \) is unique.
+    Let \( y^{\prime} \) and \( y^{\prime\prime} \) be two elements of \( \finiteseq{S} \) such that \( \orderedpair{n^{\prime}}{y^{\prime}} \in T \)
+    and \( \orderedpair{n^{\prime}}{y^{\prime\prime}} \in T \).
+    Let \( i^{\prime} \in k \) be arbitrary.
+    Since \( k \subseteq n^{\prime} \), it follows that \( i^{\prime} \in n^{\prime} \).
+    Since \( \orderedpair{n^{\prime}}{y^{\prime}} \) and \( \orderedpair{n^{\prime}}{y^{\prime\prime}} \) both belong to \( T \), it follows that
+    \( \disjunction{\theta(i^{\prime}, y^{\prime})} \) and \( \disjunction{\theta(i^{\prime}, y^{\prime\prime})} \) are both true.
+    It can be shown that in all possible cases, \( \disjunction{\theta(i^{\prime}, \restrictedfunctionsmall{y^{\prime}}{k} )} \)
+    and \( \disjunction{\theta(i^{\prime}, \restrictedfunctionsmall{y^{\prime\prime}}{k})} \) are both true;
+    that is, \( \orderedpair{k}{ \restrictedfunctionsmall{y^{\prime}}{k} } \in T \) and \( \orderedpair{k}{ \restrictedfunctionsmall{y^{\prime\prime}}{k} } \in T \).
+    Since \( k < n^{\prime} \), the induction hypothesis guarantees uniqueness;
+    that is, \( \restrictedfunctionsmall{y^{\prime}}{k} = \restrictedfunctionsmall{y^{\prime\prime}}{k} \).
+    Furthermore, \( y^{\prime}(k) = g(y^{\prime}(j), j) = g( \restrictedfunctionsmall{y^{\prime}}{k}(j), j) = g( \restrictedfunctionsmall{y^{\prime\prime}}{k}(j), j )
+    = g( y^{\prime\prime}(j), j ) = y^{\prime\prime}(k) \).
+    Therefore, \( y^{\prime} \) and \( y^{\prime\prime} \) are equal functions, which establishes uniqueness.
+    In other words, \( P(n^{\prime}) \) is true for the subcase \( k \neq \emptyset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since the \( P(n^{\prime}) \) follows from the induction hypothesis in all possible cases, we conclude by \aref{thm:metatheory-strong-induction}{Strong Induction}
+    that \( P(n) \) is true for all \( n \in \naturalset \); that is, \( \function{T}{\naturalset}{\finiteseq{S}} \).
+    Next, we prove the following useful claims.
+
+    \begin{claim}
+        \phantomsection \label{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n}
+        For all \( n \in \naturalset \), \( T_{m} \subseteq T_{n} \) for all \( m \in n \).
+    \end{claim}
+
+    \noindent
+    We proceed with an inductive proof by defining the predicate \( P(n) \) as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{\( n \in \naturalset \) and \( T_{m} \subseteq T_{n} \) for all \( m \in n \)}
+    \end{equation*}
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \). We now state the following induction hypothesis.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Induction Hypothesis}: \( P(i) \) is true for all \( i < n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    The goal is to show that the induction hypothesis implies \( P(n^{\prime}) \). Once again, we consider two separate cases: \( n^{\prime} = 0 \)
+    or \( n^{\prime} \neq 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase}: \( n^{\prime} = 0 \)
+
+    \vspace{0.1cm}
+    \noindent
+    \( P(n^{\prime}) \) is trivially true because no element of \( \naturalset \) is less than \( 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Subcase}: \( n^{\prime} \neq 0 \)
+
+    \vspace{0.1cm}
+    \noindent
+    By \cref{thm:metatheory-every-nonzero-natural-number-is-a-successor-of-another-natural-number}, there exists a \( k \in \naturalset \) such that
+    \( n^{\prime} = k + 1 = k \union \mleft\{ k \mright\} \).
+    The foremost task is to show that \( \orderedpair{k}{ \restrictedfunctionsmall{(T_{n^{\prime}})}{k} } \in T \).
+    For this, it suffices to prove that \( \psi_{1}(k, \restrictedfunctionsmall{(T_{n^{\prime}})}{k} ) \) is true.
+    Since \( k \in \naturalset \), either \( k = 0 \) or \( k \neq 0 \). If \( k = 0 \),  then 
+    \( \restrictedfunctionsmall{(T_{n^{\prime}})}{k} = \restrictedfunctionsmall{(T_{n^{\prime}})}{\emptyset} = \emptyset \).
+    Since \( \orderedpair{\emptyset}{\emptyset} \in T \), it follows that \( \restrictedfunctionsmall{(T_{n^{\prime}})}{k} \in T \) as needed.
+    For \( k \neq 0 \), let \( i^{\prime} \in k \) be arbitrary. Since \( i^{\prime} \in k \) and \( n^{\prime} = k + 1 \), it follows that
+    \( i^{\prime} \in n^{\prime} \).
+    Since \( \psi_{1}(n^{\prime}, T_{n^{\prime}}) \) is true, it follows that \( \disjunction{\theta(i^{\prime}, T_{n^{\prime}})} \) is true.
+    If \( i^{\prime} = 0 \), necessarily \( \orderedpair{i^{\prime}}{\sigma} \in T_{n^{\prime}} \).
+    But \( i^{\prime} \in k \), so this must mean that \( \orderedpair{i^{\prime}}{\sigma} \in \restrictedfunctionsmall{(T_{n^{\prime}})}{k} \)
+    and thus \( \theta_{0}(i^{\prime}, \restrictedfunctionsmall{(T_{n^{\prime}})}{k} ) \) is true.
+    On the other hand, if \( i^{\prime} \neq 0 \), then \( \theta_{1}(i^{\prime}, T_{n^{\prime}}) \) must be true; that is, there exists a
+    \( j^{\prime} \in \naturalset \) such that \( i^{\prime} = j^{\prime} + 1 \) and \( \orderedpair{j^{\prime}}{z^{\prime}} \in T_{n^{\prime}} \)
+    and \( \orderedpair{i^{\prime}}{g(z^{\prime}, j^{\prime})} \in T_{n^{\prime}} \) for some \( z^{\prime} \in S \).
+    But if \( \orderedpair{j^{\prime}}{z^{\prime}} \in T_{n^{\prime}} \), then necessarily
+    \(\orderedpair{j^{\prime}}{z^{\prime}} \in \restrictedfunctionsmall{(T_{n^{\prime}})}{k} \) because \( j^{\prime} \in i^{\prime} \in k \).
+    By the same line of reasoning, we can infer that \( \orderedpair{i^{\prime}}{g(z^{\prime}, j^{\prime})} \in \restrictedfunctionsmall{(T_{n^{\prime}})}{k} \).
+    In other words, \( \theta_{1}(i^{\prime}, \restrictedfunctionsmall{(T_{n^{\prime}})}{k}) \) is true.
+    Hence, it has been shown that \( \disjunction{\theta(i^{\prime}, \restrictedfunctionsmall{(T_{n^{\prime}})}{k})} \) is true for any arbitrary 
+    \( i^{\prime} \in k \).
+    In other words, \( \psi_{1}(k, \restrictedfunctionsmall{(T_{n^{\prime}})}{k}) \) is true.
+    Thus,
+    \begin{equation}
+        \phantomsection \label{eq:Tk-is-subset-of-Tn-prime}
+        \restrictedfunctionsmall{(T_{n^{\prime}})}{k} = T_{k} \subseteq T_{n^{\prime}}
+    \end{equation}
+    Now let \( m^{\prime} \) be an arbitrary element of \( n^{\prime} \).
+    Since \( n^{\prime} = k \union \mleft\{ k \mright\} \), either \( m^{\prime} \in k \) or \( m^{\prime} = k \).
+    If \( m^{\prime} \in k \), then \( T_{m^{\prime}} \subseteq T_{k} \subseteq T_{n^{\prime}} \) by the induction hypothesis
+    and \eqref{eq:Tk-is-subset-of-Tn-prime}.
+    If \( m^{\prime} = k \), then clearly \( T_{m^{\prime}} \subseteq T_{n^{\prime}} \) by \eqref{eq:Tk-is-subset-of-Tn-prime}.
+    Thus, \( T_{m^{\prime}} \subseteq T_{n^{\prime}} \) is true in either case.
+    Since \( m^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( m \in n^{\prime} \), \( T_{m} \subseteq T_{n^{\prime}} \)}
+    \end{equation*}
+    In other words, \( P(n^{\prime}) \) is true.
+    \cref{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n} follows readily from \aref{thm:metatheory-weak-induction}{Weak Induction}.
+\end{proof}
+
+\newpage
 \section{First-Order Languages}
 Suppose we have at our disposal a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
 on a sheet of paper.

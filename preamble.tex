@@ -39,6 +39,15 @@
   {.}
   {5pt plus 1pt minus 1pt}
   {}
+\newtheoremstyle{claim}
+  {\topsep}
+  {\topsep}
+  {\normalfont}
+  {0pt}
+  {\scshape}
+  {:}
+  {5pt plus 1pt minus 1pt}
+  {}
 \newtheoremstyle{rem}
   {\topsep}
   {\topsep}
@@ -62,7 +71,7 @@
   {\normalfont}
   {0pt}
   {\bfseries}
-  {}
+  {.}
   {5pt plus 1pt minus 1pt}
   {}
 
@@ -74,6 +83,8 @@
 \newtheorem{lem}{Lemma}[chapter]
 \newtheorem{cor}{Corollary}[chapter]
 \newtheorem{meta-theorem}{Metatheorem}[chapter]
+\theoremstyle{claim}
+\newtheorem{claim}{Claim}[chapter]
 \theoremstyle{rem}
 \newtheorem*{rem}{Remark}
 \newtheorem*{eg}{Example}
