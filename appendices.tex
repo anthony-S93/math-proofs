@@ -667,7 +667,7 @@ to derive some basic results of our metatheory.
 
 \begin{notation}
     For any family of sets \( S \), we write \( \Union S \) to denote the union of \( S \). 
-    If \( S \) is the unordered pair \( \mleft\{ A \union B \mright\} \), then we also use the notation
+    If \( S \) is the unordered pair \( \mleft\{ A, B \mright\} \), then we also use the notation
     \( A \union B \) to denote \( \Union S \).
 \end{notation}
 
@@ -745,6 +745,16 @@ to derive some basic results of our metatheory.
     \( \Intersect S \).
 \end{notation}
 
+\begin{dfn}[Disjoint]
+    \phantomsection \label{dfn:metatheory-disjoint-sets}
+    Two sets \( A \) and \( B \) are \keyword{disjoint} iff \( A \intersect B = \emptyset \).
+\end{dfn}
+
+\begin{dfn}[Pairwise Disjoint]
+    \phantomsection \label{dfn:label-name}
+    If \( S \) is a family of sets, then \( S \) is \keyword{pairwise disjoint} iff any two \emph{distinct} elements of \( S \) are disjoint.
+\end{dfn}
+
 \begin{dfn}[Difference]
     \phantomsection \label{dfn:metatheory-the-difference-of-two-sets}
     For any two sets \( A \) and \( B \), the \keyword{set difference} between \( A \) and \( B \) (also called the \keyword{relative complement} of \( B \) in \( A \))
@@ -812,6 +822,52 @@ to derive some basic results of our metatheory.
     Suppose that \( B \in A \) were true. Then \( B \in S \) must also be true by \cref{meta-axiom:extensionality} because \( S = A \) as previously shown.
     But it has already been established that \( B \notin S \), so our supposition that \( B \in A \) must be false.
     Thus, \( B \notin A \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-any-member-of-a-family-of-sets-is-a-subset-of-the-union-of-the-family-of-sets}
+    If \( S \) is a family of sets and \( E \in S \), then \( E \subseteq \Union S \)
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be a non-empty family of sets and \( E \) be any element of \( S \).
+    Let \( \alpha \) be an arbitrary object in the univese.
+    Suppose that \( \alpha \in E \).
+    Since \( E \in S \) and \( \alpha \in E \), it follows from \cref{meta-rule:existential-generalization} that
+    there exists an \( x \in S \) such that \( \alpha \in x \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that \( \alpha \in \Union S \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in E \) implies \( x \in \Union S \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, we thus have \( E \subseteq \Union S \).
+\end{proof}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-A-and-B-are-both-subsets-of-A-union-B}
+    For any two sets \( A \) and \( B \), \( A \subseteq A \union B \) and \( B \subseteq A \union B \).
+\end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-union-of-a-set-and-its-subset-is-itself}
+    For any two sets \( A \) and \( B \), if \( A \subseteq B \), then \( A \union B = B \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be any two sets such that \( A \subseteq B \).
+    Let \( \alpha \) be an arbitrary object in the universe.
+    Suppose that \( \alpha \in A \union B \); that is, \( \alpha \in A \) or \( \alpha \in B \).
+    But if \( \alpha \in A \), then \( \alpha \in B \) must also be true since \( A \subseteq B \).
+    In other words, \( \alpha \in B \) is true in all possible cases.
+    \begin{equation*}
+        \therefore \, \alpha \in A \union B \ \text{implies} \ \alpha \in B
+    \end{equation*}
+    Since \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
+    \( x \in A \union B \) implies \( x \in B \) for all \( x \).
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \union B \subseteq B \).
+    We know from \cref{cor:metatheory-A-and-B-are-both-subsets-of-A-union-B} that \( B \subseteq A \union B \).
+    This means that \( A \union B \) and \( B \) are subsets of each other.
+    By \cref{thm:metatheory-equality-in-terms-of-subsets}, \( A \union B = B \).
 \end{proof}
 
 \subsection{Functions}
@@ -1551,6 +1607,29 @@ We now define the notion of functions and then derive many of their familiar pro
     By \cref{dfn:metatheory-compatibility-of-functions}, necessarily \( F \) is compatible.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-if-a-function-is-a-subset-of-another-function-then-the-two-functions-are-compatible}
+    For any two functions \( f \) and \( g \), if \( f \subseteq g \), then \( f \) and \( g \) are compatible.
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be two arbitrary functions such that \( f \subseteq g \).
+    Let \( x^{\prime} \) be an arbitrary element of \( \dom f \,{\intersect}\, \dom g \).
+    Thus, there exist objects \( y^{\prime} \) and \( z^{\prime} \) such that
+    \begin{equation*}
+        \orderedpair{x^{\prime}}{y^{\prime}} \in f \ \text{and} \ \orderedpair{x^{\prime}}{z^{\prime}} \in g
+    \end{equation*}
+    Since \( f \subseteq g \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \), it follows that
+    \( \orderedpair{x^{\prime}}{y^{\prime}} \in g \).
+    But \( g \) is a function, so if \( \orderedpair{x^{\prime}}{y^{\prime}} \in g \) and \( \orderedpair{x^{\prime}}{z^{\prime}} \)
+    are both true, then necessarily \( f(x^{\prime}) = y^{\prime} = z^{\prime} = g(x^{\prime}) \).
+    Given that \( x^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \in \dom f \,{\intersect}\, \dom g \), \( f(x) = g(x) \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-compatibility-of-two-functions}, it follows that \( f \) and \( g \) are compatible. 
+\end{proof}
+
 \begin{dfn}[Restriction]
     \phantomsection \label{dfn:metatheory-restricted-function}
     If \( f \) is a function and \( A \) is a set, then the \keyword{restriction} of \( f \) to \( A \) is the set given by
@@ -2267,7 +2346,8 @@ We will preface the construction of the counting numbers with the following defi
         \item \( P(0) \) is a true statement
         \item for all \( n \in \naturalset \), \( P(n) \) implies \( P(n + 1) \)
     \end{enumerate}
-    Then \( \naturalset = \setbuilder{ n \in \naturalset }{P(n)} \).
+    Then  \( \naturalset = \setbuilder{ n \in \naturalset }{P(n)} \).
+    In other words, \( P(n) \) is true for all \( n \in \naturalset \).
 \end{thm}
 
 \begin{proof}
@@ -2334,6 +2414,8 @@ We will preface the construction of the counting numbers with the following defi
     is known as the \keyword{inductive step}.
     The statement \( P(n) \) in the implication ``\( P(n) \) implies \( P(n + 1)\)'' is also known as the \keyword{induction hypothesis}.
 \end{dfn}
+
+
 
 \begin{thm}[Strong Induction]
     \phantomsection \label{thm:metatheory-strong-induction}
@@ -2581,6 +2663,158 @@ We will preface the construction of the counting numbers with the following defi
     Since \( P(n^{\prime}) \) is true, there are three possibilities: \( m^{\prime} \in n^{\prime} \), \( m^{\prime} = n^{\prime} \), or \( n^{\prime} \in m^{\prime} \).
     If \( m^{\prime} \in n^{\prime} \) or \( m^{\prime} = n^{\prime} \), then necessarily
     \( m^{\prime} \in n^{\prime} + 1 \) since \( n^{\prime} + 1 = n^{\prime} \union \mleft\{ n^{\prime} \mright\} \).
+    On the other hand, if \( n^{\prime} \in m^{\prime} \), then either \( m^{\prime} = n^{\prime} + 1 \) or \( n^{\prime} + 1 \in  m^{\prime} \)
+    by \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}.
+    But \( m^{\prime} \neq n^{\prime} + 1 \) by assumption, so necessarily \( n^{\prime} + 1 \in m^{\prime} \).
+    In other words, we have proven the following statement:
+    \begin{equation*}
+        \text{if \( m^{\prime} \neq n^{\prime} + 1 \), then either \( m^{\prime} \in n^{\prime} + 1 \) or \( n^{\prime} + 1 \in m^{\prime} \)}
+    \end{equation*}
+    Since \( m^{\prime} \) is an arbitrary element of \( \naturalset \), we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( m \in \naturalset \), \( m \neq n^{\prime} + 1 \) implies either \( m \in n^{\prime} + 1 \) or \( n^{\prime} + 1 \in m \)}
+    \end{equation*}
+    In other words, \( P(n^{\prime} + 1) \) is true.
+    Since \( n^{\prime} \) is arbitrary, the inductive step follows readily from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-there-is-nothing-in-between-a-natural-number-and-its-successor}
+    For all \( n \in \naturalset \), there does not exists an \( m \in \naturalset \) such that \( n \in m \) and \( m \in n + 1 \).
+\end{thm}
+
+\begin{proof}
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    Suppose that there exists an \( m \in \naturalset \) such that \( n^{\prime} \in m \) and \( m \in n^{\prime} + 1 \).
+    Since \( m \in n^{\prime} + 1 \), it follows from \cref{dfn:metatheory-successor} that either \( m \in n^{\prime} \) or \( m = n^{\prime} \).
+    If \( m \in n^{\prime} \), then \( n^{\prime} \notin m \) by \cref{thm:metatheory-asymmetry-of-membership-relation}.
+    If \( m = n^{\prime} \), then \( n^{\prime} \notin m \) is also implied by \cref{thm:metatheory-no-set-is-an-element-of-itself}.
+    Both cases imply \( n^{\prime} \notin m \), a contradiction.
+    Therefore, our supposition that such an \( m \in \naturalset \) exists cannot possibly be true.
+\end{proof}
+
+\begin{thm}[Well-Ordering]
+    \phantomsection \label{thm:metatheory-well-ordering-of-natural-numbers}
+    If \( S \) is a non-empty subset of \( \naturalset \), then \( S \) has a least element; that is,
+    there exists an \( x \in S \) such that \( x \leq y \) for all \( y \in S \).
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be a non-empty subset of \( \naturalset \).
+    Suppose, for the sake of contradiction, that \( S \) has no least element.
+    Now let \( T \) be the set defined as follows.
+    \begin{equation}
+        \label{eq:definition-of-T}
+        T \coloneq \setbuilderbig{x \in \naturalset}{\text{for all \( y \in S \), \( x < y \)}}
+    \end{equation}
+    We now establish the following claims.
+
+    \begin{claim}
+        \phantomsection \label{claim:empty-set-does-not-belong-to-S}
+        \( \emptyset \notin S \)
+    \end{claim}
+
+    \noindent
+    Suppose that \( \emptyset \in S \).
+    Then any element of \( S \) must either be equal to \( \emptyset \) or less than \( \emptyset \)
+    by \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}, which contradicts our initial supposition.
+    Therefore, \( \emptyset \notin S \).
+
+    \begin{claim}
+        \phantomsection \label{claim:T-is-inductive}
+        \( T \) is inductive.
+    \end{claim}
+
+    \noindent
+    Let \( y^{\prime} \) be an arbitrary element of \( S \).
+    Since \( \emptyset \notin S \) by \cref{claim:empty-set-does-not-belong-to-S}, it follows that \( y^{\prime} \neq \emptyset \).
+    By \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}, necessarily \( \emptyset < y^{\prime} \).
+    Since \( y^{\prime} \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( y \in S \), \( \emptyset < y \)}
+    \end{equation*}
+    It follows from \eqref{eq:definition-of-T} that \( \emptyset \in T \).
+    Now let \( x^{\prime} \) be an arbitrary object such that \( x^{\prime} \in T \).
+    By \eqref{eq:definition-of-T}, it follows that
+    \begin{equation}
+        \label{eq:x-prime-less-than-all-elements-of-S}
+        \text{for all \( y \in S \), \( x^{\prime} < y \)}
+    \end{equation}
+    Let \( y^{\prime} \) be an arbitrary element of \( S \).
+    Applying \cref{meta-rule:universal-instantiation} to \eqref{eq:x-prime-less-than-all-elements-of-S} yields
+    \( x^{\prime} < y^{\prime} \).
+    By \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}, it follows that
+    either \( x^{\prime} + 1 = y^{\prime} \) or \( x^{\prime} + 1 < y^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( x^{\prime} + 1 = y^{\prime} \); this means that \( x^{\prime} + 1 \in S \).
+    Let \( z^{\prime} \) be an arbitrary element of \( S \).
+    By \eqref{eq:x-prime-less-than-all-elements-of-S}, it follows that \( x^{\prime} < z^{\prime} \).
+    Since \( x^{\prime} + 1 \in S \) and \( z^{\prime} \in S \) , there are two cases to consider: \( z^{\prime} = x^{\prime} + 1 \) or \( z^{\prime} \neq x^{\prime} + 1 \).
+    If \( z^{\prime} \neq x^{\prime} + 1 \), then it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers} that either
+    \( z^{\prime} < x^{\prime} + 1 \) or \( x^{\prime} + 1 < z^{\prime} \).
+    But \( z^{\prime} < x^{\prime} + 1 \) is impossible because it implies \( x^{\prime} < z^{\prime} < x^{\prime} + 1 \),
+    which contradicts \cref{thm:metatheory-there-is-nothing-in-between-a-natural-number-and-its-successor}.
+    Therefore, either \( z^{\prime} = x^{\prime} + 1 \) or \( x^{\prime} + 1 < z^{\prime} \).
+    Since \( z^{\prime} \) is arbitrary, it follows that \( x^{\prime} + 1 \leq z \) for all \( z \in S \). 
+    Since \( x^{\prime} + 1 \in S \), it follows that there exists an element of \( S \) that is less than or equal to all elements of \( S \), which contradicts
+    our initial hypothesis that no such element exists.
+    In other words, \( x^{\prime} + 1 = y^{\prime} \) cannot possibly be true.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( x^{\prime} + 1 = y^{\prime} \) and \( x^{\prime} + 1 < y^{\prime} \) are the only two possibilities, we conclude that
+    \( x^{\prime} + 1 < y^{\prime} \).
+    Given that \( y^{\prime} \) is an arbitrary element of \( S \), we have by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( y \in S \), \( x^{\prime} + 1 < y \)}
+    \end{equation*}
+    By \eqref{eq:definition-of-T}, it follows that \( x^{\prime} + 1 \in T \).
+    Since \( x^{\prime} \) is arbitrary, we can apply \cref{meta-rule:universal-generalization} once again to conclude
+    \begin{equation*}
+        \text{for all \( x \), \( x \in T \) implies \( x + 1 \in T \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-inductive-set}, \( T \) is necessarily an inductive set.
+
+    \begin{claim}
+        \phantomsection \label{claim:T-is-the-subset-of-N-minus-S}
+        \( T \subseteq \mleft( \naturalset - S \mright) \)
+    \end{claim}
+
+    \noindent
+    Let \( x^{\prime} \in T \).
+    Clearly, \( x^{\prime} \in \naturalset \) by \eqref{eq:definition-of-T}.
+    If \( x^{\prime} \) also belongs to \( S \), then \eqref{eq:definition-of-T} would require that \( x^{\prime} \in x^{\prime} \),
+    which contradicts \cref{thm:metatheory-no-set-is-an-element-of-itself}.
+    Thus, \( x^{\prime} \notin S \).
+    Since \( x^{\prime} \in T \) implies \( x^{\prime} \in \naturalset \) and \( x^{\prime} \notin S \), it follows that
+    \( x^{\prime} \in \mleft( \naturalset - S \mright) \). In other words, \( x \in T \) implies \( x \in \mleft( \naturalset - S \mright) \)
+    for all \( x \). 
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( T \subseteq \mleft( \naturalset - S \mright) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( T \) is inductive, necessarily \( \naturalset \subseteq T \) by \cref{thm:metatheory-the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}.
+    Additionally, we know from \eqref{eq:definition-of-T} that \( T \subseteq \naturalset \).
+    Given that \( \naturalset \) and \( T \) are subsets of each other, they must be equal by \cref{thm:metatheory-equality-in-terms-of-subsets}.
+    
+    \vspace{0.3cm}
+    \noindent
+    Let \( x^{\prime} \) denote an arbitrary object.
+    By \cref{meta-rule:law-of-excluded-middle}, either \( x^{\prime} \in \naturalset \) or \( x^{\prime} \notin \naturalset \) is true.
+    If \( x^{\prime} \in \naturalset \), then \( x^{\prime} \in T \) since \( T = \naturalset \).
+    But \( T \subseteq \mleft( \naturalset - S \mright) \) by \cref{claim:T-is-the-subset-of-N-minus-S}, so necessarily \( x^{\prime} \notin S \).
+    If \( x^{\prime} \notin \naturalset \), then \( x^{\prime} \notin S \) must follow from \cref{meta-rule:modus-tollens}
+    since \( S \subseteq \naturalset \).
+    Thus, \( x^{\prime} \notin S \) is true in both cases.
+    Since \( x^{\prime} \) is arbitrary, it follows that \( x \notin S \) for all \( x \).
+    In other words, \( S = \emptyset \).
+    \begin{equation*}
+        \therefore \, \text{if \( S \) has no least element, then \( S = \emptyset \)}
+    \end{equation*}
+    Since \( S \neq \emptyset \) by assumption, the supposition that \( S \) has no least element cannot be true.
+    In other words, \( S \) must have a least element.
 \end{proof}
 
 \begin{dfn}[Finite Set]
@@ -2683,8 +2917,6 @@ We will preface the construction of the counting numbers with the following defi
     In other words, \( \setbuilder{A^{n}}{n \in \naturalset} \) is non-empty.
 \end{proof}
 
-
-
 \begin{dfn}
     \phantomsection \label{dfn:metatheory-set-of-all-finite-sequence}
     If \( A \) is a set, then \( \finiteseq{A} \) denotes the set \( \Union \sequence{A^{n}}{n \in \naturalset} \).
@@ -2762,8 +2994,111 @@ We will preface the construction of the counting numbers with the following defi
     \cref{meta-axiom:union,dfn:metatheory-union-of-indexed-family-of-sets}.
 \end{proof}
 
+\begin{thm}[Generalized Weak Induction]
+    \phantomsection \label{thm:metatheory-generalized-weak-induction}
+    Let \( k \) be an element of \( \naturalset \) and \( P(n) \) be a predicate such that the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( P(k) \) is true
+        \item for all \( n \geq k \), \( P(n) \) implies \( P(n + 1) \)
+    \end{enumerate}
+    Then \( \setbuilder{n \in \naturalset}{\text{\( n \geq k \) and \( P(n) \)}} = \setbuilder{n \in \naturalset}{n \geq k} \);
+    that is, \( P(n) \) is true for all \( n \geq k \).
+\end{thm}
+
+\begin{proof}
+    Let \( S = \setbuilder{n \in \naturalset}{n < k} \) and \( T = \setbuilder{n \in \naturalset}{n \geq k \ \text{and} \ P(n)} \).
+    We now consider two cases: \( k = 0 \) or \( k \neq 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( k = 0\), then necessarily \( \emptyset \in T \) because \( \emptyset \geq k \) and \( P(\emptyset) \) are both true.
+    If \( k \neq 0 \), then \( \emptyset \in S \) because \( \emptyset \) is less than any non-zero natural number by \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}.
+    In either case, \( \emptyset \in \mleft( S \,{\union}\, T \mright) \) is implied.
+    \begin{equation*}
+        \therefore \, \emptyset \in \mleft( S \union T \mright)
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( \alpha \) be an arbitrary object in the universe.
+    Suppose that \( \alpha \in \mleft( S \union T \mright) \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that either \( \alpha \in S \) or \( \alpha \in T \).
+    If \( \alpha \in S \), then \( \alpha \in \naturalset \) and \( \alpha < k \).
+    By \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}, it follows that
+    either \( \alpha + 1 = k \) or \( \alpha + 1 < k \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \alpha + 1 = k \), then \( \mleft( \alpha + 1 \mright) \in T \) follows because \( P(\alpha + 1) \) and \( \alpha + 1 \geq k \) are both true.
+    Since \( \alpha + 1 \in T \), \( \alpha + 1 \) must also belong to \( S \union T \).
+    On the other hand, if \( \alpha + 1 < k \), then \( \alpha + 1 \) must belong to \( S \) by definition.
+    Thus, \( \alpha + 1 \) must belong to \( S \union T \).
+    \begin{equation*}
+        \therefore \, \text{if \( \alpha \in S \), then \( \mleft( \alpha + 1 \mright) \in \mleft( S \union T \mright) \)}
+    \end{equation*}
+    If \( \alpha \in T \), then it follows from the definition of \( T \) that \( \alpha \geq k \) and \( P(\alpha) \) are both true.
+    Applying \cref{meta-rule:universal-instantiation} to the second condition of the theorem yields
+    \begin{equation*}
+        \text{if \( \alpha \geq k \), then \( P(\alpha) \) implies \( P(\alpha + 1) \)}
+    \end{equation*}
+    Since \( \alpha \geq k \) and \( P(\alpha) \) are both true, we conclude from \cref{meta-rule:modus-ponens} that \( P(\alpha + 1) \) is true.
+    Moreover, \( \alpha \geq k \) also implies that \( \alpha + 1 > k \).
+    By the definition of \( T \), it follows that \( \mleft( \alpha + 1 \mright) \in T \) and thus \( \mleft( \alpha + 1 \mright) \in \mleft( S \,{\union}\, T \mright) \).
+    \begin{equation*}
+        \therefore \, \text{if \( \alpha \in T \), then \( \mleft( \alpha + 1 \mright) \in \mleft( S \union T \mright) \)}
+    \end{equation*}
+    By \cref{meta-rule:disjunction-elimination}, it follows that \( \mleft( \alpha + 1 \mright) \in \mleft( S \,{\union}\, T \mright) \) must be true.
+    In other words, \( \alpha \in \mleft( S \union T \mright) \) implies \( \mleft( \alpha + 1 \mright) \in \mleft( S \,{\union}\, T \mright) \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \mleft( S \union T \mright) \) implies \( \mleft( x + 1 \mright) \in \mleft( S \union T \mright) \)}
+    \end{equation*}
+    Given that \( \emptyset \in \mleft( S \,{\union}\, T \mright) \), it follows from \cref{dfn:metatheory-inductive-set} that \( S \,{\union}\, T \) is inductive.
+    By \cref{thm:the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}, we conclude that \( \naturalset \subseteq \mleft( S \,{\union}\, T \mright) \).
+    But \( S \,{\union}\, T \) is clearly also a subset of \( \naturalset \).
+    \begin{equation*}
+        \therefore \, \naturalset = \mleft( S \union T \mright)
+    \end{equation*}
+    Next, we note the fact that \( \naturalset - S = \setbuilder{n \in \naturalset}{n \geq k} \) as a consequence of
+    \cref{thm:metatheory-linear-ordering-of-natural-numbers}.
+    But \( \naturalset = \mleft( S \,{\union}\, T \mright) \) as previously shown.
+    Thus,
+    \begin{equation}
+        \phantomsection \label{eq:S-union-T-minus-S-equals-all-numbers-geq-k}
+        \mleft( S \,{\union}\, T \mright) - S = \setbuilder{n \in \naturalset}{n \geq k}
+    \end{equation}
+    Let \( \beta \) be an arbitrary object in the universe.
+    Suppose that \( \beta \in \mleft( S \,{\union}\, T \mright) - S \).
+    By \cref{dfn:metatheory-the-difference-of-two-sets}, it follows that \( \beta \in \mleft( S \union T \mright) \) and \( \beta \notin S \) are both true, which
+    is only possible if \( \beta \in T \). Thus,
+    \begin{equation*}
+        \text{ if  \( \beta \in \mleft( S \,{\union}\, T \mright) \), then \( \beta \in T \)}
+    \end{equation*}
+    Conversely, suppose that \( \beta \in T \).
+    Clearly, \( \beta \in \mleft( S \,{\union}\, T \mright) \) by \cref{dfn:metatheory-the-union-of-sets}.
+    But \( S \) and \( T \) are disjoint due to \cref{thm:metatheory-linear-ordering-of-natural-numbers}, so \( \beta \in T \) must imply
+    \( \beta \notin S \). In other words, \( \beta \in \mleft( S \,{\union}\, T \mright) \) and \( \beta \notin S \) are both true.
+    By \cref{dfn:metatheory-the-difference-of-two-sets}, \( \beta \in \mleft( S \,{\union}\, T \mright) - S \).
+    Thus,
+    \begin{equation*}
+        \text{if \( \beta \in T \), then \( \beta \in \mleft( S \,{\union}\, T \mright) - S \)}
+    \end{equation*}
+    Since \( \beta \in \mleft( S \,{\union}\, T \mright) \) and \( \beta \in T \) imply each other, we conclude that
+    \begin{equation*}
+        \beta \in \mleft( S \union T \mright) \ \text{iff} \ \beta \in T
+    \end{equation*}
+    Since \( \beta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \mleft( S \,{\union}\, T \mright) - S \) iff \( x \in T \)}
+    \end{equation*}
+    By \cref{meta-axiom:extensionality}, it follows that \( \mleft( S \,{\union}\, T \mright) - S = T \).
+    Substituting into \eqref{eq:S-union-T-minus-S-equals-all-numbers-geq-k} then yields
+    \( T = \setbuilder{n \in \naturalset}{n \geq k \ \text{and} \ P(n)} = \mleft( S \,{\union}\, T \mright) - S = \setbuilder{n \in \naturalset}{n \geq k} \)
+    as needed.
+\end{proof}
+
 \noindent
-The counting numbers can now be used to generalize the notion of conjunction and disjunction.
+Our development of the counting numbers is now sufficiently sophisticated that it can be used to generalize the notion of conjunction and disjunction.
 
 \begin{dfn}[Generalized Conjunction]
     \phantomsection \label{dfn:metatheory-generalized-conjunction}
@@ -2793,11 +3128,11 @@ The counting numbers can now be used to generalize the notion of conjunction and
 \end{notation}
 
 \subsection{Recursion}
-\begin{thm}
+\begin{thm}[Standard Recursion]
     \phantomsection \label{thm:metatheory-recursion-theorem}
     Let \( S \) be a non-empty set.
     If \( g \) is a function such that \( \function{g}{S \times \naturalset}{S} \) and \( \sigma \) is an element of \( S \),
-    then there exists a unique infinite sequence \( \function{f}{\naturalset}{S} \) such that:
+    then there exists a unique function \( \function{f}{\naturalset}{S} \) such that:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( f(0) = \sigma \)
         \item for all \( n \in \naturalset \), \( f(n + 1) = g(f(n), n) \)
@@ -3102,6 +3437,289 @@ The counting numbers can now be used to generalize the notion of conjunction and
     \end{equation*}
     In other words, \( P(n^{\prime}) \) is true.
     \cref{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n} follows readily from \aref{thm:metatheory-weak-induction}{Weak Induction}.
+
+    \begin{claim}
+        \phantomsection \label{claim:the-values-of-all-Tn}
+        For all \( n \in \naturalset \), if \( n \neq 0 \), then
+        \begin{equation}
+            \phantomsection \label{eq:the-values-of-Tn-at-i}
+            T_{n}(i) =
+            \begin{cases}
+                \sigma \ &\text{if} \ i = 0 \\
+                g(T_{n}(j), j) \ &\text{if} \ i \neq 0 \ \text{where} \ i = j + 1
+            \end{cases}
+        \end{equation}
+        for all \( i \in n \).
+    \end{claim}
+    \noindent
+    Proving \cref{claim:the-values-of-all-Tn} once again requires \aref{thm:metatheory-weak-induction}{Weak Induction}.
+    Let the predicate \( P(n) \) be defined as follows.
+
+    \begin{equation*}
+        P(n) \coloneq \text{for all \( i \in n \), \( T_{n}(i) \) has the value defined by \eqref{eq:the-values-of-Tn-at-i}}
+    \end{equation*}
+    
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}: \( P(\emptyset) \) is vacuously true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    Observe that \( T_{n^{\prime}} \subseteq T_{n^{\prime} + 1} \) since \( n^{\prime} \in n^{\prime} + 1 \) (see \cref{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n}).
+    By \cref{thm:metatheory-if-a-function-is-a-subset-of-another-function-then-the-two-functions-are-compatible}, the two functions \( T_{n^{\prime}} \)
+    and \( T_{n^{\prime} + 1} \) are therefore compatible.
+    In other words,
+    \begin{equation}
+        \phantomsection \label{eq:obeys-the-required-condition-for-all-i-less-than-n-prime}
+        \text{for all \( i \in n^{\prime} \), \( T_{n^{\prime}}(i) = T_{n^{\prime} + 1}(i) \)}
+    \end{equation}
+    Since \( P(n^{\prime}) \) is true, then it follows that \( T_{n^{\prime} + 1}(i) \) is defined by \eqref{eq:the-values-of-Tn-at-i} for all \( i \in n^{\prime} \).
+    It remains to show that \( T_{n^{\prime} + 1}(n^{\prime}) \) is also defined according to \eqref{eq:the-values-of-Tn-at-i}.
+    Clearly, \( \orderedpair{n^{\prime} + 1}{T_{n^{\prime} + 1}} \in T \); this means that
+    \( \psi_{1}(n^{\prime} + 1, T_{n^{\prime} + 1}) \) is true and thus
+    \( \disjunction{\theta(n^{\prime}, T_{n^{\prime} + 1})} \) must also be true because \( n^{\prime} \in n^{\prime} + 1 \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n^{\prime} = 0 \), then clearly \( T_{n^{\prime} + 1}(n^{\prime}) = g(\sigma, n^{\prime})\) so that \( \theta_{0}(n^{\prime}, T_{n^{\prime} + 1}) \) can
+    be satisfied.
+    But \( T_{n^{\prime}}(n^{\prime}) = \sigma \) by \eqref{eq:the-values-of-Tn-at-i} (since \( P(n^{\prime}) \) is true by assumption).
+    Furthermore, \eqref{eq:obeys-the-required-condition-for-all-i-less-than-n-prime} also requires that \( T_{n^{\prime} + 1}(n^{\prime}) = T_{n^{\prime}}(n^{\prime}) = \sigma \).
+    Thus, \( T_{n^{\prime} + 1}(n^{\prime}) = g(T_{n^{\prime} + 1}(n^{\prime}), n^{\prime}) \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n^{\prime} \neq 0 \), then we can also arrive at the same conclusion via the observation that
+    \( T_{n^{\prime} + 1}(n^{\prime}) = g(T_{n^{\prime} + 1}(j^{\prime}), j^{\prime}) \) for some \( j^{\prime} \) such that \( n^{\prime} = j^{\prime} + 1 \);
+    this is necessary so that \( \theta_{1}(n^{\prime}, T_{n^{\prime} + 1}) \) can be satisfied.
+
+    \vspace{0.3cm}
+    \noindent
+    Thus, the values of \( T_{n^{\prime} + 1} \) is defined by \eqref{eq:the-values-of-Tn-at-i} in all possible cases.
+    In other words, \( P(n^{\prime} + 1) \) follows from \( P(n^{\prime}) \).
+    Since \( n^{\prime} \) is arbitrary, we conclude the inductive step from \cref{meta-rule:universal-generalization}.
+    The claim follows readily from \aref{thm:metatheory-weak-induction}{Weak Induction}.
+
+    \vspace{0.3cm}
+    \noindent
+    Note that \( T \) is an indexed family of sets, so its union exists.
+    Now let \( f = \Union T \).
+    It remains to prove that \( f \) is indeed the infinite sequence we are searching for.
+
+    \vspace{0.3cm}
+    \noindent
+    We begin by proving that \( \function{f}{\naturalset}{S} \).
+    Let \( g \) and \( h \) be arbitrary elements of \( \ran T \).
+    By \cref{dfn:metatheory-range-of-a-function}, there exist \( n, m \in \dom T \) such that \( \orderedpair{n}{g} \in T \) and \( \orderedpair{m}{h} \in T \).
+    Note that \( \function{T}{\naturalset}{\finiteseq{S}} \), so \( \dom T = \naturalset \).
+    In other words, \( n \) and \( m \) are elements of \( \naturalset \).
+    By \cref{thm:metatheory-linear-ordering-of-natural-numbers}, there are only three possible cases: \( n = m \), \( n \in m \), or \( m \in n \).
+
+    \vspace{0.3cm}
+    \noindent
+    We can then show that \( g \) and \( h \) are compatible in all three cases.
+    If \( n = m \), then clearly \( g = h \) because \( T \) is a function. But if \( g = h \), then \( g \) and \( h \) must be compatible.
+    If \( n \in m \), then \( g \subseteq h \) by \cref{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n}.
+    Thus, \( g \) and \( h \) are necessarily compatible by \cref{thm:metatheory-if-a-function-is-a-subset-of-another-function-then-the-two-functions-are-compatible}.
+    If \( m \in n \), then \( h \subseteq g \) by \cref{claim:for-all-m-n-Tm-subset-of-Ts-if-m-less-than-n}.
+    Once again, we conclude from \cref{thm:metatheory-if-a-function-is-a-subset-of-another-function-then-the-two-functions-are-compatible} that \( g \) and \( h \)
+    are compatible.
+
+    \vspace{0.3cm}
+    \noindent
+    Since any two functions in \( \ran T \) are compatible, it follows from \cref{dfn:metatheory-compatibility-of-functions} that \( \ran T \)
+    is a compatible family of functions. By \cref{thm:metatheory-a-family-of-functions-is-compatible-iff-its-union-is-a-function}, it follows
+    that \( f = \Union T = \Union \ran T \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( a \in \dom f \) be arbitrary.
+    By \cref{dfn:metatheory-domain-of-a-function}, there exists a unique object \( b \) such that \( \orderedpair{a}{b} \in f \).
+    Since \( f = \Union T \), \( \orderedpair{a}{b} \in f \) implies that \( \orderedpair{a}{b} \in T_{n} \) for some \( n \in \naturalset \).
+    In other words, \( a \in \dom T_{n} \)
+    But the definition of \( T \) requires that \( \function{T_{n}}{n}{S} \); that is, \( \dom T_{n} = n \).
+    Therefore, \( a \in n \).
+    Since \( n \in \naturalset \) and \( n \subseteq \naturalset \) by \cref{thm:metatheory-every-natural-number-is-a-subset-of-N},
+    it follows that \( a \in \naturalset \).
+    In other words, \( \dom f \subseteq \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, let \( n \) be an arbitrary element of \( \naturalset \).
+    Now consider the function \( \function{T_{n+1}}{n+1}{S} \).
+    If \( n = 0 \), then \( T_{n+1}(n) = \sigma \) by \cref{claim:the-values-of-all-Tn}, which means that \( \orderedpair{n}{\sigma} \in T_{k} \) for some \( k \in \naturalset \).
+    Therefore, \( \orderedpair{n}{\sigma} \in f \) and thus \( n \in \dom f \).
+    If \( n \neq 0 \), then \( n = j + 1 \) for some \( j \in \naturalset \) by \cref{thm:metatheory-every-nonzero-natural-number-is-a-successor-of-another-natural-number}.
+    Moreover, we have \( T_{n+1}(n) = g(T_{n+1}(j), j) \) by \cref{claim:the-values-of-all-Tn}.
+    In other words, there exists some \( k \in \naturalset \) such that \( \orderedpair{n}{g(T_{k}(j), j)} \in T_{k} \).
+    Given that \( f = \Union T = \Union \ran T \), it follows that \( \orderedpair{n}{g(T_{k}(j), j)} \in f \) and thus \( n \in \dom f \).
+    We have shown that in all possibilities, \( n \in \dom f \).
+    Since \( n \) is arbitrary, we conclude that \( \naturalset \subseteq \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \dom f \) and \( \naturalset \) are subsets of each other, it follows from \cref{dfn:metatheory-subsets-and-proper-subsets} that
+    \( \dom f = \naturalset \).
+    It is trivial to show that \( \ran f \subseteq S \); this follows readily from the fact that \( \ran T \subseteq \finiteseq{S} \).
+    Taking all these facts into account, we arrive at the conclusion that \( \function{f}{\naturalset}{S} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we prove that \( f \) has all the required properties stated in the theorem.
+    Suppose that \( \orderedpair{0}{a} \in f \).
+    Thus, there exists a \( k \in \naturalset \) such that \( \orderedpair{0}{a} \in T_{k} \).
+    By \cref{claim:the-values-of-all-Tn}, necessarily \( a = \sigma \).
+    In other words, \( f(0) = \sigma \).
+    Now let \( n \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( \orderedpair{n+1}{b} \in f \); that is, \( \orderedpair{n+1}{b} \in T_{j} \) for some \( j \in \naturalset \).
+    But \cref{claim:the-values-of-all-Tn} requires that \( b = g(T_{j}(n), n) = g(f(n), n) \).
+    Therefore, \( T_{j}(n+1) = b = g(f(n), n) \).
+    In other words, \( \orderedpair{n+1}{g(f(n), n)} \in T_{j} \).
+    Since \( f = \Union T \), necessarily \( \orderedpair{n+1}{g(f(n), n)} \in f \).
+    \begin{equation*}
+        \therefore \, f(n + 1) = g(f(n), n) \ \text{for all \( n \in \naturalset \)}
+    \end{equation*}
+
+    \vspace{0.3cm}
+    \noindent
+    Finally, we establish the uniqueness of any function that has the properties stated in \cref{thm:metatheory-recursion-theorem}.
+    Let \( f \) and \( h \) be any two such functions.
+    We must therefore prove that \( f \) and \( g \) are necessarily equal.
+    Clearly, \( \dom f = \dom h = \naturalset \).
+    It remains to prove that \( f(n) = h(n) \) for all \( n \in \dom f \), which can be done by \aref{thm:metatheory-weak-induction}{Weak Induction} with
+    \( P(n) \) defined as follows.
+    \begin{equation*}
+        P(n) \coloneq n \in \naturalset \ \text{and} \ f(n) = h(n)
+    \end{equation*}
+    Proving the base case is trivial since \( f(0) = \sigma = h(0) \).
+    Let \( n^{\prime} \) be an arbitrary natural number such that \( P(n^{\prime}) \) is true.
+    We know that \( f(n^{\prime} + 1) = g(f(n^{\prime}), n^{\prime}) \) and \( h(n^{\prime} + 1) = g(h(n^{\prime}), n^{\prime})  \).
+    Since \( P(n^{\prime}) \) is true, it follows that \( f(n^{\prime}) = h(n^{\prime}) \), which in turn implies that
+    \( f(n^{\prime} + 1) = g(f(n^{\prime}), n^{\prime}) = g(h(n^{\prime}), n^{\prime}) = h(n^{\prime} + 1) \).
+    In other words, \( P(n^{\prime} + 1) \) is true.
+    Since \( n^{\prime} \) is arbitrary, we conclude from \aref{thm:metatheory-weak-induction}{Weak Induction} that \( f(n) = h(n) \) for all \( n \in \naturalset\).
+    Given that \( f \) and \( h \) have equal domains and have the same values every where, they must be equal functions.
+    This suffices to establish uniqueness.
+\end{proof}
+
+\begin{thm}[Finite Recursion]
+    \phantomsection \label{thm:metatheory-finite-recursion}
+    Let \( S \) be a non-empty set.
+    If \( g \) is a function such that \( \dom g \subseteq  S \times \naturalset \) and \( \ran g = S \) and \( \sigma \) is an element of \( S \), then
+    there exists a unique function \( f \) such that:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f(0) = \sigma \)
+        \item \( f(n + 1) = g(f(n), n) \) for all \( n \in \naturalset \) such that \( n + 1 \in \dom f \)
+        \item either \( \dom f = \naturalset \) or \( \dom f = k + 1 \) where \( \orderedpair{f(k)}{k} \notin \dom g \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    By \cref{meta-rule:law-of-excluded-middle}, it follows that either \( \mleft( S \times \naturalset \mright) \subseteq \dom g  \)
+    or \( \mleft( S \times \naturalset \mright) \nsubseteq \dom g \).
+    If \( \mleft( S \times \naturalset \mright) \subseteq \dom g \), then \( S \times \naturalset = \dom g \) by \cref{dfn:metatheory-subsets-and-proper-subsets}
+    because \( \dom g \subseteq \mleft( S \times \naturalset \mright) \) by assumption.
+    But if \( \dom g = \mleft( S \times \naturalset \mright) \), then the problem simply reduces to the case of \aref{thm:metatheory-recursion-theorem}{standard recursion}.
+
+    \vspace{0.3cm}
+    \noindent
+    On the other hand, if \( \mleft( S \times \naturalset \mright) \nsubseteq \dom g \), then there must exist a \( p \in \mleft( S \times \naturalset \mright) \) such that
+    \( p \notin \dom g \). By \cref{dfn:metatheory-cartesian-product}, it follows that \( p = \orderedpair{e}{m} \) for some \( e \in S \) and \( m \in \naturalset \).
+    Let \( \psi(x, y) \) be a sequence of two predicates such that
+    \begin{alignat*}{2}
+        &\psi_{0}(x, y) &&\coloneq x \in \dom g \ \text{and} \ \orderedpair{x}{y} \in g\\
+        &\psi_{1}(x, y) &&\coloneq x \notin \dom g \ \text{and} \ y = e
+    \end{alignat*}
+    Now let the set \( g^{\prime} \) be defined as follows.
+    \begin{equation*}
+        g^{\prime} \coloneq \setbuilderbig{\orderedpair{x}{y}}{\text{there exists \( a \in S \) and \( b \in n \) such that \( x = \orderedpair{a}{b} \) and
+        \( \disjunction{\psi(x, y)} \) is true}}
+    \end{equation*}
+    It is trivial to prove that \( g^{\prime} \) exists.
+    We now prove that \( \function{g^{\prime}}{\mleft( S \times \naturalset \mright)}{S} \).
+    It is clear from the definition of \( g^{\prime} \) that \( g^{\prime} \) is a set of ordered pairs and that
+    \( \dom g^{\prime} \subseteq \mleft( S \times \naturalset \mright) \).
+    Suppose that \( \orderedpair{x^{\prime}}{y^{\prime}} \in g^{\prime} \) and \( \orderedpair{x^{\prime}}{z^{\prime}} \in g \) for objects \( x^{\prime} \), \( y^{\prime} \),
+    and \( z^{\prime} \).
+    Thus, \( x^{\prime} = \orderedpair{a}{b} \) for some \( a \in S \) and \( b \in \naturalset \).
+    Furthermore, \( \disjunction{\psi(x^{\prime}, y^{\prime})} \) and \( \disjunction{\psi(x^{\prime}, z^{\prime})} \) are both true.
+    We now consider the only two possibilities: \( x^{\prime} \in \dom g \) or \( x^{\prime} \notin \dom g \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( x^{\prime} \in \dom g \), then \( \psi_{1}(x^{\prime}, y^{\prime}) \) and \( \psi_{1}(x^{\prime}, z^{\prime}) \) cannot be true, which means
+    that \( \psi_{0}(x^{\prime}, y^{\prime}) \) and \( \psi_{0}(x^{\prime}, z^{\prime}) \) must be true so that
+    \( \disjunction{\psi(x^{\prime}, y^{\prime})} \) and \( \disjunction{\psi(x^{\prime}, z^{\prime})} \) can both be true.
+    But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in g \) and \( \orderedpair{x^{\prime}}{z^{\prime}} \in g \) are both true, then necessarily
+    \( y^{\prime} = z^{\prime} \) because \( g \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( x^{\prime} \notin \dom g \), then \( \psi_{0}(x^{\prime}, y^{\prime}) \) and \( \psi_{0}(x^{\prime}, z^{\prime}) \) cannot be true;
+    therefore, \( \psi_{1}(x^{\prime}, y^{\prime}) \) and \( \psi_{1}(x^{\prime}, z^{\prime}) \) hold.
+    By the definition of \( \psi(x, y) \), it follows that \( y^{\prime} = e = z^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Thus, \( y^{\prime} = z^{\prime} \) is implied in all possible cases.
+    By \cref{dfn:metatheory-function}, it follows that \( g^{\prime} \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    To prove that \( \dom g^{\prime} = \mleft( S \times \naturalset \mright) \), it suffices to prove that \( \mleft( S \times \naturalset \mright) \subseteq \dom g^{\prime} \)
+    since we already know that \( \dom g^{\prime} \subseteq \mleft( S \times \naturalset \mright) \).
+    Let \( p \) be an arbitrary element of \( S \times \naturalset \);
+    that is, there exist objects \( a \in S \) and \( b \in \naturalset \) such that \( p = \orderedpair{a}{b} \).
+    Since \( \dom g \subseteq \mleft( S \times \naturalset \mright) \) by assumption, it follows that either \( p \in \dom g \) or \( p \notin \dom g \).
+    If \( p \in \dom g \), then there exists a \( y \in S \) such that \( \orderedpair{p}{y} \in g \).
+    This means that \( \psi_{0}(p, y) \) is true and thus \( \orderedpair{p}{y} \in g^{\prime} \).
+    In other words, there exists a \( y \in S \) such that \( \orderedpair{p}{y} \in g^{\prime} \).
+    By \cref{dfn:metatheory-range-of-a-function}, it follows that \( p \in \dom g^{\prime} \).
+    On the other hand, if \( p \notin \dom g \), then it follows from the definition of \( g^{\prime} \) that \( \orderedpair{p}{e} \in g^{\prime} \).
+    Therefore, \( p \) also belongs to \( \dom g^{\prime} \).
+    Clearly, \( p \in \dom g^{\prime} \) is true in all possible cases.
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x  \), \( x \in \mleft( S \times \naturalset \mright) \) implies \( x \in \dom g^{\prime} \)}
+    \end{equation*}
+    Thus, \( \mleft( S \times \naturalset \mright) \subseteq \dom g^{\prime} \) as needed.
+
+    \vspace{0.3cm}
+    \noindent
+    It is trivial to show that \( \ran g^{\prime} \subseteq S \) (both \( \psi_{0}(x, y) \) and \( \psi_{1}(x, y) \) implies \( y \in S \)).
+    Since \( g^{\prime} \) is a function with \( \dom g^{\prime} = \mleft( S \times \naturalset \mright) \) and \( \ran g^{\prime} \subseteq S \),
+    it follows that \( \function{g^{\prime}}{\mleft( S \times \naturalset \mright)}{S} \).
+    Given that \( \sigma \in S \), it follows from \cref{thm:metatheory-recursion-theorem} that there exists a unique function
+    \( \function{h}{\naturalset}{S} \) such that
+    \begin{align*}
+        h(0) &= \sigma\\
+        h(n + 1) &= g^{\prime}(h(n), n) \ \text{for all \( n \in \naturalset \)}
+    \end{align*}
+    Let \( T = \setbuilder{n \in \dom h}{\orderedpair{n}{e} \in h} \).
+    Observe that since \( T \subseteq \naturalset \), \cref{thm:metatheory-well-ordering-of-natural-numbers} guarantees that \( T \) has a least element
+    if \( T \neq \emptyset \).
+    Now let \( f = \mleft\{ \orderedpair{0}{\sigma} \mright\} \union \restrictedfunctionsmall{h}{D} \) where
+    \begin{equation*}
+        D =
+        \begin{cases}
+            \naturalset \ &\text{if} \ T = \emptyset\\
+            \lambda \ &\text{if} \ T \neq \emptyset \ \text{and \( \lambda \) is the least element of \( T \)}
+        \end{cases}
+    \end{equation*}
+    We will now show that, in both scenarios, \( f(0) = \sigma \) and \( f(n + 1) = g(f(n), n) \) for all \( n \in \naturalset \) such that \( n + 1 \in \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( T = \emptyset \), then \( \restrictedfunctionsmall{h}{D} = \restrictedfunctionsmall{h}{\naturalset} = h \) because \( \dom h = \naturalset \).
+    Since \( \orderedpair{0}{\sigma} \in h \), it follows that \( \mleft\{ \orderedpair{0}{\sigma} \mright\} \subseteq h \)
+    and thus \( f = \mleft\{ \orderedpair{0}{\sigma} \mright\} \union \restrictedfunctionsmall{h}{D} = \mleft\{ \orderedpair{0}{\sigma} \mright\} \union h = h \)
+    by \cref{thm:metatheory-union-of-a-set-and-its-subset-is-itself}.
+    It should be obvious that \( f(0) = h(0) = \sigma \).
 \end{proof}
 
 \newpage
