@@ -476,7 +476,7 @@ to derive some basic results of our metatheory.
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-unrestricted-comprehension-set}
-    For any predicate \( \varphi(x) \), if there exists a set \( S \) such that the statement ``for all \( x \), \( \varphi(x) \) implies \( x \in S \)'' is true,
+    For any predicate \( \varphi(x) \), if there exists a set \( S \) such that \( \varphi(x) \) implies \( x \in S \) for all \( x \),
     then the set \( \setbuilder{x}{\varphi(x)} \) exists and \( \setbuilder{x}{\varphi(x)} = \setbuilder{x \in S}{\varphi(x)} \).
 \end{thm}
 
@@ -751,7 +751,7 @@ to derive some basic results of our metatheory.
 \end{dfn}
 
 \begin{dfn}[Pairwise Disjoint]
-    \phantomsection \label{dfn:label-name}
+    \phantomsection \label{dfn:metatheory-pairwise-disjoint-sets}
     If \( S \) is a family of sets, then \( S \) is \keyword{pairwise disjoint} iff any two \emph{distinct} elements of \( S \) are disjoint.
 \end{dfn}
 
@@ -868,6 +868,102 @@ to derive some basic results of our metatheory.
     We know from \cref{cor:metatheory-A-and-B-are-both-subsets-of-A-union-B} that \( B \subseteq A \union B \).
     This means that \( A \union B \) and \( B \) are subsets of each other.
     By \cref{thm:metatheory-equality-in-terms-of-subsets}, \( A \union B = B \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-intersection-of-two-sets-using-set-builder-notation}
+    If \( A \) and \( B \) are sets, then \( A \intersect B = \setbuilder{x}{x \in A \ \text{and} \ x \in B} \).
+\end{thm}
+
+\begin{proof}
+    Let \( \varphi(x) \) be the predicate defined as follows.
+    \begin{equation*}
+        \varphi(x) \coloneq x \in A \ \text{and} \ x \in B
+    \end{equation*}
+    Clearly, \( \varphi(x) \) implies \( x \in A \) for all \( x \).
+    Thus, the set \( \setbuilder{x}{\varphi(x)} \) exists by \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}.
+    Let \( S = \setbuilder{x}{\varphi(x)} \).
+    The goal is to prove that \( A \intersect B = S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in S \).
+    Therefore, \( \varphi(x^{\prime}) \) is a true statement; i.e., \( x^{\prime} \in A \) and \( x^{\prime} \in B \) are both true.
+    Let \( Z \) be an arbitrary element of \( \mleft\{ A, B \mright\} \).
+    By \cref{dfn:metatheory-unordered-pair}, either \( Z = A \) or \( Z = B \).
+    If \( Z = A \), then necessarily \( x^{\prime} \in Z \) because \( x^{\prime} \in A \) is true.
+    Similarly, if \( Z = B \), then necessarily \( x^{\prime} \in Z \) because \( x^{\prime} \in B \) is true.
+    Clearly, \( x^{\prime} \in Z \) is implied in both cases.
+    Therefore, we conclude by \cref{meta-rule:disjunction-elimination} that \( x^{\prime} \in Z \) must be true.
+    Since \( Z \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( X \in \mleft\{ A, B \mright\} \), \( x^{\prime} \in X \)}
+    \end{equation*}
+    It follows from \cref{dfn:metatheory-intersection-of-indexed-family-of-sets} that \( x^{\prime} \in \Intersect \mleft\{ A, B \mright\} \) and
+    thus \( x^{\prime} \in A \intersect B \).
+    In other words,
+    \begin{equation*}
+        x^{\prime} \in S \ \text{implies} \ x^{\prime} \in A \intersect B
+    \end{equation*}
+    Since \( x^{\prime} \), is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( x \in S \) implies \( x  \in A \intersect B \)}
+    \end{equation*}
+    That is, \( S \subseteq A \intersect B \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, let \( y^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( y^{\prime} \in A \intersect B \); i.e., \( y^{\prime} \in \Intersect \mleft\{ A, B \mright\} \).
+    By \cref{dfn:metatheory-intersection-of-indexed-family-of-sets}, it follows that
+    \begin{equation}
+        \label{eq:y-prime-is-an-element-of-all-elements-of-unordered-pair-A-B}
+        \text{for all \( x \), \( x \in \mleft\{ A, B \mright\} \) implies \( y^{\prime} \in x \) }
+    \end{equation}
+    Clearly, \( A \) is an object in the universe.
+    Applying \cref{meta-rule:universal-instantiation} to \eqref{eq:y-prime-is-an-element-of-all-elements-of-unordered-pair-A-B} yields
+    \begin{equation*}
+        A \in \mleft\{ A, B \mright\} \ \text{implies} \ y^{\prime} \in A
+    \end{equation*}
+    But \( A \in \mleft\{ A, B \mright\} \) is true, so \( y^{\prime} \in A \) must also be true by \cref{meta-rule:modus-ponens}.
+    A similar argument can be used to show that \( y^{\prime} \in B \).
+    Since \( y^{\prime} \in A \) and \( y^{\prime} \in B \) are both true, it follows that \( \varphi(y^{\prime}) \) is a true statement
+    and thus \( y^{\prime} \in S \).
+    In other words, \( A \intersect B \subseteq S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( A \intersect B \) and \( S \) are subsets of each other, they must be equal sets by \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-intersection-between-a-set-and-its-subset-equals-the-subset}
+    For any two sets \( A \) and \( B \), if \( A \subseteq B \), then \( A \,{\intersect}\, B = A \).
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) be any two sets such that \( A \subseteq B \).
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in A \,{\intersect}\, B \).
+    By \cref{thm:metatheory-intersection-of-two-sets-using-set-builder-notation}, it follows that \( x^{\prime} \in A \) and \( x^{\prime} \in B \)
+    are both true statements. Thus,
+    \begin{equation*}
+        x^{\prime} \in A \intersect B \ \text{implies} \ x^{\prime} \in A
+    \end{equation*}
+    Since \( x^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( A \,{\intersect}\, B \subseteq A \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x^{\prime} \in A \). Since \( A \subseteq B \), \( x^{\prime} \) must also be an element of \( B \).
+    Thus, \( x^{\prime} \in A \) and \( x^{\prime} \in B \) are both true.
+    In other words, \( x^{\prime} \in A \,{\intersect}\, B \) by \cref{thm:metatheory-intersection-of-two-sets-using-set-builder-notation}.
+    \begin{equation*}
+        x^{\prime} \in A \ \text{implies} \ x^{\prime} \in A \intersect B
+    \end{equation*}
+    Since \( x^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} once again
+    that \( A \subseteq A \,{\intersect}\, B \). Since \( A \,{\intersect}\, B \) and \( A \) are subsets of each other, they are necessarily equal.
 \end{proof}
 
 \subsection{Functions}
@@ -1730,6 +1826,184 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-domain-of-restriction-of-f-to-A-is-the-intersection-between-dom-f-and-A}
+    If \( f \) is a function and \( A \) is a set, then \( \dom \restrictedfunctionsmall{f}{A} = A \intersect \dom f \).
+\end{thm}
+
+\begin{proof}
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in \dom \restrictedfunctionsmall{f}{A} \).
+    By \cref{dfn:metatheory-domain-of-a-function}, it follows that there exists some \( y^{\prime} \)
+    such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \).
+    But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \),
+    then necessarily \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \), the latter of which
+    implies \( x^{\prime} \in \dom f \).
+    In other words, \( x^{\prime} \in A \) and \( x^{\prime} \in \dom f \) are both true
+    and thus \( x^{\prime} \in A \,{\intersect}\, \dom f \) by \cref{thm:metatheory-intersection-of-two-sets-using-set-builder-notation}.
+    \begin{equation*}
+        \therefore \, x^{\prime} \in \dom \restrictedfunctionsmall{f}{A} \ \text{implies} \ x^{\prime} \in A \intersect \dom f
+    \end{equation*}
+    Since \( x^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \dom \restrictedfunctionsmall{f}{A} \subseteq A \,{\intersect}\, \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x^{\prime} \in A \,{\intersect}\, \dom f \); that is, \( x^{\prime} \in A \) and \( x^{\prime} \in \dom f \)
+    are both true.
+    By \cref{dfn:metatheory-domain-of-a-function}, there must exist some \( y^{\prime} \in \ran f \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    In other words, there exist objects \( x^{\prime} \) and \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and
+    \( x^{\prime} \in A \).
+    Thus, \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \) and \( x^{\prime} \in \dom \restrictedfunctionsmall{f}{A} \).
+    Since \( x^{\prime} \) is arbitrary, we conclude that \( A \,{\intersect}\, \dom f \subseteq \dom \restrictedfunctionsmall{f}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \dom \restrictedfunctionsmall{f}{A} \) and \( A \,{\intersect}\, \dom f \) are subsets of each other, it follows from
+    \cref{thm:metatheory-equality-in-terms-of-subsets} that they are equal sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-range-of-a-restriction-is-the-image-of-the-function-under-the-restricted-domain}
+    If \( f \) is a function and \( A \) is a set, then \( \ran \restrictedfunctionsmall{f}{A} = \imageSet{f}{A} \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be an arbitrary function and \( A \) an arbitrary set in the universe.
+    Let \( y^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{A} \).
+    By \cref{dfn:metatheory-range-of-a-function}, there exists an object \( x^{\prime}\) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \).
+    But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \), then necessarily
+    \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) by \cref{dfn:metatheory-restricted-function}.
+    It should be obvious from \cref{dfn:metatheory-image-of-a-set-under-a-function} that \( y^{\prime} \in \imageSet{f}{A} \).
+    Thus,
+    \begin{equation*}
+        y^{\prime} \in \ran \restrictedfunctionsmall{f}{A} \ \text{implies} \ y^{\prime} \in \imageSet{f}{A}
+    \end{equation*}
+    Since \( y^{\prime} \) is arbitrary, it follows that \( \restrictedfunctionsmall{f}{A} \subseteq \imageSet{f}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, let \( y^{\prime} \) be an arbitrary object in the universe such that \( y^{\prime} \in \imageSet{f}{A} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that there exists an object \( x^{\prime} \) such that
+    \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    Immediately, we can infer \( y^{\prime} \in \restrictedfunctionsmall{f}{A} \).
+    Thus, \( y^{\prime} \in \imageSet{f}{A} \) implies \( y^{\prime} \in \restrictedfunctionsmall{f}{A} \) for any arbitrary \( y^{\prime} \);
+    i.e., \( \imageSet{f}{A} \subseteq \restrictedfunctionsmall{f}{A} \).
+    Since \( \restrictedfunctionsmall{f}{A} \) and \( \imageSet{f}{A} \) are subsets of each other, they are necessarily equal sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-restriction-of-an-injection-is-also-an-injection}
+    If \( f \) is an injective function and \( A \) is a set, then \( \restrictedfunctionsmall{f}{A} \) is also an injection.
+\end{thm}
+
+\begin{proof}
+    It follows immediately from \cref{thm:metatheory-restriction-is-a-function} that \( \restrictedfunctionsmall{f}{A} \) is a function.
+    Let \( \alpha \), \( \beta \), and \( \gamma \) be objects in the universe such that
+    \( \orderedpair{\alpha}{\gamma} \in \restrictedfunctionsmall{f}{A} \) and \( \orderedpair{\beta}{\gamma} \in \restrictedfunctionsmall{f}{A} \)
+    are both true.
+    It follows from \cref{dfn:metatheory-restricted-function} that \( \orderedpair{\alpha}{\gamma} \in f \) and \( \orderedpair{\beta}{\gamma} \in f \)
+    are both true.
+    Since \( f \) is injective, it follows from \cref{dfn:metatheory-injection} that \( \alpha = \beta \).
+    Therefore, \( \restrictedfunctionsmall{f}{A} \) is also injective.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-image-of-a-proper-subset-under-an-injective-function-is-a-proper-subset-of-the-range}
+    If \( f \) is a non-empty injective function and \( A \) is a set such that \( A \subset \dom f \), then \( \imageSet{f}{A} \subset \ran f \).
+\end{thm}
+
+\begin{proof}
+    It follows immediately from \cref{thm:metatheory-image-of-a-set-under-a-function-subset-of-the-range-of-the-function} that \( \imageSet{f}{A} \subseteq \ran f \).
+    It remains to prove that there exists a \( y \in \ran f \) such that \( y \notin \imageSet{f}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( A \subset \dom f \) and \( \dom f \neq \emptyset \), it follows that there exists an element of \( \dom f \) that does not belong to \( A \).
+    Let \( x^{\prime} \) denote such an element; that is, \( x^{\prime} \in \dom f \) and \( x^{\prime} \notin A \).
+    Since \( x^{\prime} \in \dom f \), it follows from \cref{dfn:metatheory-domain-of-a-function} that
+    there exists some \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    Clearly, \( y^{\prime} \in \ran f \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now let us suppose (for the sake of contradiction) that \( y^{\prime} \in \imageSet{f}{A} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that there exists some \( x^{\prime\prime} \in A \) such that
+    \( \orderedpair{x^{\prime\prime}}{y^{\prime}} \in f \).
+    But \( f \) is injective, which means that if both \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and \( \orderedpair{x^{\prime\prime}}{y^{\prime}} \in f \)
+    are true, then necessarily \( x^{\prime} = x^{\prime\prime} \).
+    But if \( x^{\prime} \) and \( x^{\prime\prime} \) are the same object, then necessarily \( x^{\prime} \in A \) because \( x^{\prime\prime} \) is an element of \( A \).
+    This contradict the established fact that \( x^{\prime} \notin A \).
+    Therefore, \( y^{\prime} \in \imageSet{f}{A} \) cannot possibly be true.
+    In other words, \( y^{\prime} \notin \imageSet{f}{A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( y^{\prime} \) is an element of \( \ran f \) that does not belong to \( \imageSet{f}{A} \), it follows that \( \ran f \subset \imageSet{f}{A} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-restriction-of-a-bijection-to-a-subset-of-the-domain-of-the-function}
+    If \( \bijection{f}{A}{B} \) and \( S \subseteq  A \), then \( \bijection{\restrictedfunctionsmall{f}{S}}{S}{\mleft( B - \imageSet{f}{A - S} \mright)} \).
+\end{thm}
+
+\begin{proof}
+    Since \( f \) is injective, it follows immediately from \cref{thm:metatheory-the-restriction-of-an-injection-is-also-an-injection}
+    that \( \restrictedfunctionsmall{f}{S} \) is also injective.
+    Moreover, since \( S \subseteq  A \), it follows from
+    \cref{thm:metatheory-domain-of-restriction-of-f-to-A-is-the-intersection-between-dom-f-and-A,thm:metatheory-the-intersection-between-a-set-and-its-subset-equals-the-subset}
+    that \( \dom \restrictedfunctionsmall{f}{S} = S \,{\intersect}\, \dom f = S \,{\intersect}\, A = S \).
+
+    \vspace{0.3cm}
+    \noindent
+    It remains to prove that \( \ran \restrictedfunctionsmall{f}{S} = B - \imageSet{f}{A - S} \).
+    Let \( y^{\prime} \) be an arbitrary object such that \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{S} \).
+    Thus, there exists an \( x^{\prime} \in S \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    Clearly, \( y^{\prime} \in \ran f \) and thus \( y^{\prime} \in B \) since \( \ran f = B \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we will show that \( y^{\prime} \in \imageSet{f}{A - S} \) leads to a contradiction.
+    Suppose that \( y^{\prime} \in \imageSet{f}{A - S} \).
+    Then according to \cref{dfn:metatheory-image-of-a-set-under-a-function}, there must exist an object \( x^{\prime\prime} \)
+    such that \( x^{\prime\prime} \in A \), \( x^{\prime\prime} \notin S \), and \( \orderedpair{x^{\prime\prime}}{y^{\prime\prime}} \in f \).
+    Since \( f \) is injective, necessarily \( x^{\prime} = x^{\prime\prime} \).
+    Since \( x^{\prime\prime} \notin S \), this would imply that \( x^{\prime} \notin S \), which contradicts the fact that \( x^{\prime} \in S \).
+    Since \( y^{\prime} \in \imageSet{f}{A - S} \) leads to a contradiction, it cannot possibly be true.
+    In other words, \( y^{\prime} \in B \) and \( y^{\prime} \notin \imageSet{f}{A - S} \) are both true.
+    By \cref{dfn:metatheory-the-difference-of-two-sets}, we thus have \( y^{\prime} \in B - \imageSet{f}{A - S} \).
+    \begin{equation*}
+        y^{\prime} \in \ran \restrictedfunctionsmall{f}{S} \ \text{implies} \ y^{\prime} \in B - \imageSet{f}{A - S}
+    \end{equation*}
+    Given that \( y^{\prime} \) is arbitrary, we conclude that \( \ran \restrictedfunctionsmall{f}{S} \subseteq B - \imageSet{f}{A - S} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( y^{\prime} \in B - \imageSet{f}{A - S} \).
+    Thus, \( y^{\prime} \in B \) and \( y^{\prime} \notin \imageSet{f}{A - S} \).
+    Suppose (for the sake of contradiction) that \( y^{\prime} \notin \ran \restrictedfunctionsmall{f}{S} \).
+    Since \( y^{\prime} \in B \) and \( \ran f = B \), there must exist an \( x^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    Since \( \dom f = A \), \( x^{\prime} \) must be an element of \( A \).
+    Moreover, \( x^{\prime} \) cannot be an element of \( S \); otherwise, \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{S} \), which contradicts our initial supposition
+    that \( y^{\prime} \notin \ran \restrictedfunctionsmall{f}{S} \).
+    But if \( x^{\prime} \in A \) and \( x^{\prime} \notin S \) are both true, then necessarily \( x^{\prime} \in A - S \).
+    This means that \( x^{\prime} \) is an element of \( A - S \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that \( y^{\prime} \in \imageSet{f}{A - S} \), which is yet another contradiction
+    because it has already been established that \( y^{\prime} \notin \imageSet{f}{A - S} \).
+    Since \( y^{\prime} \notin \ran \restrictedfunctionsmall{f}{S} \) inevitably leads to a contradiction, it cannot possibly be true.
+    Therefore, \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{S} \).
+    \begin{equation*}
+        y^{\prime} \in B - \imageSet{f}{A - S} \ \text{implies} \ y^{\prime} \in \ran \restrictedfunctionsmall{f}{S}
+    \end{equation*}
+    Since \( y^{\prime} \) is arbitrary, we conclude that \( B - \imageSet{f}{A - S} \subseteq \ran \restrictedfunctionsmall{f}{S} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Having proven that \( \ran \restrictedfunctionsmall{f}{S} \) and \( B - \imageSet{f}{A - S} \) are subsets of each other, we conclude
+    from \cref{thm:metatheory-equality-in-terms-of-subsets} that \( \ran \restrictedfunctionsmall{f}{S} = B - \imageSet{f}{A - S} \).
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-restriction-of-restricted-function-equals-original-function-restricted-to-intersection}
     If \( f \) is a function and \( A \) and \( B \) are sets, then
     \begin{equation*}
@@ -1943,16 +2217,12 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{thm}
 
 \begin{proof}
-    To prove that \( \bijection{f^{-1}}{\imageSet{f}{A}}{A} \), we must establish the following claims:
-    \begin{enumerate*}[label=(\roman*)]
-        \item \( \function{f^{-1}}{\imageSet{f}{A}}{A} \), \phantomsection \label{enum:metatheory-inverse-of-a-function-claim1}
-        \item \( f^{-1} \) is injective, \phantomsection \label{enum:metatheory-inverse-of-a-function-claim2}
-        \item \( \ran f^{-1} = A \). \phantomsection \label{enum:metatheory-inverse-of-a-function-claim3}
-    \end{enumerate*}
-
-    \vspace{0.3cm}
+    To prove that \( \bijection{f^{-1}}{\imageSet{f}{A}}{A} \), we must establish the following claims.
+    \begin{claim}
+        \phantomsection \label{claim:f-inverse-is-a-function-on-image-of-A-under-f-into-A}
+        \function{f^{-1}}{\imageSet{f}{A}}{A}
+    \end{claim}
     \noindent
-    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim1}:
     We must show that \( f^{-1} \) satisfies the conditions stated in \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
     We begin by showing that \( f^{-1} \) is indeed a function.
     Let \( p \) be an arbitrary object in the universe.
@@ -2000,9 +2270,11 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
     Thus, \( \ran f^{-1} \subseteq A \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
 
-    \vspace{0.3cm}
+    \begin{claim}
+        \phantomsection \label{claim:f-inverse-is-injective}
+        \( f^{-1} \) is injective.
+    \end{claim}
     \noindent
-    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim2}:
     Suppose that \( f^{-1}(a) = f^{-1}(b) \) for some arbitrary \( a \) and \( b \);
     that is, there exists some \( c \) such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
     are both true.
@@ -2015,9 +2287,11 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
     Thus, \( f^{-1} \) must be injective by \cref{dfn:metatheory-injection}.
 
-    \vspace{0.3cm}
+    \begin{claim}
+        \phantomsection \label{claim:range-of-f-inverse-is-A}
+        \( \ran f^{-1} = A \).
+    \end{claim}
     \noindent
-    {\scshape Claim} \ref{enum:metatheory-inverse-of-a-function-claim3}:
     The first claim itself already implies that \( \ran f^{-1} \subseteq A \).
     It remains to prove that \( A \subseteq \ran f^{-1} \).
     Let \( a \in A \) be arbitrary.
@@ -2151,6 +2425,8 @@ We now define the notion of functions and then derive many of their familiar pro
     An indexed family of functions \( F \) is compatible iff for all \( i, j \in \dom F \), \( F_{i} \) and \( F_{j} \) are compatible.
 \end{dfn}
 
+
+
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-set-exponentiation}
     For any two sets \( A \) and \( B \), \( B^{A} \) exists and is unique.
@@ -2247,6 +2523,8 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
     By \cref{dfn:metatheory-empty-set}, necessarily \( \emptyset^{A} = \emptyset \).
 \end{proof}
+
+
 
 \subsection{The Counting Numbers}
 Our metatheory is now sophisticated enough that we can build the counting numbers with it.
@@ -2379,6 +2657,82 @@ We will preface the construction of the counting numbers with the following defi
     \end{align*}
     This scheme (courtesy of John von Neumann) essentially defines a natural number as a set that contains every other natural number less than it.
 \end{rem}
+
+\begin{dfn}[Least Element]
+    \phantomsection \label{dfn:metatheory-least-element-of-a-non-empty-subset-of-N}
+    If \( S \) is a non-empty subset of \( \naturalset \), then an object \( \lambda \) is the \keyword{least element} of \( S \)
+    iff the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \lambda \in S \)
+        \item for all \( x \in S \), \( \lambda \leq x \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Greatest Element]
+    \phantomsection \label{dfn:metatheory-greatest-element-of-a-non-empty-subset-of-N}
+    If \( S \) is  a non-empty subset of \( \naturalset \), then an object \( \gamma \) is the \keyword{greatest element} of \( S \)
+    iff the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \gamma \in S \)
+        \item for all \( x \in S \), \( x \leq \gamma \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Lower Bound]
+    \phantomsection \label{dfn:metatheory-lower-bound-of-a-subset-of-N}
+    If \( S \subseteq \naturalset \), then an object \( \lambda \) is a \keyword{lower bound} of \( S \)
+    iff the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \lambda \in \naturalset \)
+        \item for all \( x \in S \), \( \lambda \leq x \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Upper Bound]
+    \phantomsection \label{dfn:metatheory-upper-bound-of-a-subset-of-N}
+    If \( S \subseteq \naturalset \), then an object \( \mu \) is an \keyword{upper bound} of \( S \)
+    iff the following conditions hold:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \mu \in \naturalset \)
+        \item for all \( x \in S \), \( x \leq \mu \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{dfn}[Boundedness]
+    \phantomsection \label{dfn:metatheory-boundedness-of-a-subset-of-N}
+    A subset \( S \) of \( \naturalset \) is \keyword{bounded} iff either an upper bound of \( S \) or a lower bound of \( S \) exists.
+    If \( S \) has an upper bound, then \( S \) is said to be \keyword{bounded from above}.
+    Similarly, if \( S \) has a lower bound, then \( S \) is \keyword{bounded from below}.
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-least-element-of-a-non-empty-subset-of-N}
+    Every non-empty subset of \( \naturalset \) has at most one least element.
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be an arbitrary non-empty subset of \( \naturalset \).
+    Suppose that \( \lambda \) and \( \lambda^{\prime} \) are both least elements of \( S \).
+    It thus follows from \cref{dfn:metatheory-least-element-of-a-non-empty-subset-of-N} that \( \lambda \leq \lambda^{\prime} \)
+    and \( \lambda^{\prime} \leq \lambda \) are both true.
+    Note that \( S \) is a subset of \( \naturalset \), which means that \( \lambda \) and \( \lambda^{\prime} \) are both elements of \( \naturalset \).
+    Observe that neither \( \lambda < \lambda^{\prime} \) nor \( \lambda^{\prime} < \lambda \) can be true;
+    e.g., if \( \lambda < \lambda^{\prime} \), then \( \lambda^{\prime} < \lambda \) and \( \lambda^{\prime} = \lambda \) must be false by
+    \cref{thm:metatheory-asymmetry-of-membership-relation,thm:metatheory-linear-ordering-of-natural-numbers}, which contradicts the fact that
+    \( \lambda^{\prime} \leq \lambda \).
+    Since \( \lambda < \lambda^{\prime} \) and \( \lambda^{\prime} < \lambda \) are both false, it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers}
+    that \( \lambda = \lambda^{\prime} \).
+    Thus, if \( S \) has a least element, then it must be unique.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-uniqueness-of-greatest-element-of-a-non-empty-subset-of-N}
+    Every non-empty subset of \( \naturalset \) has at most one greatest element.
+\end{thm}
+
+\begin{proof}
+    Same argument as in \cref{thm:metatheory-uniqueness-of-least-element-of-a-non-empty-subset-of-N}.
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-the-set-of-natural-numbers-is-a-subset-of-any-inductive-set}
@@ -2820,6 +3174,23 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-every-natural-number-is-a-proper-subset-of-N}
+    For all \( n \in \naturalset \), \( n \subset \naturalset \).
+\end{thm}
+
+\begin{proof}
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    By \cref{thm:metatheory-every-natural-number-is-a-subset-of-N}, it follows that \( n^{\prime} \subseteq \naturalset \).
+    Since \( \naturalset \) is inductive and \( n^{\prime} \in \naturalset \), it follows from \cref{dfn:metatheory-inductive-set}
+    that \( n^{\prime} + 1 \in \naturalset \).
+    Moreover, \( n^{\prime} \in n^{\prime} + 1 \) by \cref{dfn:metatheory-ordering-of-natural-numbers,dfn:metatheory-successor}.
+    But \( n^{\prime} \in n^{\prime} + 1 \) implies \( n^{\prime} + 1 \notin n^{\prime} \) by \cref{thm:metatheory-asymmetry-of-membership-relation}.
+    In other words, \( n^{\prime} + 1 \) is an element of \( \naturalset \) that does not belong to \( n^{\prime} \).
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( n^{\prime} \subset \naturalset \).
+    Since \( n^{\prime} \) is arbitrary, the theorem follows from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}
     For all \( n \in \naturalset \), \( n \neq \emptyset \) implies \( \emptyset \in n \).
 \end{thm}
@@ -2861,6 +3232,36 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-every-natural-number-is-the-set-of-all-elements-of-N-that-is-less-than-itself}
+    For all \( n \in \naturalset \), \( n = \setbuilder{x \in \naturalset}{x < n} \).
+\end{thm}
+
+\begin{proof}
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    Let \( \alpha \) be an arbitrary element of \( \setbuilder{x \in \naturalset}{x < n^{\prime}} \).
+    Thus, \( \alpha < n^{\prime} \).
+    By \cref{dfn:metatheory-ordering-of-natural-numbers}, it follows that \( \alpha \in n^{\prime} \).
+    Since \( \alpha \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that \( \setbuilder{x \in \naturalset}{x < n^{\prime}} \subseteq n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, let \( \beta \in n^{\prime} \).
+    By \cref{dfn:metatheory-ordering-of-natural-numbers}, it follows that \( \beta < n^{\prime} \).
+    Since \( n^{\prime} \in \naturalset \), it follows from \cref{thm:metatheory-every-natural-number-is-a-subset-of-N} that
+    \( n^{\prime} \subseteq \naturalset \).
+    Therefore, \( \beta \in n^{\prime} \) necessarily implies \( \beta \in \naturalset \).
+    In other words, \( \beta \in \naturalset \) and \( \beta < n^{\prime} \) are both true.
+    Thus, \( \beta \in \setbuilder{x \in \naturalset}{x < n^{\prime}} \).
+    Since \( \beta \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that \( n^{\prime} \subseteq \setbuilder{x \in \naturalset}{x < n^{\prime}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( n^{\prime} \) and \( \setbuilder{x \in \naturalset}{x < n^{\prime}} \) are subsets of each other, they must be
+    equal sets by \cref{thm:metatheory-equality-in-terms-of-subsets}.
+    Since \( n^{\prime} \) is arbitrary, the theorem follows immediately from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-every-n-plus-one-is-the-set-of-all-natural-numbers-less-than-or-equal-to-n}
     For all \( n \in \naturalset \), \( n + 1 = \setbuilder{x \in \naturalset }{x \leq n} \).
 \end{thm}
@@ -2882,7 +3283,7 @@ We will preface the construction of the counting numbers with the following defi
     are both true statements.
     Since \( \varphi(x^{\prime}) \) is true, it follows from the definition of \( \varphi \) that \( x^{\prime} \leq n^{\prime} \);
     i.e., either \( x^{\prime} < n^{\prime} \) or \( x^{\prime} = n^{\prime} \) is true.
-    Since \( x^{\prime} \in \naturalset \), the membership relation and \( < \) relation are synonymous.
+    Since \( x^{\prime}, n^{\prime} \in \naturalset \), the membership relation and \( < \) relation are synonymous by \cref{dfn:metatheory-ordering-of-natural-numbers}.
     In other words, either \( x^{\prime} \in n^{\prime} \) or \( x^{\prime} = n^{\prime} \) is true, which in turn implies \( x^{\prime} \in n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} \) and thus \( x^{\prime} \in n^{\prime} + 1 \).
     Since \( x^{\prime} \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
     \begin{equation*}
@@ -3269,6 +3670,58 @@ We will preface the construction of the counting numbers with the following defi
     \end{equation*}
     Since \( S \neq \emptyset \) by assumption, the supposition that \( S \) has no least element cannot be true.
     In other words, \( S \) must have a least element.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-non-empty-subset-of-N-that-is-bounded-from-above-has-a-greatest-element}
+    Every non-empty subset of \( \naturalset \) that is bounded from above has a greatest element.
+\end{thm}
+
+\begin{proof}
+    Let \( S \) be any non-empty subset of \( \naturalset \). Let \( U \) be the set of all upper bounds of \( S \).
+    In other words,
+    \begin{equation}
+        \phantomsection \label{eq:U-is-the-set-of-all-upper-bounds-of-S}
+        U = \setbuilderbig{x \in \naturalset}{\text{for all \( z \in S \), \( z \leq x \)}}
+    \end{equation}
+    Clearly, \( U \subseteq \naturalset \).
+    Since \( S \) has an upper bound, it follows that \( U \neq \emptyset \).
+    By \cref{thm:metatheory-well-ordering-of-natural-numbers}, \( U \) must have a least element.
+    Let \( \lambda \) be the least element of \( U \).
+    We will now show that \( \lambda \) is necessarily an element of \( S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( \lambda \notin S \).
+    Then necessarily \( \lambda \neq \emptyset \); otherwise, the fact that \( \lambda \) is an upper bound of \( S \) and \( S \) cannot be empty
+    would imply that \( S = \mleft\{ \emptyset \mright\} \), which in turn implies that \( \emptyset \in S \) and thus \( \lambda \in S \), a contradiction.
+    Since \( \lambda \in \naturalset \) and \( \lambda \neq \emptyset \),
+    it follows from \cref{thm:metatheory-every-nonzero-natural-number-is-a-successor-of-another-natural-number}
+    that \( \lambda = k + 1 \) for some \( k \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x^{\prime} \) be an arbitrary element of \( S \).
+    Since \( \lambda \) is an upper bound of \( S \) and since no natural number exists in between
+    \( k \) and \( \lambda = k + 1 \) by \cref{thm:metatheory-there-is-nothing-in-between-a-natural-number-and-its-successor},
+    we deduce the following inequality:
+    \begin{equation}
+        \phantomsection \label{eq:k-is-sandwiched-between-x-prime-and-lambda}
+        x^{\prime} \leq k < \lambda
+    \end{equation}
+    Since \( x^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \in S \), \( x \leq k \)}
+    \end{equation*}
+    By \eqref{eq:U-is-the-set-of-all-upper-bounds-of-S}, it follows that \( k \in U \).
+    But if \( k \) is an element of \( U \), then \( \lambda \) cannot possibly be the least element of \( U \) since \( k < \lambda \) by
+    \eqref{eq:k-is-sandwiched-between-x-prime-and-lambda}.
+    In other words, the statement \( \lambda \notin S \) leads to a contradiction and must therefore be false.
+    \begin{equation*}
+        \therefore \, \lambda \in S
+    \end{equation*}
+    We can then conclude from \cref{dfn:metatheory-greatest-element-of-a-non-empty-subset-of-N,dfn:metatheory-upper-bound-of-a-subset-of-N} that
+    \( \lambda \) is the greatest element of \( S \).
 \end{proof}
 
 \begin{thm}[Generalized Weak Induction]
@@ -4644,39 +5097,40 @@ We will preface the construction of the counting numbers with the following defi
     \begin{equation}
         \label{eq:values-of-F-2}
         \begin{aligned}
-            F(0) &\\
-            F(n + 1) &
+            F_{0} &\\
+            F_{n + 1} &
         \end{aligned}
         \begin{aligned}
             &= \tuple{}\\
-            &= G(F(n), n)
+            &= G(F_{n}, n)
         \end{aligned}
     \end{equation}
     for all \( n \in \naturalset \) such that \( n + 1 \in \dom F \) where \( \dom F \) is either \( \naturalset \) or \( j + 1 \) for some \( j \in \naturalset \)
-    such that \( \orderedpair{F(j)}{j} \notin \dom G \).
+    such that \( \orderedpair{F_{j}}{j} \notin \dom G \).
     Now we let \( f = \Union F  \) and proceed to prove that \( f \) has all the required properties posited in the theorem.
     To do this, it is crucial to establish the following claims.
 
     \begin{claim}
         \phantomsection \label{claim:for-all-n-in-N-dom-F-n-is-n}
-        For all \( n \in \naturalset \), \( \dom F(n) = n \).
+        For all \( n \in \naturalset \), \( n \in \dom F \) implies \( \dom F_{n} = n \).
     \end{claim}
     \noindent
     We prove this claim by induction.
     Let the predicate \( P(n) \) be defined as follows.
     \begin{equation*}
-        P(n) \coloneq n \in \naturalset \ \text{and} \ \dom F(n) = n
+        P(n) \coloneq n \in \naturalset \ \text{and} \ n \in \dom F \ \text{implies} \ \dom F_{n} = n
     \end{equation*}
-    The base case is straightforward since \( 0 \in \naturalset \) and \( \dom F(0) = \dom \emptyset = \emptyset = 0 \).
+    The base case is straightforward since \( 0 \in \naturalset \) and \( \dom F_{0} = \dom \emptyset = \emptyset = 0 \).
     For the inductive step, let \( n^{\prime} \) denote an arbitrary element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
     Since \( n^{\prime} \in \naturalset \) and \aref{thm:metatheory-the-set-of-all-natural-numbers-is-inductive}{\( \naturalset \) is an inductive set},
     it follows that \( n^{\prime} + 1 = n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} \) is also an element of \( \naturalset \).
-    Furthermore, \( F(n^{\prime} + 1) = G(F(n^{\prime}), n^{\prime}) \) by \eqref{eq:values-of-F-2}.
-    This means that \( \psi_{2}(F(n^{\prime}), n^{\prime}, F(n^{\prime} + 1)) \) is true and thus
-    \( F(n^{\prime} + 1) = F(n^{\prime}) \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F(n^{\prime}))} \mright\} \).
-    Clearly, \( \dom F(n^{\prime} + 1) = \dom F(n^{\prime}) \,{\union}\, \mleft\{ n^{\prime} \mright\} \).
-    But \( \dom F(n^{\prime}) = n^{\prime} \) because \( P(n^{\prime}) \) is true.
-    Therefore, \( \dom F(n^{\prime} + 1) = n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} = n^{\prime} + 1 \).
+    Suppose that \( n^{\prime} + 1 \in \dom F \).
+    Then \( F_{n^{\prime} + 1} = G(F_{n^{\prime}}, n^{\prime}) \) by \eqref{eq:values-of-F-2}.
+    This means that \( \psi_{2}(F_{n^{\prime}}, n^{\prime}, F_{n^{\prime} + 1}) \) is true and thus
+    \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} \).
+    Clearly, \( \dom F_{n^{\prime} + 1} = \dom F_{n^{\prime}} \,{\union}\, \mleft\{ n^{\prime} \mright\} \).
+    But \( \dom F_{n^{\prime}} = n^{\prime} \) because \( P(n^{\prime}) \) is true.
+    Therefore, \( \dom F_{n^{\prime} + 1} = n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} = n^{\prime} + 1 \).
     In other words, if \( P(n^{\prime}) \) is true, then \( P(n^{\prime} + 1) \) follows.
     Since \( n^{\prime} \) is arbitrary, the inductive step follows from \cref{meta-rule:universal-generalization}.
     Having established the base case and the inductive step, we conclude by \cref{thm:metatheory-weak-induction} that
@@ -4684,31 +5138,31 @@ We will preface the construction of the counting numbers with the following defi
 
     \begin{claim}
         \phantomsection \label{claim:if-n-less-than-m-then-F-n-is-proper-subset-of-F-m}
-        For all \( n, m \in \dom F \), \( m < n \) implies \( F(m) \subset F(n) \).
+        For all \( n, m \in \dom F \), \( m < n \) implies \( F_{m} \subset F_{n} \).
     \end{claim}
     \noindent
     Let the predicate \( P(n) \) be defined as follows.
     \begin{equation*}
-        P(n) \coloneq n \in \naturalset \ \text{and for all \( m \in n \), \( F(m) \subset F(n) \) }
+        P(n) \coloneq n \in \naturalset \ \text{and for all \( m \in n \), \( F_{m} \subset F_{n} \) }
     \end{equation*}
     If \( \dom F = \naturalset \), then we can proceed by \aref{thm:metatheory-weak-induction}{Weak Induction} like so.
     First, we note that \( P(0) \) is vacuously true since the empty set contains no element (base case).
     For the inductive step, let \( n^{\prime} \) be an element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
     Let \( m^{\prime} \) be an arbitrary element of \( \naturalset \) such that \( m^{\prime} \in n^{\prime} + 1 \);
     that is, either \( m^{\prime} \in n^{\prime} \) or \( m^{\prime} = n^{\prime} \).
-    If \( m^{\prime} \in n^{\prime} \), then \( F(m^{\prime}) \subset F(n^{\prime}) \) because \( P(n^{\prime}) \) is true.
-    Recall that \( F(n^{\prime} + 1) = G(F(n^{\prime}), n^{\prime}) \).
-    This means that \( F(n^{\prime} + 1) = F(n^{\prime}) \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F(n^{\prime}))} \mright\} \) due to
+    If \( m^{\prime} \in n^{\prime} \), then \( F_{m^{\prime}} \subset F_{n^{\prime}} \) because \( P(n^{\prime}) \) is true.
+    Recall that \( F_{n^{\prime} + 1} = G(F_{n^{\prime}}, n^{\prime}) \).
+    This means that \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} \) due to
     \( \psi_{2} \).
-    Clearly, \( F(m^{\prime}) \subset F(n^{\prime}) \).
+    Clearly, \( F_{m^{\prime}} \subset F_{n^{\prime} + 1} \).
     If \( m^{\prime} = n^{\prime} \), the same argument applies.
-    Since \( m^{\prime} = n^{\prime} \), necessarily \( F(m^{\prime}) = F(n^{\prime}) \) due to the fact that \( F \) is a function.
-    Thus, \( F(n^{\prime} + 1) = F(n^{\prime}) \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F(n^{\prime}))} \mright\} = F(m^{\prime}) \,{\union}\,
-    \mleft\{ \orderedpair{m^{\prime}}{g(F(m^{\prime}))} \mright\} \).
-    Once again, it follows that \( F(m^{\prime}) \subset F(n^{\prime} + 1) \).
+    Since \( m^{\prime} = n^{\prime} \), necessarily \( F_{m^{\prime}} = F_{n^{\prime}} \) due to the fact that \( F \) is a function.
+    Thus, \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} = F_{m^{\prime}} \,{\union}\,
+    \mleft\{ \orderedpair{m^{\prime}}{g(F_{m^{\prime}})} \mright\} \).
+    Once again, it follows that \( F_{m^{\prime}} \subset F_{n^{\prime} + 1} \).
     Since \( m^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
     \begin{equation*}
-        \text{for all \( m \in n^{\prime} + 1 \), \( F(m) \subset F(n^{\prime} + 1) \) }
+        \text{for all \( m \in n^{\prime} + 1 \), \( F_{m} \subset F_{n^{\prime} + 1} \) }
     \end{equation*}
     In other words, \( P(n^{\prime} + 1) \) is implied by \( P(n^{\prime}) \).
     The inductive step is then justified via \cref{meta-rule:universal-generalization}.
@@ -4724,17 +5178,17 @@ We will preface the construction of the counting numbers with the following defi
     In other words, \( F \) is necessarily defined at \( n^{\prime} + 1 \).
     Let \( m^{\prime} \) be an arbitrary natural number such that \( m^{\prime} \in n^{\prime} + 1 \); that is, either \( m^{\prime} \in n^{\prime} \)
     or \( m^{\prime} = n^{\prime} \).
-    If \( m^{\prime} \in n^{\prime} \), then \( F(m^{\prime}) \subset F(n^{\prime}) \) follows readily from the fact that \( P(n^{\prime}) \) is true.
-    Since \( n^{\prime} + 1 \in \dom F \), we have \( F(n^{\prime} + 1) = G(F(n^{\prime}), n^{\prime}) \) by \eqref{eq:values-of-F-2}.
-    We then infer from the definition of \( G \) that \( F(n^{\prime} + 1) = F(n^{\prime}) \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F(n^{\prime}))} \mright\} \).
-    Since \( F(m^{\prime}) \subset F(n^{\prime}) \), necessarily \( F(m^{\prime}) \subset F(n^{\prime} + 1 ) \).
-    If \( m^{\prime} = n^{\prime} \), then clearly \( F(m^{\prime}) = F(n^{\prime}) \) because \( F \) is a function.
-    Moreover, \( F(n^{\prime} + 1) = F(n^{\prime}) \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F(n^{\prime}))} \mright\}
-    = F(m^{\prime}) \,{\union}\, \mleft\{ \orderedpair{m^{\prime}}{g(F(m^{\prime}))} \mright\}\).
-    It follows from the definition of union that every element of \( F(m^{\prime}) \) is an element of \( F(n^{\prime} + 1) \);
-    also, the ordered pair \( \orderedpair{m^{\prime}}{g(F(m^{\prime}))} \) does not belong to \( F(m^{\prime}) \) because
-    \( \dom F(m^{\prime}) = m^{\prime} \) and \( m^{\prime} \notin m^{\prime} \).
-    From this, we conclude that \( F(m^{\prime}) \subset F(n^{\prime} + 1) \).
+    If \( m^{\prime} \in n^{\prime} \), then \( F_{m^{\prime}} \subset F_{n^{\prime}} \) follows readily from the fact that \( P(n^{\prime}) \) is true.
+    Since \( n^{\prime} + 1 \in \dom F \), we have \( F_{n^{\prime} + 1} = G(F_{n^{\prime}}, n^{\prime}) \) by \eqref{eq:values-of-F-2}.
+    We then infer from the definition of \( G \) that \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} \).
+    Since \( F_{m^{\prime}} \subset F_{n^{\prime}} \), necessarily \( F_{m^{\prime}} \subset F_{n^{\prime} + 1} \).
+    If \( m^{\prime} = n^{\prime} \), then clearly \( F_{m^{\prime}} = F_{n^{\prime}} \) because \( F \) is a function.
+    Moreover, \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\}
+    = F_{m^{\prime}} \,{\union}\, \mleft\{ \orderedpair{m^{\prime}}{g(F_{m^{\prime}})} \mright\}\).
+    It follows from the definition of union that every element of \( F_{m^{\prime}} \) is an element of \( F_{n^{\prime} + 1} \);
+    also, the ordered pair \( \orderedpair{m^{\prime}}{g(F_{m^{\prime}})} \) does not belong to \( F_{m^{\prime}} \) because
+    \( \dom F_{m^{\prime}} = m^{\prime} \) and \( m^{\prime} \notin m^{\prime} \).
+    From this, we conclude that \( F_{m^{\prime}} \subset F_{n^{\prime} + 1} \).
     Since \( m^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that \( P(n^{\prime} + 1) \) is true; that is,
     \begin{equation*}
         \text{if \( n^{\prime} < j \), then \( P(n^{\prime}) \) implies \( P(n^{\prime} + 1) \)}
@@ -4760,7 +5214,7 @@ We will preface the construction of the counting numbers with the following defi
     By \cref{thm:metatheory-a-family-of-functions-is-compatible-iff-its-union-is-a-function}, \( f = \Union F = \Union \ran F \) must be a function.
 
     \begin{claim}
-        \phantomsection \label{claim:domain-of-f-is-either-N-or-k-plus-one}
+        \phantomsection \label{claim:domain-of-f-is-either-N-or-k-where-k-is-an-element-of-N}
         Either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \in \naturalset \).
     \end{claim}
     \noindent
@@ -4772,15 +5226,15 @@ We will preface the construction of the counting numbers with the following defi
     First, we consider the case where \( \dom F = \naturalset \).
     Let \( m \) be an arbitrary element of \( \naturalset \).
     Since \( \naturalset \) is inductive, it follows that \( m + 1 \) is also an element of \( \naturalset \).
-    Using \cref{claim:for-all-n-in-N-dom-F-n-is-n}, we deduce that \( \dom F(m + 1) = \mleft( m + 1 \mright) \).
-    Since \( m \in \mleft( m + 1 \mright) \), it follows that \( m \in \dom F(m + 1) \). In other words, there exists a
-    \( y \) such that \( \orderedpair{m}{y} \in F(m + 1) \).
+    Using \cref{claim:for-all-n-in-N-dom-F-n-is-n}, we deduce that \( \dom F_{m + 1} = \mleft( m + 1 \mright) \).
+    Since \( m \in \mleft( m + 1 \mright) \), it follows that \( m \in \dom F_{m + 1} \). In other words, there exists a
+    \( y \) such that \( \orderedpair{m}{y} \in F_{m + 1} \).
     By the definition of union, it follows that \( \orderedpair{m}{y} \in f \), which in turn implies that \( m \in \dom f \).
     Thus, \( m \in \naturalset \) implies \( m \in \dom f \).
     Since \( m \) is arbitrary, it follows that \( \naturalset \subseteq \dom f \).
     Conversely, let \( q \) be an arbitrary element of \( \dom f \); that is, \( \orderedpair{q}{r} \in f \) for some \( r \in S \).
-    Again, the definition of union implies that there exists some \( n \in \naturalset \) such that \( \orderedpair{q}{r} \in F(n) \).
-    But this would imply \( q \in n \) because \( q \in \dom F(n) \) and \( \dom F(n) = n \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
+    Again, the definition of union implies that there exists some \( n \in \naturalset \) such that \( \orderedpair{q}{r} \in F_{n} \).
+    But this would imply \( q \in n \) because \( q \in \dom F_{n} \) and \( \dom F_{n} = n \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
     Moreover, \( n \subset \naturalset \) by \cref{thm:metatheory-every-natural-number-is-a-subset-of-N}.
     Since \( q \in n \) and \( n \) is a proper subset of \( \naturalset \), necessarily \( q \in \naturalset \).
     In other words, \( q \in \dom f\) implies \( q \in \naturalset \).
@@ -4789,20 +5243,146 @@ We will preface the construction of the counting numbers with the following defi
 
     \vspace{0.3cm}
     \noindent
-    Next, we consider the case where \( \dom F = j + 1 \) for some \( j \in \naturalset \) such that \( \orderedpair{F(j)}{j} \notin \dom G \), in which
+    Next, we consider the case where \( \dom F = j + 1 \) for some \( j \in \naturalset \) such that \( \orderedpair{F_{j}}{j} \notin \dom G \), in which
     case we can show that \( \dom f = j \).
     Let \( m \) be an arbitrary element of \( \dom f \); that is, \( \orderedpair{m}{y} \in f \) for some \( y \in S \).
-    By the definition of unions, it follows that \( \orderedpair{m}{y} \in F(i) \) for some \( i \in \dom F \).
-    Moreover, \( m \in i \) because \( m \in \dom F(i) \) and \( \dom F(i) = i \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
+    By the definition of unions, it follows that \( \orderedpair{m}{y} \in F_{i} \) for some \( i \in \dom F \).
+    Moreover, \( m \in i \) because \( m \in \dom F_{i} \) and \( \dom F_{i} = i \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
     Since \( \dom F = j + 1 \), it follows that either \( i \in j \) or \( i = j \).
     But for either case, \( m \in j \) is implied.
     In other words, \( m \in \dom f \) implies \( m \in j \); that is, \( \dom f \subseteq j \).
     Conversely, let \( q \) be an arbitrary element of \( j \).
-    Observe that \( q \in \dom F(j) \) must follow because \( \dom F(j) = j \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
-    Therefore, there must exists some \( y \in S \) such that \( \orderedpair{q}{y} \in F(j) \).
+    Observe that \( q \in \dom F_{j} \) must follow because \( \dom F_{j} = j \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}.
+    Therefore, there must exists some \( y \in S \) such that \( \orderedpair{q}{y} \in F_{j} \).
     Since \( f = \Union F \), it follows from the definition of union that \( \orderedpair{q}{y} \in f \) and thus \( q \in \dom f \).
     From this, we infer that \( j \subseteq \dom f \).
     Since \( j \) and \( \dom f \) are subsets of each other, they are necessarily equal sets.
+    In other words, there exists a \( k \in \naturalset \) such that \( \dom f = k \).
+
+    \begin{claim}
+        \phantomsection \label{claim:for-all-n-in-N-if-n-in-dom-f-then-n-must-also-be-in-dom-F}
+        For all \( n \in \naturalset \), \( n \in \dom f \) implies \( n \in \dom F \).
+    \end{claim}
+    \noindent
+    Let \( n^{\prime} \) denote an arbitrary element of \( \naturalset \).
+    Suppose that \( n^{\prime} \in \dom f \).
+    Recall that \( \dom F \) is either \( \naturalset \) or an element of \( \naturalset \).
+    If \( \dom F = \naturalset \), then \( n^{\prime} \in \dom F \) is trivially true since \( n^{\prime} \in \naturalset \).
+    It remains to prove that \( n^{\prime} \in \dom F \) is also true when \( \dom F \in \naturalset \).
+    Since \( n^{\prime} \in \dom f \) by assumption, there exists a \( y^{\prime} \in S \) such that \( \orderedpair{n^{\prime}}{y^{\prime}} \in f \).
+    But \( f = \Union F \), therefore \( \orderedpair{n^{\prime}}{y^{\prime}} \in F_{m} \) for some \( m \in \dom F \).
+    Since \( m \) and \( \dom F \) are both elements of \( \naturalset\), \( m \in \dom F \) implies \( m < \dom F \), which in turn implies \( m \subset \dom F \)
+    by \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}.
+    Moreover, we know from \cref{claim:for-all-n-in-N-dom-F-n-is-n} that \( \dom F_{m} = m \) and thus \( n^{\prime} \in m \) because
+    \( n^{\prime} \in \dom F_{m} \).
+    But \( m \) is a subset of \( \dom F \), so if \( n^{\prime} \in m \), then \( n^{\prime} \) must also belong to \( \dom F \).
+    Evidently, \( n^{\prime} \in \dom F \) follows in every possible scenario.
+    \begin{equation*}
+        \therefore \, n^{\prime} \in \dom f \ \text{implies} \ n^{\prime} \in \dom F
+    \end{equation*}
+    Since \( n^{\prime} \) is arbitrary, the claim follows from \cref{meta-rule:universal-generalization}.
+
+    \begin{claim}
+        \phantomsection \label{claim:for-all-n-in-dom-f-f-restricted-to-n-equals-the-value-of-F-at-n}
+        For all \( n \in \naturalset \), \( n \in \dom f \) implies \( \restrictedfunctionsmall{f}{n} = F_{n} \).
+    \end{claim}
+    \noindent
+    Let \( P(n) \) be a predicate defined as follows.
+    \begin{equation*}
+        P(n) \coloneq n \in \dom f \ \text{implies} \ \restrictedfunctionsmall{f}{n} = F_{n}
+    \end{equation*}
+    We must prove that \( P(n) \) is true for all \( n \in \naturalset \), which can be done by \aref{thm:metatheory-weak-induction}{Weak Induction}.
+    The proof for the base case is straightforward since \( \emptyset \in \dom f \) and \( \restrictedfunctionsmall{f}{\emptyset} = \emptyset = \tuple{} = F_{0} \)
+    by \eqref{eq:values-of-F-2}.
+    Now let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( P(n^{\prime}) \) is true.
+    Clearly, either \( n^{\prime} \in \dom f \) or \( n^{\prime} \notin \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n^{\prime} \in \dom f \), then necessarily \( \restrictedfunctionsmall{f}{n^{\prime}} = F_{n^{\prime}} \)
+    because \( P(n^{\prime}) \) is true by assumption.
+    Note that \( n^{\prime} + 1 \) may or may not be an element of \( \dom f \).
+    If \( n^{\prime} + 1 \notin \dom f \), then \( P(n^{\prime} + 1) \) is vacuously true.
+    If \( n^{\prime} + 1 \in \dom f \), then necessarily \( n^{\prime} \subset n^{\prime} + 1 \subset \dom f \)
+    by \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation,thm:metatheory-every-natural-number-is-a-subset-of-N}
+    since \( n^{\prime} \) and \( n^{\prime} + 1 \) are elements of \( \naturalset \) and \( \dom f  \) is either \( \naturalset \) or an element of \( \naturalset \).
+    Since \( f \) is a function and \( \restrictedfunctionsmall{f}{n^{\prime}} = F_{n^{\prime}} \), we have
+    \begin{equation}
+        \phantomsection \label{eq:f-restricted-to-n-prime-plus-one-in-union-form-2}
+        \restrictedfunctionsmall{f}{n^{\prime} + 1} = \restrictedfunctionsmall{f}{n^{\prime}} \union \mleft\{ \orderedpair{n^{\prime}}{f(n^{\prime})} \mright\}
+        = F_{n^{\prime}} \union \mleft\{ \orderedpair{n^{\prime}}{y^{\prime}} \mright\}
+    \end{equation}
+    for some \( y^{\prime} \) such that \( \orderedpair{n^{\prime}}{y^{\prime}} \in f \).
+    Since \( n^{\prime} + 1 \in \dom f \), \( n^{\prime} + 1 \) must also belong to \( \dom F \)
+    as demonstrated in \cref{claim:for-all-n-in-N-if-n-in-dom-f-then-n-must-also-be-in-dom-F}.
+    In other words, \( F_{n^{\prime} + 1} \) is defined and
+    \( F_{n^{\prime} + 1} = G(F_{n^{\prime}}, n^{\prime}) \) by \eqref{eq:values-of-F-2};
+    that is, \( \orderedpair{\orderedpair{F_{n^{\prime}}}{n^{\prime}}}{F_{n^{\prime} + 1}} \in G \).
+    This means that \( \psi_{2}(F_{n^{\prime}}, n^{\prime}, F_{n^{\prime} + 1}) \) must be true and thus
+    \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} \).
+    Observe that \( \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \in F_{n^{\prime} + 1} \).
+    Since \( f = \Union F \) and \( n^{\prime} + 1 \in \dom F \), necessarily \( \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \in f \).
+    But \( f \) is a function as demonstrated in \cref{claim:f-is-a-function}, which means that \( y^{\prime} \) and \( g(F_{n^{\prime}}) \)
+    must be equal since both \( \orderedpair{n^{\prime}}{y^{\prime}} \) and \( \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \) are elements of \( f \).
+    Since \( F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\} \)
+    and \( y^{\prime} = g(F_{n^{\prime}}) \), we conclude that
+    \begin{equation}
+        \label{eq:F-at-n-prime-plus-one-in-union-form}
+        F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{y^{\prime}} \mright\}
+    \end{equation}
+    Comparing \eqref{eq:f-restricted-to-n-prime-plus-one-in-union-form-2} and \eqref{eq:F-at-n-prime-plus-one-in-union-form},
+    it is easy to see that \( \restrictedfunctionsmall{f}{n^{\prime} + 1} = F_{n^{\prime} + 1} \).
+    In other words, \( P(n^{\prime} + 1) \) follows from \( P(n^{\prime}) \).
+    Since \( n^{\prime} \) is arbitrary, the inductive step follows from \cref{meta-rule:universal-generalization}.
+
+    \begin{claim}
+        \phantomsection \label{claim:the-value-of-f-at-n-is-the-value-of-g-at-f-restricted-to-n-for-all-n-in-dom-f}
+        For all \( n \in \dom f \), \( f(n) = g( \restrictedfunctionsmall{f}{n} ) \)
+    \end{claim}
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \dom f \).
+    Therefore, \( \orderedpair{n^{\prime}}{y^{\prime}} \in f \) for some \( y^{\prime} \in S \).
+    Since \( f = \Union F \), there exists some \( m \in \dom F \) such that \( \orderedpair{n^{\prime}}{y^{\prime}} \in F_{m} \).
+    Note that \( \dom F_{m} = m \) by \cref{claim:for-all-n-in-N-dom-F-n-is-n}, so \( \orderedpair{n^{\prime}}{y^{\prime}} \in F_{m} \)
+    implies \( n^{\prime} \in m \).
+    It follows from \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}
+    that either \( n^{\prime} + 1 \in m \) or \( n^{\prime} + 1 = m \) is true.
+    If \( n^{\prime} + 1 = m \), then obviously \( n^{\prime} + 1 \in \dom F \) since \( m \in \dom F \).
+    If \( n^{\prime} + 1 \in m \), then we must consider two possibilities: \( \dom F = \naturalset \) or
+    \( \dom F \in \naturalset \).
+    If \( \dom F = \naturalset \), clearly \( m \in \naturalset \) because \( m \in \dom F \).
+    Given that \( n^{\prime} + 1 \in m \), \cref{thm:metatheory-every-natural-number-is-the-set-of-all-elements-of-N-that-is-less-than-itself}
+    implies that \( n^{\prime} + 1 \in \naturalset \) and thus \( n^{\prime} + 1 \in \dom F \).
+    If \( \dom F \in \naturalset \), then \( m \) must be a proper subset of \( \dom F \)
+    by \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation} because \( m < \dom F \).
+    Once again, this implies that \( n^{\prime} + 1 \in \dom F \) because \( n^{\prime} + 1 \in m \).
+
+    \vspace{0.3cm}
+    \noindent
+    Evidently, \( n^{\prime} + 1 \in \dom F \) is true in all possible scenarios.
+    In other words, \( F_{n^{\prime} + 1} \) is defined.
+    By \eqref{eq:values-of-F-2}, it follows that
+    \begin{equation*}
+        F_{n^{\prime} + 1} = G(F_{n^{\prime}}, n^{\prime})
+    \end{equation*}
+    Applying the definition of \( G \) then yields
+    \begin{equation}
+        \label{eq:F-at-n-prime-plus-one-union-form}
+        F_{n^{\prime} + 1} = F_{n^{\prime}} \,{\union}\, \mleft\{ \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \mright\}
+    \end{equation}
+    We then infer from \eqref{eq:F-at-n-prime-plus-one-in-union-form} and the definition of union that \( \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \in f \) since
+    \( \orderedpair{n^{\prime}}{g(F_{n^{\prime}})} \in F_{n^{\prime} + 1} \) and \( n^{\prime} + 1 \in \dom F \).
+    In other words,
+    \begin{equation*}
+        f(n^{\prime}) = g(F_{n^{\prime}})
+    \end{equation*}
+    Since \( n^{\prime} \in \dom f \), necessarily \( \restrictedfunctionsmall{f}{n^{\prime}} = F_{n^{\prime}} \)
+    as demonstrated in \cref{claim:for-all-n-in-dom-f-f-restricted-to-n-equals-the-value-of-F-at-n}.
+    \begin{equation*}
+        \therefore \, f(n^{\prime}) = g( \restrictedfunctionsmall{f}{n^{\prime}} )
+    \end{equation*}
+    Since \( n^{\prime} \) is arbitrary, the claim follows from \cref{meta-rule:universal-generalization}.
 \end{proof}
 
 \subsection{Cardinality}
@@ -4817,9 +5397,14 @@ We will preface the construction of the counting numbers with the following defi
     The concept of cardinality is essentially the mathematical definition of the intuitive notion of counting.
     When we say that a set \( S \) contains \( 5 \) objects, what we're really saying is that a bijection
     exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\} \) and the set \( S \).
-    Notice that \cref{dfn:metatheory-cardinality-of-finite-sets} includes a uniqueness claim, which we will now justify
-    via the following theorems.
 \end{rem}
+
+\noindent
+For \cref{dfn:metatheory-cardinality-of-finite-sets} to truly capture the essence of counting, it is crucial for the definition of cardinality
+to satisfy the uniqueness property; that is, every finite set must have \emph{exactly one} cardinality.
+After all, it would be absurd to claim that ``\( S \) contains 5 objects'' and ``\( S \) contains 6 objects'' are both true at
+the same time.
+The following theorems will serve as a justification for the uniqueness claim in \cref{dfn:metatheory-cardinality-of-finite-sets}.
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-no-bijection-exists-between-a-natural-number-and-its-proper-subset}
@@ -5068,8 +5653,43 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{thm:metatheory-every-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-or-equal-to-the-number}
-    If \( n \in \naturalset \) and \( S \) is a set such that \( S \subseteq n \), then there exists a natural number \( k \leq n \) such that
+    \phantomsection \label{thm:metatheory-no-element-of-N-can-form-bijections-with-N-itself}
+    If \( n \in \naturalset \), then no bijection exists between \( n \) and \( \naturalset \).
+\end{thm}
+
+\begin{proof}
+    Let \( k \) be an arbitrary element of \( \naturalset \).
+    Suppose that a bijection exists between \( k \) and \( \naturalset \); that is, there exists some function \( f \)
+    such that
+    \begin{equation*}
+        \bijection{f}{\naturalset}{k}
+    \end{equation*}
+    Since \( k \in \naturalset \), it follows from \cref{thm:metatheory-every-natural-number-is-a-proper-subset-of-N} that
+    \( k \subset \naturalset \) (and thus \( k \subseteq \naturalset \)).
+    We can then infer from \cref{thm:metatheory-restriction-of-a-bijection-to-a-subset-of-the-domain-of-the-function} that
+    \begin{equation*}
+        \bijection{ \restrictedfunctionsmall{f}{k} }{k}{ \mleft(  k - \imageSet{f}{\naturalset - k} \mright) }
+    \end{equation*}
+    Note that \( \naturalset - k \neq \emptyset \) since \( k + 1 \) is an element of \( \naturalset \) that does not belong to \( k \).
+    Let \( i \) denote an element of \( \naturalset - k \).
+    Clearly \( i \in \naturalset \), so it follows that \( i \in \dom f \).
+    In other words, there exists some \( j \in \ran f \) such that \( \orderedpair{i}{j} \in f \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that \( j \in \imageSet{f}{\naturalset - k} \).
+    Since \( j \in \imageSet{f}{\naturalset - k} \) is true, necessarily \( j \notin k - \imageSet{f}{\naturalset - k} \).
+    But \( \ran f = k \), which means that \( j \) must belong to \( k \).
+    In other words, \( j \) is an element of \( k \) that does not belong to \( k - \imageSet{f}{\naturalset - k} \).
+    \begin{equation*}
+        \therefore \, \mleft( k - \imageSet{f}{\naturalset - k} \mright) \subset k
+    \end{equation*}
+    This contradicts \cref{thm:metatheory-no-bijection-exists-between-a-natural-number-and-its-proper-subset}, which states that
+    no bijection can be formed between a natural number and its proper subset.
+    Therefore, our initial supposition that a bijection exists between \( k \) and \( \naturalset \) must be false.
+    Since \( k \) is arbitrary, the theorem can be established via \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-proper-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-the-number}
+    If \( n \in \naturalset \) and \( S \) is a set such that \( S \subset n \), then there exists a natural number \( k < n \) such that
     a bijection exists between \( k \) and \( S \).
 \end{thm}
 
