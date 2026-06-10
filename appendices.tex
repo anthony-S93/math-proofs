@@ -2643,6 +2643,7 @@ We will preface the construction of the counting numbers with the following defi
     \phantomsection \label{dfn:metatheory-ordering-of-natural-numbers}
     For any two natural numbers \( m \) and \( n \), we say that \( m \) is \keyword{less than} \( n \) (denoted as \( m < n \))
     iff \( m \in n \).
+    Similarly, we write \( m \leq n \) to abbreviate the statement ``\( m \in n \) or \( m = n \).''
 \end{dfn}
 
 \begin{rem}
@@ -2706,6 +2707,22 @@ We will preface the construction of the counting numbers with the following defi
 \end{dfn}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-antisymmetric-property-of-membership-relation-of-N}
+    If \( n, m \in \naturalset \) such that \( n \leq m \) and \( m \leq n \) are both true,
+    then \( n = m \).
+\end{thm}
+
+\begin{proof}
+    Since \( n \leq m \), it follows that either \( n \in m \) or \( n = m \).
+    Suppose that \( n \in m \).
+    Then \( m \notin n \) by \cref{thm:metatheory-asymmetry-of-membership-relation}.
+    Since \( m \leq n \) is trueand \( m \notin n \), we conclude by \cref{meta-rule:disjunctive-syllogism} that \( m = n \).
+    But \( n \in m \), so \( m = n \) would imply \( n \in n \), which contradicts \cref{thm:metatheory-no-set-is-an-element-of-itself}.
+    Since \( n \in m \) leads to a contradiction, it cannot be true.
+    By \cref{meta-rule:disjunctive-syllogism}, necessarily \( n = m \).
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-uniqueness-of-least-element-of-a-non-empty-subset-of-N}
     Every non-empty subset of \( \naturalset \) has at most one least element.
 \end{thm}
@@ -2715,14 +2732,9 @@ We will preface the construction of the counting numbers with the following defi
     Suppose that \( \lambda \) and \( \lambda^{\prime} \) are both least elements of \( S \).
     It thus follows from \cref{dfn:metatheory-least-element-of-a-non-empty-subset-of-N} that \( \lambda \leq \lambda^{\prime} \)
     and \( \lambda^{\prime} \leq \lambda \) are both true.
-    Note that \( S \) is a subset of \( \naturalset \), which means that \( \lambda \) and \( \lambda^{\prime} \) are both elements of \( \naturalset \).
-    Observe that neither \( \lambda < \lambda^{\prime} \) nor \( \lambda^{\prime} < \lambda \) can be true;
-    e.g., if \( \lambda < \lambda^{\prime} \), then \( \lambda^{\prime} < \lambda \) and \( \lambda^{\prime} = \lambda \) must be false by
-    \cref{thm:metatheory-asymmetry-of-membership-relation,thm:metatheory-linear-ordering-of-natural-numbers}, which contradicts the fact that
-    \( \lambda^{\prime} \leq \lambda \).
-    Since \( \lambda < \lambda^{\prime} \) and \( \lambda^{\prime} < \lambda \) are both false, it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers}
-    that \( \lambda = \lambda^{\prime} \).
-    Thus, if \( S \) has a least element, then it must be unique.
+    Since \( S \subseteq \naturalset \) and \( \lambda \) and \( \lambda^{\prime} \) are both elements of \( S \), 
+    \cref{thm:metatheory-antisymmetric-property-of-membership-relation-of-N} applies, and we conclude that \( \lambda = \lambda^{\prime} \).
+    Thus, the least element of \( S \), if it exists, must be unique.
 \end{proof}
 
 \begin{thm}
@@ -3746,8 +3758,6 @@ We will preface the construction of the counting numbers with the following defi
     \begin{equation*}
         \therefore \, \emptyset \in \mleft( S \union T \mright)
     \end{equation*}
-
-    \vspace{0.3cm}
     \noindent
     Let \( \alpha \) be an arbitrary object in the universe.
     Suppose that \( \alpha \in \mleft( S \union T \mright) \).
@@ -5055,7 +5065,7 @@ We will preface the construction of the counting numbers with the following defi
     \( f \) such that:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item for all \( n \in \dom f \), \( f(n) = g( \restrictedfunctionsmall{f}{n} ) \)
-        \item either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \)
+        \item either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \in \naturalset \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \)
     \end{enumerate}
 \end{recursion-theorem}
 
@@ -5688,12 +5698,105 @@ The following theorems will serve as a justification for the uniqueness claim in
 \end{proof}
 
 \begin{thm}
-    \phantomsection \label{thm:metatheory-every-proper-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-the-number}
-    If \( n \in \naturalset \) and \( S \) is a set such that \( S \subset n \), then there exists a natural number \( k < n \) such that
+    \phantomsection \label{thm:metatheory-every-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-or-equal-to-the-number}
+    If \( n \in \naturalset \) and \( S \) is a set such that \( S \subseteq n \), then there exists a natural number \( k \leq n \) such that
     a bijection exists between \( k \) and \( S \).
 \end{thm}
 
 \begin{proof}
+    If \( S = \emptyset \), then the proof is trivial since the empty function is a bijection between \( S \) and \( 0 \).
+    Now we consider the case where \( S \neq \emptyset \).
+    Let \( \lambda(X, y) \) be a predicate defined as follows:
+    \begin{equation*}
+        \lambda(X, y) \coloneq \ \text{\( X \) is a non-empty subset of \( \naturalset \) and \( y \in X \) such that for all \( z \in X \), \( y \leq z \)}
+    \end{equation*}
+    Let \( \psi(X, y) \) be a sequence of predicates such that
+    \begin{alignat*}{2}
+        &\psi_{0}(X, y) &&\coloneq \text{\( X \in \finiteseq{S} \) and \( X \) is injective}\\
+        &\psi_{1}(X, y) &&\coloneq \lambda(S - \ran X, y)
+    \end{alignat*}
+    Now let \( g \) be the set
+    \begin{equation*}
+        g \coloneq \setbuilderbig{\orderedpair{X}{y}}{\conjunction{\psi(X, y)}}
+    \end{equation*}
+    We begin by proving that \( g \) is a function.
+    Let \( X^{\prime} \), \( y^{\prime} \), and \( y^{\prime\prime} \) be objects in the universe such that
+    \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \) and \( \orderedpair{X^{\prime}}{y^{\prime\prime}} \in g \).
+    Thus, \( \lambda(S - \ran X^{\prime}, y^{\prime}) \) and \( \lambda(S - \ran X^{\prime}, y^{\prime\prime}) \) are both true.
+    Clearly, \( y^{\prime} \leq y^{\prime\prime} \) and \( y^{\prime\prime} \leq y^{\prime} \) are both true.
+    By \cref{thm:metatheory-antisymmetric-property-of-membership-relation-of-N}, it follows that \( y^{\prime} = y^{\prime\prime} \).
+    In other words, \( g \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we show that \( \dom g \subseteq \finiteseq{S} \) and \( \ran g \subseteq S \).
+    Let \( X^{\prime} \) be an arbitrary element of \( \dom g \).
+    Thus, there exists a \( y^{\prime} \) such that \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \).
+    But this would imply that \( \psi_{0}(X^{\prime}, y^{\prime}) \) is true.
+    Thus, \( X^{\prime} \in \finiteseq{S} \).
+    Since \( X^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that \( \dom g \subseteq \finiteseq{S} \).
+    Let \( y^{\prime\prime} \) an arbitrary element of \( \ran g \).
+    Thus, there exists an \( X^{\prime\prime} \) such that \( \orderedpair{X^{\prime\prime}}{y^{\prime\prime}} \in g \).
+    It follows from the definitions of \( \psi \) and \( \lambda \) that \( y^{\prime\prime} \in S - \ran X^{\prime\prime} \).
+    Clearly, \( y^{\prime\prime} \in S \).
+    Therefore, \( \ran g \subseteq S \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have thus proven that \( g \) is a function on a subset of \( \finiteseq{S} \) into \( S \) where \( S \) is a non-empty set.
+    This means that \cref{recursion-theorem:generalized-sequence-form} applies and there exists a unique function \( f \) such that
+    \( f(n) = g( \restrictedfunctionsmall{f}{n} ) \) for all \( n \in \dom f \).
+    Furthermore, either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \in \naturalset \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \).
+
+    \vspace{0.3cm}
+    \noindent
+    We now prove the following useful claims.
+
+    \begin{claim}
+        \phantomsection \label{claim:dom-f-cannot-be-empty}
+        \( \dom f \neq \emptyset \).
+    \end{claim}
+    \noindent
+    Suppose that \( \dom f = \emptyset \).
+    This would mean that \( \restrictedfunctionsmall{f}{\emptyset} = \emptyset \) is not an element of \( \dom g \), which is only possible
+    if \( S = \emptyset \).
+    This contradicts our initial assumption that \( S \neq \emptyset \).
+    Thus, \( \dom f \) cannot be empty.
+
+    \begin{claim}
+        \phantomsection \label{claim:f-zero-equals-least-element-of-S}
+        \( 0 \in \dom f \) and \( f(0) \) is the least element of \( S \).
+    \end{claim}
+
+    \noindent
+    Since \( \dom f \) is either \( \naturalset \) or a non-empty element of \( \naturalset \),
+    it follows from \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set} that \( \emptyset \in \dom f \).
+    Due to \( S \) being non-empty subset of \( \naturalset \), it follows from \cref{thm:metatheory-well-ordering-of-natural-numbers}
+    that \( S \) has a least element.
+    Since \( 0 \in \dom f \), there exists some \( y^{\prime} \) such that \( \orderedpair{0}{y^{\prime}} \in f \).
+    Furthermore, \( y^{\prime} = g( \restrictedfunctionsmall{f}{0} ) = g( \restrictedfunctionsmall{f}{\emptyset} ) = g(\emptyset) \).
+    In other words, \( \orderedpair{\emptyset}{y^{\prime}} \in g \), which means that \( \lambda(S - \ran \emptyset, y^{\prime}) \) must be true
+    and thus \( y^{\prime} \) must be the least element of \( S - \ran \emptyset = S - \emptyset = S \).
+
+    \noindent
+    \begin{claim}
+        \phantomsection \label{claim:for-all-n-in-dom-f-and-n-plus-one-in-dom-f-f-n-less-than-f-n-plus-one}
+        For all \( n \in \dom f \), if \( n + 1 \in \dom f \), then \( f(n) < f(n + 1) \).
+    \end{claim}
+    \noindent
+    Since \( \dom f \) is either \( \naturalset \) or an element of \( \naturalset \), we can prove the claim by induction.
+    Let \( P(n) \) be a predicate defined as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{if \( n + 1 \in \dom f \), then \( f(n) < f(n + 1) \)}
+    \end{equation*}
+    \noindent
+    \underline{\scshape Base Case}: \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( 0 + 1 \notin \dom f \), then \( P(0) \) is vacuously true.
+    If \( 0 + 1 \in \dom f \), then \( f(1) = g( \restrictedfunctionsmall{f}{1} ) = g( \mleft\{ \orderedpair{0}{l} \mright\} ) \)
+    where \( l \) is the least element of \( S \).
 \end{proof}
 
 \begin{thm}
