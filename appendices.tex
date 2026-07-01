@@ -58,7 +58,7 @@ first-order theory\footnote{A formal theory associated with first-order logic.}.
 Nevertheless, sets and logic cannot exist independently; that is, ideas pertaining to sets and logic are inherently connected.
 For instance, the fundamental set-theoretic constructions (unions, intersections, negations) are really just logical operations in disguise.
 Similarly, the semantics of first-order languages cannot be fully defined without invoking some notion of sets---i.e., it is not possible to capture the full meaning of
-universally quantified statements without explaining it in terms of sets or collections\footnote{ By making statements like ``for all \( x \), \( P(x) \) is true,'' we are alluding to the existence of a (possibly empty) universal collection containing all things.}.
+universal quantification without explaining it in terms of sets or collections\footnote{ By making statements like ``for all \( x \), \( P(x) \) is true,'' we are alluding to the existence of a (possibly empty) universal collection containing all things.}.
 
 \vspace{0.3cm}
 \noindent
@@ -87,13 +87,13 @@ we decide that a particular formal system in the recursive chain is self-evident
 \vspace{0.3cm}
 \noindent
 Our preferred approach is to skip all the fanfare and just formulate the metatheory in plain English
-and to do it in such a way that the resulting metatheory is self-evident.
+and to do it in such a way that the basic axioms of the resulting metatheory is self-evident.
 Note that our choice in using natural language as the metalanguage does not preclude the use of symbolisms in the metatheory.
-Symbolic notations will be used wherever convenient\footnote{It is more accurate to think
+Symbolic notations will still be used wherever convenient\footnote{It is more accurate to think
 of the metatheory as a semi-formal system of reasoning rather than a purely informal one.}.
 
-\section{Metatheory}
-The following are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
+\section{Metatheory} \phantomsection \label{sec:metatheory}
+The following terms are considered \keyword{primitive notions} in our metatheory of logic: `true', `false',
 `not', `and', `or', `if', `imply', `iff', `all', `every', `any', `some', `for all', `for any', `there exists', `conjunction', `disjunction', `negation',
 `implication', `converse', `object', `collection', `aggregate', `symbol', `sentence', `rule', `identity', `same', `unique', `arbitrary', `universe'.
 By this, we mean that these terms are assumed to be understood a priori and hence will not be explicitly defined.
@@ -825,6 +825,24 @@ to derive some basic results of our metatheory.
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-transitivity-of-subset-relation}
+    If \( A \), \( B \), and \( C \) are sets such that \( A \subseteq B \) and \( B \subseteq C \), then \( A \subseteq C \).
+\end{thm}
+
+\begin{proof}
+    Let \( x^{\prime} \) denote an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in A \).
+    Since \( A \subseteq B \), it follows that \( x^{\prime} \in B \) is true.
+    But \( B \subseteq C \) is also true, so \( x^{\prime} \in B \) implies \( x^{\prime} \in C \).
+    Therefore, \( x^{\prime} \in A \) implies \( x^{\prime} \in C \).
+    Since \( x^{\prime} \) is arbitrary,  we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in A \) implies \( x \in C \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \subseteq C \).
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-any-member-of-a-family-of-sets-is-a-subset-of-the-union-of-the-family-of-sets}
     If \( S \) is a family of sets and \( E \in S \), then \( E \subseteq \Union S \)
 \end{thm}
@@ -966,8 +984,94 @@ to derive some basic results of our metatheory.
     that \( A \subseteq A \,{\intersect}\, B \). Since \( A \,{\intersect}\, B \) and \( A \) are subsets of each other, they are necessarily equal.
 \end{proof}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-A-minus-B-is-empty-iff-A-is-a-subset-of-B}
+    For any two sets \( A \) and \( B \), \( A - B = \emptyset \) iff \( A \subseteq B \)
+\end{thm}
+
+\begin{proof}
+    Let \( A \) and \( B \) denote any two sets.
+    Suppose that \( A - B = \emptyset \).
+    Let \( \alpha \) be an arbitrary element of \( A \).
+    Since \( A - B \) is empty, necessarily \( \alpha \notin \mleft( A - B \mright) \).
+    Thus, the following statement must be false:
+    \begin{equation*}
+        \alpha \in A \ \text{and} \ \alpha \notin B
+    \end{equation*}
+    By \cref{meta-rule:de-morgans-laws}, it follows that either \( \alpha \notin A \) or \( \alpha \in B \).
+    Since \( \alpha \in A \) by assumption, necessarily \( \alpha \in B \).
+    In other words, \( \alpha \in A \) implies \( \alpha \in B \).
+    Given that \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( A \subseteq B \).
+    \begin{equation*}
+        \therefore \, A - B = \emptyset \ \text{implies} \ A \subseteq B
+    \end{equation*}
+    Conversely, suppose that \( A \subseteq B \).
+    Let \( \beta \) denote an arbitrary object in the universe.
+    Clearly, either \( \beta \in A \) or \( \beta \notin A \).
+    If \( \beta \in A \), then necessarily \( \beta \in B \) since \( A \subseteq B \).
+    Thus, \( \beta \notin \mleft( A - B \mright) \).
+    On the other hand, if \( \beta \notin A \), then \( \beta \) also cannot belon to \( A - B \).
+    In either case, \( \beta \notin \mleft( A - B \mright) \).
+    Since \( \beta \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that \( x \notin \mleft( A - B \mright) \)
+    for all \( x \). In other words, \( A - B \) is empty.
+    \begin{equation*}
+        \therefore \, A \subseteq B \ \text{implies} \ A - B = \emptyset
+    \end{equation*}
+    Clearly, \( A - B = \emptyset \) and \( A \subseteq B \) imply each other.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-right-distributivity-of-difference-over-intersection}
+    If \( A \), \( B \), and \( C \) are sets, then \( \mleft( A \,{\intersect}\, B \mright) - C = \mleft( A - C \mright) \,{\intersect}\, \mleft( B - C \mright) \).
+\end{thm}
+
+\begin{proof}
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in \mleft( A \,{\intersect}\, B \mright) - C \).
+    By \cref{dfn:metatheory-the-difference-of-two-sets,thm:metatheory-intersection-of-two-sets-using-set-builder-notation},
+    it follows that \( x^{\prime} \in A \), \( x^{\prime} \in B \) and \( x^{\prime} \notin C \) are all true statements.
+    This means that \( x^{\prime} \in \mleft( A - C \mright) \) and \( x^{\prime} \in \mleft( B - C \mright) \) are also both true.
+    Therefore, \( x^{\prime} \in \mleft( A - C \mright) \,{\intersect}\, \mleft( B - C \mright) \).
+    Since \( x^{\prime} \) is arbitrary, it follows that \( \mleft( A \,{\intersect}\, B \mright) - C \subseteq \mleft( A - C \mright) \,{\intersect}\, \mleft( B - C \mright) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x^{\prime} \in \mleft( A - C \mright) \,{\intersect}\, \mleft( B - C \mright) \).
+    Thus, \( x^{\prime} \in A \), \( x^{\prime} \in B \), and \( x^{\prime} \notin C \) are necessarily true statements,
+    which in turn implies \( x^{\prime} \in \mleft( A \,{\intersect}\, B \mright) \) and \( x^{\prime} \notin C \).
+    In other words, \( x^{\prime} \in \mleft( A \,{\intersect}\, B \mright) - C \).
+    Thus, we conclude that \( \mleft( A - C \mright) \,\,{\intersect}\,\, \mleft( B - C \mright) \subseteq \mleft( A \,\,{\intersect}\,\, B \mright) - C \).
+
+    \vspace{0.3cm}
+    \noindent
+    Equality follows readily from \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-difference-and-intersection-swapped-in-mixed-operations}
+    If \( A \), \( B \), and \( C \) are sets, then \( \mleft( A - B \mright) \,\,{\intersect}\,\, C = \mleft( A \,\,{\intersect}\,\, C \mright) - B  \).
+\end{thm}
+
+\begin{proof}
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in \mleft( A - B \mright) \,\,{\intersect}\,\, C \).
+    Thus, \( x^{\prime} \in \mleft( A - B \mright) \) and \( x^{\prime} \in C \) are both true statements.
+    But \( x^{\prime} \in \mleft( A - B \mright) \) implies that \( x^{\prime} \in A \) and \( x^{\prime} \notin B \) are both true,
+    which in turn implies \( x^{\prime} \in \mleft( A \,\,{\intersect}\,\, C \mright) \) and \( x^{\prime} \notin B \).
+    In other words, \( x^{\prime} \in \mleft( A \,\,{\intersect}\,\, C \mright) - B \).
+    Thus, \( \mleft( A - B \mright) \,\,{\intersect}\,\, C \subseteq \mleft( A \,\,{\intersect}\,\, C \mright) - B \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x^{\prime} \in \mleft( A \,\,{\intersect}\,\, C \mright) - B \).
+    This means that \( x^{\prime} \in A \), \( x^{\prime} \in C \) and \( x^{\prime} \notin B \) are all true statements.
+    Clearly, \( x^{\prime} \in \mleft( A - B \mright) \) is also true by \cref{dfn:metatheory-the-difference-of-two-sets}.
+    Thus, \( x^{\prime} \in \mleft( A - B \mright) \,\,{\intersect}\,\, C \).
+\end{proof}
+
 \subsection{Functions}
-We now define the notion of functions and then derive many of their familiar properties within our metatheory.
+We now define the concept of functions within our metatheory and then derive many of their familiar properties.
 
 \begin{dfn}[Ordered Pair]
     \phantomsection \label{dfn:metatheory-ordered-pair-kuratowski}
@@ -1302,54 +1406,167 @@ We now define the notion of functions and then derive many of their familiar pro
     By \cref{dfn:metatheory-subsets-and-proper-subsets}, it follows that \( A \subseteq B \).
 \end{proof}
 
-\begin{dfn}[Function]
-    \phantomsection \label{dfn:metatheory-function}
-    A set \( f \) is a function iff the following statements are true:
-    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item for all \( x \), \( x \in f \) implies \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
-        \item for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{y} \in f \) and \( \orderedpair{x}{z} \in f \) implies \( y = z \)
-    \end{enumerate}
+\begin{dfn}[Domain]
+    \phantomsection \label{dfn:metatheory-domain-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the \keyword{domain} of \( R \) is the set
+    \begin{equation*}
+        \dom R = \setbuilderbig{x}{\text{there exists a \( y \) such that \( \orderedpair{x}{y} \in R \)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{dfn}[Range]
+    \phantomsection \label{dfn:metatheory-range-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the \keyword{range} of \( R \) is the set
+    \begin{equation*}
+        \ran R = \setbuilderbig{y}{\text{there exists an \( x \) such that \( \orderedpair{x}{y} \in R \)}}
+    \end{equation*}
 \end{dfn}
 
 \begin{thm}
-    \phantomsection \label{thm:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}
-    If \( S \) is a set of ordered pairs, then \( S \) and \( \Union S \) are families of sets.
+    \phantomsection \label{thm:metatheory-existence-of-domain-and-range-of-a-set-of-ordered-pairs}
+    The domain and range of a set of ordered pairs exist.
 \end{thm}
 
 \begin{proof}
-    Let \( p \) be an arbitrary object. Suppose that \( p \in S \).
-    Thus, \( p \) must be an ordered pair by assumption; that is, \( p = \orderedpair{a}{b} \)
-    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
-    By \cref{dfn:metatheory-ordered-pair-kuratowski}, \( p \) is the set \(  \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \).
-    Clearly, \( p \) must be a set.
-    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
-    \begin{equation*}
-        \text{for all \( x \), \( x \in S \) implies \( x \) is a set}
-    \end{equation*}
-    In other words, \( S \) is a family of sets.
-    By \cref{meta-axiom:union}, \( \Union S \) exists.
-    We must show that \( \Union S \) is also a family of sets.
-    Let \( q \) be an arbitrary element of \( \Union S \).
-    By \cref{dfn:metatheory-the-union-of-sets}, \( q \in p \) for some \( p \in S \).
-    Since \( S \) is a set of ordered pairs, necessarily \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \) where \( a \) and \( b \)
-    denote objects in the universe.
-    By \cref{dfn:metatheory-ordered-pair-kuratowski}, either \( q = \mleft\{ a \mright\} \) or \( q = \mleft\{ a, b \mright\} \).
-    In either case, \( q \) is a set. Thus,
-    \begin{equation*}
-        \text{for all \( x \), \( x \in \Union S \) implies \( x \) is a set}
-    \end{equation*}
-    In other words, \( \Union S \) is indeed a family of sets.
+    Let \( R \) be an arbitrary set of ordered pairs. Let \( \varphi(x) \) and \( \psi(y) \) denote the following predicates:
+    \begin{align*}
+        \varphi(x) &\coloneq \text{there exists a \( y \) such that \( \orderedpair{x}{y} \in R \)}\\
+        \psi(y)    &\coloneq \text{there exists a \( z \) such that \( \orderedpair{z}{y} \in R \) }
+    \end{align*}
+    Now let \( \alpha \) denote an arbitrary object such that \( \varphi(\alpha) \) is a true statement; that is, there exists some \( \beta \) in the universe
+    such that \( \orderedpair{\alpha}{\beta} \in R \).
+    Since \( R \) is a set of ordered pairs, \( R \) and \( \Union R \) are both families of sets by
+    \cref{thm:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}.
+    Thus, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies and we have
+    \( \alpha \in \Union \mleft( \Union R \mright) \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation}
+        \label{eq:varphi-x-implies-union-union-of-R}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \Union \mleft( \Union R \mright) \)}
+    \end{equation}
+    Similarly, let \( \theta \) denote an arbitrary object such that \( \psi(\theta) \) is a true statement.
+    Thus, there exists some \( \delta \) in the universe such that \( \orderedpair{\delta}{\theta} \in R \).
+    Again, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} guarantees that
+    \( \theta \in \Union \mleft( \Union R \mright) \).
+    By \cref{meta-rule:universal-generalization}, we have
+    \begin{equation}
+        \label{eq:psi-x-implies-union-union-of-R}
+        \text{for all \( x \), \( \psi(x) \) implies \( x \in \Union \mleft( \Union R \mright) \)}
+    \end{equation}
+    We can now apply \cref{thm:metatheory-existence-of-unrestricted-comprehension-set} to \eqref{eq:varphi-x-implies-union-union-of-R} and
+    \eqref{eq:psi-x-implies-union-union-of-R} to infer the existences of
+    \( \setbuilder{x}{\varphi(x)} \) and \( \setbuilder{x}{\psi(x)} \), which are \( \dom R \) and \( \ran R \) respectively.
 \end{proof}
 
-\begin{cor}
-    \phantomsection \label{cor:metatheory-every-function-and-its-union-are-families-of-sets}
-    If \( f \) is a function, then \( f \) and \( \Union f \) are families of sets since \( f \) is a set of ordered pairs.
-\end{cor}
+\begin{dfn}[Image]
+    \phantomsection \label{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs and \( A \) is a set, then the \keyword{image} of \( A \) under \( R \)
+    is the set
+    \begin{equation*}
+        \imageSet{R}{A} \coloneq \setbuilder{y}{\text{there exists an \( x \) such that \( x \in A \) and \( \orderedpair{x}{y} \in R \)}}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    The existence of \( \imageSet{R}{A} \) should be obvious from the fact that for an object to be an element of \( \imageSet{R}{A} \), it must belong to \( \ran R \).
+\end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-a-set-under-a-set-of-ordered-pairs-is-the-subset-of-the-range-of-the-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs and \( A \) is a set, then \( \imageSet{R}{A} \subseteq \ran R \).
+\end{thm}
+
+\begin{proof}
+    Let \( \beta \) be an arbitrary object in the universe.
+    Suppose that \( \beta \in \imageSet{R}{A} \).
+    Thus, there must exists an \( \alpha \in A \) such that \( \orderedpair{\alpha}{\beta} \in R \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, necessarily \( \beta \in \ran R \).
+    In other words, \( \beta \in \imageSet{R}{A} \) implies \( \beta \in \ran R \).
+    Since \( \beta \) is arbitrary, we have \( \imageSet{R}{A} \subseteq \ran R \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-a-set-under-a-set-of-ordered-pairs-is-the-image-of-the-intersection-between-the-domain-and-the-set-itself}
+    If \( R \) is a set of ordered pairs and \( A \) is a set, then \( \imageSet{R}{A} = \imageSet{R}{\dom R \,{\intersect}\, A} \).
+\end{thm}
+
+\begin{proof}
+    Let \( y^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( y^{\prime} \in \imageSet{R}{A} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that there exists
+    an object \( x^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in R \) and \( x^{\prime} \in A \).
+    But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in R  \), then necessariy \( x^{\prime} \in \dom R \) by
+    \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}.
+    In other words, \( x^{\prime} \in \mleft( \dom R \,{\intersect}\, A \mright) \) and thus \( y^{\prime} \in \imageSet{R}{\dom R \,{\intersect}\, A} \).
+    Since \( y^{\prime} \) is arbitrary, we conclude that \( \imageSet{R}{A} \subseteq \imageSet{R}{\dom R \,{\intersect}\, A} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( y^{\prime} \in \imageSet{R}{\dom R \,{\intersect}\, A} \).
+    Thus, \( \orderedpair{x^{\prime}}{y^{\prime}} \in R \) for some \( x^{\prime} \in \mleft( \dom R \,{\intersect}\, A \mright) \).
+    Clearly, \( x^{\prime} \in A \).
+    Therefore, \( y^{\prime} \in \imageSet{R}{A} \) by \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
+    In other words, \( \imageSet{R}{\dom R \,{\intersect}\, A} \subseteq \imageSet{R}{A} \).
+    Since \( \imageSet{R}{A} \) and \( \imageSet{R}{\dom R \,{\intersect}\, A} \) are subsets of each other,
+    equality follows from \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-the-domain-of-a-set-of-ordered-pairs-under-itself-equals-its-range}
+    If \( R \) is a set of ordered pairs, then \( \imageSet{R}{\dom R} = \ran R \)
+\end{thm}
+
+\begin{proof}
+    Let \( \beta \) be an arbitrary object in the universe.
+    Suppose that \( \beta \in \imageSet{R}{\dom R} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, there exists
+    an \( \alpha \in \dom R \) such that \( \orderedpair{\alpha}{\beta} \in R \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, necessarily \( \beta \in \ran R \).
+    Conversely, suppose that \( \beta \in \ran R \).
+    Then by \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, there exists a \( \gamma \) such that
+    \( \orderedpair{\gamma}{\beta} \in \ran R \).
+    But by \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, \( \gamma \in \dom R \).
+    This means that there exists a \( \gamma \in \dom R \) such that \( \orderedpair{\gamma}{\beta} \in R \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, \( \beta \in \imageSet{R}{\dom R} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have shown that \( \beta \in \imageSet{R}{\dom R} \) and \( \beta \in \ran R \) imply each other for any arbitrary \( \beta \).
+    By \cref{meta-axiom:extensionality}, it follows that \( \imageSet{R}{\dom R} = \ran R \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-union-is-union-of-images}
+    If \( R \) is a set of ordered pairs and \( A \) and \( B \) are sets, then \( \imageSet{R}{A \,{\union}\, B} = \imageSet{R}{A} \,{\union}\, \imageSet{R}{B} \).
+\end{thm}
+
+\begin{proof}
+    Let \( y^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( y^{\prime} \in \imageSet{R}{A \,{\union}\, B} \).
+    Thus, there exists an object \( x^{\prime} \) such that \( x^{\prime} \in \mleft( A \,{\union}\, B \mright) \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in R \).
+    Since \( x^{\prime} \in \mleft( A \,{\union}\, B \mright) \), there are two possibilities to consider: \( x^{\prime} \in A \) or \( x^{\prime} \in B \).
+    If \( x^{\prime} \in A \), then \( y^{\prime} \in \imageSet{R}{A} \) follows from \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
+    If \( x^{\prime} \in B \), then \( y^{\prime} \in \imageSet{R}{B} \) by the same reason.
+    Thus, \( \imageSet{R}{A \,{\union}\, B} \subseteq \imageSet{R}{A} \,{\union}\, \imageSet{R}{B} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( z^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( z^{\prime} \in \imageSet{R}{A} \,{\union}\, \imageSet{R}{B} \).
+    Thus, either \( z^{\prime} \in \imageSet{R}{A} \) or \( z^{\prime} \in \imageSet{R}{B} \) is true.
+    If \( z^{\prime} \in \imageSet{R}{A} \), then there exists a \( w^{\prime} \in A \) such that \( \orderedpair{w^{\prime}}{z^{\prime}} \in R \).
+    But if \( w^{\prime} \in A \) is true, then necessarily \( w^{\prime} \in A \,{\union}\, B \).
+    This means that there exists an object \( w^{\prime} \) such that \( w^{\prime} \in A \,{\union}\, B \) and \( \orderedpair{w^{\prime}}{z^{\prime}} \in R \) are both
+    true.
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that \( z^{\prime} \in \imageSet{R}{A \,{\union}\, B} \).
+    If \( z^{\prime} \in \imageSet{R}{B} \), we can show that \( z^{\prime} \in \imageSet{R}{A \,{\union}\, B} \) using an identical line of reasoning.
+    Thus, \( \imageSet{R}{A} \,{\union}\, \imageSet{R}{B} \subseteq \imageSet{R}{A \,{\union}\, B} \).
+\end{proof}
 
 \begin{dfn}[Composition]
     \phantomsection \label{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}
     If \( R \) and \( S \) are sets of ordered pairs, then the \keyword{composition} of \( R \) and \( S \)
-    is the set given by
+    is the set
     \begin{equation*}
         \composition{S}{R} \coloneq \setbuilderbig{\orderedpair{x}{y}}{\text{there exists a \( z \) such that \( \orderedpair{x}{z} \in R \) and \( \orderedpair{z}{y} \in S \) }}
     \end{equation*}
@@ -1384,6 +1601,200 @@ We now define the notion of functions and then derive many of their familiar pro
     Therefore, the set \( \composition{S}{R} = \setbuilder{x}{\varphi(x)} \) exists by \cref{thm:metatheory-existence-of-unrestricted-comprehension-set}.
 \end{proof}
 
+\begin{dfn}[Inverse]
+    \phantomsection \label{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}
+    If \( R \) is a set of ordered pairs, then the \keyword{inverse} of \( R \) is the set
+    \begin{equation*}
+        R^{-1} = \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R}
+    \end{equation*}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-existence-of-inverse-of-a-set-of-ordered-pairs}
+    For any set of ordered pairs \( R \), \( R^{-1} \) exists.
+\end{thm}
+
+\begin{proof}
+    Since \( R \) is a set of ordered pairs,
+    \cref{thm:metatheory-existence-of-domain-and-range-of-a-set-of-ordered-pairs} guarantees the existence of \( \dom R \) and \( \ran R \).
+    Furthermore, \cref{thm:metatheory-existence-of-cartesian-products} guarantees the existence of sets \( \dom R \times \ran R \) and \( \ran R \times \dom R \).
+    Now let \( \varphi(x) \) be the predicate defined as follows:
+    \begin{equation*}
+        \varphi(x) \coloneq \text{there exists an \( a \) and a \( b \) such that \( x = \orderedpair{b}{a} \) and \( \orderedpair{a}{b} \in R \)}
+    \end{equation*}
+    Let \( p \) be an arbitrary object.
+    Suppose that \( \varphi(p) \) is a true statement;
+    that is, there exists an \( \alpha \) and a \( \beta \) such that \( p = \orderedpair{\beta}{\alpha} \) and \( \orderedpair{\alpha}{\beta} \in R \).
+    Since \( \orderedpair{\alpha}{\beta} \in R \), it follows from \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs,dfn:metatheory-range-of-a-set-of-ordered-pairs} that
+    \( \alpha \in \dom R \) and \( \beta \in \ran R \).
+    Clearly, \( \orderedpair{\beta}{\alpha} \in \ran R \times \dom R \) by \cref{dfn:metatheory-cartesian-product}.
+    Thus, \( p \in \ran R \times \dom R \).
+    Since \( p \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
+    \begin{equation*}
+        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \ran R \times \dom R \)}
+    \end{equation*}
+    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set},
+    the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{\orderedpair{y}{x}}{\orderedpair{x}{y} \in R} = R^{-1} \) exists.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-a-set-of-ordered-pairs-and-its-union-are-families-of-sets}
+    If \( S \) is a set of ordered pairs, then \( S \) and \( \Union S \) are families of sets.
+\end{thm}
+
+\begin{proof}
+    Let \( p \) be an arbitrary object. Suppose that \( p \in S \).
+    Thus, \( p \) must be an ordered pair by assumption; that is, \( p = \orderedpair{a}{b} \)
+    for some \( a \) and \( b \) where \( a \) and \( b \) denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, \( p \) is the set \(  \mleft\{ \mleft\{ a \mright\}, \mleft\{ a, b \mright\} \mright\} \).
+    Clearly, \( p \) must be a set.
+    Since \( p \) is arbitrary, we conclude from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in S \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( S \) is a family of sets.
+    By \cref{meta-axiom:union}, \( \Union S \) exists.
+    We must show that \( \Union S \) is also a family of sets.
+    Let \( q \) be an arbitrary element of \( \Union S \).
+    By \cref{dfn:metatheory-the-union-of-sets}, \( q \in p \) for some \( p \in S \).
+    Since \( S \) is a set of ordered pairs, necessarily \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \) where \( a \) and \( b \)
+    denote objects in the universe.
+    By \cref{dfn:metatheory-ordered-pair-kuratowski}, either \( q = \mleft\{ a \mright\} \) or \( q = \mleft\{ a, b \mright\} \).
+    In either case, \( q \) is a set. Thus,
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \Union S \) implies \( x \) is a set}
+    \end{equation*}
+    In other words, \( \Union S \) is indeed a family of sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-domain-and-range-of-the-composition-of-two-sets-of-ordered-pairs-is-subset-of-the-domain-and-range-of-one-of-its-components}
+    If \( R \) and \( S \) are sets of ordered pairs, then:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \dom \mleft( \composition{R}{S} \mright) \subseteq \dom S \)
+        \item \( \ran \mleft( \composition{R}{S} \mright) \subseteq \ran R \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( x^{\prime} \) be an arbitrary element of \( \dom \mleft( \composition{R}{S} \mright) \).
+    Thus, there exists an object \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \composition{R}{S} \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, it follows that
+    \( \orderedpair{x^{\prime}}{z^{\prime}} \in S \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in R \) for some object \( z^{\prime} \).
+    Clearly, \( x^{\prime} \in \dom S \).
+    Since \( x^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that \( \dom \mleft( \composition{R}{S} \mright) \subseteq \dom S \).
+
+    \vspace{0.3cm}
+    \noindent
+    Similarly, let \( y^{\prime} \) denote an arbitrary element of \( \ran \mleft( \composition{R}{S} \mright) \).
+    As such, there exists an object \( x^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \composition{R}{S} \), which
+    in turn implies the existence of an object \( z^{\prime} \) such that \( \orderedpair{x^{\prime}}{z^{\prime}} \in S \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in R \).
+    The latter implies that \( y^{\prime} \in \ran R \).
+    Once again, we conclude by \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \( \ran \mleft( \composition{R}{S} \mright) \subseteq \ran R \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs}
+    If \( R \) and \( S \) are sets of ordered pairs, then \( \dom \mleft( \composition{R}{S} \mright) = \imageSet{S^{-1}}{\dom R} \).
+\end{thm}
+
+\begin{proof}
+    Let \( x \) be an arbitrary element of \( \dom \mleft( \composition{R}{S} \mright) \).
+    Thus, there exists an object \( y \) such that \( \orderedpair{x}{y} \in \composition{R}{S} \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, it follows that
+    an object \( z \) exists such that \( \orderedpair{x}{z} \in S \) and \( \orderedpair{z}{y} \in R \).
+    But \( \orderedpair{x}{z} \in S \) implies \( \orderedpair{z}{x} \in S^{-1} \) by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}.
+    Furthermore, \( \orderedpair{z}{y} \in R \) implies \( z \in \dom R \).
+    In other words, if \( x \in \dom \mleft( \composition{R}{S} \mright) \), there exists an object \( z \)
+    such that
+    \begin{equation*}
+        z \in \dom R \ \text{and} \ \orderedpair{z}{x} \in S^{-1}
+    \end{equation*}
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that \( x \in \imageSet{S^{-1}}{\dom R} \).
+    Since \( z \) is arbitrary, we conclude that \( \dom \mleft( \composition{R}{S} \mright) \subseteq \imageSet{S^{-1}}{\dom R} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x \) is an arbitrary element of \( \imageSet{S^{-1}}{\dom R} \).
+    Thus, \( \orderedpair{y}{x} \in S^{-1} \) for some \( y \in \dom R \).
+    Equivalently, \( \orderedpair{x}{y} \in S \) for some \( y \in \dom R \).
+    But if \( y \in \dom R \), then there must exist an object \( z \) such that \( \orderedpair{y}{z} \in R \).
+    Therefore, \( \orderedpair{x}{z} \in \composition{R}{S} \) by \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs},
+    which in turn implies \( x \in \dom \mleft( \composition{R}{S} \mright) \).
+    Since \( x \) is arbitrary, we conclude that \( \imageSet{S^{-1}}{\dom R} \subseteq \dom \mleft( \composition{R}{S} \mright) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \dom \mleft( \composition{R}{S} \mright) \) and \( \imageSet{S^{-1}}{\dom R} \) are subsets of each other, they must be equal sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-associativity-of-composition}
+    If \( R \), \( S \), and \( T \) are sets of ordered pairs,
+    then \( \composition{R}{\mleft( \composition{S}{T} \mright)} = \composition{\mleft( \composition{R}{S} \mright)}{T} \).
+\end{thm}
+
+\begin{proof}
+    Let \( p \) denote an arbitrary object in the universe.
+    Suppose that \( p \in \composition{R}{\mleft( \composition{S}{T} \mright)} \).
+    Since \(  \composition{R}{\mleft( \composition{S}{T} \mright)} \) is a set of ordered pairs,
+    \( p \) must be an ordered pair; that is \( p = \orderedpair{x}{y} \) for objects \( x \) and \( y \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, it follows that there exists some object
+    \( z \) such that
+    \begin{equation*}
+        \orderedpair{x}{z} \in \composition{S}{T} \ \text{and} \ \orderedpair{z}{y} \in R
+    \end{equation*}
+    But if \( \orderedpair{x}{z} \in \composition{S}{T} \), then there must exist an object \( w \) such that
+    \begin{equation*}
+        \orderedpair{x}{w} \in T \ \text{and} \ \orderedpair{w}{z} \in S
+    \end{equation*}
+    Note that \( \orderedpair{w}{z} \in S \) and \( \orderedpair{z}{y} \in R \) are both true, which implies
+    \( \orderedpair{w}{y} \in \composition{R}{S} \).
+    Since \( \orderedpair{x}{w} \in T \), we conclude that
+    \( \orderedpair{x}{y} \in \composition{\mleft( \composition{R}{S} \mright)}{T} \).
+    In other words, \( p \in  \composition{R}{\mleft( \composition{S}{T} \mright)} \) implies
+    \( p \in \composition{\mleft( \composition{R}{S} \mright)}{T} \).
+    Since \( p \) is arbitrary, we conclude that \( \composition{R}{\mleft( \composition{S}{T} \mright)} \subseteq  \composition{\mleft( \composition{R}{S} \mright)}{T} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We can prove the converse relation using a similar argument.
+    Let \( q \) denote an arbitrary element of \( \composition{\mleft( \composition{R}{S} \mright)}{T} \).
+    Since \( \composition{\mleft( \composition{R}{S} \mright)}{T} \) is a set of ordered pair, it follows that
+    \( q \) must be an ordered pair; that is, \( q = \orderedpair{x}{y} \) for some \( x \) and \( y \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, it follows that
+    \begin{equation*}
+        \orderedpair{x}{z} \in T \ \text{and} \ \orderedpair{z}{y} \in \composition{R}{S}
+    \end{equation*}
+    for some object \( z \).
+    Since \( \orderedpair{z}{y} \in \composition{R}{S} \), it follows that
+    \( \orderedpair{z}{w} \in S \) and \( \orderedpair{w}{y} \in R \) for some object \( w \).
+    Clearly, \( \orderedpair{x}{w} \in \composition{S}{T} \) and thus \( \orderedpair{x}{y} \in \composition{R}{\mleft( \composition{S}{T} \mright)} \).
+    In other words, \( q \in \composition{\mleft( \composition{R}{S} \mright)}{T} \) implies
+    \( q \in \orderedpair{x}{y} \in \composition{R}{\mleft( \composition{S}{T} \mright)} \) for any arbitrary \( q \).
+    Thus, \( \composition{\mleft( \composition{R}{S} \mright)}{T} \subseteq \composition{R}{\mleft( \composition{S}{T} \mright)} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \composition{R}{\mleft( \composition{S}{T} \mright)} \) and \( \composition{\mleft( \composition{R}{S} \mright)}{T} \) are subsets of each other,
+    equality follows from \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{dfn}[Function]
+    \phantomsection \label{dfn:metatheory-function}
+    A set \( f \) is a function iff the following statements are true:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item for all \( x \), \( x \in f \) implies \( x = \orderedpair{a}{b} \) for some \( a \) and \( b \)
+        \item for all \( x \), \( y \), and \( z \), \( \orderedpair{x}{y} \in f \) and \( \orderedpair{x}{z} \in f \) implies \( y = z \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{rem}
+    Functions are a special class of sets of ordered pairs.
+    Therefore, all the properties of sets of ordered pairs apply to functions as well.
+\end{rem}
+
 \begin{thm}
     \phantomsection \label{thm:metatheory-the-composition-of-functions-is-a-function}
     If \( f \) and \( g \) are functions, then \( \composition{g}{f} \) is also a function.
@@ -1412,57 +1823,6 @@ We now define the notion of functions and then derive many of their familiar pro
     Thus, \( \composition{g}{f} \) must be a function.
 \end{proof}
 
-\begin{dfn}[Domain]
-    \phantomsection \label{dfn:metatheory-domain-of-a-function}
-    If \( f \) is a function, then the \keyword{domain} of \( f \) is the set given by
-    \begin{equation*}
-        \dom f = \setbuilderbig{x}{\text{there exists a \( y \) such that \( \orderedpair{x}{y} \in f \)}}
-    \end{equation*}
-\end{dfn}
-
-\begin{dfn}[Range]
-    \phantomsection \label{dfn:metatheory-range-of-a-function}
-    If \( f \) is a function, then the \keyword{range} of \( f \) is the set given by
-    \begin{equation*}
-        \ran f = \setbuilderbig{y}{\text{there exists an \( x \) such that \( \orderedpair{x}{y} \in f \)}}
-    \end{equation*}
-\end{dfn}
-
-\begin{thm}
-    \phantomsection \label{thm:metatheory-existence-of-domain-and-range-of-function}
-    The domain and range of a function exist.
-\end{thm}
-
-\begin{proof}
-    Let \( f \) be an arbitrary function. Let \( \varphi(x) \) and \( \psi(y) \) denote the following predicates:
-    \begin{align*}
-        \varphi(x) &\coloneq \text{there exists a \( y \) such that \( \orderedpair{x}{y} \in f \)}\\
-        \psi(y)    &\coloneq \text{there exists a \( z \) such that \( \orderedpair{z}{y} \in f \) }
-    \end{align*}
-    Now let \( \alpha \) denote an arbitrary object such that \( \varphi(\alpha) \) is a true statement; that is, there exists some \( \beta \) in the universe
-    such that \( \orderedpair{\alpha}{\beta} \in f \).
-    Since \( f \) is a function, \( f \) and \( \Union f \) are both families of sets by \cref{cor:metatheory-every-function-and-its-union-are-families-of-sets}.
-    Thus, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} applies and we have
-    \( \alpha \in \Union \mleft( \Union f \mright) \).
-    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
-    \begin{equation}
-        \label{eq:varphi-x-implies-union-union-of-f}
-        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \Union \mleft( \Union f \mright) \)}
-    \end{equation}
-    Similarly, let \( \theta \) denote an arbitrary object such that \( \psi(\theta) \) is a true statement.
-    Thus, there exists some \( \delta \) in the universe such that \( \orderedpair{\delta}{\theta} \in f \).
-    Again, \cref{thm:metatheory-components-of-ordered-pair-must-belong-to-union-of-union-of-a-family-of-set} guarantees that
-    \( \theta \in \Union \mleft( \Union f \mright) \).
-    By \cref{meta-rule:universal-generalization}, we have
-    \begin{equation}
-        \label{eq:psi-x-implies-union-union-of-f}
-        \text{for all \( x \), \( \psi(x) \) implies \( x \in \Union \mleft( \Union f \mright) \)}
-    \end{equation}
-    We can now apply \cref{thm:metatheory-existence-of-unrestricted-comprehension-set} to \eqref{eq:varphi-x-implies-union-union-of-f} and
-    \eqref{eq:psi-x-implies-union-union-of-f} to infer the existences of
-    \( \setbuilder{x}{\varphi(x)} \) and \( \setbuilder{x}{\psi(x)} \), which are \( \dom f \) and \( \ran f \) respectively.
-\end{proof}
-
 \begin{thm}
     \phantomsection \label{thm:metatheory-function-with-empty-range-must-have-empty-domain}
     If \( f \) is a function and \( \ran f = \emptyset \), then \( \dom f = \emptyset \).
@@ -1471,7 +1831,7 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{proof}
     Let \( \alpha \) be an arbitrary object.
     Suppose that \( \alpha \in \dom f \).
-    Then by \cref{dfn:metatheory-domain-of-a-function}, \( \orderedpair{\alpha}{\beta} \in f \) for some \( \beta \) in the universe.
+    Then by \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, \( \orderedpair{\alpha}{\beta} \in f \) for some \( \beta \) in the universe.
     But this would mean that \( \beta \in \ran f \), contradicting the fact that \( \ran f = \emptyset \).
     Therefore, the supposition that \( \alpha \in \dom f \) must be false.
     In other words, \( \alpha \notin \dom f \).
@@ -1485,6 +1845,52 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{rem}
     In fact, if \( \dom f = \emptyset \) or \( \ran f = \emptyset \), then \( f \) itself is necessarily the empty set.
 \end{rem}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-domain-of-g-compose-f-equals-domain-of-f-if-and-only-if-range-of-f-is-subset-of-domain-of-g}
+    If \( f \) and \( g \) are functions, then \( \dom \mleft( \composition{g}{f} \mright) = \dom f \) iff \( \ran f \subseteq \dom g \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) and \( g \) be arbitrary functions.
+    We must demonstrate that \( \dom \mleft( \composition{g}{f} \mright) = \dom f \) and \( \ran f \subseteq \dom g \) imply each other.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( \dom \mleft( \composition{g}{f} \mright) = \dom f \).
+    Let \( y^{\prime} \) be an arbitrary element of \( \ran f \).
+    Thus, \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) for some object \( x^{\prime} \).
+    Clearly, \( x^{\prime} \in \dom f \).
+    Since \( \dom \mleft( \composition{g}{f} \mright) \) and \( \dom f \) are equal, it follows that
+    \( x^{\prime} \) is also an element of \( \dom \mleft( \composition{g}{f} \mright) \).
+    This implies the existence of an object \( z^{\prime} \) such that \( \orderedpair{x^{\prime}}{z^{\prime}} \in \composition{g}{f} \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, necessarily 
+    \( \orderedpair{x^{\prime}}{w^{\prime}} \in f \) and \( \orderedpair{w^{\prime}}{z^{\prime}} \in g \) for some object \( w^{\prime} \).
+    Notice that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and \( \orderedpair{x^{\prime}}{w^{\prime}} \in f \) are both true.
+    Since \( f \) is a function, \( y^{\prime} \) and \( w^{\prime} \) must be equal by \cref{dfn:metatheory-function}.
+    Given that \( \orderedpair{w^{\prime}}{z^{\prime}} \in g \), necessarily \( y^{\prime} \in \dom g \).
+    Since \( y^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that \( \ran f \subseteq \dom g \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( \ran f \subseteq \dom g \).
+    We must show that \( \dom \mleft( \composition{g}{f} \mright) = \dom f \) as a result.
+    Let \( x^{\prime} \) be an arbitrary element of \( \dom \mleft( \composition{g}{f} \mright) \).
+    Thus, there exists an object \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \composition{g}{f} \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, there exists an object \( z^{\prime} \)
+    such that \( \orderedpair{x^{\prime}}{z^{\prime}} \in f \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in g \).
+    Clearly, \( x^{\prime} \in \dom f \).
+    Since \( x^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that \( \dom \mleft( \composition{g}{f} \mright) \subseteq \dom f \).
+    Let \( x^{\prime\prime} \) be an arbitrary element of \( \dom f \); i.e., \( \orderedpair{x^{\prime\prime}}{y^{\prime\prime}} \in f \) for some object
+    \( y^{\prime\prime} \).
+    Since \( y^{\prime\prime} \in \ran f \) and \( \ran f \subseteq \dom g \), necessarily \( y^{\prime\prime} \in \dom g \), which means that
+    there exists some object \( z^{\prime\prime} \) such that \( \orderedpair{y^{\prime\prime}}{z^{\prime\prime}} \in g \).
+    But if \( \orderedpair{x^{\prime\prime}}{y^{\prime\prime}} \in f \) and \( \orderedpair{y^{\prime\prime}}{z^{\prime\prime}} \in g \) are both true,
+    then necessarily \( \orderedpair{x^{\prime\prime}}{z^{\prime\prime}} \in \composition{g}{f} \) by \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}.
+    This then implies that \( x^{\prime\prime} \in \dom \mleft( \composition{g}{f} \mright) \).
+    Since \( x^{\prime\prime} \) is arbitrary, we conclude that \( \dom f \subseteq \dom \mleft( \composition{g}{f} \mright) \).
+    Given that \( \dom f \) and \( \dom \mleft( \composition{g}{f} \mright) \) are subsets of each other, they must be equal sets.
+\end{proof}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-function-equality}
@@ -1504,9 +1910,9 @@ We now define the notion of functions and then derive many of their familiar pro
     Let \( p \) be an arbitrary object such that \( p \in f \).
     Since \( f \) is a function, \( p \) must be an ordered pair.
     Let \( p = \orderedpair{a}{b} \) where \( a \) and \( b \) are objects in the universe.
-    By \cref{dfn:metatheory-domain-of-a-function}, \( a \in \dom f \).
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, \( a \in \dom f \).
     Since \( \dom f \) and \( \dom g \) are equal, this means that \( a \in \dom g \) is also true.
-    Once again, we infer from \cref{dfn:metatheory-domain-of-a-function} that there exists some \( b^{\prime} \)
+    Once again, we infer from \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs} that there exists some \( b^{\prime} \)
     such that \( \orderedpair{a}{b^{\prime}} \in g \); i.e., \( g(a) = b^{\prime} \).
     But \( f(a) = b = g(a) = b^{\prime} \), which means that \( b = b^{\prime} \).
     By \cref{thm:metatheory-equality-of-ordered-pairs}, it follows that \( p = \orderedpair{a}{b} = \orderedpair{a}{b^{\prime}} \).
@@ -1534,7 +1940,7 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{notation}
 
 \begin{dfn}
-    \phantomsection \label{dfn:metateory-value-of-a-function}
+    \phantomsection \label{dfn:metatheory-value-of-a-function}
     Let \( f \) be a function and \( x \) be an object in the universe such that \( x \in \dom f \).
     Then an object \( y \) is the \keyword{value} of \( f \) at \( x \) iff \( \orderedpair{x}{y} \in f \).
 \end{dfn}
@@ -1550,23 +1956,6 @@ We now define the notion of functions and then derive many of their familiar pro
     \( f(x) = g(x) \).
 \end{dfn}
 
-\begin{dfn}[Image]
-    \phantomsection \label{dfn:metatheory-image-of-a-set-under-a-function}
-    If \( f \) is a function and \( A \) is a set, then the \keyword{image} of \( A \) under \( f \) is the set given by
-    \begin{equation*}
-        \imageSet{f}{A} \coloneq \setbuilderbig{f(x)}{x \in A}
-    \end{equation*}
-\end{dfn}
-
-\begin{rem}
-    Note that the \aref{dfn:metatheory-expressional-set-builder-notation}{expressional set-builder notation}
-    was used in \cref{dfn:metatheory-image-of-a-set-under-a-function}.
-    It is also possible to denote \( \imageSet{f}{A} \) using the standard set-builder notation if desired.
-    \begin{equation*}
-        \imageSet{f}{A} \coloneq \setbuilderbig{y}{\text{there exists an \( x \) such that \( x \in A \) and \( \orderedpair{x}{y} \in f \) }}
-    \end{equation*}
-\end{rem}
-
 \begin{thm}
     \phantomsection \label{thm:metatheory-function-is-subset-of-cartesian-product}
     If \( \function{f}{A}{B} \), then \( f \subseteq A \times B \)
@@ -1576,9 +1965,9 @@ We now define the notion of functions and then derive many of their familiar pro
     Let \( p \) denote an arbitrary object in the universe.
     Suppose that \( p \in f \).
     By \cref{dfn:metatheory-function}, it follows that \( p = \orderedpair{a}{b} \) where \( a \) and \( b \) are objects in the universe.
-    By \cref{dfn:metatheory-domain-of-a-function}, it follows that \( a \in \dom f \) and thus \( a \in A \) because \( \dom f = A \)
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, it follows that \( a \in \dom f \) and thus \( a \in A \) because \( \dom f = A \)
     by \cref{dfn:metatheory-functions-in-terms-of-two-sets}.
-    Additionally, we have \( b \in \ran f \) by \cref{dfn:metatheory-range-of-a-function}.
+    Additionally, we have \( b \in \ran f \) by \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}.
     Since \( \ran f \subseteq B \) by \cref{dfn:metatheory-functions-in-terms-of-two-sets}, it follows that \( b \in B \).
     In other words, \( p \in A \times B \).
     Since \( p \) is arbitrary, \cref{meta-rule:universal-generalization} permits us to conclude that
@@ -1586,44 +1975,6 @@ We now define the notion of functions and then derive many of their familiar pro
         \text{for all \( x \), \( x \in f \) implies \( x \in A \times B \)}
     \end{equation*}
     By \cref{dfn:metatheory-subsets-and-proper-subsets}, we conclude \( f \subseteq A \times B \).
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:metatheory-image-of-a-set-under-a-function-subset-of-the-range-of-the-function}
-    If \( f \) is a function and \( A \) is a set, then \( \imageSet{f}{A} \subseteq \ran f \).
-\end{thm}
-
-\begin{proof}
-    Let \( \beta \) be an arbitrary object in the universe.
-    Suppose that \( \beta \in \imageSet{f}{A} \).
-    Thus, there must exists an \( \alpha \in A \) such that \( \orderedpair{\alpha}{\beta} \in f \).
-    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( \beta \in \ran f \).
-    In other words, \( \beta \in \imageSet{f}{A} \) implies \( \beta \in \ran f \).
-    Since \( \beta \) is arbitrary, we have \( \imageSet{f}{A} \subseteq \ran f \) by \cref{dfn:metatheory-subsets-and-proper-subsets}.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:metatheory-image-of-the-domain-of-a-function-under-the-function-equals-the-range-of-the-function}
-    If \( f \) is a function, then \( \imageSet{f}{\dom f} = \ran f \)
-\end{thm}
-
-\begin{proof}
-    Let \( \beta \) be an arbitrary object in the universe.
-    Suppose that \( \beta \in \imageSet{f}{\dom f} \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there exists
-    an \( \alpha \in \dom f \) such that \( \orderedpair{\alpha}{\beta} \in f \).
-    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( \beta \in \ran f \).
-    Conversely, suppose that \( \beta \in \ran f \).
-    Then by \cref{dfn:metatheory-range-of-a-function}, there exists a \( \gamma \) such that
-    \( \orderedpair{\gamma}{\beta} \in \ran f \).
-    But by \cref{dfn:metatheory-domain-of-a-function}, \( \gamma \in \dom f \).
-    This means that there exists a \( \gamma \in \dom f \) such that \( \orderedpair{\gamma}{\beta} \in f \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, \( \beta \in \imageSet{f}{\dom f} \).
-
-    \vspace{0.3cm}
-    \noindent
-    We have shown that \( \beta \in \imageSet{f}{\dom f} \) and \( \beta \in \ran f \) imply each other for any arbitrary \( \beta \).
-    By \cref{meta-axiom:extensionality}, it follows that \( \imageSet{f}{\dom f} = \ran f \).
 \end{proof}
 
 \begin{dfn}[Injection]
@@ -1731,6 +2082,11 @@ We now define the notion of functions and then derive many of their familiar pro
     By \cref{dfn:metatheory-compatibility-of-functions}, necessarily \( F \) is compatible.
 \end{proof}
 
+\begin{cor}
+    \phantomsection \label{cor:metatheory-two-functions-are-compatible-iff-their-union-is-a-function}
+    Two functions \( f \) and \( g \) are compatible iff \( f \,{\union}\, g \) is a function. 
+\end{cor}
+
 \begin{thm}
     \phantomsection \label{thm:metatheory-the-domain-of-a-compatible-family-of-functions-is-the-union-of-the-domains-of-each-function-in-the-family}
     If \( F \) is a compatible family of functions, then
@@ -1746,7 +2102,7 @@ We now define the notion of functions and then derive many of their familiar pro
     Thus, \( \orderedpair{x^{\prime}}{y^{\prime}} \in \Union F \) for some \( y^{\prime} \).
     By \cref{dfn:metatheory-union-of-indexed-family-of-sets}, it follows that there exists some function
     \( f^{\prime} \in \ran F \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f^{\prime} \).
-    Since \( f^{\prime} \) is a function, it follows from \cref{dfn:metatheory-domain-of-a-function} that
+    Since \( f^{\prime} \) is a function, it follows from \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs} that
     \( x^{\prime} \in \dom f^{\prime} \).
     This means that if \( x^{\prime} \in \dom \mleft( \Union F \mright) \), then there exists an \( f^{\prime} \in F \) such that \( x^{\prime} \in \dom f^{\prime} \).
     In other words, \( \dom \mleft( \Union F \mright) \subseteq \Union \setbuilder{\dom f}{f \in F} \).
@@ -1757,7 +2113,7 @@ We now define the notion of functions and then derive many of their familiar pro
     It follows from \cref{dfn:metatheory-the-union-of-sets} that \( x^{\prime} \in Z \) for some \( Z \in \setbuilder{\dom f}{f \in F} \).
     Clearly, \( Z = \dom f^{\prime} \) for some \( f^{\prime} \in F \).
     Since \( x^{\prime} \in Z \) and \( Z = \dom f^{\prime} \), it follows that \( x^{\prime} \in \dom f^{\prime} \).
-    Given that \( f^{\prime} \) is a function, it follows from \cref{dfn:metatheory-domain-of-a-function} that a
+    Given that \( f^{\prime} \) is a function, it follows from \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs} that a
     unique \( y^{\prime} \) exists such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f^{\prime} \).
     Since \( F \) is a family of functions and \( f^{\prime} \in \ran F \), this means that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \Union F \).
     Therefore, \( x^{\prime} \in \dom \mleft( \Union F \mright) \).
@@ -1833,7 +2189,7 @@ We now define the notion of functions and then derive many of their familiar pro
 \begin{proof}
     Let \( x^{\prime} \) be an arbitrary object in the universe.
     Suppose that \( x^{\prime} \in \dom \restrictedfunctionsmall{f}{A} \).
-    By \cref{dfn:metatheory-domain-of-a-function}, it follows that there exists some \( y^{\prime} \)
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, it follows that there exists some \( y^{\prime} \)
     such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \).
     But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \),
     then necessarily \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \), the latter of which
@@ -1850,7 +2206,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \noindent
     Conversely, suppose that \( x^{\prime} \in A \,{\intersect}\, \dom f \); that is, \( x^{\prime} \in A \) and \( x^{\prime} \in \dom f \)
     are both true.
-    By \cref{dfn:metatheory-domain-of-a-function}, there must exist some \( y^{\prime} \in \ran f \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there must exist some \( y^{\prime} \in \ran f \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
     In other words, there exist objects \( x^{\prime} \) and \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and
     \( x^{\prime} \in A \).
     Thus, \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \) and \( x^{\prime} \in \dom \restrictedfunctionsmall{f}{A} \).
@@ -1871,10 +2227,10 @@ We now define the notion of functions and then derive many of their familiar pro
     Let \( f \) be an arbitrary function and \( A \) an arbitrary set in the universe.
     Let \( y^{\prime} \) be an arbitrary object in the universe.
     Suppose that \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{A} \).
-    By \cref{dfn:metatheory-range-of-a-function}, there exists an object \( x^{\prime}\) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, there exists an object \( x^{\prime}\) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \).
     But if \( \orderedpair{x^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{f}{A} \), then necessarily
     \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) by \cref{dfn:metatheory-restricted-function}.
-    It should be obvious from \cref{dfn:metatheory-image-of-a-set-under-a-function} that \( y^{\prime} \in \imageSet{f}{A} \).
+    It should be obvious from \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs} that \( y^{\prime} \in \imageSet{f}{A} \).
     Thus,
     \begin{equation*}
         y^{\prime} \in \ran \restrictedfunctionsmall{f}{A} \ \text{implies} \ y^{\prime} \in \imageSet{f}{A}
@@ -1884,12 +2240,12 @@ We now define the notion of functions and then derive many of their familiar pro
     \vspace{0.3cm}
     \noindent
     Conversely, let \( y^{\prime} \) be an arbitrary object in the universe such that \( y^{\prime} \in \imageSet{f}{A} \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that there exists an object \( x^{\prime} \) such that
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that there exists an object \( x^{\prime} \) such that
     \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
     Immediately, we can infer \( y^{\prime} \in \restrictedfunctionsmall{f}{A} \).
     Thus, \( y^{\prime} \in \imageSet{f}{A} \) implies \( y^{\prime} \in \restrictedfunctionsmall{f}{A} \) for any arbitrary \( y^{\prime} \);
     i.e., \( \imageSet{f}{A} \subseteq \restrictedfunctionsmall{f}{A} \).
-    Since \( \restrictedfunctionsmall{f}{A} \) and \( \imageSet{f}{A} \) are subsets of each other, they are necessarily equal sets.
+    Since \( \ran \restrictedfunctionsmall{f}{A} \) and \( \imageSet{f}{A} \) are subsets of each other, they are necessarily equal sets.
 \end{proof}
 
 \begin{thm}
@@ -1914,21 +2270,21 @@ We now define the notion of functions and then derive many of their familiar pro
 \end{thm}
 
 \begin{proof}
-    It follows immediately from \cref{thm:metatheory-image-of-a-set-under-a-function-subset-of-the-range-of-the-function} that \( \imageSet{f}{A} \subseteq \ran f \).
+    It follows immediately from \cref{thm:metatheory-image-of-a-set-under-a-set-of-ordered-pairs-is-the-subset-of-the-range-of-the-set-of-ordered-pairs} that \( \imageSet{f}{A} \subseteq \ran f \).
     It remains to prove that there exists a \( y \in \ran f \) such that \( y \notin \imageSet{f}{A} \).
 
     \vspace{0.3cm}
     \noindent
     Since \( A \subset \dom f \) and \( \dom f \neq \emptyset \), it follows that there exists an element of \( \dom f \) that does not belong to \( A \).
     Let \( x^{\prime} \) denote such an element; that is, \( x^{\prime} \in \dom f \) and \( x^{\prime} \notin A \).
-    Since \( x^{\prime} \in \dom f \), it follows from \cref{dfn:metatheory-domain-of-a-function} that
+    Since \( x^{\prime} \in \dom f \), it follows from \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs} that
     there exists some \( y^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
     Clearly, \( y^{\prime} \in \ran f \).
 
     \vspace{0.3cm}
     \noindent
     Now let us suppose (for the sake of contradiction) that \( y^{\prime} \in \imageSet{f}{A} \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that there exists some \( x^{\prime\prime} \in A \) such that
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that there exists some \( x^{\prime\prime} \in A \) such that
     \( \orderedpair{x^{\prime\prime}}{y^{\prime}} \in f \).
     But \( f \) is injective, which means that if both \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and \( \orderedpair{x^{\prime\prime}}{y^{\prime}} \in f \)
     are true, then necessarily \( x^{\prime} = x^{\prime\prime} \).
@@ -1965,7 +2321,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \noindent
     Next, we will show that \( y^{\prime} \in \imageSet{f}{A - S} \) leads to a contradiction.
     Suppose that \( y^{\prime} \in \imageSet{f}{A - S} \).
-    Then according to \cref{dfn:metatheory-image-of-a-set-under-a-function}, there must exist an object \( x^{\prime\prime} \)
+    Then according to \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, there must exist an object \( x^{\prime\prime} \)
     such that \( x^{\prime\prime} \in A \), \( x^{\prime\prime} \notin S \), and \( \orderedpair{x^{\prime\prime}}{y^{\prime\prime}} \in f \).
     Since \( f \) is injective, necessarily \( x^{\prime} = x^{\prime\prime} \).
     Since \( x^{\prime\prime} \notin S \), this would imply that \( x^{\prime} \notin S \), which contradicts the fact that \( x^{\prime} \in S \).
@@ -1988,7 +2344,7 @@ We now define the notion of functions and then derive many of their familiar pro
     that \( y^{\prime} \notin \ran \restrictedfunctionsmall{f}{S} \).
     But if \( x^{\prime} \in A \) and \( x^{\prime} \notin S \) are both true, then necessarily \( x^{\prime} \in A - S \).
     This means that \( x^{\prime} \) is an element of \( A - S \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that \( y^{\prime} \in \imageSet{f}{A - S} \), which is yet another contradiction
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that \( y^{\prime} \in \imageSet{f}{A - S} \), which is yet another contradiction
     because it has already been established that \( y^{\prime} \notin \imageSet{f}{A - S} \).
     Since \( y^{\prime} \notin \ran \restrictedfunctionsmall{f}{S} \) inevitably leads to a contradiction, it cannot possibly be true.
     Therefore, \( y^{\prime} \in \ran \restrictedfunctionsmall{f}{S} \).
@@ -2171,43 +2527,43 @@ We now define the notion of functions and then derive many of their familiar pro
     \( \restrictedfunctionsmall{h}{A} = \restrictedfunctionsmall{f}{A} \union \, \restrictedfunctionsmall{g}{A} \) as required.
 \end{proof}
 
-\begin{dfn}[Inverse]
-    \phantomsection \label{dfn:metatheory-inverse-of-a-function}
-    If \( f \) is a function, then the \keyword{inverse} of \( f \) is the set given by
-    \begin{equation*}
-        f^{-1} = \setbuilderbig{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f}
-    \end{equation*}
-\end{dfn}
-
-\begin{rem}
-    Note that \( f^{-1} \) is not necessarily a function.
-\end{rem}
-
 \begin{thm}
-    \phantomsection \label{thm:metatheory-existence-of-inverse-of-a-function}
-    For any function \( f \), \( f^{-1} \) exists.
+    \phantomsection \label{thm:metatheory-a-function-restricted-to-the-union-of-two-sets-is-the-union-of-the-function-restricted-to-each-set}
+    If \( f \) is a function and \( A \) and \( B \) are sets, then \( \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} = \restrictedfunctionsmall{f}{A} \,{\union}\, \restrictedfunctionsmall{f}{B} \).
 \end{thm}
 
 \begin{proof}
-    Since \( f \) is a function, \cref{thm:metatheory-existence-of-domain-and-range-of-function} guarantees the existence of \( \dom f \) and \( \ran f \).
-    Furthermore, \cref{thm:metatheory-existence-of-cartesian-products} guarantees the existence of sets \( \dom f \times \ran f \) and \( \ran f \times \dom f \).
-    Now let \( \varphi(x) \) be the predicate defined as follows:
+    Since \( f \) is a function, \( \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \) is also a function
+    by \cref{thm:metatheory-restriction-is-a-function}.
+    Let \( p \) be an arbitrary object in the universe.
+    Suppose that \( p \in \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \).
+    Since \( \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \) is a function, \( p \) must be an ordered pair.
+    Thus, there exist objects \( \alpha \) and \( \beta \) such that \( p = \orderedpair{\alpha}{\beta} \).
+    By \cref{dfn:metatheory-restricted-function}, it follows that \( \alpha \in \mleft( A \,{\union}\, B \mright) \) and
+    \( \orderedpair{\alpha}{\beta} \in f \).
+    Since \( \alpha \in \mleft( A \,{\union}\, B \mright) \), there are two cases to be considered: \( \alpha \in A \) or \( \alpha \in B \).
+    If \( \alpha \in A \), then \( p \in \restrictedfunctionsmall{f}{A} \); similarly, if \( \alpha \in B \), then \( p \in \restrictedfunctionsmall{f}{B} \).
+    By \cref{meta-rule:constructive-dilemma}, we conclude that if \( p \in \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \),
+    then either \( p \in \restrictedfunctionsmall{f}{A} \) or \( p \in \restrictedfunctionsmall{f}{B} \) must be true.
+    In other words,
     \begin{equation*}
-        \varphi(x) \coloneq \text{there exists an \( a \) and a \( b \) such that \( x = \orderedpair{b}{a} \) and \( \orderedpair{a}{b} \in f \)}
+        p \in \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)}
+        \ \text{implies}
+        \ p \in \mleft( \restrictedfunctionsmall{f}{A} \union \restrictedfunctionsmall{f}{B} \mright)
     \end{equation*}
-    Let \( p \) be an arbitrary object.
-    Suppose that \( \varphi(p) \) is a true statement;
-    that is, there exists an \( \alpha \) and a \( \beta \) such that \( p = \orderedpair{\beta}{\alpha} \) and \( \orderedpair{\alpha}{\beta} \in f \).
-    Since \( \orderedpair{\alpha}{\beta} \in f \), it follows from \cref{dfn:metatheory-domain-of-a-function,dfn:metatheory-range-of-a-function} that
-    \( \alpha \in \dom f \) and \( \beta \in \ran f \).
-    Clearly, \( \orderedpair{\beta}{\alpha} \in \ran f \times \dom f \) by \cref{dfn:metatheory-cartesian-product}.
-    Thus, \( p \in \ran f \times \dom f \).
-    Since \( p \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
-    \begin{equation*}
-        \text{for all \( x \), \( \varphi(x) \) implies \( x \in \ran f \times \dom f \)}
-    \end{equation*}
-    By \cref{thm:metatheory-existence-of-unrestricted-comprehension-set},
-    the set \( \setbuilder{x}{\varphi(x)} = \setbuilder{\orderedpair{y}{x}}{\orderedpair{x}{y} \in f} = f^{-1} \) exists.
+    Since \( p \) is arbitrary, we conclude that \( \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \subseteq \restrictedfunctionsmall{f}{A} \,{\union}\, \restrictedfunctionsmall{f}{B} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( q \) be an arbitrary object in the universe.
+    Suppose that \( q \in \mleft( \restrictedfunctionsmall{f}{A} \,{\union}\, \restrictedfunctionsmall{f}{B} \mright) \).
+    By \cref{dfn:metatheory-the-union-of-sets}, it follows that either \( q \in \restrictedfunctionsmall{f}{A} \) or \( q \in \restrictedfunctionsmall{f}{B} \)
+    is true.
+    If \( q \in \restrictedfunctionsmall{f}{A} \), then clearly \( q \) is an ordered pair since \( f \) is a function; that is, there exist
+    objects \( \alpha \) and \( \beta \) such that \( \alpha \in A \) and \( \orderedpair{\alpha}{\beta} \in f \).
+    But \( \alpha \in A \) implies \( \alpha \in \mleft( A \,{\union}\, B \mright) \), which means that \( q \in \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \).
+    If \( q \in \restrictedfunctionsmall{f}{B} \), we arrive at the same conclusion via an identical line of reasoning.
+    Thus, \( \mleft( \restrictedfunctionsmall{f}{A} \,{\union}\, \restrictedfunctionsmall{f}{B} \mright) \subseteq \restrictedfunctionsmall{f}{\mleft( A \,{\union}\, B \mright)} \).
 \end{proof}
 
 \begin{thm}
@@ -2227,7 +2583,7 @@ We now define the notion of functions and then derive many of their familiar pro
     We begin by showing that \( f^{-1} \) is indeed a function.
     Let \( p \) be an arbitrary object in the universe.
     Suppose that \( p \in f^{-1} \).
-    By \cref{dfn:metatheory-inverse-of-a-function}, there exist objects \( \alpha \) and \( \beta \)
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, there exist objects \( \alpha \) and \( \beta \)
     such that \( p = \orderedpair{\beta}{\alpha} \) and \( \orderedpair{\alpha}{\beta} \in f \).
     Thus,
     \begin{equation*}
@@ -2235,7 +2591,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \end{equation*}
     Let \( \gamma \), \( \delta \), and \( \epsilon \) denote arbitrary objects.
     Suppose that \( \orderedpair{\gamma}{\delta} \in f^{-1} \) and \( \orderedpair{\gamma}{\epsilon} \in f^{-1} \).
-    By \cref{dfn:metatheory-inverse-of-a-function}, necessarily \( \orderedpair{\delta}{\gamma} \in f \) and \( \orderedpair{\epsilon}{\gamma} \in f \).
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, necessarily \( \orderedpair{\delta}{\gamma} \in f \) and \( \orderedpair{\epsilon}{\gamma} \in f \).
     Since \( f \) is injective, necessarily \( \delta = \epsilon \) by \cref{dfn:metatheory-injection}.
     Thus, \( f^{-1} \) is a function by \cref{dfn:metatheory-function}.
 
@@ -2244,13 +2600,13 @@ We now define the notion of functions and then derive many of their familiar pro
     We now prove that \( \dom f^{-1} = \imageSet{f}{A} \).
     Let \( \beta \) denote an arbitrary object in the universe.
     Suppose that \( \beta \in \dom f^{-1} \).
-    By \cref{dfn:metatheory-domain-of-a-function}, there exists some \( \alpha \) such that \( \orderedpair{\beta}{\alpha} \in f^{-1} \).
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there exists some \( \alpha \) such that \( \orderedpair{\beta}{\alpha} \in f^{-1} \).
     In other words, \( \orderedpair{\alpha}{\beta} \in f \). Since \( \function{f}{A}{B} \), we infer \( \alpha \in A \) and subsequently
     \( \beta \in \imageSet{f}{A} \).
     Conversely, suppose that \( \beta \in \imageSet{f}{A} \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, there exists a \( \gamma \in A \) such that \( \orderedpair{\gamma}{\beta} \in f \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, there exists a \( \gamma \in A \) such that \( \orderedpair{\gamma}{\beta} \in f \).
     But if \( \orderedpair{\gamma}{\beta} \in f \), then necessarily \( \beta \in \dom f^{-1} \) since
-    \( \orderedpair{\beta}{\gamma} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
+    \( \orderedpair{\beta}{\gamma} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}.
     Since \( \beta \) is arbitrary, we have by \cref{meta-rule:universal-generalization}
     \begin{equation*}
         \text{ for all \( x \),  \( x \in \dom f^{-1} \) iff \( x \in \imageSet{f}{A} \)}
@@ -2261,7 +2617,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \noindent
     Finally, we prove that \( \ran f^{-1} \subseteq A \).
     Let \( \delta \) denote an arbitrary element of \( \ran f^{-1} \).
-    By \cref{dfn:metatheory-range-of-a-function}, there exists some \( \xi \) such that \( \orderedpair{\xi}{\delta} \in f^{-1} \)
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, there exists some \( \xi \) such that \( \orderedpair{\xi}{\delta} \in f^{-1} \)
     and thus \( \orderedpair{\delta}{\xi} \in f \).
     But this would mean that \( \delta \in \dom f \), and since \( \dom f = A \), necessarily \( \delta \in A \).
     In other words,
@@ -2278,7 +2634,7 @@ We now define the notion of functions and then derive many of their familiar pro
     Suppose that \( f^{-1}(a) = f^{-1}(b) \) for some arbitrary \( a \) and \( b \);
     that is, there exists some \( c \) such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
     are both true.
-    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \)
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \)
     are both true.
     But \( f \) is a function, so \( a \) and \( b \) must be equal by \cref{dfn:metatheory-function}.
     In other words,
@@ -2297,13 +2653,13 @@ We now define the notion of functions and then derive many of their familiar pro
     Let \( a \in A \) be arbitrary.
     Since \( \function{f}{A}{B} \), it follows that \( \dom f = A \).
     Thus, \( a \in \dom f \).
-    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( b \) such that
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there must exist a \( b \) such that
     \( \orderedpair{a}{b} \in f \), which in turn implies that \( \orderedpair{b}{a} \in f^{-1} \).
     In other words,
     \begin{equation*}
         \text{if \( a \in A \), then there exists a \( b \) such that \( \orderedpair{b}{a} \in f^{-1} \)}
     \end{equation*}
-    By \cref{dfn:metatheory-range-of-a-function}, necessarily \( a \in \ran f^{-1} \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, necessarily \( a \in \ran f^{-1} \).
     Therefore,
     \begin{equation*}
         \text{if \( a \in A \), then \( a \in \ran f^{-1} \)}
@@ -2326,7 +2682,7 @@ We now define the notion of functions and then derive many of their familiar pro
     Since \( \injection{f}{A}{B} \), it follows from \cref{thm:metatheory-if-a-function-is-injective-then-inverse-is-a-function} that
     \( \function{f^{-1}}{\imageSet{f}{A}}{A} \).
     Also, given that \( \surjection{f}{A}{B} \), it follows that \( \ran f = B \).
-    But \( \dom f = A \), so by \cref{thm:metatheory-image-of-the-domain-of-a-function-under-the-function-equals-the-range-of-the-function},
+    But \( \dom f = A \), so by \cref{thm:metatheory-image-of-the-domain-of-a-set-of-ordered-pairs-under-itself-equals-its-range},
     \( \imageSet{f}{A} = \imageSet{f}{\dom f} = \ran f = B \).
     \begin{equation*}
         \therefore \, \function{f^{-1}}{B}{A}
@@ -2337,7 +2693,7 @@ We now define the notion of functions and then derive many of their familiar pro
     \noindent
     Let \( a \), \( b \), and \( c \) be objects in the universe such that \( \orderedpair{a}{c} \in f^{-1} \) and \( \orderedpair{b}{c} \in f^{-1} \)
     are both true.
-    By \cref{dfn:metatheory-inverse-of-a-function}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \).
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{c}{a} \in f \) and \( \orderedpair{c}{b} \in f \).
     Since \( f \) is a function, necessarily \( a \) and \( b \) are equal.
     \begin{equation*}
         \therefore \, \injection{f^{-1}}{B}{A}
@@ -2348,10 +2704,10 @@ We now define the notion of functions and then derive many of their familiar pro
     Finally, we prove that \( \ran f^{-1} = A \) by showing that \( A \subseteq \ran f^{-1} \) because \( \ran f^{-1} \subseteq A \) is already implied by
     \( \function{f^{-1}}{B}{A} \).
     Let \( \alpha \) be an arbitrary element of \( A \). Since \( A = \dom f \), it follows that \( \alpha \in \dom f \).
-    By \cref{dfn:metatheory-domain-of-a-function}, there must exist a \( \beta \) such that \( \orderedpair{\alpha}{\beta} \in f \).
-    But if \( \orderedpair{\alpha}{\beta} \in f \) is true, then necessarily \( \orderedpair{\beta}{\alpha} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-function}.
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there must exist a \( \beta \) such that \( \orderedpair{\alpha}{\beta} \in f \).
+    But if \( \orderedpair{\alpha}{\beta} \in f \) is true, then necessarily \( \orderedpair{\beta}{\alpha} \in f^{-1} \) by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}.
     Since \( \orderedpair{\beta}{\alpha} \in f^{-1} \) and \( \beta \) is an existing object, necessarily \( \alpha \in \ran f^{-1} \) by
-    \cref{dfn:metatheory-range-of-a-function}.
+    \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}.
     Thus, \( A \subseteq \ran f^{-1} \) as required.
 \end{proof}
 
@@ -2425,8 +2781,6 @@ We now define the notion of functions and then derive many of their familiar pro
     An indexed family of functions \( F \) is compatible iff for all \( i, j \in \dom F \), \( F_{i} \) and \( F_{j} \) are compatible.
 \end{dfn}
 
-
-
 \begin{thm}
     \phantomsection \label{thm:metatheory-existence-of-set-exponentiation}
     For any two sets \( A \) and \( B \), \( B^{A} \) exists and is unique.
@@ -2444,7 +2798,7 @@ We now define the notion of functions and then derive many of their familiar pro
     Suppose that \( p \in f^{\prime} \).
     Since \( f^{\prime} \) is a function, \( p \) must be an ordered pair;
     that is, there exists objects \( a \) and \( b \) such that \( p = \orderedpair{a}{b} \).
-    By \cref{dfn:metatheory-domain-of-a-function,dfn:metatheory-range-of-a-function}, it follows that
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs,dfn:metatheory-range-of-a-set-of-ordered-pairs}, it follows that
     \( a \in \dom f^{\prime} \) and \( b \in \ran f^{\prime} \).
     Since \( \dom f^{\prime} = A \) and \( \ran f^{\prime} \), necessarily \( a \in A \) and \( b \in B \).
     By \cref{dfn:metatheory-cartesian-product}, necessarily \( p \in A \times B \).
@@ -2472,7 +2826,7 @@ We now define the notion of functions and then derive many of their familiar pro
     By \cref{dfn:metatheory-set-exponentiation}, it follows that \( \function{f}{\emptyset}{A} \).
     Suppose that \( f \neq \emptyset \). Then there exists some \( p \) such that \( p \in f \).
     Since \( f \) is a function, it follows that \( p = \orderedpair{a}{b} \) for some \( a \) and \( b \).
-    But by \cref{dfn:metatheory-domain-of-a-function}, this would imply that \( a \in \dom f \), which contradicts the fact
+    But by \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, this would imply that \( a \in \dom f \), which contradicts the fact
     that \( \dom f = \emptyset \).
     By \cref{meta-rule:reductio-ad-absurdum}, the supposition that \( f \neq \emptyset \) must be false.
     In other words, \( f = \emptyset \).
@@ -2805,7 +3159,7 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \begin{dfn}[Finite Set]
-    \phantomsection \label{dfn:metatheory-finite-set-and-cardinality}
+    \phantomsection \label{dfn:metatheory-finite-set}
     A set \( S \) is \keyword{finite} iff there exists an \( n \in \naturalset \) such that a \keyword{bijection} exists
     between \( n \) and \( S \).
 \end{dfn}
@@ -2977,7 +3331,7 @@ We will preface the construction of the counting numbers with the following defi
     We now prove that \( \dom S = \naturalset \).
     Let \( \gamma \) denote an arbitrary object in the universe.
     Suppose that \( \gamma \in \dom S \).
-    By \cref{dfn:metatheory-domain-of-a-function}, there exists a \( \Delta \) such that \( \orderedpair{\gamma}{\Delta} \in S \).
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there exists a \( \Delta \) such that \( \orderedpair{\gamma}{\Delta} \in S \).
     In other words, \( \varphi(\orderedpair{\gamma}{\Delta}) \) is a true statement, so we have
     \begin{equation*}
         \gamma \in \naturalset \ \text{and} \ \Delta = A^{\gamma}
@@ -3430,6 +3784,42 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-N-minus-a-natural-number-is-the-set-of-all-natural-numbers-greater-than-or-equal-to-that-number}
+    For all \( n \in \naturalset \), \( \naturalset - n = \setbuilder{x \in \naturalset}{n \leq x}  \).
+\end{thm}
+
+\begin{proof}
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \) and \( \alpha \) be an arbitrary object in the universe.
+    Now suppose that \( \alpha \in \mleft( \naturalset - n^{\prime} \mright) \).
+    Thus, \( \alpha \in \naturalset \) and \( \alpha \notin n^{\prime} \).
+    Since \( \alpha \) and \( n^{\prime} \) are both elements of \( \naturalset \), there are evidently two possibilities: either \( \alpha = n^{\prime} \)
+    or \( \alpha \neq n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( \alpha \neq n^{\prime} \), then either \( \alpha \in n^{\prime} \) or \( n^{\prime} \in \alpha \) by \cref{thm:metatheory-linear-ordering-of-natural-numbers}.
+    We already know that \( \alpha \notin n^{\prime} \). Thus, \( n^{\prime} \in \alpha \) by \cref{meta-rule:disjunctive-syllogism}.
+    This means that either \( \alpha = n^{\prime} \) is true, or \( n^{\prime} \in \alpha \) is true; i.e., \( n^{\prime} \leq \alpha \).
+    \begin{equation*}
+        \therefore \, \alpha \in \mleft( \naturalset - n^{\prime} \mright) \ \text{implies} \ \alpha \in \naturalset \ \text{and} \ n^{\prime} \leq \alpha
+    \end{equation*}
+    Conversely, suppose that \( \alpha \in \naturalset \) and \( n^{\prime} \leq \alpha \) are both true.
+    This means that either \( n^{\prime} \in \alpha \) or \( n^{\prime} = \alpha \).
+    In either case, \( \alpha \notin n^{\prime} \) and thus \( \alpha \in \mleft( \naturalset - n^{\prime} \mright) \).
+    \begin{equation*}
+        \therefore \, \alpha \in \naturalset \ \text{and} \ n^{\prime} \leq \alpha \ \text{implies} \ \alpha \in \mleft( \naturalset - n^{\prime} \mright)
+    \end{equation*}
+    Since \( \alpha \in \mleft( \naturalset - n^{\prime} \mright) \) and the predicate ``\( \alpha \in \naturalset \) and \( n^{\prime} \leq \alpha \)'' imply
+    each other and \( \alpha \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( x \), \( x \in \mleft( \naturalset - n^{\prime} \mright) \) iff \( x \in \naturalset \) and \( n^{\prime} \leq x \)}
+    \end{equation*}
+    By \cref{dfn:metatheory-conditional-set-builder-notation}, it follows that
+    \( \naturalset - n^{\prime} = \setbuilder{x \in \naturalset}{n^{\prime} \leq x} \).
+    Since \( n^{\prime} \) is arbitrary, the theorem follows from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}
     For all \( n \in \naturalset \) and \( m \in \naturalset \), \( n < m \) iff \( n \subset m \).
 \end{thm}
@@ -3558,6 +3948,29 @@ We will preface the construction of the counting numbers with the following defi
     \vspace{0.3cm}
     \noindent
     Having established both the base case and the inductive step, we can conclude the theorem by \aref{thm:metatheory-weak-induction}{Weak Induction}.
+\end{proof}
+
+\begin{thm}[Transitivity]
+    \phantomsection \label{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers}
+    If \( x \), \( y \), and \( z \) are elements of \( \naturalset \) such that \( x < y \) and \( y < z \) are both true,
+    then \( x < z \) is also true.
+\end{thm}
+
+\begin{proof}
+    Since \( x < y \) and \( y < z \) are both true, it follows from \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}
+    that \( x \subset y \) and \( y \subset z \).
+    Let \( \alpha \) be an arbitrary element of \( x \).
+    Since \( x \subset y \), it follows that \( \alpha \in y \).
+    But \( y \subset z \), so \( \alpha \in y \) would imply \( \alpha \in z \).
+    In other words, \( \alpha \in x \) implies \( \alpha \in z \).
+    Since \( \alpha \) is arbitrary, we have by \cref{meta-rule:universal-generalization} \( x \subseteq z \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Observe that there must exist an \( e \in y \) such that \( e \notin x \) because \( x \subset y \). Since \( e \in y \) and \( y \subset z \),
+    it follows that \( e \in z \). In other words, \( e \) is an element in \( z \) that is not an element of \( x \).
+    Since \( x \subseteq z \) is also true, it follows from \cref{dfn:metatheory-subsets-and-proper-subsets} that \( x \subset z \).
+    By \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}, we have \( x < z \) as needed.
 \end{proof}
 
 \begin{thm}[Well-Ordering]
@@ -4331,7 +4744,7 @@ We will preface the construction of the counting numbers with the following defi
     \noindent
     We begin by proving that \( \function{f}{\naturalset}{S} \).
     Let \( g \) and \( h \) be arbitrary elements of \( \ran T \).
-    By \cref{dfn:metatheory-range-of-a-function}, there exist \( n, m \in \dom T \) such that \( \orderedpair{n}{g} \in T \) and \( \orderedpair{m}{h} \in T \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, there exist \( n, m \in \dom T \) such that \( \orderedpair{n}{g} \in T \) and \( \orderedpair{m}{h} \in T \).
     Note that \( \function{T}{\naturalset}{\finiteseq{S}} \), so \( \dom T = \naturalset \).
     In other words, \( n \) and \( m \) are elements of \( \naturalset \).
     By \cref{thm:metatheory-linear-ordering-of-natural-numbers}, there are only three possible cases: \( n = m \), \( n \in m \), or \( m \in n \).
@@ -4355,7 +4768,7 @@ We will preface the construction of the counting numbers with the following defi
     \vspace{0.3cm}
     \noindent
     Let \( a \in \dom f \) be arbitrary.
-    By \cref{dfn:metatheory-domain-of-a-function}, there exists a unique object \( b \) such that \( \orderedpair{a}{b} \in f \).
+    By \cref{dfn:metatheory-domain-of-a-set-of-ordered-pairs}, there exists a unique object \( b \) such that \( \orderedpair{a}{b} \in f \).
     Since \( f = \Union T \), \( \orderedpair{a}{b} \in f \) implies that \( \orderedpair{a}{b} \in T_{n} \) for some \( n \in \naturalset \).
     In other words, \( a \in \dom T_{n} \)
     But the definition of \( T \) requires that \( \function{T_{n}}{n}{S} \); that is, \( \dom T_{n} = n \).
@@ -4859,7 +5272,7 @@ We will preface the construction of the counting numbers with the following defi
     If \( p \in \dom g \), then there exists a \( y \in S \) such that \( \orderedpair{p}{y} \in g \).
     This means that \( \psi_{0}(p, y) \) is true and thus \( \orderedpair{p}{y} \in g^{\prime} \).
     In other words, there exists a \( y \in S \) such that \( \orderedpair{p}{y} \in g^{\prime} \).
-    By \cref{dfn:metatheory-range-of-a-function}, it follows that \( p \in \dom g^{\prime} \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, it follows that \( p \in \dom g^{\prime} \).
     On the other hand, if \( p \notin \dom g \), then it follows from the definition of \( g^{\prime} \) that \( \orderedpair{p}{e} \in g^{\prime} \).
     Therefore, \( p \) also belongs to \( \dom g^{\prime} \).
     Clearly, \( p \in \dom g^{\prime} \) is true in all possible cases.
@@ -5212,7 +5625,7 @@ We will preface the construction of the counting numbers with the following defi
     \end{claim}
     \noindent
     Let \( F^{\prime} \) and \( F^{\ast} \) be arbitrary elements of \( \ran F \).
-    By \cref{dfn:metatheory-range-of-a-function}, it follows that there exist \( n, m \in \dom F\)
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, it follows that there exist \( n, m \in \dom F\)
     such that \( \orderedpair{n}{F^{\prime}} \in F \) and \( \orderedpair{m}{F^{\ast}} \in F \).
     Since \( \dom F = \naturalset \), it follows that \( n \) and \( m \) are both elements of \( \naturalset \).
     By \cref{thm:metatheory-linear-ordering-of-natural-numbers}, there are only three possibilities: \( n = m \), \( n < m \), or \( m < n \).
@@ -5396,6 +5809,10 @@ We will preface the construction of the counting numbers with the following defi
 \end{proof}
 
 \subsection{Cardinality}
+\noindent
+The concept of cardinality is essentially the mathematical definition of the intuitive notion of discrete quantities.
+When we say that a set \( S \) contains \( 5 \) objects, what we're really saying is that a bijection
+exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\} \) and the set \( S \).
 
 \begin{dfn}[Cardinality]
     \phantomsection \label{dfn:metatheory-cardinality-of-finite-sets}
@@ -5404,17 +5821,12 @@ We will preface the construction of the counting numbers with the following defi
 \end{dfn}
 
 \begin{rem}
-    The concept of cardinality is essentially the mathematical definition of the intuitive notion of counting.
-    When we say that a set \( S \) contains \( 5 \) objects, what we're really saying is that a bijection
-    exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\} \) and the set \( S \).
+    To truly capture the essence of discrete quantities, it is crucial for the definition of cardinality
+    to satisfy the uniqueness property; that is, every finite set must have \emph{at most one} cardinality.
+    After all, it would be absurd to claim that ``\( S \) contains 5 objects'' and ``\( S \) contains 6 objects'' are both true at
+    the same time.
+    The following theorems will serve as a justification for the uniqueness claim in \cref{dfn:metatheory-cardinality-of-finite-sets}.
 \end{rem}
-
-\noindent
-For \cref{dfn:metatheory-cardinality-of-finite-sets} to truly capture the essence of counting, it is crucial for the definition of cardinality
-to satisfy the uniqueness property; that is, every finite set must have \emph{exactly one} cardinality.
-After all, it would be absurd to claim that ``\( S \) contains 5 objects'' and ``\( S \) contains 6 objects'' are both true at
-the same time.
-The following theorems will serve as a justification for the uniqueness claim in \cref{dfn:metatheory-cardinality-of-finite-sets}.
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-no-bijection-exists-between-a-natural-number-and-its-proper-subset}
@@ -5455,7 +5867,7 @@ The following theorems will serve as a justification for the uniqueness claim in
     \noindent
     Suppose, for the sake of contradiction, that a bijection \( \bijection{f}{\mleft( k + 1 \mright)}{S} \) exists between \( k + 1 \) and \( S \).
     Since \( k \in S \) and \( \ran f = S \), it follows that \( k \in \ran f \).
-    By \cref{dfn:metatheory-range-of-a-function}, there exists some \( j \in \mleft( k + 1 \mright) \) such that \( \orderedpair{j}{k} \in f \).
+    By \cref{dfn:metatheory-range-of-a-set-of-ordered-pairs}, there exists some \( j \in \mleft( k + 1 \mright) \) such that \( \orderedpair{j}{k} \in f \).
     Since \( j \in \mleft( k + 1 \mright) \), there are only two possibilities to consider: \( j = k \) or \( j \in k \).
 
     \vspace{0.3cm}
@@ -5684,7 +6096,7 @@ The following theorems will serve as a justification for the uniqueness claim in
     Let \( i \) denote an element of \( \naturalset - k \).
     Clearly \( i \in \naturalset \), so it follows that \( i \in \dom f \).
     In other words, there exists some \( j \in \ran f \) such that \( \orderedpair{i}{j} \in f \).
-    By \cref{dfn:metatheory-image-of-a-set-under-a-function}, it follows that \( j \in \imageSet{f}{\naturalset - k} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, it follows that \( j \in \imageSet{f}{\naturalset - k} \).
     Since \( j \in \imageSet{f}{\naturalset - k} \) is true, necessarily \( j \notin k - \imageSet{f}{\naturalset - k} \).
     But \( \ran f = k \), which means that \( j \) must belong to \( k \).
     In other words, \( j \) is an element of \( k \) that does not belong to \( k - \imageSet{f}{\naturalset - k} \).
@@ -5695,108 +6107,6 @@ The following theorems will serve as a justification for the uniqueness claim in
     no bijection can be formed between a natural number and its proper subset.
     Therefore, our initial supposition that a bijection exists between \( k \) and \( \naturalset \) must be false.
     Since \( k \) is arbitrary, the theorem can be established via \cref{meta-rule:universal-generalization}.
-\end{proof}
-
-\begin{thm}
-    \phantomsection \label{thm:metatheory-every-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-or-equal-to-the-number}
-    If \( n \in \naturalset \) and \( S \) is a set such that \( S \subseteq n \), then there exists a natural number \( k \leq n \) such that
-    a bijection exists between \( k \) and \( S \).
-\end{thm}
-
-\begin{proof}
-    If \( S = \emptyset \), then the proof is trivial since the empty function is a bijection between \( S \) and \( 0 \).
-    Now we consider the case where \( S \neq \emptyset \).
-    Let \( \lambda(X, y) \) be a predicate defined as follows:
-    \begin{equation*}
-        \lambda(X, y) \coloneq \ \text{\( X \) is a non-empty subset of \( \naturalset \) and \( y \in X \) such that for all \( z \in X \), \( y \leq z \)}
-    \end{equation*}
-    Let \( \psi(X, y) \) be a sequence of predicates such that
-    \begin{alignat*}{2}
-        &\psi_{0}(X, y) &&\coloneq \text{\( X \in \finiteseq{S} \) and \( X \) is injective}\\
-        &\psi_{1}(X, y) &&\coloneq \lambda(S - \ran X, y)
-    \end{alignat*}
-    Now let \( g \) be the set
-    \begin{equation*}
-        g \coloneq \setbuilderbig{\orderedpair{X}{y}}{\conjunction{\psi(X, y)}}
-    \end{equation*}
-    We begin by proving that \( g \) is a function.
-    Let \( X^{\prime} \), \( y^{\prime} \), and \( y^{\prime\prime} \) be objects in the universe such that
-    \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \) and \( \orderedpair{X^{\prime}}{y^{\prime\prime}} \in g \).
-    Thus, \( \lambda(S - \ran X^{\prime}, y^{\prime}) \) and \( \lambda(S - \ran X^{\prime}, y^{\prime\prime}) \) are both true.
-    Clearly, \( y^{\prime} \leq y^{\prime\prime} \) and \( y^{\prime\prime} \leq y^{\prime} \) are both true.
-    By \cref{thm:metatheory-antisymmetric-property-of-membership-relation-of-N}, it follows that \( y^{\prime} = y^{\prime\prime} \).
-    In other words, \( g \) is a function.
-
-    \vspace{0.3cm}
-    \noindent
-    Next, we show that \( \dom g \subseteq \finiteseq{S} \) and \( \ran g \subseteq S \).
-    Let \( X^{\prime} \) be an arbitrary element of \( \dom g \).
-    Thus, there exists a \( y^{\prime} \) such that \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \).
-    But this would imply that \( \psi_{0}(X^{\prime}, y^{\prime}) \) is true.
-    Thus, \( X^{\prime} \in \finiteseq{S} \).
-    Since \( X^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that \( \dom g \subseteq \finiteseq{S} \).
-    Let \( y^{\prime\prime} \) an arbitrary element of \( \ran g \).
-    Thus, there exists an \( X^{\prime\prime} \) such that \( \orderedpair{X^{\prime\prime}}{y^{\prime\prime}} \in g \).
-    It follows from the definitions of \( \psi \) and \( \lambda \) that \( y^{\prime\prime} \in S - \ran X^{\prime\prime} \).
-    Clearly, \( y^{\prime\prime} \in S \).
-    Therefore, \( \ran g \subseteq S \).
-
-    \vspace{0.3cm}
-    \noindent
-    We have thus proven that \( g \) is a function on a subset of \( \finiteseq{S} \) into \( S \) where \( S \) is a non-empty set.
-    This means that \cref{recursion-theorem:generalized-sequence-form} applies and there exists a unique function \( f \) such that
-    \( f(n) = g( \restrictedfunctionsmall{f}{n} ) \) for all \( n \in \dom f \).
-    Furthermore, either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \in \naturalset \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \).
-
-    \vspace{0.3cm}
-    \noindent
-    We now prove the following useful claims.
-
-    \begin{claim}
-        \phantomsection \label{claim:dom-f-cannot-be-empty}
-        \( \dom f \neq \emptyset \).
-    \end{claim}
-    \noindent
-    Suppose that \( \dom f = \emptyset \).
-    This would mean that \( \restrictedfunctionsmall{f}{\emptyset} = \emptyset \) is not an element of \( \dom g \), which is only possible
-    if \( S = \emptyset \).
-    This contradicts our initial assumption that \( S \neq \emptyset \).
-    Thus, \( \dom f \) cannot be empty.
-
-    \begin{claim}
-        \phantomsection \label{claim:f-zero-equals-least-element-of-S}
-        \( 0 \in \dom f \) and \( f(0) \) is the least element of \( S \).
-    \end{claim}
-
-    \noindent
-    Since \( \dom f \) is either \( \naturalset \) or a non-empty element of \( \naturalset \),
-    it follows from \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set} that \( \emptyset \in \dom f \).
-    Due to \( S \) being non-empty subset of \( \naturalset \), it follows from \cref{thm:metatheory-well-ordering-of-natural-numbers}
-    that \( S \) has a least element.
-    Since \( 0 \in \dom f \), there exists some \( y^{\prime} \) such that \( \orderedpair{0}{y^{\prime}} \in f \).
-    Furthermore, \( y^{\prime} = g( \restrictedfunctionsmall{f}{0} ) = g( \restrictedfunctionsmall{f}{\emptyset} ) = g(\emptyset) \).
-    In other words, \( \orderedpair{\emptyset}{y^{\prime}} \in g \), which means that \( \lambda(S - \ran \emptyset, y^{\prime}) \) must be true
-    and thus \( y^{\prime} \) must be the least element of \( S - \ran \emptyset = S - \emptyset = S \).
-
-    \noindent
-    \begin{claim}
-        \phantomsection \label{claim:for-all-n-in-dom-f-and-n-plus-one-in-dom-f-f-n-less-than-f-n-plus-one}
-        For all \( n \in \dom f \), if \( n + 1 \in \dom f \), then \( f(n) < f(n + 1) \).
-    \end{claim}
-    \noindent
-    Since \( \dom f \) is either \( \naturalset \) or an element of \( \naturalset \), we can prove the claim by induction.
-    Let \( P(n) \) be a predicate defined as follows.
-    \begin{equation*}
-        P(n) \coloneq \text{if \( n + 1 \in \dom f \), then \( f(n) < f(n + 1) \)}
-    \end{equation*}
-    \noindent
-    \underline{\scshape Base Case}: \( P(0) \) is true.
-
-    \vspace{0.3cm}
-    \noindent
-    If \( 0 + 1 \notin \dom f \), then \( P(0) \) is vacuously true.
-    If \( 0 + 1 \in \dom f \), then \( f(1) = g( \restrictedfunctionsmall{f}{1} ) = g( \mleft\{ \orderedpair{0}{l} \mright\} ) \)
-    where \( l \) is the least element of \( S \).
 \end{proof}
 
 \begin{thm}
@@ -5839,16 +6149,1075 @@ The following theorems will serve as a justification for the uniqueness claim in
 \end{proof}
 
 \begin{rem}
-The purpose of this section is to develop (in our metalanguage) just enough of set theory to be useable in the formulation of first-order logic.
-In the next section, we will continue our development of the metatheory of logic by defining (in terms of the concepts that we have just devloped)
-many of the concepts in logic.
-After the essential concepts of logic have been defined, we will proceed to prove the familiar properties of first-order logic, many of which we already
-know intuitively.
+    \cref{thm:metatheory-a-set-can-form-a-bijection-with-at-most-one-natural-number} justifies the uniqueness claim
+    in \cref{dfn:metatheory-cardinality-of-finite-sets}.
 \end{rem}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-proper-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-the-number}
+    If \( n \in \naturalset \) and \( S \subset n \), then there exists a bijection \( \bijection{f}{k}{S} \) where \( k \in \naturalset \)
+    and \( k < n \).
+\end{thm}
+
+\begin{proof}
+    Since \( S \subset n \), either \( S = \emptyset \) or \( S \neq \emptyset \).
+    If \( S = \emptyset \), then the proof is trivial since the empty function is a bijection between \( S \) and \( 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    The real task is to prove that the conclusion of the theorem also holds if \( S \neq \emptyset \).
+    To begin, let \( \lambda(X, y) \) be a predicate defined as follows:
+    \begin{equation*}
+        \lambda(X, y) \coloneq \ \text{\( X \) is a non-empty subset of \( \naturalset \) and \( y \in X \) such that for all \( z \in X \), \( y \leq z \)}
+    \end{equation*}
+    Additionally, we also define \( \psi(X, y) \) to be a sequence of predicates such that
+    \begin{alignat*}{2}
+        &\psi_{0}(X, y) &&\coloneq \text{\( X \in \finiteseq{S} \) and \( X \) is injective}\\
+        &\psi_{1}(X, y) &&\coloneq \lambda(S - \ran X, y)
+    \end{alignat*}
+    Now let \( g \) be the set
+    \begin{equation*}
+        g \coloneq \setbuilderbig{\orderedpair{X}{y}}{\conjunction{\psi(X, y)}}
+    \end{equation*}
+    We begin by proving that \( g \) is a function.
+    Let \( X^{\prime} \), \( y^{\prime} \), and \( y^{\prime\prime} \) be objects in the universe such that
+    \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \) and \( \orderedpair{X^{\prime}}{y^{\prime\prime}} \in g \).
+    Thus, \( \lambda(S - \ran X^{\prime}, y^{\prime}) \) and \( \lambda(S - \ran X^{\prime}, y^{\prime\prime}) \) are both true.
+    Clearly, \( y^{\prime} \leq y^{\prime\prime} \) and \( y^{\prime\prime} \leq y^{\prime} \) are both true.
+    By \cref{thm:metatheory-antisymmetric-property-of-membership-relation-of-N}, it follows that \( y^{\prime} = y^{\prime\prime} \).
+    In other words, \( g \) is a function.
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we show that \( \dom g \subseteq \finiteseq{S} \) and \( \ran g \subseteq S \).
+    Let \( X^{\prime} \) be an arbitrary element of \( \dom g \).
+    Thus, there exists a \( y^{\prime} \) such that \( \orderedpair{X^{\prime}}{y^{\prime}} \in g \).
+    But this would imply that \( \psi_{0}(X^{\prime}, y^{\prime}) \) is true.
+    Thus, \( X^{\prime} \in \finiteseq{S} \).
+    Since \( X^{\prime} \) is arbitrary, it follows from \cref{meta-rule:universal-generalization} that \( \dom g \subseteq \finiteseq{S} \).
+    Let \( y^{\prime\prime} \) an arbitrary element of \( \ran g \).
+    Thus, there exists an \( X^{\prime\prime} \) such that \( \orderedpair{X^{\prime\prime}}{y^{\prime\prime}} \in g \).
+    It follows from the definitions of \( \psi \) and \( \lambda \) that \( y^{\prime\prime} \in S - \ran X^{\prime\prime} \).
+    Clearly, \( y^{\prime\prime} \in S \).
+    Therefore, \( \ran g \subseteq S \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have thus proven that \( g \) is a function on a subset of \( \finiteseq{S} \) into \( S \) where \( S \) is a non-empty set.
+    This means that \cref{recursion-theorem:generalized-sequence-form} applies and there exists a unique function \( f \) such that
+    \( f(n) = g( \restrictedfunctionsmall{f}{n} ) \) for all \( n \in \dom f \) and \( \ran f \subseteq S \).
+    Furthermore, either \( \dom f = \naturalset \) or \( \dom f = k \) for some \( k \in \naturalset \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \).
+
+    \vspace{0.3cm}
+    \noindent
+    We now prove the following claims.
+
+    \begin{claim}
+        \phantomsection \label{claim:dom-f-cannot-be-empty}
+        \( \dom f \neq \emptyset \).
+    \end{claim}
+    \noindent
+    Suppose that \( \dom f = \emptyset \).
+    This would mean that \( \restrictedfunctionsmall{f}{\emptyset} = \emptyset \) is not an element of \( \dom g \), which is only possible
+    if \( S = \emptyset \).
+    This contradicts our initial assumption that \( S \neq \emptyset \).
+    Thus, \( \dom f \) cannot be empty.
+
+    \begin{claim}
+        \phantomsection \label{claim:f-zero-equals-least-element-of-S}
+        \( 0 \in \dom f \) and \( f(0) \) is the least element of \( S \).
+    \end{claim}
+
+    \noindent
+    Since \( \dom f \) is either \( \naturalset \) or a non-empty element of \( \naturalset \),
+    it follows from \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set} that \( \emptyset \in \dom f \).
+    Due to \( S \) being non-empty subset of \( \naturalset \), it follows from \cref{thm:metatheory-well-ordering-of-natural-numbers}
+    that \( S \) has a least element.
+    Since \( 0 \in \dom f \), there exists some \( y^{\prime} \) such that \( \orderedpair{0}{y^{\prime}} \in f \).
+    Furthermore, \( y^{\prime} = g( \restrictedfunctionsmall{f}{0} ) = g( \restrictedfunctionsmall{f}{\emptyset} ) = g(\emptyset) \).
+    In other words, \( \orderedpair{\emptyset}{y^{\prime}} \in g \), which means that \( \lambda(S - \ran \emptyset, y^{\prime}) \) must be true
+    and thus \( y^{\prime} \) must be the least element of \( S - \ran \emptyset = S - \emptyset = S \).
+
+    \begin{claim}
+        \phantomsection \label{claim:if-n-is-in-dom-f-then-the-range-of-f-restricted-to-n-plus-one-is-the-set-of-all-elements-of-S-that-are-less-than-or-equal-to-f-n}
+        For all \( n \in \naturalset \), if \( n \in \dom f \), then \( \ran \restrictedfunctionsmall{f}{n + 1} = \setbuilder{x \in S}{x \leq f(n)} \).
+    \end{claim}
+    \noindent
+    We proceed by induction with \( P(n) \) defined as the predicate
+    \begin{equation*}
+        \text{if \( n \in \dom f \), then \( \ran \restrictedfunctionsmall{f}{n + 1} = \setbuilder{x \in S}{x \leq f(n)} \)}
+    \end{equation*}
+    \noindent
+    \underline{\scshape Base Case}:
+    It has already been established in \cref{claim:f-zero-equals-least-element-of-S} that \( 0 \in \dom f \) and that \( f(0) \) is the least element of \( S \).
+    Thus,
+    \begin{equation*}
+        \setbuilder{x \in S}{x \leq f(0)} = \mleft\{ f(0) \mright\}
+    \end{equation*}
+    Since \( 0 + 1 = 0 \,{\union}\, \mleft\{ 0 \mright\} = \emptyset \,{\union}\, \mleft\{ 0 \mright\} = \mleft\{ 0 \mright\} \),
+    it follows that \( \restrictedfunctionsmall{f}{0 + 1} = \restrictedfunctionsmall{f}{\mleft\{ 0 \mright\}} = \mleft\{ \orderedpair{0}{f(0)} \mright\} \).
+    Thus, \( \ran \restrictedfunctionsmall{f}{0 + 1} = \mleft\{ f(0) \mright\} = \setbuilder{x \in S}{x \leq f(0)} \) as required.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}:
+    Let \( n \) be an arbitrary element of \( \naturalset \) such that \( P(n) \) is true.
+    Evidently, there are two cases that must be considered: \( n \in \dom f \) or \( n \notin \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( n \notin \dom f \).
+    Then clearly \( \dom f \neq \naturalset \) because \( n \in \naturalset \).
+    This means that \( \dom f \) is an element of \( \naturalset \) and \( \dom f \leq n < n + 1 \) by \cref{thm:metatheory-linear-ordering-of-natural-numbers}.
+    Moreover, \( n + 1 \notin \dom f \) by \cref{thm:metatheory-asymmetry-of-membership-relation} so that \( P(n + 1) \) is vacuously true.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( n \in \dom f \).
+    Since \( P(n) \) is true, we infer by \cref{meta-rule:modus-ponens} that \( \ran \restrictedfunctionsmall{f}{n + 1} = \setbuilder{x \in S}{x \leq f(n)} \).
+    Note that \( n + 1 \) may or may not be an element of \( \dom f \).
+    Obviously, if \( n + 1 \notin \dom f \), then \( P(n + 1) \) is vacuously true.
+    But if \( n + 1 \in \dom f \), then the property of \( f \) (as stated in \cref{recursion-theorem:generalized-sequence-form}) requires that
+    \( f(n + 1) = g( \restrictedfunctionsmall{f}{n + 1} ) \).
+    It thus follows from the definition of \( g \) that \( f(n + 1) \) is the least element of \( S - \ran \restrictedfunctionsmall{f}{n + 1} =
+    S - \setbuilder{x \in S }{x \leq f(n) } \).
+    Clearly, \( f(n + 1) \notin \setbuilder{x \in S}{x \leq f(n)} \), which means that the statement \( f(n + 1) \leq f(n) \) is false.
+    Since \( f(n) \) and \( f(n + 1) \) are both elements of \( \naturalset \), it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers}
+    that
+    \begin{equation}
+        \label{eq:f-n-is-less-than-f-n-plus-one}
+        f(n) < f(n + 1)
+    \end{equation}
+    Observe also that
+    \begin{equation}
+        \phantomsection \label{eq:range-of-f-restricted-to-successcor-of-n-plus-one}
+        \ran \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} = \ran \restrictedfunctionsmall{f}{n + 1} \union \mleft\{ f(n + 1) \mright\}
+        = \setbuilder{x \in S}{x \leq f(n)} \union \mleft\{ f(n + 1) \mright\}
+    \end{equation}
+    Let \( x^{\prime} \) be an arbitrary element of \( \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \).
+    Then either \( x^{\prime} \leq f(n) \) or \( x^{\prime} = f(n + 1) \) by \eqref{eq:range-of-f-restricted-to-successcor-of-n-plus-one}.
+    If \( x^{\prime} \leq f(n) \), then clearly \( x^{\prime} < f(n + 1) \) due to \eqref{eq:f-n-is-less-than-f-n-plus-one}
+    and \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers}.
+    In other words, if \( x^{\prime} \in \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \), then either \( x^{\prime} < f(n + 1) \) or \( x^{\prime} = f(n + 1) \);
+    i.e., \( x^{\prime} \leq f(n + 1) \).
+    Since \( x^{\prime} \) is arbitrary, we have \( \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \subseteq \setbuilder{x \in S}{x \leq f(n + 1)} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, if \( x^{\prime} \in \setbuilder{x \in S}{x \leq f(n + 1)} \), then either \( x^{\prime} < f(n + 1) \) or \( x^{\prime} = f(n + 1) \).
+    If \( x^{\prime} = f(n + 1) \), then \( x^{\prime} \in \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \)
+    by \eqref{eq:range-of-f-restricted-to-successcor-of-n-plus-one}.
+    On the other hand, if \( x^{\prime} < f(n + 1) \), then \( x^{\prime} \) cannot be an element of \( S - \ran \restrictedfunctionsmall{f}{n + 1} \)
+    because \( f(n + 1) \) is the least element of \( S - \ran \restrictedfunctionsmall{f}{n + 1} \).
+    Thus, the statement
+    \begin{equation*}
+        x^{\prime} \in S \ \text{and} \ x^{\prime} \notin \ran \restrictedfunctionsmall{f}{n + 1}
+    \end{equation*}
+    is necessarily false. By \cref{meta-rule:de-morgans-laws}, we thus have
+    \begin{equation*}
+        x^{\prime} \notin S \ \text{or} \ x^{\prime} \in \ran \restrictedfunctionsmall{f}{n + 1}
+    \end{equation*}
+    But \( x^{\prime} \notin S \) cannot be true because \( x^{\prime} \in \setbuilder{x \in S}{x \leq f(n + 1)} \).
+    By \cref{meta-rule:disjunctive-syllogism}, we conclude that \( x^{\prime} \in \ran \restrictedfunctionsmall{f}{n + 1} \) and thus
+    \( x^{\prime} \in \ran \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \) by \eqref{eq:range-of-f-restricted-to-successcor-of-n-plus-one}.
+    Evidently, \( x^{\prime} \in \ran \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \) is implied in either case.
+    Thus, \( \setbuilder{x \in S}{x \leq f(n + 1)} \subseteq \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \).
+
+    \vspace{0.3cm}
+    \noindent
+    We have shown that \( \restrictedfunctionsmall{f}{\mleft( n + 1 \mright) + 1} \) and \( \setbuilder{x \in S}{x \leq f(n + 1)} \)
+    are subsets of each other. By \cref{thm:metatheory-equality-in-terms-of-subsets}, they must be equal sets.
+    In other words, \( P(n) \) implies \( P(n + 1) \) for any arbitrary \( n \in \naturalset \).
+    \cref{claim:if-n-is-in-dom-f-then-the-range-of-f-restricted-to-n-plus-one-is-the-set-of-all-elements-of-S-that-are-less-than-or-equal-to-f-n} then follows
+    from \aref{thm:metatheory-weak-induction}{Weak Induction}.
+
+    \begin{claim}
+        \phantomsection \label{claim:f-n-less-than-f-n-plus-one}
+        For all \( n \in \naturalset \), if \( n, n + 1 \in \dom f \), then \( f(n) < f(n + 1) \).
+    \end{claim}
+    \noindent
+    Let \( n \) be an arbitrary element of \( \naturalset \) such that \( n, n + 1 \in \dom f \).
+    Recall the property of \( f \) where
+    \begin{equation*}
+        f(n + 1) = g( \restrictedfunctionsmall{f}{n + 1} )
+    \end{equation*}
+    Additionally, we have \( \ran \restrictedfunctionsmall{f}{n + 1} = \setbuilder{x \in S}{x \leq f(n)} \)
+    as established in \cref{claim:if-n-is-in-dom-f-then-the-range-of-f-restricted-to-n-plus-one-is-the-set-of-all-elements-of-S-that-are-less-than-or-equal-to-f-n}.
+    It follows from the definition of \( g \) that \( f(n + 1) \notin \setbuilder{x \in S}{x \leq f(n)} \).
+    Thus, \( f(n) < f(n + 1) \).
+
+    \begin{claim}
+        \phantomsection \label{claim:if-n-less-than-m-then-f-n-less-than-f-m}
+        For all \( n, m \in \dom f \), \( n < m \) implies \( f(n) < f(m) \).
+    \end{claim}
+    \noindent
+    Since \( n < m \), it follows from \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n} that either
+    \( n + 1 = m \) or \( n + 1 < m \). If \( n + 1 = m \), then \( f(n) < f(m) \) follows readily from \cref{claim:f-n-less-than-f-n-plus-one}.
+    If \( n + 1 < m \), then \( n + 1 \in \dom \restrictedfunctionsmall{f}{m + 1} \),
+    which in turn means that \( f(n + 1) \in \ran \restrictedfunctionsmall{f}{m + 1} \).
+    But \( \ran \restrictedfunctionsmall{f}{m + 1} = \setbuilder{x \in S}{x \leq f(m)} \) as shown in
+    \cref{claim:if-n-is-in-dom-f-then-the-range-of-f-restricted-to-n-plus-one-is-the-set-of-all-elements-of-S-that-are-less-than-or-equal-to-f-n}.
+    Since \( f(n + 1) \in \restrictedfunctionsmall{f}{m + 1} \), necessarily \( f(n + 1) \leq f(m) \).
+    By \cref{claim:f-n-less-than-f-n-plus-one}, we thus have
+    \begin{equation*}
+        f(n) < f(n + 1) \leq f(m)
+    \end{equation*}
+    Therefore, \( f(n) < f(m) \) as required.
+    
+    \begin{claim}
+        \phantomsection \label{claim:f-is-injective}
+        \( f \) is injective.
+    \end{claim}
+    \noindent
+    Let \( m \) and \( n \) be elements of \( \dom f \) such that \( f(n) = f(m) \).
+    Since \( \dom f \) is either \( \naturalset \) or an element of \( \naturalset \), it follows that \( m \) and \( n \) are both elements of \( \naturalset \).
+    We now prove that \( m \neq n \) leads to a contradiction.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( m \neq n \).
+    Since \( m, n \in \naturalset \), it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers} that either \( m < n \) or \( n < m \) is true.
+    If \( m < n \), then necessarily \( f(m) < f(n) \) as has been shown in \cref{claim:if-n-less-than-m-then-f-n-less-than-f-m}.
+    But this would mean that \( f(n) \neq f(m) \), which contradicts our initial supposition that \( f(n) = f(m) \).
+    If \( n < m \), then we can arrive at the same contradiction via a similar argument, only with the roles of \( n \) and \( m \) swapped.
+    Since \( m \neq n \) leads to a contradiction, we conclude from \cref{meta-rule:reductio-ad-absurdum} that \( m = n \).
+    Thus, \( f \) is injective.
+
+    \vspace{0.3cm}
+    \noindent
+    Using these claims, one can then show that \( \dom f \neq \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    First of all, observe that \( \ran f \neq \emptyset \) because \( \dom f \neq \emptyset \) and that \( \ran f \subseteq S \subset n \subseteq \naturalset \);
+    that is, \( \ran f \) is a non-empty subset of \( \naturalset \).
+    Note also that \( \ran f \) is bounded from above; e.g., \( y < n \) for all \( y \in \ran f\).
+
+    \vspace{0.3cm}
+    \noindent
+    Now suppose that \( \dom f = \naturalset \).
+    Let \( y \) be an arbitrary element of \( \ran f \).
+    Thus, there exists some \( n \in \dom f \) such that \( \orderedpair{n}{y} \in f \).
+    But if \( n \in \dom f \), then necessarily \( n + 1 \in \dom f \) due to the fact that \( \naturalset \) is an inductive set.
+    Thus, there must exist a \( y^{\prime} \in \ran f \) such that \( \orderedpair{n + 1}{y^{\prime}} \in f \).
+    Moreover, \( y < y^{\prime} \) by \cref{claim:f-n-less-than-f-n-plus-one}.
+    This implies that for every \( y \in \ran f \), it is possible to find another element in \( \ran f \) that is greater than \( y \).
+    In other words, \( \ran f \) has no greatest element.
+    But this contradicts \cref{thm:metatheory-every-non-empty-subset-of-N-that-is-bounded-from-above-has-a-greatest-element} which states that
+    \( \ran f \), a non-empty subset of \( \naturalset \) that is bounded from above, must have a greatest element.
+    Therefore, \( \dom f = \naturalset \) cannot be true.
+    This means that \( \dom f = k \) for some \( k \in \naturalset \) such that \( \restrictedfunctionsmall{f}{k} \notin \dom g \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we prove that \( \ran f = S \).
+    It is known from \cref{recursion-theorem:generalized-sequence-form} that \( \ran f \subseteq S \).
+    Thus, it suffices to prove that \( S \subseteq \ran f \).
+    We begin with the observation that \( \restrictedfunctionsmall{f}{k} = f \) since \( \dom f = k \).
+    It thus follows that \( \ran \restrictedfunctionsmall{f}{k} = \ran f \).
+    With that in mind, we consider the given fact that \( \restrictedfunctionsmall{f}{k} \notin \dom g \), which can only be true
+    if and only if
+    \begin{equation}
+        \phantomsection \label{eq:either-psi-0-is-false-or-psi-1-is-false}
+        \text{for all \( y \), either \( \psi_{0}( \restrictedfunctionsmall{f}{k}, y)\) is false or \( \psi_{1}( \restrictedfunctionsmall{f}{k}, y)\) is false}
+    \end{equation}
+    Let \( y^{\prime} \) denote an arbitrary object in the universe.
+    Note that \( \psi_{0}( \restrictedfunctionsmall{f}{k}, y^{\prime})\) can never be false because \( \restrictedfunctionsmall{f}{k} \in \finiteseq{S} \) and
+    \( \restrictedfunctionsmall{f}{k} \) is injective.
+    Therefore, \( \psi_{1}( \restrictedfunctionsmall{f}{k}, y^{\prime})\) must be false by \cref{meta-rule:disjunctive-syllogism}.
+    Since \( y^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation}
+        \phantomsection \label{eq:lambda-is-false-for-all-y}
+        \text{for all \( y \), \( \lambda( S - \ran \restrictedfunctionsmall{f}{k}, y ) \) is false}
+    \end{equation}
+    Since \( S \subset n \subseteq \naturalset \), naturally \( S - \ran \restrictedfunctionsmall{f}{k} \) must also be a subset of \( S \) and, by extension,
+    a subset of \( \naturalset \).
+    We will now prove that it is impossible for \eqref{eq:lambda-is-false-for-all-y} to hold if \( S - \ran \restrictedfunctionsmall{f}{k} \) is non-empty.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( S - \ran \restrictedfunctionsmall{f}{k} \neq \emptyset \).
+    This would imply that \( S - \ran \restrictedfunctionsmall{f}{k} \) is a non-empty subset of \( \naturalset \).
+    By \cref{thm:metatheory-well-ordering-of-natural-numbers}, \( S - \ran \restrictedfunctionsmall{f}{k} \) must have a least element.
+    Let \( \mu \) be the least element of \( S - \ran \restrictedfunctionsmall{f}{k} \).
+    In other words,
+    \begin{equation*}
+        \mu \in \mleft( S - \ran \restrictedfunctionsmall{f}{k} \mright) \ \text{and for all \( z \in \mleft( S - \ran \restrictedfunctionsmall{f}{k} \mright) \), \( \mu \leq z \)}
+    \end{equation*}
+    But this would mean that \( \lambda(S - \ran \restrictedfunctionsmall{f}{k}, \mu) \) is true, which contradicts \eqref{eq:lambda-is-false-for-all-y}.
+    By \cref{meta-rule:reductio-ad-absurdum}, we come to the conclusion that the set \( S - \ran \restrictedfunctionsmall{f}{k} \) must be empty.
+    Since \( S - \ran \restrictedfunctionsmall{f}{k} = \emptyset \), we then infer from \cref{thm:metatheory-A-minus-B-is-empty-iff-A-is-a-subset-of-B}
+    that \( S \subseteq \ran \restrictedfunctionsmall{f}{k} \).
+    Since \( S \) and \( \ran \restrictedfunctionsmall{f}{k} \) are subsets of each other, they must be equal sets.
+    \begin{equation*}
+       \ran f = \ran \restrictedfunctionsmall{f}{k} = S
+    \end{equation*}
+    To recap, so far we have demonstrated that \( f \) is an injective function where \( \dom f = k \) for some \( k \in \naturalset \) and \( \ran f = S \).
+    Put simply, \( f \) is a bijection between a natural number \( k \) and a set \( S \).
+    \begin{equation*}
+        \bijection{f}{k}{S}
+    \end{equation*}
+    To complete the proof, we will now demonstrate that necessarily \( k < n \).
+
+    \vspace{0.3cm}
+    \noindent
+    Note, first and foremost, that \( k = n \) cannot be true; otherwise, \( f \) would be a bijection between \( n \) and its proper subset \( S \),
+    which contradicts \cref{thm:metatheory-no-bijection-exists-between-a-natural-number-and-its-proper-subset}.
+    Since \( k \neq n \), it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers} that either \( n < k \) or \( k < n \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( n < k \), then necessarily \( n \subset k \) by \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}.
+    But this would mean that \( \restrictedfunctionsmall{f}{n} \) is a bijection between \( n \) and a proper subset of \( S \), which itself is a proper subset
+    of \( n \). Again, this contradicts \cref{thm:metatheory-no-bijection-exists-between-a-natural-number-and-its-proper-subset}.
+    This means that \( n < k \).
+
+    \vspace{0.3cm}
+    \noindent
+    By \cref{meta-rule:disjunctive-syllogism}, necessarily \( k < n \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-or-equals-to-the-number}
+    If \( n \in \naturalset \) and \( S \subseteq n \), then there exists a bijection \( \bijection{f}{k}{S} \) where \( k \in \naturalset \)
+    and \( k \leq n \).
+\end{thm}
+
+\begin{proof}
+    Since \( S \subseteq n \), we are left with only two possibilities: either \( S = n \) or \( S \subset n \).
+    If \( S = n \), then the identity function is clearly a bijection between \( n \) and \( S \).
+    If \( S \subset n \), then \cref{thm:metatheory-every-proper-subset-of-a-natural-number-can-form-bijections-with-a-natural-number-less-than-the-number}
+    guarantees the existence of a bijection \( f \) between \( k \) and \( S \) where \( k \) is a natural number less than \( n \).
+\end{proof}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-every-subset-of-a-natural-number-is-a-finite-set}
+    Every subset of a natural number is a finite set.
+\end{cor}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-the-cardinality-of-any-subset-of-a-natural-number-is-less-than-or-equals-to-the-number}
+    If \( n \in \naturalset \) and \( S \subseteq n \), then \( \abs{S} \leq n \).
+\end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-cardinality-of-any-finite-sequence-is-its-domain}
+    For any finite sequence \( s \), \( \abs{s} = \dom s \).
+\end{thm}
+
+\begin{proof}
+    Let \( f \) be the set defined as follows:
+    \begin{equation*}
+        f = \setbuilderbig{\orderedpair{x}{y}}{ y \in s \ \text{and there exists a \( z \) such that \( y = \orderedpair{x}{z} \)} }
+    \end{equation*}
+    We first prove that \( f \) is a function.
+    Let \( x^{\prime} \), \( y^{\prime} \), and \( y^{\prime\prime} \) be arbitrary objects in the universe.
+    Suppose that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) and \( \orderedpair{x^{\prime}}{y^{\prime\prime}} \in f \) are both true.
+    Thus, \( y^{\prime} = \orderedpair{x^{\prime}}{z^{\prime}} \) and \( y^{\prime\prime} = \orderedpair{x^{\prime}}{z^{\prime\prime}} \)
+    for objects \( z^{\prime} \) and \( z^{\prime\prime} \).
+    Furthermore, \( y^{\prime} \) and \( y^{\prime\prime} \) are both elements of \( s \).
+    In other words,
+    \begin{equation*}
+        \orderedpair{x^{\prime}}{z^{\prime}} \in s \ \text{and} \ \orderedpair{x^{\prime}}{z^{\prime\prime}} \in s
+    \end{equation*}
+    are both true.
+    Since \( s \) is a function, it follows that \( z^{\prime} = z^{\prime\prime} \).
+    Thus, 
+    \begin{equation*}
+        y^{\prime} = \orderedpair{x^{\prime}}{z^{\prime}} = \orderedpair{x^{\prime}}{z^{\prime\prime}} = y^{\prime\prime}
+    \end{equation*}
+    by \cref{thm:metatheory-equality-of-ordered-pairs}.
+    Therefore, \( f \) is a function by \cref{dfn:metatheory-function}.
+    It remains to prove that \( f \) is a bijection between \( \dom s \) and \( s \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Let \( x^{\prime} \), \( x^{\prime\prime} \), and \( y \) be objects in the universe such that
+    \( \orderedpair{x^{\prime}}{y} \in f \) and \( \orderedpair{x^{\prime\prime}}{y} \in f \) are both true.
+    We then infer from the definition of \( f \) that \( y = \orderedpair{x^{\prime}}{z^{\prime}} = \orderedpair{x^{\prime\prime}}{z^{\prime\prime}} \)
+    for objects \( z^{\prime} \) and \( z^{\prime\prime} \).
+    Thus, \( x^{\prime} = x^{\prime\prime} \) by \cref{thm:metatheory-equality-of-ordered-pairs}.
+    In other words, \( f \) is injective.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( x^{\prime} \) be an arbitrary element of \( \dom f \); that is, \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \) for some \( y^{\prime} \).
+    Clearly, \( y^{\prime} \in s \) and \( y^{\prime} = \orderedpair{x^{\prime}}{z^{\prime}} \) for some \( z^{\prime} \).
+    Therefore, \( \orderedpair{x^{\prime}}{z^{\prime}} \in s \) and thus \( x^{\prime} \in \dom s \).
+    Since \( x^{\prime} \) is arbitrary, we conclue that \( \dom f \subseteq \dom s \).
+    Conversely, suppose that \( x^{\prime} \) is an arbitrary element of \( \dom s \).
+    Thus, there exists a \( z^{\prime} \) such that \( \orderedpair{x^{\prime}}{z^{\prime}} \in s \).
+    But this would imply that \( \orderedpair{x^{\prime}}{\orderedpair{x^{\prime}}{z^{\prime}}} \in \dom f \) and thus \( x^{\prime} \in \dom f \).
+    In other words, \( \dom s \subseteq \dom f \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \dom f \) and \( \dom s \) are subsets of each other, they are necessarily equal sets.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( y^{\prime} \in \ran f \); that is, there exists an \( x^{\prime} \) such that \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    It follows from the definition of \( f \) that \( y^{\prime} \in s \), which allows us to draw the conclusion that \( \ran f \subseteq s \).
+    Conversely, if \( y^{\prime} \in s \), then \( y^{\prime} \) must be an ordered pair since \( s \) is a function.
+    Let \( y^{\prime} = \orderedpair{a}{b} \), in which case \( \orderedpair{a}{y^{\prime}} \) is necessarily an element of \( f \).
+    Thus, \( s \subseteq \ran f \).
+    Since \( s \) and \( \ran f \) are subsets of each other, it follows that \( s = \ran f \).
+
+    \vspace{0.3cm}
+    \noindent
+    It has been shown that \( f \) is an injective function such that \( \dom f = \dom s \) and \( \ran f = s \).
+    In other words, \( f \) is a bijection between \( \dom s \) and \( s \).
+    Since \( s \) is a finite sequence, it follows that \( \dom s \in \naturalset \).
+    By \cref{dfn:metatheory-cardinality-of-finite-sets}, \( \abs{s} = \dom s \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-a-bijection-exists-between-N-and-N-minus-n-where-n-is-an-element-of-N}
+    For all \( m \in \naturalset \), there exists a bijection \( f \) between \( \naturalset \) and \( \naturalset - m \) with the
+    following properties:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( f(0) = m \)
+        \item for all \( n \in \naturalset \), \( f(n + 1) = f(n) + 1 \)
+    \end{enumerate}
+\end{thm}
+
+\begin{proof}
+    Let \( m \) be an arbitrary element of \( \naturalset \).
+    Let \( \varphi(x, n, y) \) be a sequence of two predicates such that:
+    \begin{alignat*}{2}
+        &\varphi_{0}(x, n, y) &&\coloneq \text{\( n \in \naturalset \) and \( x \in \mleft( \naturalset - m \mright) \)}\\
+        &\varphi_{1}(x, n, y) &&\coloneq \text{\( y = x + 1 \)}
+    \end{alignat*}
+    Now let \( g = \setbuilderbig{\orderedpair{\orderedpair{x}{n}}{y}}{\conjunction{\varphi(x, n, y)}} \).
+    It should be evident from \cref{thm:metatheory-existence-of-unrestricted-comprehension-set,dfn:metatheory-cartesian-product}
+    that the set \( g \) exists.
+    We now prove that \( \function{g}{\mleft( \naturalset - m \mright) \times \naturalset}{\mleft( \naturalset - m \mright)} \)
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( p \), \( y^{\prime} \), and \( y^{\prime\prime} \) be arbitrary objects such that
+    \( \orderedpair{p}{y^{\prime}} \in g \) and \( \orderedpair{p}{y^{\prime\prime}} \in g \) are both true.
+    Due to the definition of \( g \), \( p \) must be an ordered pair of the form \( \orderedpair{x^{\prime}}{n^{\prime}} \)
+    where \( x^{\prime} \) and \( n^{\prime} \) are existing objects.
+    Moreover, \( x^{\prime} \in \mleft( \naturalset - m \mright) \) and \( n^{\prime} \in \naturalset \) due to \( \varphi_{0} \).
+    For \( \varphi_{1}(x^{\prime}, n^{\prime}, y^{\prime}) \)
+    and \( \varphi_{1}(x^{\prime}, n^{\prime}, y^{\prime\prime}) \) to be true,
+    both \( y^{\prime} \) and \( y^{\prime\prime} \) must be the successor of \( x^{\prime} \).
+    Since the successor of any natural number is unique by \cref{thm:metatheory-uniqueness-of-successor}, necessarily \( y^{\prime} = y^{\prime\prime} \).
+    Thus, \( g \) is a function by \cref{dfn:metatheory-function}.
+
+    \vspace{0.3cm}
+    \noindent
+    It is immediately obvious from the definition of \( g \) that \( \dom g \subseteq \mleft( \naturalset - m \mright) \times \naturalset \).
+    To prove the converse, let \( p \) be an arbitrary element of \( \mleft( \naturalset - m \mright) \times \naturalset \).
+    Thus, \( p = \orderedpair{r^{\prime}}{n^{\prime}} \) where \( r^{\prime} \in \mleft( \naturalset - m \mright) \) and \( n^{\prime} \in \naturalset \).
+    Clearly, \( \orderedpair{p}{r^{\prime} + 1} \in g \) and thus \( p \in \dom g \).
+    Since \( p \) is arbitrary, it follows that \( \mleft( \naturalset - m \mright) \times \naturalset \subseteq \dom g \).
+    Since \( \dom g \) and \( \mleft( \naturalset - m \mright) \times \naturalset \) are subsets each other, their equality
+    follows by virtue of \cref{thm:metatheory-equality-in-terms-of-subsets}.
+
+    \vspace{0.3cm}
+    \noindent
+    To show that \( \ran g \subseteq \mleft( \naturalset - m \mright) \),
+    recall from \cref{thm:metatheory-N-minus-a-natural-number-is-the-set-of-all-natural-numbers-greater-than-or-equal-to-that-number}
+    that \( \naturalset - m = \setbuilder{x \in \naturalset}{m \leq x} \).
+    If \( y^{\prime} \in \ran g \), then necessarily \( y^{\prime} = x^{\prime} + 1 \) for some \( x^{\prime} \in \mleft( \naturalset - m \mright) \).
+    This means that \( m \leq x^{\prime} < x^{\prime} + 1 \) and thus \( m < y^{\prime} \) so that \( y^{\prime} \in \mleft( \naturalset - m \mright) \).
+    Therefore, \( \ran g \subseteq \mleft( \naturalset - m \mright) \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( g \) is a function with \( \dom g = \mleft( \naturalset - m \mright) \) and \( \ran g \subseteq \mleft( \naturalset - m \mright) \), it follows
+    that \( \function{g}{\mleft( \naturalset - m \mright) \times \naturalset}{\mleft( \naturalset - m \mright)} \).
+    Since \( m \in \mleft( \naturalset - m \mright) \),
+    \cref{recursion-theorem:standard-form} guarantees the existence of a unique function \( \function{f}{\naturalset}{\mleft( \naturalset - m \mright)} \)
+    such that \( f(0) = m \) and \( f(n + 1) = g(f(n), n) = f(n) + 1 \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now we use the properties of \( f \) to prove that \( f \) is a bijection between \( \naturalset \) and \( \naturalset - m \).
+
+    \vspace{0.3cm}
+    \noindent
+    We begin with the observation that \( f(n) < f(n + 1) \) for all \( n \in \naturalset \), which is evident from the definition of \( g \).
+    From this, we can then prove by induction that \( i < n \) implies \( f(i) < f(n) \) for all \( n, i \in \naturalset \).
+    Let \( P(n) \) be the following predicate.
+    \begin{equation*}
+        P(n) \coloneq \text{ for all \( i \in \naturalset \), \( i < n \) implies \( f(i) < f(n) \) }
+    \end{equation*}
+    \noindent
+    \underline{\scshape Base Case}: \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( i^{\prime} \) be an arbitrary element of \( \naturalset \).
+    By \cref{thm:metatheory-every-nonzero-natural-number-contains-the-empty-set}, it follows that either \( i^{\prime} = 0 \)
+    or \( 0 < i^{\prime} \).
+    In either case, \( i^{\prime} < 0 \) is false.
+    Thus, the statement
+    \begin{equation*}
+        i^{\prime} < 0 \ \text{implies} \ f(i^{\prime}) < f(0)
+    \end{equation*}
+    is vacuously true.
+    Since \( i^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \)
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be any element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    Let \( i^{\prime} \) be any element of \( \naturalset \) such that \( i^{\prime} < n^{\prime} + 1 \).
+    Thus, either \( i^{\prime} \in n^{\prime} \) or \( i^{\prime} = n^{\prime} \).
+    If \( i^{\prime} \in n^{\prime} \), then necessarily \( f(i^{\prime}) < f(n^{\prime}) \) since \( P(n^{\prime}) \) is true.
+    But \( f(n^{\prime}) < f(n^{\prime} + 1) \), so necessarily \( f(i^{\prime}) < f(n^{\prime} + 1) \) by
+    \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers}.
+    If \( i^{\prime} = n^{\prime} \), then obviously \( f(i^{\prime}) = f(n^{\prime}) < f(n^{\prime} + 1) \).
+    In other words, \( f(i^{\prime}) < f(n^{\prime} + 1) \) is implied in either possibility.
+    \begin{equation*}
+        \therefore \, i^{\prime} < \mleft( n^{\prime} + 1 \mright) \ \text{implies} \ f(i^{\prime}) < f(n^{\prime} + 1)
+    \end{equation*}
+    Since \( i^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \( P(n^{\prime} + 1) \) is true.
+    Thus, \( P(n^{\prime}) \) implies \( P(n^{\prime} + 1) \) for any arbitrary \( n^{\prime} \in \naturalset \).
+    The inductive step follows readily from \cref{meta-rule:universal-generalization}.
+
+    \vspace{0.3cm}
+    \noindent
+    The previous result can be utilized to prove that \( f \) is injective.
+    Let \( n \) and \( m \) be any two elements of \( \naturalset \) such that \( f(n) = f(m) \).
+    Since \( \ran f \subseteq \naturalset \), it follows that \( f(n) \) and \( f(m) \) are both elements of \( \naturalset \).
+    Given that \( f(n) = f(m) \), we infer from \cref{thm:metatheory-linear-ordering-of-natural-numbers} that
+    \( f(n) < f(m) \) and \( f(m) < f(n) \) are both false.
+    This means that neither \( n < m \) nor \( m < n \) are true.
+    Thus, \( n = m \) by \cref{thm:metatheory-linear-ordering-of-natural-numbers}.
+
+    \vspace{0.3cm}
+    \noindent
+    Finally, we prove that \( \ran f = \mleft( \naturalset - m \mright) = \setbuilder{x \in \naturalset}{m \leq x} \).
+    Since \cref{recursion-theorem:standard-form} guarantees that \( \ran f \subseteq \mleft( \naturalset - m \mright) \),
+    it suffices to verify that \( \mleft( \naturalset - m \mright) \subseteq \ran f \).
+    We can do this by induction.
+    Let \( P(n) \) be the following predicate.
+    \begin{equation*}
+        P(n) \coloneq n \in \ran f
+    \end{equation*}
+    The goal is to prove that \( P(n) \) is true for all \( n \geq m \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Base Case}: \( P(m) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( f(0) = m \), necessarily \( m \in \ran f \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \)
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be any element of \( \naturalset \) such that \(  m \leq n^{\prime} \) and \( P(n^{\prime}) \) is true.
+    Thus, \( \orderedpair{x^{\prime}}{n^{\prime}} \in f \) for some \( x^{\prime} \in \naturalset \).
+    Since \( \dom f \in \naturalset \) and \( x^{\prime} + 1 \) is necessarily an element of \( \naturalset \), it follows
+    that \( \mleft( x^{\prime} + 1 \mright) \in \dom f \).
+    Thus, \( \orderedpair{x^{\prime} + 1}{n^{\prime\prime}} \in f \) for some object \( n^{\prime\prime} \).
+    Furthermore, \( \orderedpair{\orderedpair{n^{\prime}}{x^{\prime}}}{n^{\prime\prime}} \in g \) as stated
+    in \cref{recursion-theorem:standard-form}.
+    For \(  \orderedpair{\orderedpair{n^{\prime}}{x^{\prime}}}{n^{\prime\prime}}  \) to be an element of \( g \),
+    the statement \( \varphi_{1}(n^{\prime}, x^{\prime}, n^{\prime\prime}) \) must be true, which means that
+    \( n^{\prime\prime} = n^{\prime} + 1 \).
+    In other words, \( \orderedpair{x^{\prime} + 1}{n^{\prime} + 1} \in f \).
+    Therefore, \( \mleft( n^{\prime} + 1 \mright) \in \ran f \) and \( P(n^{\prime} + 1) \) is true.
+    By \cref{meta-rule:universal-generalization}, we conclude that
+    \begin{equation*}
+        \text{for all \( n \in \naturalset \) such that \( m \leq n \), \( P(n) \) implies \( P(n + 1) \)}
+    \end{equation*}
+    The inductive step follows readily from \aref{thm:metatheory-generalized-weak-induction}{Generalized Weak Induction}.
+
+    \vspace{0.3cm}
+    \noindent
+    It has been shown that \( f \) is an injective function on \( \naturalset \) with \( \ran f = \mleft( \naturalset - m \mright) \).
+    Hence, \( f \) must be a bijection between \( \naturalset \) and \( \naturalset - m \).
+\end{proof}
+
+\begin{dfn}
+    \phantomsection \label{dfn:metatheory-n-shift-of-N}
+    Given any \( n \in \naturalset \), the \keyword{\( n \)-shift} of \( \naturalset \), denoted as \( \mathfrak{S}_{n} \),
+    is the unique bijection from \( \naturalset \) to \( \naturalset - n \)
+    such that:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \mathfrak{S}_{n}(0) = n \)
+        \item \( \mathfrak{S}_{n}(i + 1) = \mathfrak{S}_{n}(i) + 1  \) for all \( i \in \naturalset \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-0-shift-of-N-is-the-identity-function}
+    The \( 0 \)-shift of \( \naturalset \) is the identity function of \( \naturalset \).
+\end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-n-shift-of-N-is-monotonic}
+    If \( k \in \naturalset \), then for all \( n, m \in \dom \mathfrak{S}_{k} \),
+    \( m < n \) implies \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(n) \).
+\end{thm}
+
+\begin{proof}
+    Let \( k \) be an arbitrary element of \( \naturalset \).
+    The \( k \)-shift of \( \naturalset \) is the function
+    \begin{equation*}
+        \bijection{\mathfrak{S}_{k}}{\naturalset}{\mleft( \naturalset - k \mright)}
+    \end{equation*}
+    Note that \( \dom \mathfrak{S}_{k} = \naturalset \).
+    This means that we can prove the theorem by induction.
+    Let \( P(n) \) be the following predicate.
+    \begin{equation*}
+        P(n) \coloneq \text{for all \( m \in \dom \mathfrak{S}_{k} \), \( m < n \) implies \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(n) \)}
+    \end{equation*}
+    \underline{\scshape Base Case}: \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( m \) be an arbitrary element of \( \dom \mathfrak{S}_{k} \).
+    Clearly, \( m \notin \emptyset \), which means that the implication
+    \begin{equation*}
+        \text{\( m < 0 \) implies \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(0) \)}
+    \end{equation*}
+    is vacuously true.
+    Since \( m \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be any element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    Let \( m \) be any element of \( \dom \mathfrak{S}_{k} \).
+    Suppose that \( m < n^{\prime} + 1 \).
+    Thus, either \( m \in n^{\prime} \) or \( m = n^{\prime} \).
+    If \( m \in n^{\prime} \), then necessarily \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(n^{\prime}) \)
+    because \( P(n^{\prime}) \) is true.
+    But \( \mathfrak{S}_{k}(n^{\prime} + 1) = \mathfrak{S}_{k} + 1 \) by \cref{dfn:metatheory-n-shift-of-N}.
+    Thus, \( \mathfrak{S}_{k}(n^{\prime}) < \mathfrak{S}_{k}(n^{\prime} + 1)  \).
+    It follows from \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers} that
+    \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(n^{\prime} + 1) \).
+    If \( m = n^{\prime} \), then \( \mathfrak{S}_{k}(m) < \mathfrak{S}_{k}(n^{\prime} + 1) \) follows readily from
+    \cref{dfn:metatheory-n-shift-of-N}.
+    Thus, \( P(n^{\prime} + 1) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    By \aref{thm:metatheory-weak-induction}{Weak Induction}, it follows that \( P(n) \) is true for all \( n \in \dom \mathfrak{S}_{k} \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-range-of-restricted-n-shift}
+    For all \( n, k \in \naturalset \), if \( k \neq 0 \), then \( \ran \mleft(  \restrictedfunctionsmall{ \mathfrak{S}_{n} }{k} \mright) = \mathfrak{S}_{n}(k) - n  \).
+\end{thm}
+
+\begin{proof}
+    Let \( y \) be an arbitrary element of \( \ran \mleft( \restrictedfunctionsmall{ \mathfrak{S}_{n} }{k} \mright) \).
+    Thus, there exists some \( i \in k \) such that \( \orderedpair{i}{y} \in \mathfrak{S}_{n} \).
+    Since \( i \in k \), it follows from \cref{thm:metatheory-n-shift-of-N-is-monotonic} that \( y = \mathfrak{S}_{n}(i) < \mathfrak{S}_{n}(k)  \).
+    Moreover, we also have \( n \leq y \) since \( \ran \mathfrak{S}_{n} = \mleft( \naturalset - n \mright) \).
+    This means that \( y \in \mathfrak{S}_{n}(k) \) and \( y \notin n \); i.e., \( y \in \mleft( \mathfrak{S}_{n}(k) - n \mright) \).
+    Given that \( y \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization} that
+    \( \ran \mleft( \restrictedfunctionsmall{\mathfrak{S}_{n}}{k} \mright) \subseteq \mathfrak{S}_{n}(k) - n \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( z \) be an arbitrary element of \( \mathfrak{S}_{n}(k) - n \); that is, \( z \in \mathfrak{S}_{n}(k) \) and \( z \notin n \)
+    are both true.
+    Since \( z \) and \( n \) are both elements of \( \naturalset \), it follows from \cref{thm:metatheory-linear-ordering-of-natural-numbers}
+    that \( n \leq z \).
+    By \cref{thm:metatheory-N-minus-a-natural-number-is-the-set-of-all-natural-numbers-greater-than-or-equal-to-that-number}, it follows
+    that \( z \in \mleft( \naturalset - n \mright) \) and thus \( z \in \ran \mathfrak{S}_{n} \).
+    This means that there exists a \( j \in \naturalset \) such that \( z = \mathfrak{S}_{n}(j) \).
+    Since \( j \) and \( k \) are both elements of \( \naturalset \), \cref{thm:metatheory-linear-ordering-of-natural-numbers} implies only
+    three possibilities: \( j = k \), \( j < k \), or \( k < j \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( j = k \), then necessarily \( \mathfrak{S}_{n}(j) = \mathfrak{S}_{n}(k) \) since \( \mathfrak{S}_{n} \) is a function.
+    But this contradicts the fact that \( z = \mathfrak{S}_{n}(j) < \mathfrak{S}_{n}(k) \).
+    Therefore, \( j = k \) cannot possibly be true.
+
+    \vspace{0.3cm}
+    \noindent
+    If \( k < j \), then necessarily \( \mathfrak{S}_{n}(k) < \mathfrak{S}_{n}(j)  \) by \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
+    By \cref{thm:metatheory-asymmetry-of-membership-relation}, it follows that \( \mathfrak{S}_{n}(j) < \mathfrak{S}_{n}(k) \) must be false.
+    Again, this contradicts our initial assumption that \( \mathfrak{S}_{n}(j) < \mathfrak{S}_{n}(k) \) is true.
+    Therefore, \( k < j \) cannot be true.
+
+    \vspace{0.3cm}
+    \noindent
+    Thus, we are left with only one possibility, which is \( j < k \).
+    In other words, \( z \in \mleft( \mathfrak{S}_{n}(k) - n \mright) \) implies \( z = \mathfrak{S}_{n}(i) \) for some \( i \in k \);
+    that is, \( z \in \ran \restrictedfunctionsmall{ \mathfrak{S}_{n} }{k} \).
+    Since \( z \) is arbitrary, it follows that \( \mathfrak{S}_{n}(k) - n \subseteq \ran \restrictedfunctionsmall{\mathfrak{S}_{n}}{k} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( \mathfrak{S}_{n}(k) - n \) and \( \ran \restrictedfunctionsmall{\mathfrak{S}_{n}}{k} \) are subsets of each other, they must be equal sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-image-of-a-natural-number-under-an-inverse-n-shift-is-also-a-natural-number}
+    If \( k \in \naturalset \), then \( k < n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \) for all \( n \in \naturalset \).
+\end{thm}
+
+\begin{proof}
+    We prove this by induction with the predicate \( P(n) \) defined as follows.
+    \begin{equation*}
+        P(n) \coloneq \text{\( k < n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \)}
+    \end{equation*}
+    \noindent
+    \underline{\scshape Base Case}: \( P(0) \) is vacuously true since no element of \( \naturalset \) is less than \( 0 \).
+
+    \vspace{0.3cm}
+    \noindent
+    \underline{\scshape Inductive Step}: \( P(n) \) implies \( P(n + 1) \) for all \( n \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( n^{\prime} \) be an element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
+    The statement \( k < n^{\prime} \) is either true or false by \cref{meta-rule:law-of-excluded-middle}.
+    We must show that \( P(n^{\prime} + 1) \) is necessarily true in either possibility.
+
+    \vspace{0.3cm}
+    \noindent
+    Suppose that \( k < n^{\prime} \) is true.
+    Since \( n^{\prime} < n^{\prime} + 1 \), \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers} implies that
+    \( k < n^{\prime} < n^{\prime} + 1 \).
+    Observe that \( n^{\prime} + 1 = n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} \) due to \cref{dfn:metatheory-successor}.
+    Thus, we have by \cref{thm:metatheory-image-of-union-is-union-of-images}
+    \begin{equation*}
+        \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} \union \mleft\{ n^{\prime} \mright\}}
+        = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \,{\union}\, \mleft\{ \mathfrak{S}^{-1}_{k}(n^{\prime}) \mright\}
+    \end{equation*}
+    Let \( m \in \naturalset \) such that \( \mathfrak{S}^{-1}_{k}(n^{\prime}) = m \).
+    In other words, \( \orderedpair{n^{\prime}}{m} \in \mathfrak{S}^{-1}_{k} \) and thus \( \orderedpair{m}{n^{\prime}} \in \mathfrak{S}_{k} \)
+    by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}.
+    Let \( x^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \).
+    By \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}, there exists an object \( y^{\prime} \in n^{\prime} \)
+    such that \( \orderedpair{y^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, this is tantamount to \( \orderedpair{x^{\prime}}{y^{\prime}} \in \mathfrak{S}_{k} \).
+    Since \( \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) = \naturalset \)
+    and \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \subseteq \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) \),
+    it follows that \( x^{\prime} \in \naturalset \).
+    With \( x^{\prime} \) and \( m \) both being elements of \( \naturalset \), \cref{thm:metatheory-linear-ordering-of-natural-numbers} implies only three possible cases:
+    \( x^{\prime} = m \), \( x^{\prime} < m \), or \( m < x^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Observe, however, that \( x^{\prime} = m \) and \( m < x^{\prime} \) are both impossible because they imply
+    \( y^{\prime} = n^{\prime} \) and \( n^{\prime} < y^{\prime} \) respectively, thereby contradicting the fact that \( y^{\prime} < n^{\prime} \).
+    By \cref{meta-rule:disjunctive-syllogism}, necessarily \( x^{\prime} < m \) and thus \( x^{\prime} \in m \).
+    In other words,
+    \begin{equation*}
+        x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \ \text{implies} \ x^{\prime} \in m
+    \end{equation*}
+    Since \( x^{\prime} \) is arbitrary, it follows that \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \subseteq m \).
+
+    \vspace{0.3cm}
+    \noindent
+    Conversely, suppose that \( x^{\prime} \in m \).
+    Since \( m \in \naturalset \) and \( \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) = \naturalset \),
+    it follows that \( m \in \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) \), which means that an object
+    \( y^{\prime} \) exists such that \( \orderedpair{y^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
+    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \mathfrak{S}_{k} \).
+    Recall that \( \orderedpair{m}{n^{\prime}} \in \mathfrak{S}_{k} \).
+    Since \( x^{\prime} < m \), necessarily \( y^{\prime} < n^{\prime} \) by \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
+    This means that \( y^{\prime} \) is an object such that \( y^{\prime} \in n^{\prime} \) and \( \orderedpair{y^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
+    Thus \( x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \) by \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
+    \begin{equation*}
+        x^{\prime} \in m \ \text{implies} \ x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}}
+    \end{equation*}
+    Since \( x^{\prime} \) is arbitrary, we have \( m \subseteq \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \).
+
+    \vspace{0.3cm}
+    \noindent
+    It has been demonstrated that \( m \) and \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \) are subsets of each other.
+    By \cref{thm:metatheory-equality-in-terms-of-subsets}, they must be equal sets.
+    Therefore,
+    \begin{equation*}
+        \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1}
+        = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \,{\union}\, \mleft\{ \mathfrak{S}^{-1}_{k}(n^{\prime}) \mright\}
+        = m \union \mleft\{ m \mright\}
+        = m + 1
+    \end{equation*}
+    Since \( m \in \naturalset \) and \( \naturalset \) is inductive, \( m + 1 = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \) must also be
+    an element of \( \naturalset \).
+    Thus, \( P(n^{\prime} + 1) \) is true when \( k < n^{\prime} \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    On other hand, suppose that \( k < n^{\prime} \) is false; that is, either \( n^{\prime} < k \) or \( n^{\prime} = k \).
+    If \( n^{\prime} < k \), then \( n^{\prime} + 1 \leq k \) by \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}.
+\end{proof}
+
 \newpage
-\subsection{First-Order Languages}
-Suppose we include in our universe a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
+\subsection{Strings}
+\noindent
+We now present the basic mathematics of string manipulation.
+Fundamentally, strings are no different from finite sequences.
+As such, operations on strings are really just sequence operations in disguise.
+
+\begin{dfn}[String]
+    \phantomsection \label{dfn:metatheory-strings}
+    If \( \Sigma \) is a non-empty set of symbols, then a \keyword{string} over \( \Sigma \) is any element of \( \finiteseq{\Sigma} \).
+\end{dfn}
+
+\begin{notation}[Literals]
+    \phantomsection \label{notation:metatheory-literal-expressions-of-strings}
+    We use quotes to denote the literal expressions of strings---i.e., when we intend to list (in their exact order) all the symbols constituting the
+    string.
+\end{notation}
+
+\begin{eg}
+    If \( \Sigma = \mleft\{ x, +, \#, 2, * \mright\} \),
+    then the literals `\( {x}{+}{+} \)' and `\( 22+*\# \)' denote the strings
+    \( \mleft\{ \orderedpair{0}{x}, \orderedpair{1}{+}, \orderedpair{2}{+} \mright\} \) and
+    \( \mleft\{ \orderedpair{0}{2}, \orderedpair{1}{2}, \orderedpair{2}{+}, \orderedpair{3}{*}, \orderedpair{4}{\#} \mright\} \)
+    respectively.
+\end{eg}
+
+\begin{dfn}[Substring]
+    \phantomsection \label{dfn:metatheory-substring}
+    If \( s \) and \( \sigma \) are strings over a set \( \Sigma \), then we say that
+    \( s \) is a \keyword{substring} of \( \sigma \)
+    if and only if there exists a function \( g \in \finiteseq{\dom \sigma} \) such that:
+    \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
+        \item \( \dom s = \dom g \)
+        \item for all \( n \in \naturalset \), if \( n + 1 \in \dom g \), then \( g(n + 1) = g(n) + 1 \)
+        \item \( s = \composition{\sigma}{g} \)
+    \end{enumerate}
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-transitivity-of-substrings}
+    Let \( r \), \( s \), and \( t \) be strings over a set \( \Sigma \).
+    If \( r \) is a substring of \( s \) and \( s \) is a substring of \( t \), then \( r \) is necessarily a substring of \( t \).
+\end{thm}
+
+\begin{proof}
+    Since \( r \) is a substring of \( s \) and \( s \) is a substring of \( t \), it follows from \cref{dfn:metatheory-substring} that
+    there exist functions \( g_{r} \in \finiteseq{ \dom s } \) and \( g_{s} \in \finiteseq{\dom t} \) such that
+    \begin{equation*}
+        r = \composition{s}{g_{r}} = \composition{\mleft( \composition{t}{g_{s}} \mright)}{g_{r}} =
+    \composition{t}{\mleft( \composition{g_{s}}{g_{r}} \mright)}
+    \end{equation*}
+    To prove that the function \( \composition{g_{s}}{g_{r}} \) has all the properties stated in \cref{dfn:metatheory-substring}, we have to establish
+    the following claims.
+    \begin{claim}
+        \phantomsection \label{claim:dom-gs-equals-dom-r}
+        \( \dom \mleft( \composition{g_{s}}{g_{r}} \mright) = \dom r \).
+    \end{claim}
+
+    \noindent
+    Observe that the functions \( g_{s} \) and \( g_{r} \) have all the properties stated in \cref{dfn:metatheory-substring}.
+    In particular, we have the following
+    \begin{align*}
+        \dom g_{s} &= \dom s \\
+        \dom g_{r} &= \dom r
+    \end{align*}
+    Since \( g_{r} \in \finiteseq{\dom s} \), we have \( \ran g_{r} \subseteq \dom s \)
+    and thus \( \ran g_{r} \subseteq \dom g_{s} \).
+    We then infer from \cref{thm:metatheory-domain-of-g-compose-f-equals-domain-of-f-if-and-only-if-range-of-f-is-subset-of-domain-of-g}
+    that \( \dom \mleft( \composition{g_{s}}{g_{r}} \mright) = \dom g_{r} = \dom r \) as required.
+
+    \begin{claim}
+        \phantomsection \label{claim:gs-compose-gr-is-an-element-of-Seq-dom-t}
+        \( \mleft( \composition{g_{s}}{g_{r}} \mright) \in \finiteseq{\dom t} \).
+    \end{claim}
+    \noindent
+    For this claim, we have to show that \( \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \in \naturalset \) and also that
+    \( \ran \mleft( \composition{g_{s}}{g_{r}} \mright) \subseteq \dom t \).
+    The proof for the former is straightforward since \( \dom \mleft( \composition{g_{s}}{g_{r}} \mright) = \dom r \) as demonstrated
+    in \cref{claim:dom-gs-equals-dom-r}. Since \( r \) is an \( \mathcal{L} \)-string, necessarily \( r \in \finiteseq{\Sigma} \) by \cref{dfn:first-order-language-L-string}.
+    In other words, \( r \) is a \aref{dfn:metatheory-set-of-all-finite-sequence}{finite sequence} of the symbols from the set \( \Sigma \).
+    Thus, \( \dom r = \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \in \naturalset \).
+
+    \vspace{0.3cm}
+    \noindent
+    To prove that \( \ran \mleft( \composition{g_{s}}{g_{r}} \mright) \), we begin with the observation that
+    \( \ran \mleft( \composition{g_{s}}{g_{r}} \mright) \subseteq \ran g_{s} \).
+    Recall that \( g_{s} \in \finiteseq{\dom t} \), which means that \( \ran g_{s} \subseteq \dom t \).
+    Since \( \ran \mleft( \composition{g_{s}}{g_{r}} \mright) \subseteq \ran g_{s} \) and \( \ran g_{s} \subseteq \dom t \)
+    are both true, it follows from \cref{thm:metatheory-transitivity-of-subset-relation} that \( \ran \mleft( \composition{g_{s}}{g_{r}} \mright) \subseteq \dom t \)
+    as required.
+
+    \begin{claim}
+        \phantomsection \label{claim:the-values-of-gs-compose-gr-at-n-plus-one-is-the-successor-of-its-value-at-n}
+        For all \( n \in \naturalset \), if \( n + 1 \in \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \),
+        then \( \mleft( \composition{g_{s}}{g_{r}} \mright)(n + 1) = \mleft( \composition{g_{s}}{g_{r}} \mright)(n) + 1\).
+    \end{claim}
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( n^{\prime} + 1 \in \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \).
+    In other words, there exists an object \( y^{\prime\prime} \) such that \( \orderedpair{n^{\prime} + 1}{y^{\prime\prime}} \in \composition{g_{s}}{g_{r}} \).
+    By \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}, it follows that
+    there exists a \( z^{\prime\prime} \in \naturalset \) such that \( \orderedpair{n^{\prime} + 1}{z^{\prime\prime}} \in g_{r} \)
+    and \( \orderedpair{z^{\prime\prime}}{y^{\prime\prime}} \in g_{s} \).
+    
+    \vspace{0.3cm}
+    \noindent
+    Observe that if \( n^{\prime} + 1 \in \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \), then necessarily
+    \( n^{\prime} \in \dom \mleft( \composition{g_{s}}{g_{r}} \mright) \) because \( \dom \mleft( \composition{g_{s}}{g_{r}} \mright) = \dom r \)
+    and \( \dom r \in \naturalset \).
+    This means that there exists an object \( y^{\prime} \) such that \( \orderedpair{n^{\prime}}{y^{\prime}} \in \composition{g_{s}}{g_{r}} \),
+    which in turn implies the existence of an object \( z^{\prime} \) such that \( \orderedpair{n^{\prime}}{z^{\prime}} \in g_{r} \)
+    and \( \orderedpair{z^{\prime}}{y^{\prime}} \in g_{s} \).
+    Recall that both \( g_{s} \) and \( g_{r} \) have the properties stated in \cref{dfn:metatheory-substring}.
+    Thus, we have
+    \begin{align*}
+        z^{\prime\prime} = g_{r}(n^{\prime} + 1) = g_{r}(n^{\prime}) + 1 = z^{\prime} + 1
+    \end{align*}
+    Since \( \orderedpair{z^{\prime\prime}}{y^{\prime\prime}} \in g_{s} \), it follows that
+    \( \orderedpair{z^{\prime} + 1}{y^{\prime\prime}} \in g_{s} \).
+    But \( \orderedpair{z^{\prime}}{y^{\prime}} \in g_{s} \), so we have by \cref{dfn:metatheory-substring}
+    \begin{equation*}
+        \mleft( \composition{g_{s}}{g_{r}} \mright)(n^{\prime} + 1) = y^{\prime\prime} = y^{\prime} + 1 = \mleft( \composition{g_{s}}{g_{r}} \mright)(n^{\prime}) + 1
+    \end{equation*}
+    Since \( n^{\prime} \) is arbitrary, the claim follows from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{dfn}[Concatenation]
+    \phantomsection \label{dfn:metatheory-concantenation-of-strings}
+    If \( s \) and \( t \) are strings over \( \Sigma \), then the \keyword{concatenation} of \( s \) and \( t \) (denoted as \( s + t \))
+    is the function \( s \,{\union}\, \mleft( \composition{t}{ \mathfrak{S}^{-1}_{k} } \mright) \) where \( k = \dom s \).
+\end{dfn}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-concantenation-of-two-strings-over-an-alphabet-is-also-a-string-over-the-same-alphabet}
+    If \( s \) and \( t \) are strings over a set \( \Sigma \), then \( s + t \) is also a string over \( \Sigma \).
+\end{thm}
+
+\begin{proof}
+    We consider two separate cases: \( t = \emptyset \) or \( t \neq \emptyset \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( t = \emptyset \), then the proof is straightforward because \( s + t = s \,{\union}\, \emptyset = s \).
+    Since \( s \) is a string over \( \Sigma \) and \( s + t = s \), necessarily \( s + t \) is a string over \( \Sigma \).
+
+    \vspace{0.3cm}
+    \noindent
+    Now suppose that \( t \neq \emptyset \).
+    This implies that \( \dom t = m \) where \( m \) is a non-zero natural number.
+    Let \( k = \dom s \) and \( \mathfrak{T} = \composition{t}{\mathfrak{S}^{-1}_{k}} \).
+    We begin by proving that \( s \) and \( \mathfrak{T} \) are compatible functions.
+
+    \vspace{0.3cm}
+    \noindent
+    Since \( s \) and \( \mathfrak{S}_{k} \) are both functions, it follows from \cref{thm:metatheory-the-composition-of-functions-is-a-function}
+    that \( \mathfrak{T} \) is a function; and since \( \mathfrak{S}^{-1}_{k} \) is a bijection between
+    \( \naturalset \) and \( \naturalset - k \), we have by \cref{thm:metatheory-inverse-of-bijection-is-another-bijection}
+    \begin{equation*}
+        \bijection{\mathfrak{S}^{-1}_{k}}{\mleft( \naturalset - k \mright)}{\naturalset}
+    \end{equation*}
+    Furthermore, \( \dom \mathfrak{T} \subseteq \mleft( \naturalset - k \mright) \)
+    due to \cref{thm:metatheory-domain-and-range-of-the-composition-of-two-sets-of-ordered-pairs-is-subset-of-the-domain-and-range-of-one-of-its-components}.
+    Thus, \( \dom \mathfrak{T} \,{\intersect}\, \dom s = \dom \mathfrak{T} \,{\intersect}\, k = \emptyset \) since
+    \( \mleft( \naturalset - k \mright) \,{\intersect}\, k = \emptyset \).
+    This means that the domains of \( s \) and \( \mathfrak{T} \) have no element in common.
+    Therefore, it is vacuously true that \( s \) and \( \mathfrak{T} \) are compatible functions.
+    Since \( s \) and \( \mathfrak{T} \) are compatible, \( s + t = s \union \mathfrak{T} \) must be a function by
+    \cref{cor:metatheory-two-functions-are-compatible-iff-their-union-is-a-function}.
+
+    \vspace{0.3cm}
+    \noindent
+    In order to prove that \( s + t \) is a string over \( \Sigma \), we need to show that \( \mleft( s + t \mright) \in \finiteseq{\Sigma} \);
+    that is, we need to justify the following two claims:
+    \begin{claim}
+        \phantomsection \label{claim:domain-of-s-concatenate-t-is-a-natural-number}
+        \( \dom \mleft( s + t \mright) \in \naturalset \).
+    \end{claim}
+    \noindent
+    Since \( s + t = s \,{\union}\, \mathfrak{T} \) and \( s \) and \( \mathfrak{T} \) are compatible functions,
+    \cref{thm:metatheory-the-domain-of-a-compatible-family-of-functions-is-the-union-of-the-domains-of-each-function-in-the-family}
+    yields
+    \begin{equation}
+        \phantomsection \label{eq:domain-of-s-concatenate-t}
+        \dom \mleft( s + t \mright) = \dom s \union \dom \mathfrak{T} = k \union \dom \mathfrak{T}
+    \end{equation}
+    Since \( \mathfrak{T} = \composition{t}{\mathfrak{S}^{-1}_{k}} \), we have by \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs}
+    \( \dom \mathfrak{T} = \imageSet{\mleft( \mathfrak{S}^{-1}_{k} \mright)^{-1}}{\dom t} = \imageSet{\mathfrak{S}_{k}}{m} \).
+    But \( \imageSet{\mathfrak{S}_{k}}{m} = \ran \mleft( \restrictedfunctionsmall{ \mathfrak{S}_{k} }{m} \mright) = \mathfrak{S}_{k}(m) - k \)
+    by \cref{thm:metatheory-the-range-of-a-restriction-is-the-image-of-the-function-under-the-restricted-domain,thm:metatheory-the-range-of-restricted-n-shift}.
+    Substituting into \eqref{eq:domain-of-s-concatenate-t} gives us
+    \begin{equation*}
+        \dom \mleft( s + t \mright) = k \union \mleft( \mathfrak{S}_{k}(m) - k \mright) = k \union \mathfrak{S}_{k}(m)
+    \end{equation*}
+    Recall that \( \ran \mleft( \mathfrak{S}_{k} \mright) = \naturalset - k \).
+    Therefore, \( \mathfrak{S}_{k}(m) \) is a natural number such that \( k \leq \mathfrak{S}_{k}(m) \).
+    But \( m \neq 0 \), so necessarily \( 0 < m \).
+    Thus, \( \mathfrak{S}_{k}(0) < \mathfrak{S}_{k}(m) \) by \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
+    But \( \mathfrak{S}_{k}(0) = k \) according to \cref{dfn:metatheory-n-shift-of-N}.
+    \begin{equation*}
+        \therefore \, k < \mathfrak{S}_{k}(m)
+    \end{equation*}
+    By \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}, it follows that
+    \( k \subset \mathfrak{S}_{k}(m) \) and thus \( \dom \mleft( s + t \mright) = k \,{\union}\, \mathfrak{S}_{k}(m) = \mathfrak{S}_{k}(m)  \).
+    Since \( \mathfrak{S}_{k}(m) \in \naturalset \), we conclude that \( \dom \mleft( s + t \mright) \in \naturalset \).
+
+    \begin{claim}
+        \phantomsection \label{claim:range-of-s-concatenant-t-is-subset-of-Sigma}
+        \( \ran \mleft( s + t \mright) \subseteq \Sigma \).
+    \end{claim}
+    \noindent
+    This is an immediate consequence of \cref{thm:metatheory-domain-and-range-of-the-composition-of-two-sets-of-ordered-pairs-is-subset-of-the-domain-and-range-of-one-of-its-components} whereby we can infer \( \ran \mleft( s + t \mright) \subseteq \ran s \subseteq \Sigma \).
+\end{proof}
+
+\begin{dfn}[Slice]
+    \phantomsection \label{dfn:metatheory-string-slice}
+    If \( s \) is a string over \( \Sigma \) and \( a, b \in \naturalset \) such that \( a \leq b \leq \dom s \),
+    then a \keyword{slice} of \( s \) from \( a \) to \( b \) (denoted as \( \stringslice{s}{a}{b} \)) is the function
+    \( \composition{\restrictedfunctionsmall{s}{b}}{ \mathfrak{S}_{a} } \).
+\end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-string-slice-equal-start-and-end}
+    For any \( a \leq \dom s \), \( \stringslice{s}{a}{a} = \emptyset \) because
+    \( \dom \mleft( \stringslice{s}{a}{a} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{\dom \mleft( \restrictedfunctionsmall{s}{a} \mright)} = \imageSet{\mathfrak{S}^{-1}_{a}}{a} = \emptyset \)
+    by \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs}.
+\end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-any-slice-of-a-string-is-also-a-string}
+    Let \( \Sigma \) be a non-empty set and \( s \) be any string over \( \Sigma \).
+    Let \( a, b \in \naturalset \) such that \( a \leq b \leq \dom s \).
+    Then \( \stringslice{s}{a}{b} \) is also a string over \( \Sigma \).
+\end{thm}
+
+\begin{proof}
+    We need to prove that \( \dom \mleft( \stringslice{s}{a}{b} \mright) \in \naturalset \) and \( \ran \mleft( \stringslice{s}{a}{b} \mright) \subseteq \Sigma \).
+    There are two cases to be considered: \( a = b \) or \( a < b \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( a = b \), then \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \emptyset \) by \cref{cor:metatheory-string-slice-equal-start-and-end}.
+    Thus, \( \dom \mleft( \stringslice{s}{a}{b} \mright) \in \naturalset \) because \( \emptyset \in \naturalset \).
+    Moreover, \( \ran \mleft( \stringslice{s}{a}{b} \mright) = \emptyset \subseteq \Sigma \).
+    Therefore, \( \stringslice{s}{a}{b} \in \finiteseq{\Sigma} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( a < b \), then \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{\dom \mleft( \restrictedfunctionsmall{s}{b} \mright)} \)
+    by \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs}.
+    Since \( b \leq \dom s \), it follows that \( b \subseteq \dom s \) so that \( \dom \mleft( \restrictedfunctionsmall{s}{b} \mright) = b \).
+    Thus, \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{b} \).
+\end{proof}
+
+\newpage
+\section{First-Order Languages}
+Let us consider a non-empty, countable set \( \Sigma \) of symbolic entities---i.e., glyphs and characters that can be drawn, written, or printed
 on a sheet of paper.
 If we now take \( \mathcal{F} \) to be any non-empty subset of \( \finiteseq{\Sigma} \), then we say that \( \mathcal{F} \) is a \keyword{formal language} over \( \Sigma \)
 and that \( \Sigma \) is the \keyword{alphabet} of \( \mathcal{F} \).
@@ -5896,41 +7265,47 @@ For our purposes, we will restrict ourselves to a class of formal languages that
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-L-symbol}
-    A symbol that belongs to the alphabet of \( \mathcal{L} \) is called an \( \mathcal{L} \)-symbol.
+    An element of \( \Sigma \) is called an \( \mathcal{L} \)-symbol.
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-L-variable}
-    An \( \mathcal{L} \)-symbol that is also a variable symbol is called an \( \mathcal{L} \)-variable.
+    An \( \mathcal{L} \)-symbol that is also a variable symbol is an \( \mathcal{L} \)-variable.
 \end{dfn}
 
 \begin{dfn}
     \phantomsection \label{dfn:first-order-language-L-string}
-    An \( \mathcal{L} \)-string is a finite sequence of \( \mathcal{L} \)-symbols.
+    An \( \mathcal{L} \)-string is any non-empty element of \( \finiteseq{\Sigma} \).
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-L-expression}
-    An \( \mathcal{L} \)-expression is an \( \mathcal{L} \)-string that belongs to \( \mathcal{L} \).
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folsymbols{ \varepsilon } \) denotes the set of all
-    the \( \mathcal{L} \)-symbols consituting \( \varepsilon \). Essentially, \( \folsymbols{ \varepsilon } = \ran \varepsilon \).
+    \phantomsection \label{dfn:first-order-language-set-of-all-L-symbols-in-an-L-string}
+    If \( \sigma \) is an \( \mathcal{L} \)-string, then \( \folsymbols{\sigma} \) is the set of all symbols appearing in \( \sigma \);
+    i.e., \( \folsymbols{\sigma} = \ran \sigma \).
 \end{dfn}
 
 \begin{dfn}
-    \phantomsection \label{dfn:first-order-language-the-set-of-all-variable-symbols-in-a-first-order-language}
-    If \( \mathcal{L} \) is a first-order language, then \( \folvars{\mathcal{L}} \) denotes the (countable and non-empty) set of all \( \mathcal{L} \)-variables
-    associated with \( \mathcal{L} \).
-    If \( \varepsilon \) is an \( \mathcal{L} \)-expression, then \( \folvars{ \varepsilon } \) denotes the set of all \( \mathcal{L} \)-variables
-    appearing in \( \varepsilon \). 
-    \begin{equation*}
-        \folvars{ \varepsilon } = \folsymbols{ \varepsilon } \,{\intersect}\, \folvars{\mathcal{L}}
-    \end{equation*}
+    \phantomsection \label{dfn:first-order-language-set-of-all-L-variables-in-an-L-string}
+    The set of all \( \mathcal{L} \)-variables is denoted as \( \folvars{\mathcal{L}} \).
+    If \( \sigma \) is an \( \mathcal{L} \)-string, then \( \folvars{ \sigma } \) denotes the set of all \( \mathcal{L} \)-variables
+    appearing in \( \sigma \); i.e., \( \folvars{ \sigma } = \folsymbols{ \sigma } \,{\intersect}\, \folvars{\mathcal{L}} \).
 \end{dfn}
 
 \begin{cor}
-    It follows then that for any \( \mathcal{L} \)-expression \( \varepsilon \), \( \folvars{ \varepsilon } \subseteq \folsymbols{ \varepsilon } \)
-    and \( \folvars{ \varepsilon } \subseteq \folvars{\mathcal{L}} \).
+    For any \( \mathcal{L} \)-string \( \sigma \), \( \folvars{ \sigma } \subseteq \folsymbols{ \sigma } \)
+    and \( \folvars{ \sigma } \subseteq \folvars{\mathcal{L}} \).
 \end{cor}
+
+\begin{notation}
+    When the context makes it clear that a sequence of symbols represents the literal expression of an \( \mathcal{L} \)-string, we sometimes drop the quotes for brevity;
+    e.g., we write \( F(s, v_{{1}}) \) instead of `\( F(s, v_{1}) \)' when the context makes it clear that the sequence of symbols
+    `\( F \)', `\( ( \)', `\( s \)', `\( , \)', `\( v_{1} \)', `\( ) \)' is part of a literal expression of an \( \mathcal{L} \)-string.
+\end{notation}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-each-L-string-in-a-tuple-of-L-strings-is-a-substring-of-the-expanded-tuple}
+    If \( \tau \) is a tuple of \( \mathcal{L} \)-strings, then every element of \( \ran \tau \) is a substring of `\( \tau \)'.
+\end{thm}
 
 \subsection{Syntax}
 The syntax of first-order languages is relatively straightforward.
@@ -5940,13 +7315,15 @@ formulas are also composed of smaller units called \emph{terms}.
 
 \begin{dfn}[Terms]
     \phantomsection \label{dfn:first-order-language-construction-of-terms}
-    An \aref{dfn:first-order-language-L-expression}{\( \mathcal{L} \)-expression} is an \( \mathcal{L} \)-term if and only if
-    it is constructible in a finite number of steps via the application of the following two rules:
+    An \( \mathcal{L} \)-string is an \( \mathcal{L} \)-term if and only if
+    it is constructible in a finite number of steps via the application of the following rules:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item If \( t \) is an \( \mathcal{L} \)-expression such that \( \folsymbols{t} = \mleft\{ x \mright\} \) and \( x \in \folvars{\mathcal{L}} \),
+        \item If \( t \) is an \( \mathcal{L} \)-string such that \( t = \) `\( x \)' where \( x \in \folvars{\mathcal{L}} \),
              then \( t \) is an \( \mathcal{L} \)-term
         \item If \( \tau \) is a tuple of \( \mathcal{L} \)-terms such that \( \dom \tau = \Phi^{\mathcal{L}}(i) \) for some \( i \in \dom F^{\mathcal{L}} \),
-             then \( F^{\mathcal{L}}_{i}(\tau) \) is also an \( \mathcal{L} \)-term
+             then `\( F^{\mathcal{L}}_{i}(\tau) \)' is also an \( \mathcal{L} \)-term
+        \item If \( t \) is an \( \mathcal{L} \)-term, then `\( \mleft( t \mright) \)' and `\( \mleft[ \, t \, \mright] \)' are
+             also \( \mathcal{L} \)-terms
     \end{enumerate}
 \end{dfn}
 
@@ -5954,31 +7331,42 @@ formulas are also composed of smaller units called \emph{terms}.
     \phantomsection \label{dfn:first-order-language-complexity-of-terms}
     If \( t \) is an \( \mathcal{L} \)-term, then the \keyword{complexity} of \( t \) (denoted as \( \folcomplexityofterm{t} \))
     is the number of occurrences of function symbols with non-zero arity in \( t \).
+    More precisely, we define \( \folcomplexityofterm{t} \) as the \aref{dfn:metatheory-cardinality-of-finite-sets}{cardinality} of the following set:
+    \begin{equation*}
+        \setbuilderbig{i \in \dom t}{ \text{there exists a \( j \in \dom F^{\mathcal{L}} \) such that } t(i) = F^{\mathcal{L}}_{j} \ \text{and} \ \Pi^{\mathcal{L}}(j) \neq 0 }
+    \end{equation*}
 \end{dfn}
 
 \begin{rem}
     Note that the complexity of a term counts the number of \emph{occurrences} of function symbols with non-zero arity, not just the number of such function symbols occurring
-    in \( t \). For instance, a term \( F(G(x), G(y)) \) has a complexity of \( 3 \) not \( 2 \) even though only two function symbols occurred in it in total.
-    The function symbol \( G \) needs to be counted twice.
+    in \( t \). For instance, a term `\( F(G(x), G(y)) \)' has a complexity of \( 3 \) not \( 2 \) even though only two function symbols occurred in it in total.
+    The function symbol `\( G \)' needs to be counted twice.
 \end{rem}
 
 \begin{thm}
     \phantomsection \label{thm:first-order-language-every-term-has-finite-complexity}
-    If \( t \) is an \( \mathcal{L} \)-term, then \( \folcomplexityofterm{t} \in \naturalset \).
+    Every term of a first-order language has finite complexity.
 \end{thm}
 
 \begin{proof}
-    Since \( t \) is an \( \mathcal{L} \)-term, it follows from \cref{dfn:first-order-language-construction-of-terms} that
-    \( t \) is an \( \mathcal{L} \)-expression.
-    By \cref{dfn:first-order-language-L-expression}, \( t \) must be an \( \mathcal{L} \)-string.
-    Since \aref{dfn:first-order-language-L-string}{all \( \mathcal{L} \)-string are finite sequences of the elements of \( \Sigma \),} it follows that
-    \( \function{t}{k}{\Sigma} \) for some \( k \in \naturalset \).
+    Let \( t \) be a term of some first-order language \( \mathcal{L} \) with alphabet \( \Sigma \).
+    Since \( t \) is an \( \mathcal{L} \)-string, it follows that \( t \in \finiteseq{\Sigma} \).
+    Naturally, this implies that \( t \) is a function with \( \dom t \in \naturalset \).
+    Let us now define the set \( \Delta \) as follows.
+    \begin{equation*}
+        \Delta \coloneq \setbuilderbig{i \in \dom t}{ \text{there exists a \( j \in \dom F^{\mathcal{L}} \) such that } t(i) = F^{\mathcal{L}}(j) \ \text{and} \ \Pi^{\mathcal{L}}(j) \neq 0 }
+    \end{equation*}
+    Clearly, \( \Delta \subseteq \dom t \).
+    The fact that \( \dom t \) is a natural number means that
+    \cref{cor:metatheory-the-cardinality-of-any-subset-of-a-natural-number-is-less-than-or-equals-to-the-number}
+    applies and we thus have \( \folcomplexityofterm{t} = \abs{\Delta} \leq \dom t \).
+    Therefore, \( \folcomplexityofterm{t} \in \naturalset \).
 \end{proof}
 
 \begin{cor}
     \phantomsection \label{cor:first-order-language-terms-with-zero-complexity-is-either-a-variable-or-0-ary-function-symbol}
-    If \( t \) is an \( \mathcal{L} \)-term and \( \folcomplexityofterm{t} = 0 \), then either \( t \) comprises of a single \( \mathcal{L} \)-variable
-    or \( t \) has the form \( F^{\mathcal{L}}_{i}() \) for some \( i \in \dom F^{\mathcal{L}} \) such that \( \Phi^{\mathcal{L}}(i) = 0 \).
+    If \( t \) is an \( \mathcal{L} \)-term and \( \folcomplexityofterm{t} = 0 \), then either \( t = \) `\( x \)' for some \( \mathcal{L} \)-variable \( x \)
+    or \( t = \) `\( F^{\mathcal{L}}_{i}() \)' for some \( i \in \dom F^{\mathcal{L}} \) such that \( \Phi^{\mathcal{L}}(i) = 0 \).
 \end{cor}
 
 \begin{cor}
@@ -6001,24 +7389,40 @@ formulas are also composed of smaller units called \emph{terms}.
 
 \begin{dfn}[Subterms]
     \phantomsection \label{dfn:first-order-language-subterms}
-    If \( s \) and \( t \) denote \( \mathcal{L} \)-terms,
+    If \( s \) and \( t \) are \( \mathcal{L} \)-terms,
     then we say that \( s \) is a \keyword{subterm} of \( t \) (denoted as \( s \folsubterm t \))
     if and only if the following conditions are met:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
-        \item \( t \) has the form \( F^{\mathcal{L}}_{i}(\tau) \) for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
+        \item \( t = \) `\( F^{\mathcal{L}}_{i}(\tau) \)' for some \( i \in \dom F^{\mathcal{L}} \) where \( \tau \) is a tuple of \( \mathcal{L} \)-terms
             such that \( \abs{\tau} = \Phi^{\mathcal{L}}(i) \neq 0 \)
         \item \( s \in \ran \tau \) or \( s \folsubterm r \) for some \( r \in \ran \tau \)
     \end{enumerate}
 \end{dfn}
 
 \begin{cor}
-    \phantomsection \label{cor:first-order-language-the-complexity-of-a-subterm-is-less-than-the-complexity-of-the-parent-term}
-    If \( t \) is an \( \mathcal{L} \)-term and \( s \) is a subterm of \( t \), then \( \folcomplexityofterm{s} < \folcomplexityofterm{t} \).
+    \phantomsection \label{cor:first-order-language-symbols-in-subterms-appear-in-parent-term-also}
+    If \( s \) and \( t \) are \( \mathcal{L} \)-terms and \( s \folsubterm t \), then \( \folsymbols{s} \subseteq \folsymbols{t} \).
 \end{cor}
+
+\begin{thm}
+    \phantomsection \label{thm:first-order-language-the-complexity-of-a-subterm-is-less-than-the-complexity-of-the-parent-term}
+    If \( s \) and \( t \) are \( \mathcal{L} \)-terms such that \( s \folsubterm t \), then \( \folcomplexityofterm{s} < \folcomplexityofterm{t} \).
+\end{thm}
+
+\begin{proof}
+    Let \( s \) and \( t \) be \( \mathcal{L} \)-terms where \( s \folsubterm t \).
+    Let \( \Delta_{s} \) and \( \Delta_{t} \) be the following sets:
+    \begin{align*}
+        \Delta_{s} &\coloneq \setbuilder{i \in \dom s}{\text{there exists a \( j \in \dom F^{\mathcal{L}} \) such that \( s(i) = F^{\mathcal{L}}(j) \) and \( \Pi^{\mathcal{L}}(j) \neq 0 \)}}\\
+        \Delta_{t} &\coloneq \setbuilder{i \in \dom t}{\text{there exists a \( j \in \dom F^{\mathcal{L}} \) such that \( t(i) = F^{\mathcal{L}}(j) \) and \( \Pi^{\mathcal{L}}(j) \neq 0 \)}}
+    \end{align*}
+    By \cref{dfn:first-order-language-complexity-of-terms}, \( \folcomplexityofterm{s} \) and \( \folcomplexityofterm{t} \) are the cardinalities of
+    \( \Delta_{s} \) and \( \Delta_{t} \) respectively.
+\end{proof}
 
 \begin{dfn}[Atoms]
     \phantomsection \label{dfn:first-order-language-atom}
-    An \( \mathcal{L} \)-expression \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
+    An \( \mathcal{L} \)-string \( \varphi \) is an \keyword{atom} of \( \mathcal{L} \) if and only if
     \( \varphi \) has either one of the following forms:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
         \item \( s = t \) where \( s \) and \( t \) are \aref{dfn:first-order-language-construction-of-terms}{\( \mathcal{L} \)-terms}
