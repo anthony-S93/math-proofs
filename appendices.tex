@@ -1893,6 +1893,46 @@ We now define the concept of functions within our metatheory and then derive man
 \end{proof}
 
 \begin{thm}
+    \phantomsection \label{thm:metatheory-g-compose-f-equals-g-compose-f-restricted-to-image-of-f-inverse}
+    If \( f \) and \( g \) are functions, then \( \composition{g}{f} = \composition{g}{ \restrictedfunctionsmall{f}{D} } \)
+    where \( D = \imageSet{f^{-1}}{\dom g} \).
+\end{thm}
+
+\begin{proof}
+    Let \( p \) be an arbitrary element of \( \composition{g}{f} \).
+    Since \( f \) and \( g \) are both functions, \( \composition{g}{f} \) must also be a function by \cref{thm:metatheory-the-composition-of-functions-is-a-function}.
+    Thus, \( p \) must be an ordered pair.
+    Let \( p = \orderedpair{x}{y} \) where \( x \) and \( y \) are existing objects.
+    Since \( p \in \composition{g}{f} \), it follows from \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs} that
+    there exists an object \( z \) such that \( \orderedpair{x}{z} \in f \) and \( \orderedpair{z}{y} \in g \).
+    From this we can infer that \( z \in \dom g \) and also \( \orderedpair{z}{x} \in f^{-1} \).
+    Thus, \( x \in D \) by \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
+    With \( x \in D \) and \( \orderedpair{x}{z} \in f \) both being true, it follows from \cref{dfn:metatheory-restricted-function} that
+    \( \orderedpair{x}{z} \in \restrictedfunctionsmall{f}{D} \).
+    Since \( \orderedpair{z}{y} \in g \) is also true, necessarily \( \orderedpair{x}{y} \in \composition{g}{ \restrictedfunctionsmall{f}{D} } \)
+    and thus \( p \in \composition{g}{ \restrictedfunctionsmall{f}{D} } \).
+    Since \( p \) is arbitrary, we conclude that
+    \begin{equation*}
+        \composition{g}{f} \subseteq \composition{g}{ \restrictedfunctionsmall{f}{D} }
+    \end{equation*}
+    Let \( q \) be an arbitrary element of \( \composition{g}{\restrictedfunctionsmall{f}{D}} \).
+    Once again, \( q \) must be an ordered pair because \( g \) and \( \restrictedfunctionsmall{f}{D} \) are both functions---the latter a consequence
+    of \cref{thm:metatheory-restriction-is-a-function}.
+    Let \( q = \orderedpair{x^{\prime}}{y^{\prime}} \) for existing objects \( x^{\prime} \) and \( y^{\prime} \).
+    Since \( q \) belongs to \( \composition{g}{ \restrictedfunctionsmall{f}{D} } \), we deduce from \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs} that
+    \( \orderedpair{x^{\prime}}{z^{\prime}} \in \restrictedfunctionsmall{f}{D} \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in g \) for some object \( z^{\prime} \).
+    But if \( \orderedpair{x^{\prime}}{z^{\prime}} \in \restrictedfunctionsmall{f}{D} \), then necessarily \( \orderedpair{x^{\prime}}{z^{\prime}} \in f \).
+    Since \( \orderedpair{x^{\prime}}{z^{\prime}} \in f \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in g \) are both true,
+    it follows that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \composition{g}{f} \) and thus \( q \in \composition{g}{f} \).
+    With \( q \) being arbitrary, we thus have
+    \begin{equation*}
+        \composition{g}{ \restrictedfunctionsmall{f}{D} } \subseteq \composition{g}{f}
+    \end{equation*}
+    Since they are subsets of each other, \( \composition{g}{f} \) and \( \composition{g}{ \restrictedfunctionsmall{f}{D} } \) must be equal sets
+    by \cref{thm:metatheory-equality-in-terms-of-subsets}.
+\end{proof}
+
+\begin{thm}
     \phantomsection \label{thm:metatheory-function-equality}
     If \( f \) and \( g \) are functions, then \( f = g \) iff the following statements are true:
     \begin{enumerate}[topsep=2pt,label=\textup{\texttt{(\alph*)}}]
@@ -2017,6 +2057,19 @@ We now define the concept of functions within our metatheory and then derive man
 \begin{notation}
     We write \( \bijection{f}{A}{B} \) to abbreviate the statement ``\( f \) is a bijection between \( A \) and \( B \).''
 \end{notation}
+
+\begin{dfn}[Identity]
+    \phantomsection \label{dfn:metatheory-identity-function}
+    Given any set \( A \), the \keyword{identity function} on \( A \) is the set
+    \begin{equation*}
+        \identityfunc{A} \coloneq
+        \setbuilder{\orderedpair{x}{y} \in \mleft( A \times A \mright)}{x = y}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    It is easy to verify using \cref{meta-axiom:equality-axioms} that \( \identityfunc{A} \) is indeed a function.
+\end{rem}
 
 \begin{dfn}[Family of Functions]
     \phantomsection \label{dfn:metatheory-family-of-functions}
@@ -2246,6 +2299,59 @@ We now define the concept of functions within our metatheory and then derive man
     Thus, \( y^{\prime} \in \imageSet{f}{A} \) implies \( y^{\prime} \in \restrictedfunctionsmall{f}{A} \) for any arbitrary \( y^{\prime} \);
     i.e., \( \imageSet{f}{A} \subseteq \restrictedfunctionsmall{f}{A} \).
     Since \( \ran \restrictedfunctionsmall{f}{A} \) and \( \imageSet{f}{A} \) are subsets of each other, they are necessarily equal sets.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-restriction-of-a-function-to-a-set-in-terms-of-composition}
+    If \( f \) is a function and \( A \) is a set,
+    then \( \restrictedfunctionsmall{f}{A} = \composition{f}{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) }\).
+\end{thm}
+
+\begin{proof}
+    Let \( p^{\prime} \) be an arbitrary object in the universe.
+    Suppose that \( p^{\prime} \in \restrictedfunctionsmall{f}{A} \).
+    Since \( f \) is a function, \( \restrictedfunctionsmall{f}{A} \) must also be a function.
+    Thus, \( p^{\prime} = \orderedpair{x^{\prime}}{y^{\prime}} \) for existing objects \( x^{\prime} \) and \( y^{\prime} \).
+    Furthermore, \cref{dfn:metatheory-restricted-function} requires that \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \),
+    the latter of which implies \( x^{\prime} \in \dom f \) and thus \( \orderedpair{x^{\prime}}{x^{\prime}} \in \identityfunc{\dom f} \)
+    by \cref{dfn:metatheory-identity-function}.
+    Since \( x^{\prime} \in A \) and \( \orderedpair{x^{\prime}}{x^{\prime}} \in \identityfunc{ \dom f } \), it follows from
+    \cref{dfn:metatheory-restricted-function}
+    that \( \orderedpair{x^{\prime}}{x^{\prime}} \in \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \).
+    Since \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \),
+    necessarily \( \orderedpair{x^{\prime}}{y^{\prime}} \in \composition{ f }{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \)
+    by \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs}.
+    In other words,
+    \begin{equation*}
+        p^{\prime} \in \restrictedfunctionsmall{f}{A} \ \text{implies} \ p^{\prime} \in \composition{ f }{ \mleft(  \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) }
+    \end{equation*}
+    Since \( p^{\prime} \) is arbitrary, we conclude by \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \begin{equation*}
+         \restrictedfunctionsmall{f}{A} \subseteq \composition{ f }{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) }
+    \end{equation*}
+    Conversely, suppose that \( p^{\prime} \in \composition{f}{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \).
+    Since \( f \) and \( \restrictedfunctionsmall{ \identityfunc{ \dom f } }{A} \) are both functions, it follows from
+    \cref{thm:metatheory-the-composition-of-functions-is-a-function} that
+    \( \composition{f}{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \)
+    is a function, which means that \( p^{\prime} \) must be an ordered pair.
+    Thus, \( p^{\prime} = \orderedpair{x^{\prime}}{y^{\prime}} \) for existing objects \( x^{\prime} \) and \( y^{\prime} \).
+    Moreover, \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs} implies the existence of an object \( z^{\prime} \)
+    such that \( \orderedpair{x^{\prime}}{z^{\prime}} \in \restrictedfunctionsmall{ \identityfunc{ \dom f } }{A} \)
+    and \( \orderedpair{z^{\prime}}{y^{\prime}} \in f \).
+    In other words, \( x^{\prime} \in A \) and \( x^{\prime} = z^{\prime} \) by \cref{dfn:metatheory-identity-function,dfn:metatheory-restricted-function}.
+    Since \( \orderedpair{z^{\prime}}{y^{\prime}} \in f \) and \( z^{\prime} = x^{\prime} \), clearly
+    \( \orderedpair{x^{\prime}}{y^{\prime}} \in f \).
+    Thus, \( p^{\prime} \in \restrictedfunctionsmall{f}{A} \) as needed.
+    \begin{equation*}
+        p^{\prime} \in \composition{ f }{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \ \text{implies}
+        \ p^{\prime} \in \restrictedfunctionsmall{f}{A}
+    \end{equation*}
+    With \( p^{\prime} \) being arbitrary, it follows from \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets} that
+    \begin{equation*}
+        \composition{ f }{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \subseteq \restrictedfunctionsmall{f}{A}
+    \end{equation*}
+    Having shown that \( \restrictedfunctionsmall{f}{A} \) and \( \composition{ f }{ \mleft(  \restrictedfunctionsmall{ \identityfunc{\dom f} }{A} \mright) } \)
+    are subsets of each other, we conclude by \cref{thm:metatheory-equality-in-terms-of-subsets} that they are equal sets.
 \end{proof}
 
 \begin{thm}
@@ -6756,7 +6862,7 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
 \end{dfn}
 
 \begin{cor}
-    \phantomsection \label{cor:metatheory-0-shift-of-N-is-the-identity-function}
+    \phantomsection \label{cor:metatheory-0-shift-of-N-is-the-identity-function-of-N}
     The \( 0 \)-shift of \( \naturalset \) is the identity function of \( \naturalset \).
 \end{cor}
 
@@ -6868,16 +6974,24 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-image-of-a-natural-number-under-an-inverse-n-shift-is-also-a-natural-number}
-    If \( k \in \naturalset \), then \( k < n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \) for all \( n \in \naturalset \).
+    If \( k \in \naturalset \), then \( k \leq n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \) for all \( n \in \naturalset \).
 \end{thm}
 
 \begin{proof}
     We prove this by induction with the predicate \( P(n) \) defined as follows.
     \begin{equation*}
-        P(n) \coloneq \text{\( k < n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \)}
+        P(n) \coloneq \text{\( k \leq n \) implies \( \imageSet{\mathfrak{S}^{-1}_{k}}{n} \in \naturalset \)}
     \end{equation*}
     \noindent
-    \underline{\scshape Base Case}: \( P(0) \) is vacuously true since no element of \( \naturalset \) is less than \( 0 \).
+    \underline{\scshape Base Case}: \( P(0) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    Either \( k = 0 \) or \( 0 < k \).
+    If \( k = 0 \), then \( \mathfrak{S}_{k} = \identityfunc{\naturalset} \) by \cref{cor:metatheory-0-shift-of-N-is-the-identity-function-of-N},
+    in which case \( \mathfrak{S}_{k}^{-1} = \identityfunc{\naturalset} \) and thus \( \imageSet{\mathfrak{S}^{-1}_{k}}{0} = \imageSet{ \identityfunc{\naturalset} }{\emptyset} = \emptyset = 0 \in \naturalset \).
+    If \( 0 < k \), then \( \imageSet{\mathfrak{S}^{-1}_{k}}{0} = \imageSet{\mathfrak{S}^{-1}_{k}}{\emptyset} = \emptyset = 0 \in \naturalset \).
+    Evidently, \( P(0) \) is true in either case.
 
     \vspace{0.3cm}
     \noindent
@@ -6886,21 +7000,24 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
     \vspace{0.3cm}
     \noindent
     Let \( n^{\prime} \) be an element of \( \naturalset \) such that \( P(n^{\prime}) \) is true.
-    The statement \( k < n^{\prime} \) is either true or false by \cref{meta-rule:law-of-excluded-middle}.
-    We must show that \( P(n^{\prime} + 1) \) is necessarily true in either possibility.
+    Since \( n^{\prime} \) and \( k \) are both elements of \( \naturalset \), \cref{thm:metatheory-linear-ordering-of-natural-numbers} implies only three possibilities:
+    \( k < n^{\prime} \), \( k = n^{\prime} \), or \( n^{\prime} < k \).
+    We must show that \( P(n^{\prime} + 1) \) is true in all three cases.
 
     \vspace{0.3cm}
     \noindent
-    Suppose that \( k < n^{\prime} \) is true.
-    Since \( n^{\prime} < n^{\prime} + 1 \), \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers} implies that
-    \( k < n^{\prime} < n^{\prime} + 1 \).
+    {\scshape Case}: \( k < n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( k < n^{\prime} \), then we have \( k < n^{\prime} < n^{\prime} + 1 \) by \cref{thm:metatheory-transitivity-of-membership-relation-for-natural-numbers}.
     Observe that \( n^{\prime} + 1 = n^{\prime} \,{\union}\, \mleft\{ n^{\prime} \mright\} \) due to \cref{dfn:metatheory-successor}.
     Thus, we have by \cref{thm:metatheory-image-of-union-is-union-of-images}
     \begin{equation*}
         \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} \union \mleft\{ n^{\prime} \mright\}}
         = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \,{\union}\, \mleft\{ \mathfrak{S}^{-1}_{k}(n^{\prime}) \mright\}
     \end{equation*}
-    Let \( m \in \naturalset \) such that \( \mathfrak{S}^{-1}_{k}(n^{\prime}) = m \).
+    Since \( \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) = \naturalset\), there must exist an \( m \in \naturalset \) such that \( \mathfrak{S}^{-1}_{k}(n^{\prime}) = m \).
     In other words, \( \orderedpair{n^{\prime}}{m} \in \mathfrak{S}^{-1}_{k} \) and thus \( \orderedpair{m}{n^{\prime}} \in \mathfrak{S}_{k} \)
     by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}.
     Let \( x^{\prime} \) be an arbitrary object in the universe.
@@ -6917,7 +7034,8 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
     \vspace{0.3cm}
     \noindent
     Observe, however, that \( x^{\prime} = m \) and \( m < x^{\prime} \) are both impossible because they imply
-    \( y^{\prime} = n^{\prime} \) and \( n^{\prime} < y^{\prime} \) respectively, thereby contradicting the fact that \( y^{\prime} < n^{\prime} \).
+    \( y^{\prime} = n^{\prime} \) and \( n^{\prime} < y^{\prime} \) respectively as a result of \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
+    This contradicts the fact that \( y^{\prime} \in n^{\prime} \).
     By \cref{meta-rule:disjunctive-syllogism}, necessarily \( x^{\prime} < m \) and thus \( x^{\prime} \in m \).
     In other words,
     \begin{equation*}
@@ -6928,14 +7046,16 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
     \vspace{0.3cm}
     \noindent
     Conversely, suppose that \( x^{\prime} \in m \).
-    Since \( m \in \naturalset \) and \( \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) = \naturalset \),
-    it follows that \( m \in \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) \), which means that an object
-    \( y^{\prime} \) exists such that \( \orderedpair{y^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
-    By \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, it follows that \( \orderedpair{x^{\prime}}{y^{\prime}} \in \mathfrak{S}_{k} \).
+    Since \( m \in \naturalset \), it follows from \cref{thm:metatheory-every-natural-number-is-a-subset-of-N} that \( m \subseteq \naturalset \)
+    and thus \( x^{\prime} \in \naturalset \) because \( x^{\prime} \in m \).
+    Since \( \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) = \naturalset \) and \( x^{\prime} \in \naturalset \) are both true,
+    necessarily \( x^{\prime} \in  \ran \mleft( \mathfrak{S}^{-1}_{k} \mright) \).
+    This implies the existence of an object \( z^{\prime} \) such that \( \orderedpair{z^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \) and
+    thus, by \cref{dfn:metatheory-inverse-of-a-set-of-ordered-pairs}, \( \orderedpair{x^{\prime}}{z^{\prime}} \in \mathfrak{S}_{k} \).
     Recall that \( \orderedpair{m}{n^{\prime}} \in \mathfrak{S}_{k} \).
-    Since \( x^{\prime} < m \), necessarily \( y^{\prime} < n^{\prime} \) by \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
-    This means that \( y^{\prime} \) is an object such that \( y^{\prime} \in n^{\prime} \) and \( \orderedpair{y^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
-    Thus \( x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \) by \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
+    Since \( x^{\prime} < m \), necessarily \( z^{\prime} < n^{\prime} \) by \cref{thm:metatheory-n-shift-of-N-is-monotonic}.
+    This means that \( z^{\prime} \) is an object such that \( z^{\prime} \in n^{\prime} \) and \( \orderedpair{z^{\prime}}{x^{\prime}} \in \mathfrak{S}^{-1}_{k} \).
+    In other words, \( x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}} \) by \cref{dfn:metatheory-image-of-a-set-under-a-set-of-ordered-pairs}.
     \begin{equation*}
         x^{\prime} \in m \ \text{implies} \ x^{\prime} \in \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime}}
     \end{equation*}
@@ -6952,14 +7072,53 @@ exists between the natural number \( 5 \coloneq \mleft\{ 0, 1, 2, 3, 4 \mright\}
         = m \union \mleft\{ m \mright\}
         = m + 1
     \end{equation*}
-    Since \( m \in \naturalset \) and \( \naturalset \) is inductive, \( m + 1 = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \) must also be
+    Since \( m \in \naturalset \) and \( \naturalset \) is inductive, \( m + 1 = \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \) must be
     an element of \( \naturalset \).
-    Thus, \( P(n^{\prime} + 1) \) is true when \( k < n^{\prime} \) is true.
+    Thus, we have \( k < n^{\prime} + 1 \) and \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \in \naturalset \) both being true.
+    In other words, \( P(n^{\prime} + 1) \) is a true implication.
 
     \vspace{0.3cm}
     \noindent
-    On other hand, suppose that \( k < n^{\prime} \) is false; that is, either \( n^{\prime} < k \) or \( n^{\prime} = k \).
+    {\scshape Case}: \( k = n^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    If \( k = n^{\prime} \), then \( n^{\prime} + 1 = k + 1 \) by \cref{thm:metatheory-uniqueness-of-successor}.
+    Therefore,
+    \begin{equation*}
+        \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} =
+        \imageSet{\mathfrak{S}^{-1}_{k}}{k + 1} =
+        \imageSet{\mathfrak{S}^{-1}_{k}}{k} \union \mleft\{ \mathfrak{S}^{-1}_{k}(k) \mright\}
+    \end{equation*}
+    Note that \( \imageSet{\mathfrak{S}^{-1}_{k}}{k} = \imageSet{\mathfrak{S}^{-1}_{k}}{ \mleft( \naturalset - k \mright) \, {\intersect}\, k }
+    = \imageSet{\mathfrak{S}^{-1}_{k}}{\emptyset}
+    = \emptyset \) by \cref{thm:metatheory-image-of-a-set-under-a-set-of-ordered-pairs-is-the-image-of-the-intersection-between-the-domain-and-the-set-itself}.
+    Note also that \( \mathfrak{S}^{-1}_{k}(k) = 0 \) since \( \mathfrak{S}_{k}(0) = k \) by
+    \cref{dfn:metatheory-n-shift-of-N}.
+    Thus, \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} = \emptyset \,{\union}\, \mleft\{ \mathfrak{S}^{-1}_{k}(k) \mright\} = \mleft\{ \emptyset \mright\} = 1 \).
+    Therefore, \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \) is an element of \( \naturalset \) and \( k < n^{\prime} + 1 \).
+    In other words, \( P(n^{\prime} + 1) \) is true.
+
+    \vspace{0.3cm}
+    \noindent
+    {\scshape Case}: \( n^{\prime} < k \).
+
+    \vspace{0.3cm}
+    \noindent
     If \( n^{\prime} < k \), then \( n^{\prime} + 1 \leq k \) by \cref{thm:metatheory-m-less-than-n-implies-m-plus-one-equals-n-or-m-plus-one-less-than-n}.
+    If \( n^{\prime} + 1 < k \), then \( k \leq n^{\prime} + 1 \) is false, which means that \( P(n^{\prime} + 1) \) is vacuously true.
+    On the other hand, if \( n^{\prime} + 1 = k \), then we have
+    by \cref{thm:metatheory-image-of-a-set-under-a-set-of-ordered-pairs-is-the-image-of-the-intersection-between-the-domain-and-the-set-itself}
+    \begin{equation*}
+        \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} = \imageSet{\mathfrak{S}^{-1}_{k}}{k} = \imageSet{ \mathfrak{S}^{-1}_{k} }{\mleft( \naturalset - k \mright) \, {\intersect}\, k} = \imageSet{\mathfrak{S}^{-1}_{k}}{\emptyset} = \emptyset = 0
+    \end{equation*}
+    Therefore, \( k \leq n^{\prime} + 1 \) and \( \imageSet{\mathfrak{S}^{-1}_{k}}{n^{\prime} + 1} \in \naturalset \) are both true.
+    In other words, \( P(n^{\prime} + 1) \) is a true statement.
+
+    \vspace{0.3cm}
+    \noindent
+    It is now clear that \( P(n^{\prime}) \) implies \( P(n^{\prime} + 1) \) in all possible cases, thus establishing the inductive step.
+    The theorem follows readily from \aref{thm:metatheory-weak-induction}{Weak Induction}.
 \end{proof}
 
 \newpage
@@ -6988,6 +7147,48 @@ As such, operations on strings are really just sequence operations in disguise.
     respectively.
 \end{eg}
 
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-composition-of-any-string-with-the-identity-function-of-N-is-the-string-itself}
+    If \( s \) is a string over \( \Sigma \), then \( \composition{s}{ \identityfunc{\naturalset} } = s \).
+\end{thm}
+
+\begin{proof}
+    Let \( u = \composition{s}{ \identityfunc{\naturalset} } \).
+    The goal is to prove that \( u \subseteq s \) and \( s \subseteq u \) are both true.
+    To begin, we note that \( u \) must be a function since both \( s \) and \( \identityfunc{\naturalset} \) are functions.
+    This is due to the result proven in \cref{thm:metatheory-the-composition-of-functions-is-a-function}.
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( p \) be an arbitrary element of \( u \).
+    Since \( u \) is a function, \( p \) must be an ordered pair; that is to say, there exist objects \( x \) and \( y \)
+    such that \( p = \orderedpair{x}{y} \).
+    Moreover, \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs} also implies the existence of an object \( z \)
+    such that \( \orderedpair{x}{z} \in \identityfunc{\naturalset} \) and \( \orderedpair{z}{y} \in s \).
+    From \cref{dfn:metatheory-identity-function}, one readily infers \( x = z \) and thus \( \orderedpair{x}{y} \in s \).
+    Since \( p = \orderedpair{x}{y} \), it follows that \( p \in s \).
+    With \( p \) being arbitrary, one arrives at the conclusion (by virtue of \cref{meta-rule:universal-generalization,dfn:metatheory-subsets-and-proper-subsets})
+    that \( u \subseteq s \).
+
+    \vspace{0.3cm}
+    \noindent
+    Let \( q \) be an arbitrary element of \( s \).
+    Again, due to \( s \) being a function, \( q \) must be an ordered pair.
+    Thus, \( q = \orderedpair{x^{\prime}}{y^{\prime}} \) for existing objects \( x^{\prime} \) and \( y^{\prime} \).
+    Furthermore, \( q \in s \) also implies \( x^{\prime} \in \dom s \).
+    Taking into account the fact that \( s \in \finiteseq{\Sigma} \), one then infers \( \dom s \in \naturalset \) and thus \( \dom s \subseteq \naturalset \)
+    by \cref{thm:metatheory-every-natural-number-is-a-subset-of-N}.
+    Since \( x^{\prime} \in \dom s \) and \( \dom s \subseteq \naturalset \), necessarily \( x^{\prime} \in \naturalset \).
+    But \( \dom \mleft( \identityfunc{\naturalset} \mright) = \naturalset \); therefore, \( x^{\prime} \in \dom \mleft( \identityfunc{\naturalset} \mright) \) and
+    \( \orderedpair{x^{\prime}}{x^{\prime}} \in \identityfunc{\naturalset} \).
+    In other words, the following statement is true:
+    \begin{equation*}
+        \orderedpair{x^{\prime}}{x^{\prime}} \in \identityfunc{\naturalset} \ \text{and} \ \orderedpair{x^{\prime}}{y^{\prime}} \in s
+    \end{equation*}
+    Clearly, \( \orderedpair{x^{\prime}}{y^{\prime}} \in u \) by \cref{dfn:metatheory-composition-of-two-sets-of-ordered-pairs} and thus \( q \in u \).
+    Since \( q \) is arbitrary, it follows that \( s \subseteq u \).
+\end{proof}
+
 \begin{dfn}[Substring]
     \phantomsection \label{dfn:metatheory-substring}
     If \( s \) and \( \sigma \) are strings over a set \( \Sigma \), then we say that
@@ -6999,6 +7200,11 @@ As such, operations on strings are really just sequence operations in disguise.
         \item \( s = \composition{\sigma}{g} \)
     \end{enumerate}
 \end{dfn}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-the-empty-string-is-a-substring-of-any-string}
+    The empty string is a substring of any string \( \sigma \) because \( \emptyset = \composition{\sigma}{\emptyset} \).
+\end{cor}
 
 \begin{thm}
     \phantomsection \label{thm:metatheory-transitivity-of-substrings}
@@ -7086,6 +7292,52 @@ As such, operations on strings are really just sequence operations in disguise.
         \mleft( \composition{g_{s}}{g_{r}} \mright)(n^{\prime} + 1) = y^{\prime\prime} = y^{\prime} + 1 = \mleft( \composition{g_{s}}{g_{r}} \mright)(n^{\prime}) + 1
     \end{equation*}
     Since \( n^{\prime} \) is arbitrary, the claim follows from \cref{meta-rule:universal-generalization}.
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-a-composition-between-a-string-and-the-identity-function-is-always-a-substring}
+    If \( s \) is a string over \( \Sigma \) and \( n \) is a natural number such that \( n \leq \dom s \),
+    then \( \composition{s}{ \identityfunc{n} } \) is a substring of \( s \).
+\end{thm}
+
+\begin{proof}
+    Let \( u = \composition{s}{ \identityfunc{n} } \).
+    Clearly, \( \dom \mleft( \identityfunc{n} \mright) = n \) and \( \ran \mleft( \identityfunc{n} \mright) = n \subseteq \dom s \).
+    Since \( n \in \naturalset \), it thus follows that \( \identityfunc{n} \subseteq \finiteseq{\dom s} \).
+    Furthermore, we have by
+    \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs,thm:metatheory-domain-of-restriction-of-f-to-A-is-the-intersection-between-dom-f-and-A}
+    \begin{equation*}
+        \dom u = \imageSet{ \identityfunc{n}^{-1} }{\dom s} = \imageSet{ \identityfunc{n} }{\dom s} = \dom \mleft( \identityfunc{n} \mright) \intersect \dom s
+               = n \intersect \dom s
+    \end{equation*}
+    But \( n \subseteq \dom s \), so necessarily \( \dom u = n \, {\intersect}\, \dom s = n = \dom \mleft( \identityfunc{n} \mright) \).
+    Let \( i \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( i + 1 \in \dom \mleft( \identityfunc{n} \mright) \); that is, \( \orderedpair{i + 1}{y} \in \identityfunc{n} \) for some
+    existing object \( y \).
+    Moreover, if \( i + 1 \in \dom \mleft( \identityfunc{n} \mright) \), then necessarily \( i + 1 < n \) and thus \( i + 1 \subset n \)
+    by \cref{thm:metatheory-less-than-relation-of-natural-numbers-is-equivalent-to-proper-subset-relation}, which means that
+    \( i \) must also be an element of \( \dom \mleft( \identityfunc{n} \mright) \).
+    In other words, \( \orderedpair{i}{z} \in \identityfunc{n} \) for some existing object \( z \).
+    By \cref{dfn:metatheory-identity-function}, we thus have \( z = i \) and \( y = i + 1 = z + 1 \).
+    \begin{equation*}
+        \therefore \, \identityfunc{n}(i + 1) = y = z + 1 = \identityfunc{n}(i) + 1
+    \end{equation*}
+    Since \( i \) is an arbitrary element of \( \naturalset \), we conclude by \cref{meta-rule:universal-generalization} that
+    \begin{equation*}
+        \text{for all \( i \in \naturalset \), \( i + 1 \in \dom \mleft( \identityfunc{n} \mright) \) implies \( \identityfunc{n}(i + 1) = \identityfunc{n}(i) + 1 \) }
+    \end{equation*}
+    With that, we have demonstrated that \( \identityfunc{n} \) has all the properties stated in \cref{dfn:metatheory-substring}, in which case \( u \)
+    must be a substring of \( s \).
+\end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-the-composition-of-a-string-with-the-k-shift-of-N-is-also-a-substring}
+    If \( s \) is a string over \( \Sigma \) and \( k \in \naturalset \) such that \( k \leq \dom s \),
+    then \( \composition{s}{ \mathfrak{S}_{k} } \) is a substring of \( s \).
+\end{thm}
+
+\begin{proof}
+    Let \( u = \composition{s}{\mathfrak{S}_{k}} \).
 \end{proof}
 
 \begin{dfn}[Concatenation]
@@ -7177,10 +7429,15 @@ As such, operations on strings are really just sequence operations in disguise.
 
 \begin{dfn}[Slice]
     \phantomsection \label{dfn:metatheory-string-slice}
-    If \( s \) is a string over \( \Sigma \) and \( a, b \in \naturalset \) such that \( a \leq b \leq \dom s \),
+    If \( s \) is a non-empty string over \( \Sigma \) and \( a, b \in \naturalset \) such that \( a \leq b \leq \dom s \),
     then a \keyword{slice} of \( s \) from \( a \) to \( b \) (denoted as \( \stringslice{s}{a}{b} \)) is the function
     \( \composition{\restrictedfunctionsmall{s}{b}}{ \mathfrak{S}_{a} } \).
 \end{dfn}
+
+\begin{eg}
+    Let \( s = \) ``x+y\#\#m,'' be a string.
+    Then \( \stringslice{s}{1}{6} = \composition{\restrictedfunctionsmall{s}{6}}{ \mathfrak{S}_{1} } =  \) ``+y\#\#m'' (verify it!).
+\end{eg}
 
 \begin{cor}
     \phantomsection \label{cor:metatheory-string-slice-equal-start-and-end}
@@ -7199,6 +7456,7 @@ As such, operations on strings are really just sequence operations in disguise.
 \begin{proof}
     We need to prove that \( \dom \mleft( \stringslice{s}{a}{b} \mright) \in \naturalset \) and \( \ran \mleft( \stringslice{s}{a}{b} \mright) \subseteq \Sigma \).
     There are two cases to be considered: \( a = b \) or \( a < b \).
+    We must show that \( \stringslice{s}{a}{b} \in \finiteseq{\Sigma} \) for either case.
 
     \vspace{0.3cm}
     \noindent
@@ -7211,9 +7469,163 @@ As such, operations on strings are really just sequence operations in disguise.
     \noindent
     If \( a < b \), then \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{\dom \mleft( \restrictedfunctionsmall{s}{b} \mright)} \)
     by \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs}.
-    Since \( b \leq \dom s \), it follows that \( b \subseteq \dom s \) so that \( \dom \mleft( \restrictedfunctionsmall{s}{b} \mright) = b \).
+    Since \( b \leq \dom s \), it follows that \( b \subseteq \dom s \) so that \( \dom \restrictedfunctionsmall{s}{b} = b \).
     Thus, \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{b} \).
+    Since \( a < b \), it follows from \cref{thm:metatheory-image-of-a-natural-number-under-an-inverse-n-shift-is-also-a-natural-number} that
+    \( \dom \mleft( \stringslice{s}{a}{b} \mright) \in \naturalset \).
+    Also, \( \ran \mleft( \stringslice{s}{a}{b} \mright) \subseteq \ran \restrictedfunctionsmall{s}{b} \subseteq \ran s \subseteq \Sigma \).
+    In other words, \( \stringslice{s}{a}{b} \in \finiteseq{\Sigma} \).
 \end{proof}
+
+\begin{thm}
+    \phantomsection \label{thm:metatheory-every-slice-of-a-string-is-a-substring-of-the-string}
+    If \( s \) is a non-empty string over \( \Sigma \) and \( a, b \in \naturalset \) such that \( a \leq b \leq \dom s \),
+    then \( \stringslice{s}{a}{b} \) is a substring of \( s \).
+\end{thm}
+
+\begin{proof}
+    If \( a = b \), then the proof is trivial since \( \stringslice{s}{a}{b} = \emptyset \) and the empty string is a substring of any string by
+    \cref{cor:metatheory-the-empty-string-is-a-substring-of-any-string}.
+    Thus, for the remainder of the proof, we will only consider the case where \( a < b \leq \dom s \).
+
+    \vspace{0.3cm}
+    \noindent
+    Firstly, we have \( \stringslice{s}{a}{b} = \composition{ \restrictedfunctionsmall{s}{b} }{\mathfrak{S}_{a}} \) by \cref{dfn:metatheory-string-slice}.
+    But \( \restrictedfunctionsmall{s}{b} = \composition{s}{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright) } \)
+    by \cref{thm:metatheory-the-restriction-of-a-function-to-a-set-in-terms-of-composition}.
+    Therefore,
+    \begin{equation*}
+        \stringslice{s}{a}{b} = \composition{\mleft( \composition{s}{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)} \mright)}{\mathfrak{S}_{a}}
+        = \composition{s}{\mleft( \composition{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright) }{\mathfrak{S}_{a}} \mright)}
+    \end{equation*}
+    by \cref{thm:metatheory-associativity-of-composition}.
+    It remains to prove that \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) is a function
+    with all the properties stated in \cref{dfn:metatheory-substring}.
+
+    \noindent
+    \begin{claim}
+        \phantomsection \label{claim:Id-dom-s-restricted-to-b-compose-a-shift-is-a-function}
+        \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) is a function.
+    \end{claim}
+
+    \noindent
+    Since \( \identityfunc{\dom s} \) is a function, \( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \) must also be a function
+    by \cref{thm:metatheory-restriction-is-a-function}.
+    Since \( \mathfrak{S}_{a} \) is also a function,
+    \cref{thm:metatheory-the-composition-of-functions-is-a-function} guarantees that
+    \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) is a function.
+
+    \noindent
+    \begin{claim}
+        \phantomsection \label{claim:Id-restricted-compose-a-shift-is-an-element-of-Seq-dom-s}
+        \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \in \finiteseq{\dom s} \).
+    \end{claim}
+
+    \noindent
+    We have to prove that \( \dom \mleft(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) \in \naturalset \)
+    and \( \ran \mleft(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) \subseteq \dom s \).
+    The domain of \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) can be obtained via
+    \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs} like so:
+    \begin{equation}
+        \phantomsection \label{eq:domain-of-Id-compose-a-shift-in-terms-of-image}
+        \dom \mleft(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) =
+        \imageSet{\mathfrak{S}^{-1}_{a}}{\dom \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}
+    \end{equation}
+    By \cref{thm:metatheory-domain-of-restriction-of-f-to-A-is-the-intersection-between-dom-f-and-A}, we also have
+    \( \dom \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright) = b \,\,{\intersect}\, \dom s \).
+    But \( b \subseteq \dom s \) since \( b \leq \dom s \) and \( b, \dom s \in \naturalset \).
+    Therefore, \( \dom \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright) = b \).
+    Substituting into \eqref{eq:domain-of-Id-compose-a-shift-in-terms-of-image} then yields
+    \begin{equation*}
+        \dom \mleft(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) =
+        \imageSet{\mathfrak{S}^{-1}_{a}}{b}
+    \end{equation*}
+    Since \( a < b \), \cref{thm:metatheory-image-of-a-natural-number-under-an-inverse-n-shift-is-also-a-natural-number} applies and
+    \(  \imageSet{\mathfrak{S}^{-1}_{a}}{b} \in \naturalset \).
+    Observe also that
+    \( \ran \mleft( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) \subseteq
+    \ran \mleft(  \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright) \subseteq \dom s\).
+    It has thus been proven that \(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \)
+    is a function on a natural number into \( \dom s \), which establishes \cref{claim:Id-restricted-compose-a-shift-is-an-element-of-Seq-dom-s}.
+
+    \noindent
+    \begin{claim}
+        \phantomsection \label{claim:dom-slice-equals-dom-Id-restricted-compose-a-shift}
+        \( \dom \mleft( \stringslice{s}{a}{b} \mright) = \dom \mleft( \composition{ \mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright) \).
+    \end{claim}
+
+    \noindent
+    This is straightforward.
+    Applying \cref{thm:metatheory-domain-of-composition-of-sets-of-ordered-pairs} directly to \cref{dfn:metatheory-string-slice} yields
+    \begin{equation*}
+        \dom \mleft( \stringslice{s}{a}{b} \mright) = \imageSet{\mathfrak{S}^{-1}_{a}}{\mleft( \dom \restrictedfunctionsmall{s}{b} \mright)}
+        = \imageSet{\mathfrak{S}^{-1}_{a}}{b}
+        = \dom \mleft(  \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \mright)
+    \end{equation*}
+    as required.
+
+    \vspace{0.3cm}
+    \noindent
+    Going forward, we will simplify our notation by denoting the function \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) as \( g \).
+
+    \noindent
+    \begin{claim}
+        \phantomsection \label{claim:Id-restricted-compose-a-shift-is-a-contiguous-block}
+        For all \( n \in \naturalset \), \( \mleft( n + 1 \mright) \in \dom g \) implies \( g(n + 1) = g(n) + 1 \).
+    \end{claim}
+
+    \noindent
+    Let \( n^{\prime} \) be an arbitrary element of \( \naturalset \).
+    Suppose that \( \mleft( n^{\prime} + 1 \mright) \in \dom g \).
+    Thus, there exists object \( y^{\prime} \) and \( z^{\prime} \) such that
+    \( \orderedpair{n^{\prime} + 1}{z^{\prime}} \in \mathfrak{S}_{a} \) and \( \orderedpair{z^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \).
+    Recall that \( b \leq \dom s \), which means that \( b \subseteq \dom s \) and thus \( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} = \identityfunc{b} \).
+    Therefore, \( \orderedpair{z^{\prime}}{y^{\prime}} \in \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \) implies \( z^{\prime} \in b \) as well as
+    \( z^{\prime} = y^{\prime} \).
+
+    \vspace{0.3cm}
+    \noindent
+    Next, we note the fact that \( n^{\prime} \) is also an element of \( \dom g \) since \( \mleft( n^{\prime} + 1 \mright) \subset \dom g \) and \( n^{\prime} \in n^{\prime} + 1 \).
+    Thus, there exist objects \( y \) and \( z \) such that \( \orderedpair{n^{\prime}}{z} \in \mathfrak{S}_{a} \)
+    and \( \orderedpair{z}{y} \in \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \), from which we
+    infer that \( z \in b \) and \( z = y \).
+
+    \vspace{0.3cm}
+    \noindent
+    But if \( \orderedpair{n^{\prime}}{z} \in \mathfrak{S}_{a} \) and \( \orderedpair{n^{\prime} + 1}{z^{\prime}} \in \mathfrak{S}_{a} \) are both true,
+    then it follows from \cref{dfn:metatheory-n-shift-of-N} that
+    \( z^{\prime} = \mathfrak{S}_{a}(n^{\prime} + 1) = \mathfrak{S}_{a}(n^{\prime}) + 1 = z + 1 \).
+    Since \( z^{\prime} = y^{\prime} \) and \( z = y \), we thus have
+    \begin{equation*}
+        g(n^{\prime} + 1) = y^{\prime} = z^{\prime} = z + 1 = y + 1 = g(n^{\prime}) + 1
+    \end{equation*}
+    Since \( n^{\prime} \) is arbitrary, \cref{claim:Id-restricted-compose-a-shift-is-a-contiguous-block} follows immediately from \cref{meta-rule:universal-generalization}.
+
+    \vspace{0.3cm}
+    \noindent
+    It should now be evident from \crefrange{claim:Id-dom-s-restricted-to-b-compose-a-shift-is-a-function}{claim:Id-restricted-compose-a-shift-is-a-contiguous-block}
+    that \( \composition{\mleft( \restrictedfunctionsmall{ \identityfunc{\dom s} }{b} \mright)}{\mathfrak{S}_{a}} \) satisfy all the properties
+    stated in \cref{dfn:metatheory-substring}.
+    Therefore, \( \stringslice{s}{a}{b} \) must be a substring of \( s \).
+\end{proof}
+
+\begin{dfn}[Insert]
+    \phantomsection \label{dfn:metatheory-string-insert}
+    If \( s \) and \( t \) are strings over \( \Sigma \) and \( n \in \dom s \) such that \( n \neq 0 \),
+    then the \keyword{insertion} of \( t \) into \( s \) at \( n \) is defined as follows:
+    \begin{equation*}
+        \stringinsert{s}{t}{n} = \mleft( \stringslice{s}{0}{n} + t \mright) +  \stringslice{s}{n}{\dom s}
+    \end{equation*}
+\end{dfn}
+
+\begin{rem}
+    Note that for the insertion of \( t \) into \( s \) at \( n \) to be defined, \( s \) must be a non-empty string.
+\end{rem}
+
+\begin{cor}
+    \phantomsection \label{cor:metatheory-the-insertion-of-a-string-into-another-string-is-also-a-string}
+    The result of an insertion is also a string over \( \Sigma \) due to the fact that slicing and concatenation always yield strings over \( \Sigma \).
+\end{cor}
 
 \newpage
 \section{First-Order Languages}
